@@ -5,6 +5,59 @@ export type TemplateId = 'habit-tracker' | 'roadmap-90' | 'welcome-packet';
 export type InterfaceLang = 'en' | 'fr' | 'es' | 'de' | 'pt' | 'it';
 export type DocumentLang = 'en' | 'fr' | 'es' | 'de' | 'pt' | 'it';
 
+export type HabitPackId = 'wellbeing' | 'fitness' | 'nutrition' | 'sleep' | 'focus' | 'blank';
+
+export interface HabitItem {
+  id: string;
+  title: string;
+  subtitle: string;
+}
+
+export interface HabitTrackerCustomContent {
+  packId: HabitPackId;
+  title: string;
+  subtitle: string;
+  habits: HabitItem[];
+  weeklyQuestions: [string, string, string, string];
+  coachNote: string;
+  showScoreColumn: boolean;
+  showWeeklyCheckins: boolean;
+  showCoachNote: boolean;
+}
+
+export interface RoadmapPhaseCustom {
+  title: string;
+  daysLabel: string;
+  deliverables: string[];
+  kpi: string;
+}
+
+export interface RoadmapCustomContent {
+  title: string;
+  subtitle: string;
+  mission: string;
+  horizon: string;
+  phases: [RoadmapPhaseCustom, RoadmapPhaseCustom, RoadmapPhaseCustom];
+  showSignatureBlock: boolean;
+}
+
+export interface WelcomeAgreementCustom {
+  title: string;
+  description: string;
+}
+
+export interface WelcomePacketCustomContent {
+  title: string;
+  subtitle: string;
+  welcomeMessage: string;
+  channels: string;
+  turnaroundTime: string;
+  meetingRhythm: string;
+  urgentProcedure: string;
+  workingAgreements: WelcomeAgreementCustom[];
+  checklist72h: string[];
+}
+
 export interface BrandKit {
   logoUrl: string | null;
   brandColor: string; // Hex color
@@ -15,11 +68,15 @@ export interface BrandKit {
   clientName: string;
   contactEmail: string;
   qrUrl: string;
+  qrLabel?: string;
   paperSize: PaperSize;
   documentLang: DocumentLang;
   isPro: boolean;
   removeWatermark: boolean;
   selectedTemplate?: TemplateId;
+  habitTrackerContent?: HabitTrackerCustomContent;
+  roadmapContent?: RoadmapCustomContent;
+  welcomePacketContent?: WelcomePacketCustomContent;
 }
 
 export interface HabitCategory {

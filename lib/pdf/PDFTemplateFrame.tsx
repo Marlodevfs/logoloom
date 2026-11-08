@@ -268,10 +268,14 @@ export const PDFTemplateFrame: React.FC<PDFTemplateFrameProps> = ({
       <View style={styles.footer}>
         {/* Left: Professional metadata */}
         <View style={styles.footerLeft}>
-          <Text style={styles.footerCompany}>
-            {brandKit.companyName || 'LogoLoom Document'}
-          </Text>
-          <Text style={styles.footerDot}>•</Text>
+          {brandKit.companyName ? (
+            <>
+              <Text style={styles.footerCompany}>
+                {brandKit.companyName}
+              </Text>
+              <Text style={styles.footerDot}>•</Text>
+            </>
+          ) : null}
           <Text style={styles.footerPage}>{pageString}</Text>
         </View>
 

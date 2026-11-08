@@ -9,7 +9,8 @@ import { Header } from './Header';
 import { LogoUploader } from './LogoUploader';
 import { ColorPicker } from './ColorPicker';
 import { TemplateSelector } from './TemplateSelector';
-import { MoreOptions } from './MoreOptions';
+import { YourDetailsStep } from './YourDetailsStep';
+import { ContentEditorStep } from './ContentEditorStep';
 import { LivePreview } from './LivePreview';
 import { DownloadButton } from './DownloadButton';
 import { ProModal } from './ProModal';
@@ -32,6 +33,7 @@ export const Studio: React.FC<StudioProps> = ({ initialLang }) => {
     extractedColorSuggestion,
     setUploadedLogo,
     resetLogo,
+    resetSection,
     restoreProSubscription,
   } = useBrandKit(initialLang);
 
@@ -55,8 +57,8 @@ export const Studio: React.FC<StudioProps> = ({ initialLang }) => {
 
       {/* Hero Section: Live Studio Above the Fold */}
       <div className="max-w-7xl w-full mx-auto p-3 sm:p-5 lg:p-6 flex flex-col lg:flex-row gap-5 overflow-hidden">
-        {/* Left Panel: Core Controls (Desktop: Fixed 390px) */}
-        <div className="hidden lg:flex flex-col w-[390px] shrink-0 bg-white dark:bg-slate-900 rounded-2xl border border-slate-200/80 dark:border-slate-800 shadow-xs p-5 space-y-4 h-[calc(100vh-6rem)] overflow-y-auto">
+        {/* Left Panel: Calm 5-Step Progressive Disclosure (Desktop: Fixed 410px) */}
+        <div className="hidden lg:flex flex-col w-[410px] shrink-0 bg-white dark:bg-slate-900 rounded-2xl border border-slate-200/80 dark:border-slate-800 shadow-xs p-5 space-y-4 h-[calc(100vh-6rem)] overflow-y-auto">
           {/* 1. Drag-and-drop logo upload */}
           <LogoUploader
             logoUrl={brandKit.logoUrl}
@@ -78,7 +80,7 @@ export const Studio: React.FC<StudioProps> = ({ initialLang }) => {
 
           <div className="border-t border-slate-100 dark:border-slate-800/80" />
 
-          {/* 3. Document type selector */}
+          {/* 3. Document template selector */}
           <TemplateSelector
             activeTemplate={activeTemplate}
             onSelect={setActiveTemplate}
@@ -88,17 +90,28 @@ export const Studio: React.FC<StudioProps> = ({ initialLang }) => {
 
           <div className="border-t border-slate-100 dark:border-slate-800/80" />
 
-          {/* 4. Collapsed "More options" */}
-          <MoreOptions
+          {/* 4. Step 4: Your Details (Always visible, compact) */}
+          <YourDetailsStep
             brandKit={brandKit}
             onUpdate={updateBrandKit}
             interfaceLang={interfaceLang}
-            onOpenProModal={() => setIsProModalOpen(true)}
+            onReset={() => resetSection('details')}
+          />
+
+          <div className="border-t border-slate-100 dark:border-slate-800/80" />
+
+          {/* 5. Step 5: Customize Content (Accordion, collapsed by default) */}
+          <ContentEditorStep
+            brandKit={brandKit}
+            onUpdate={updateBrandKit}
+            activeTemplate={activeTemplate}
+            interfaceLang={interfaceLang}
+            onResetSection={() => resetSection('habitTracker')}
           />
 
           <div className="flex-1" />
 
-          {/* 5. Prominent Download PDF button */}
+          {/* Sticky Download PDF button */}
           <div className="pt-2 sticky bottom-0 bg-white dark:bg-slate-900 pb-1">
             <DownloadButton
               brandKit={brandKit}
@@ -108,12 +121,13 @@ export const Studio: React.FC<StudioProps> = ({ initialLang }) => {
           </div>
         </div>
 
-        {/* Right Panel: Large Live Preview */}
+        {/* Right Panel: Large Live Preview with Click-To-Edit */}
         <div className="flex-1 flex flex-col h-[calc(100vh-6rem)] min-h-[500px]">
           <LivePreview
             brandKit={brandKit}
             activeTemplate={activeTemplate}
             interfaceLang={interfaceLang}
+            onUpdate={updateBrandKit}
           />
         </div>
 
@@ -145,7 +159,7 @@ export const Studio: React.FC<StudioProps> = ({ initialLang }) => {
                 <div className="flex items-center space-x-2">
                   <Sliders className="w-4 h-4 text-indigo-600" />
                   <h3 className="text-sm font-bold text-slate-900 dark:text-white">
-                    Customize Document
+                    {interfaceLang === 'fr' ? 'Personnaliser le document' : 'Customize Document'}
                   </h3>
                 </div>
                 <button
@@ -180,11 +194,19 @@ export const Studio: React.FC<StudioProps> = ({ initialLang }) => {
                 interfaceLang={interfaceLang}
               />
 
-              <MoreOptions
+              <YourDetailsStep
                 brandKit={brandKit}
                 onUpdate={updateBrandKit}
                 interfaceLang={interfaceLang}
-                onOpenProModal={() => setIsProModalOpen(true)}
+                onReset={() => resetSection('details')}
+              />
+
+              <ContentEditorStep
+                brandKit={brandKit}
+                onUpdate={updateBrandKit}
+                activeTemplate={activeTemplate}
+                interfaceLang={interfaceLang}
+                onResetSection={() => resetSection('habitTracker')}
               />
 
               <button

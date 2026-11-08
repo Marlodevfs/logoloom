@@ -1,7 +1,8 @@
 import React from 'react';
 import { View, Text, StyleSheet, Svg, Path } from '@react-pdf/renderer';
-import { BrandKit } from '@/types';
+import { BrandKit, DocumentLang, HabitItem, HabitTrackerCustomContent } from '@/types';
 import { DOCUMENT_TRANSLATIONS } from '@/lib/i18n/documents';
+import { getDefaultHabitTrackerContent } from '@/lib/use-brand-kit';
 import { PDFTemplateFrame } from './PDFTemplateFrame';
 import { VectorQR } from './VectorQR';
 
@@ -88,12 +89,6 @@ const styles = StyleSheet.create({
     fontWeight: 'medium',
     flex: 1,
   },
-  metaBlankLine: {
-    fontFamily: 'Roboto',
-    fontSize: 8,
-    color: '#94A3B8',
-    letterSpacing: 1,
-  },
   tableContainer: {
     borderWidth: 0.75,
     borderColor: '#CBD5E1',
@@ -121,7 +116,6 @@ const styles = StyleSheet.create({
     textTransform: 'uppercase',
   },
   headerDayCell: {
-    width: 18.5,
     height: '100%',
     justifyContent: 'center',
     alignItems: 'center',
@@ -135,7 +129,7 @@ const styles = StyleSheet.create({
     color: '#475569',
   },
   headerScoreLabel: {
-    flex: 1,
+    width: 48,
     height: '100%',
     justifyContent: 'center',
     alignItems: 'center',
@@ -197,7 +191,6 @@ const styles = StyleSheet.create({
     lineHeight: 1.1,
   },
   dayCell: {
-    width: 18.5,
     height: '100%',
     justifyContent: 'center',
     alignItems: 'center',
@@ -213,7 +206,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFFFFF',
   },
   scoreCell: {
-    flex: 1,
+    width: 48,
     height: '100%',
     justifyContent: 'center',
     alignItems: 'center',
@@ -273,10 +266,10 @@ const styles = StyleSheet.create({
     borderWidth: 0.75,
     borderColor: '#CBD5E1',
     borderRadius: 4,
-    padding: 5,
+    padding: 6,
     flexDirection: 'column',
     justifyContent: 'space-between',
-    minHeight: 74, // Accommodate 3 lines spaced 7mm (20pt) apart
+    minHeight: 96, // Expanded to reclaim bottom 25mm for generous handwriting space
   },
   reflectionCardHeader: {
     flexDirection: 'row',
@@ -299,8 +292,8 @@ const styles = StyleSheet.create({
   },
   handwritingLines: {
     flexDirection: 'column',
-    gap: 17, // ~6 mm to 7 mm physical spacing between writing lines
-    paddingTop: 6,
+    gap: 20, // ~7 mm physical spacing between writing lines
+    paddingTop: 8,
     paddingBottom: 2,
   },
   dottedLine: {
@@ -389,16 +382,28 @@ export const VectorHabitTrackerPDF: React.FC<VectorHabitTrackerPDFProps> = ({ br
   const t = (DOCUMENT_TRANSLATIONS[docLang] || DOCUMENT_TRANSLATIONS.en).habitTracker;
   const days = Array.from({ length: 30 }, (_, i) => i + 1);
 
-  const habits = t.habitsList && t.habitsList.length >= 4 ? t.habitsList : [
-    { title: t.categories.movement, subtitle: 'Water upon waking, daily movement' },
-    { title: t.categories.mindset, subtitle: '90 min deep work without distraction' },
-    { title: t.categories.nutrition, subtitle: 'Balanced meals & restful sleep' },
-    { title: t.categories.productivity, subtitle: 'Daily reflection & next day focus' },
-    { title: 'Personal habit of choice', subtitle: 'Action agreed with your coach' },
-  ];
+  const habitContent: HabitTrackerCustomContent =
+    brandKit.habitTrackerContent || getDefaultHabitTrackerContent(docLang, 'wellbeing');
 
-  // Contact QR renders ONLY if user provided their link (never defaults to logoloom.app)
-  const hasUserQR = Boolean(brandKit.qrUrl && brandKit.qrUrl.trim().length > 0 && brandKit.qrUrl !== 'https://logoloom.app');
+  const habits: HabitItem[] = habitContent.habits && habitContent.habits.length > 0
+    ? habitContent.habits
+    : [
+        { id: '1', title: 'Hydratation & Vitalité', subtitle: 'Boire 1,5L à 2L d’eau' },
+        { id: '2', title: 'Marche quotidienne', subtitle: '20 à 30 min de marche' },
+        { id: '3', title: 'Pause calme & respiration', subtitle: '5 à 10 min de méditation' },
+        { id: '4', title: 'Déconnexion du soir', subtitle: 'Éteindre les écrans avant de dormir' },
+        { id: '5', title: 'Gratitude du jour', subtitle: 'Noter un moment positif' },
+      ];
+
+  // Contact QR renders ONLY if user entered their own link
+  const hasUserQR = Boolean(
+    brandKit.qrUrl &&
+    brandKit.qrUrl.trim().length > 0 &&
+    brandKit.qrUrl !== 'https://logoloom.app'
+  );
+
+  const defaultQrLabel = docLang === 'fr' ? 'Scannez pour réserver' : 'Scan to book a session';
+  const qrDisplayLabel = brandKit.qrLabel || defaultQrLabel;
 
   // Blank handwriting line format for physical print
   const blankPeriodLine = docLang === 'fr'
@@ -412,6 +417,9 @@ export const VectorHabitTrackerPDF: React.FC<VectorHabitTrackerPDFProps> = ({ br
     : docLang === 'it'
     ? 'Dal: ______________ al: ______________'
     : 'From: ______________ to: ______________';
+
+  const showScore = habitContent.showScoreColumn;
+  const dayCellWidth = showScore ? 18.5 : 20.1;
 
   return (
     <PDFTemplateFrame
@@ -432,8 +440,8 @@ export const VectorHabitTrackerPDF: React.FC<VectorHabitTrackerPDFProps> = ({ br
               />
               <Text style={styles.heroCategory}>{t.headerCategory}</Text>
             </View>
-            <Text style={styles.heroTitle}>{t.title}</Text>
-            <Text style={styles.heroSubtitle}>{t.subtitle}</Text>
+            <Text style={styles.heroTitle}>{habitContent.title || t.title}</Text>
+            <Text style={styles.heroSubtitle}>{habitContent.subtitle || t.subtitle}</Text>
           </View>
 
           {/* Client & Period Handwriting Metadata Block */}
@@ -469,6 +477,7 @@ export const VectorHabitTrackerPDF: React.FC<VectorHabitTrackerPDFProps> = ({ br
                   key={day}
                   style={[
                     styles.headerDayCell,
+                    { width: dayCellWidth },
                     isMilestone
                       ? {
                           backgroundColor: brandKit.brandColor || '#4F46E5',
@@ -488,14 +497,16 @@ export const VectorHabitTrackerPDF: React.FC<VectorHabitTrackerPDFProps> = ({ br
                 </View>
               );
             })}
-            <View style={styles.headerScoreLabel}>
-              <Text style={styles.headerScoreText}>{t.scoreHeader}</Text>
-            </View>
+            {showScore && (
+              <View style={styles.headerScoreLabel}>
+                <Text style={styles.headerScoreText}>{t.scoreHeader}</Text>
+              </View>
+            )}
           </View>
 
           {/* Habit Rows */}
-          {habits.slice(0, 5).map((habit, idx) => (
-            <View key={idx} style={styles.tableRow}>
+          {habits.slice(0, 8).map((habit, idx) => (
+            <View key={habit.id || idx} style={styles.tableRow}>
               {/* Habit Column: generous 175 pt, zero truncation */}
               <View style={styles.habitCell}>
                 <View
@@ -519,7 +530,7 @@ export const VectorHabitTrackerPDF: React.FC<VectorHabitTrackerPDFProps> = ({ br
                 </View>
               </View>
 
-              {/* 30 Day Checkbox Cells: 18.5 pt wide each with 16 pt (5.64 mm) checkboxes */}
+              {/* 30 Day Checkbox Cells: 16 pt (5.64 mm) checkboxes */}
               {days.map((day) => {
                 const isMilestone = [7, 14, 21, 30].includes(day);
                 return (
@@ -527,6 +538,7 @@ export const VectorHabitTrackerPDF: React.FC<VectorHabitTrackerPDFProps> = ({ br
                     key={day}
                     style={[
                       styles.dayCell,
+                      { width: dayCellWidth },
                       isMilestone
                         ? {
                             backgroundColor: `${brandKit.brandColor || '#4F46E5'}0A`,
@@ -547,13 +559,15 @@ export const VectorHabitTrackerPDF: React.FC<VectorHabitTrackerPDFProps> = ({ br
               })}
 
               {/* Score /30 Cell */}
-              <View style={styles.scoreCell}>
-                <Text style={styles.scoreText}>___ / 30</Text>
-              </View>
+              {showScore && (
+                <View style={styles.scoreCell}>
+                  <Text style={styles.scoreText}>___ / 30</Text>
+                </View>
+              )}
             </View>
           ))}
 
-          {/* Milestones Bar (encouraging neutral milestones) */}
+          {/* Milestones Bar */}
           <View style={styles.milestonesBar}>
             <View style={styles.milestoneItem}>
               <View
@@ -596,73 +610,78 @@ export const VectorHabitTrackerPDF: React.FC<VectorHabitTrackerPDFProps> = ({ br
           </View>
         </View>
 
-        {/* Weekly Reflection Cards (Spaced 7mm / 20pt for physical handwriting) */}
-        <View style={styles.reflectionsSection}>
-          <Text style={styles.reflectionsHeader}>
-            {t.weeklyReflectionTitle}
-          </Text>
-          <View style={styles.reflectionsGrid}>
-            {t.reflectionPrompts.map((prompt, idx) => (
-              <View key={idx} style={styles.reflectionCard}>
-                <View style={styles.reflectionCardHeader}>
-                  <View
-                    style={[
-                      styles.milestoneDot,
-                      { backgroundColor: brandKit.brandColor || '#4F46E5' },
-                    ]}
-                  />
-                  <Text style={styles.reflectionCardTitle}>
-                    {t.weekNames?.[idx] || `Semaine ${idx + 1}`}
-                  </Text>
+        {/* Weekly Reflection Cards (Generous physical handwriting lines) */}
+        {habitContent.showWeeklyCheckins && (
+          <View style={styles.reflectionsSection}>
+            <Text style={styles.reflectionsHeader}>
+              {t.weeklyReflectionTitle}
+            </Text>
+            <View style={styles.reflectionsGrid}>
+              {habitContent.weeklyQuestions.map((prompt, idx) => (
+                <View key={idx} style={styles.reflectionCard}>
+                  <View style={styles.reflectionCardHeader}>
+                    <View
+                      style={[
+                        styles.milestoneDot,
+                        { backgroundColor: brandKit.brandColor || '#4F46E5' },
+                      ]}
+                    />
+                    <Text style={styles.reflectionCardTitle}>
+                      {t.weekNames?.[idx] || (docLang === 'fr' ? `Semaine ${idx + 1}` : `Week ${idx + 1}`)}
+                    </Text>
+                  </View>
+                  <Text style={styles.reflectionPrompt}>{prompt}</Text>
+                  {/* 3 Full Handwriting Lines spaced >= 7 mm (20 pt) */}
+                  <View style={styles.handwritingLines}>
+                    <View style={styles.dottedLine} />
+                    <View style={styles.dottedLine} />
+                    <View style={styles.dottedLine} />
+                  </View>
                 </View>
-                <Text style={styles.reflectionPrompt}>{prompt}</Text>
-                {/* 3 Full Handwriting Lines spaced >= 7 mm (20 pt) */}
-                <View style={styles.handwritingLines}>
-                  <View style={styles.dottedLine} />
-                  <View style={styles.dottedLine} />
-                  <View style={styles.dottedLine} />
-                </View>
-              </View>
-            ))}
+              ))}
+            </View>
           </View>
-        </View>
+        )}
 
         {/* Bottom Section: Coach Advice + Optional User QR Code */}
         <View style={styles.bottomSection}>
-          <View
-            style={[
-              styles.coachAdviceBox,
-              {
-                backgroundColor: `${brandKit.brandColor || '#4F46E5'}08`,
-                borderColor: `${brandKit.brandColor || '#4F46E5'}30`,
-              },
-            ]}
-          >
-            {/* Pure SVG Vector Star Icon (zero font glyphs or emojis) */}
+          {habitContent.showCoachNote && (
             <View
               style={[
-                styles.coachStarBadge,
-                { backgroundColor: brandKit.brandColor || '#4F46E5' },
+                styles.coachAdviceBox,
+                {
+                  backgroundColor: `${brandKit.brandColor || '#4F46E5'}08`,
+                  borderColor: `${brandKit.brandColor || '#4F46E5'}30`,
+                },
               ]}
             >
-              <Svg width={12} height={12} viewBox="0 0 24 24">
-                <Path
-                  fill={brandKit.contrastText || '#FFFFFF'}
-                  d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"
-                />
-              </Svg>
+              {/* Pure SVG Vector Star Icon */}
+              <View
+                style={[
+                  styles.coachStarBadge,
+                  { backgroundColor: brandKit.brandColor || '#4F46E5' },
+                ]}
+              >
+                <Svg width={12} height={12} viewBox="0 0 24 24">
+                  <Path
+                    fill={brandKit.contrastText || '#FFFFFF'}
+                    d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"
+                  />
+                </Svg>
+              </View>
+              <View style={styles.coachAdviceContent}>
+                <Text style={styles.coachAdviceTitle}>{t.coachNoteTitle}</Text>
+                <Text style={styles.coachAdviceText}>
+                  &ldquo;{habitContent.coachNote || t.coachNoteDefault}&rdquo;
+                </Text>
+                <Text style={styles.coachSignLine}>
+                  {t.coachPrompt}{' '}
+                  {brandKit.coachName ? brandKit.coachName : '________________________'}
+                  {brandKit.companyName ? ` — ${brandKit.companyName}` : ''}
+                </Text>
+              </View>
             </View>
-            <View style={styles.coachAdviceContent}>
-              <Text style={styles.coachAdviceTitle}>{t.coachNoteTitle}</Text>
-              <Text style={styles.coachAdviceText}>
-                &ldquo;{t.coachNoteDefault}&rdquo;
-              </Text>
-              <Text style={styles.coachSignLine}>
-                {t.coachPrompt} {brandKit.coachName || 'Alexandre Martin'} —{' '}
-                {brandKit.companyName || 'LogoLoom Studio'}
-              </Text>
-            </View>
-          </View>
+          )}
 
           {/* User QR Code Card (>= 18 mm = 54 pt) - ONLY rendered when user provided link */}
           {hasUserQR ? (
@@ -674,7 +693,7 @@ export const VectorHabitTrackerPDF: React.FC<VectorHabitTrackerPDFProps> = ({ br
                 lightColor="#FFFFFF"
               />
               <View style={styles.qrActionTextCol}>
-                <Text style={styles.qrActionTitle}>{t.scanToBookTitle}</Text>
+                <Text style={styles.qrActionTitle}>{qrDisplayLabel}</Text>
                 <Text style={styles.qrActionUrl}>
                   {brandKit.qrUrl?.replace(/^https?:\/\//, '').slice(0, 26)}
                 </Text>

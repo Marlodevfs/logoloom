@@ -92,22 +92,32 @@ export const TemplateFrame: React.FC<TemplateFrameProps> = ({
             />
           ) : (
             <div className="flex flex-col">
-              <span className="font-serif font-bold text-lg text-slate-900 tracking-tight leading-tight">
-                {brandKit.companyName || 'Apex Studio & Coaching'}
+              <span className={`font-serif font-bold text-lg tracking-tight leading-tight ${
+                brandKit.companyName ? 'text-slate-900' : 'text-slate-400 italic font-medium'
+              }`}>
+                {brandKit.companyName || (docLang === 'fr' ? 'Votre Cabinet / Studio' : 'Your Business / Studio')}
               </span>
-              {brandKit.tagline && (
-                <span className="text-[11px] text-slate-500 font-sans mt-0.5">{brandKit.tagline}</span>
-              )}
+              <span className={`text-[11px] font-sans mt-0.5 ${
+                brandKit.tagline ? 'text-slate-500' : 'text-slate-400 italic'
+              }`}>
+                {brandKit.tagline || (docLang === 'fr' ? 'Votre spécialité ou sous-titre' : 'Your tagline or focus')}
+              </span>
             </div>
           )}
 
           {brandKit.logoUrl && (
             <div>
-              <h2 className="text-sm font-bold tracking-tight text-slate-900 leading-tight">
-                {brandKit.companyName || 'Apex Studio & Coaching'}
+              <h2 className={`text-sm font-bold tracking-tight leading-tight ${
+                brandKit.companyName ? 'text-slate-900' : 'text-slate-400 italic font-medium'
+              }`}>
+                {brandKit.companyName || (docLang === 'fr' ? 'Votre Cabinet / Studio' : 'Your Business / Studio')}
               </h2>
-              {brandKit.tagline && (
+              {brandKit.tagline ? (
                 <p className="text-[11px] text-slate-500 font-medium">{brandKit.tagline}</p>
+              ) : (
+                <p className="text-[11px] text-slate-400 italic font-normal">
+                  {docLang === 'fr' ? 'Votre spécialité' : 'Your tagline'}
+                </p>
               )}
             </div>
           )}
@@ -135,9 +145,11 @@ export const TemplateFrame: React.FC<TemplateFrameProps> = ({
       <footer className="pt-2 border-t border-slate-200/80 flex items-center justify-between text-[10px] text-slate-500">
         {/* Left: Metadata */}
         <div className="flex flex-col space-y-0.5">
-          <span className="font-semibold text-slate-700 tracking-wide text-[10px]">
-            {brandKit.companyName || 'LogoLoom Document'}
-          </span>
+          {brandKit.companyName ? (
+            <span className="font-semibold text-slate-700 tracking-wide text-[10px]">
+              {brandKit.companyName}
+            </span>
+          ) : null}
           <span className="text-slate-400 text-[9px]">
             {docText.footer.confidential} • {docText.footer.page}
           </span>

@@ -12,25 +12,28 @@ interface LivePreviewProps {
   brandKit: BrandKit;
   activeTemplate: TemplateId;
   interfaceLang: InterfaceLang;
+  onUpdate?: (updates: Partial<BrandKit>) => void;
 }
 
 export const LivePreview: React.FC<LivePreviewProps> = ({
   brandKit,
   activeTemplate,
   interfaceLang,
+  onUpdate,
 }) => {
   const t = UI_TRANSLATIONS[interfaceLang] || UI_TRANSLATIONS.en;
-  const [zoomScale, setZoomScale] = useState<number>(0.68);
-
   const isLandscape = activeTemplate === 'habit-tracker';
 
   const calculateFitScale = () => {
-    if (typeof window === 'undefined') return 0.68;
+    if (typeof window === 'undefined') return 0.55;
     const width = window.innerWidth;
-    if (width < 640) return isLandscape ? 0.32 : 0.42;
-    if (width < 1024) return isLandscape ? 0.46 : 0.55;
-    return isLandscape ? 0.58 : 0.68;
+    if (width < 640) return isLandscape ? 0.28 : 0.40;
+    if (width < 1024) return isLandscape ? 0.42 : 0.52;
+    if (width < 1440) return isLandscape ? 0.52 : 0.65;
+    return isLandscape ? 0.56 : 0.70;
   };
+
+  const [zoomScale, setZoomScale] = useState<number>(() => calculateFitScale());
 
   // Auto-adjust scale on mount and when activeTemplate changes
   useEffect(() => {
@@ -40,13 +43,13 @@ export const LivePreview: React.FC<LivePreviewProps> = ({
   const renderActiveTemplate = () => {
     switch (activeTemplate) {
       case 'habit-tracker':
-        return <HabitTrackerTemplate brandKit={brandKit} />;
+        return <HabitTrackerTemplate brandKit={brandKit} onUpdate={onUpdate} />;
       case 'roadmap-90':
         return <Roadmap90Template brandKit={brandKit} />;
       case 'welcome-packet':
         return <WelcomePacketTemplate brandKit={brandKit} />;
       default:
-        return <HabitTrackerTemplate brandKit={brandKit} />;
+        return <HabitTrackerTemplate brandKit={brandKit} onUpdate={onUpdate} />;
     }
   };
 
@@ -66,7 +69,10 @@ export const LivePreview: React.FC<LivePreviewProps> = ({
             {t.livePreview}
           </span>
           <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400 font-medium">
-            {isA4 ? 'A4 (210×297mm)' : 'US Letter (8.5×11")'}
+            {isLandscape ? (isA4 ? 'A4 Paysage (297×210mm)' : 'US Letter Landscape') : (isA4 ? 'A4 (210×297mm)' : 'US Letter (8.5×11")')}
+          </span>
+          <span className="hidden sm:inline-block text-[10px] text-slate-400 italic">
+            • {interfaceLang === 'fr' ? 'Édition directe en cliquant sur le texte' : 'Click text to edit directly'}
           </span>
         </div>
 
@@ -74,7 +80,7 @@ export const LivePreview: React.FC<LivePreviewProps> = ({
         <div className="flex items-center space-x-1 bg-slate-100 dark:bg-slate-800/80 p-0.5 rounded-lg border border-slate-200/70 dark:border-slate-700">
           <button
             type="button"
-            onClick={() => setZoomScale(Math.max(0.35, zoomScale - 0.08))}
+            onClick={() => setZoomScale(Math.max(0.25, zoomScale - 0.06))}
             className="p-1 text-slate-500 hover:text-slate-800 dark:hover:text-white rounded hover:bg-white dark:hover:bg-slate-700 transition-colors"
             title="Zoom out"
           >
@@ -85,7 +91,7 @@ export const LivePreview: React.FC<LivePreviewProps> = ({
           </span>
           <button
             type="button"
-            onClick={() => setZoomScale(Math.min(1.0, zoomScale + 0.08))}
+            onClick={() => setZoomScale(Math.min(1.0, zoomScale + 0.06))}
             className="p-1 text-slate-500 hover:text-slate-800 dark:hover:text-white rounded hover:bg-white dark:hover:bg-slate-700 transition-colors"
             title="Zoom in"
           >
@@ -103,7 +109,7 @@ export const LivePreview: React.FC<LivePreviewProps> = ({
       </div>
 
       {/* Viewport Canvas with Smooth Scroll & Scaling */}
-      <div className="flex-1 overflow-auto p-2 sm:p-4 md:p-8 flex items-start justify-center pb-24 lg:pb-8">
+      <div className="flex-1 overflow-auto p-2 sm:p-4 md:p-6 flex items-start justify-center pb-24 lg:pb-8">
         <div
           className="transition-transform duration-150 ease-out origin-top shrink-0"
           style={{

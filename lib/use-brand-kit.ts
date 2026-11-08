@@ -1,12 +1,21 @@
 'use client';
 
 import { useState, useEffect, useCallback } from 'react';
-import { BrandKit, DocumentLang, InterfaceLang, PaperSize, TemplateId } from '@/types';
+import {
+  BrandKit,
+  DocumentLang,
+  HabitPackId,
+  HabitTrackerCustomContent,
+  InterfaceLang,
+  TemplateId,
+} from '@/types';
 import { extractDominantColorFromImage, ensureAccessibleOnWhite, getOptimalTextColor } from './color-engine';
+import { HABIT_PACKS } from './i18n/habit-packs';
+import { DOCUMENT_TRANSLATIONS } from './i18n/documents';
 
-const STORAGE_KEY = 'logoloom_brand_kit_v1';
-const TEMPLATE_KEY = 'logoloom_template_id_v1';
-const INTERFACE_LANG_KEY = 'logoloom_ui_lang_v1';
+const STORAGE_KEY = 'logoloom_brand_kit_v2';
+const TEMPLATE_KEY = 'logoloom_template_id_v2';
+const INTERFACE_LANG_KEY = 'logoloom_ui_lang_v2';
 const PRO_TOKEN_KEY = 'logoloom_pro_token_v1';
 
 // Elegant default sample logo (Vector SVG Data URL base64) so new users immediately see a gorgeous branded preview
@@ -18,16 +27,46 @@ const SAMPLE_SVG_RAW = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160
 
 export const DEFAULT_SAMPLE_LOGO = `data:image/svg+xml;base64,${typeof btoa !== 'undefined' ? btoa(SAMPLE_SVG_RAW) : Buffer.from(SAMPLE_SVG_RAW).toString('base64')}`;
 
+export function getDefaultHabitTrackerContent(
+  lang: DocumentLang,
+  packId: HabitPackId = 'wellbeing'
+): HabitTrackerCustomContent {
+  const pack = (HABIT_PACKS[lang] && HABIT_PACKS[lang][packId]) || HABIT_PACKS.en.wellbeing;
+  const docText = (DOCUMENT_TRANSLATIONS[lang] || DOCUMENT_TRANSLATIONS.en).habitTracker;
+
+  return {
+    packId,
+    title: docText.title,
+    subtitle: docText.subtitle,
+    habits: pack.habits.map((h, i) => ({
+      id: `habit-${i + 1}`,
+      title: h.title,
+      subtitle: h.subtitle,
+    })),
+    weeklyQuestions: [
+      docText.reflectionPrompts[0] || 'What brought the most positive momentum?',
+      docText.reflectionPrompts[1] || 'Where did friction appear and how to resolve it?',
+      docText.reflectionPrompts[2] || 'Which habit is beginning to feel natural?',
+      docText.reflectionPrompts[3] || 'Key wins and next month priorities?',
+    ],
+    coachNote: docText.coachNoteDefault || 'Consistency creates lasting results. Celebrate each day completed.',
+    showScoreColumn: true,
+    showWeeklyCheckins: true,
+    showCoachNote: true,
+  };
+}
+
 export const DEFAULT_BRAND_KIT: BrandKit = {
   logoUrl: DEFAULT_SAMPLE_LOGO,
   brandColor: '#4F46E5', // Royal Indigo
   contrastText: '#FFFFFF',
-  companyName: 'Apex Studio & Coaching',
-  tagline: 'High-Impact Consulting & Strategic Performance',
-  coachName: 'Alexandre Martin',
+  companyName: '', // Empty: preview shows placeholder suggestion; export omits cleanly
+  tagline: '',
+  coachName: '',
   clientName: '',
-  contactEmail: 'hello@apexstudio.io',
-  qrUrl: '', // Default to empty so contact QR block only renders if user provided a link
+  contactEmail: '',
+  qrUrl: '', // Contact QR renders only when user enters a custom link
+  qrLabel: '',
   paperSize: 'a4',
   documentLang: 'en',
   isPro: false,
@@ -35,12 +74,16 @@ export const DEFAULT_BRAND_KIT: BrandKit = {
 };
 
 export function useBrandKit(initialLang?: InterfaceLang) {
+  const initialDocLang: DocumentLang = initialLang || 'en';
+
   const [brandKit, setBrandKit] = useState<BrandKit>(() => ({
     ...DEFAULT_BRAND_KIT,
-    documentLang: initialLang || 'en',
+    documentLang: initialDocLang,
+    habitTrackerContent: getDefaultHabitTrackerContent(initialDocLang, 'wellbeing'),
   }));
+
   const [activeTemplate, setActiveTemplate] = useState<TemplateId>('habit-tracker');
-  const [interfaceLang, setInterfaceLang] = useState<InterfaceLang>(initialLang || 'en');
+  const [interfaceLang, setInterfaceLangState] = useState<InterfaceLang>(initialLang || 'en');
   const [isLoaded, setIsLoaded] = useState(false);
   const [isExtractingColor, setIsExtractingColor] = useState(false);
   const [extractedColorSuggestion, setExtractedColorSuggestion] = useState<string | null>(null);
@@ -51,37 +94,43 @@ export function useBrandKit(initialLang?: InterfaceLang) {
       if (typeof window !== 'undefined') {
         const supportedLangs: InterfaceLang[] = ['en', 'fr', 'es', 'de', 'pt', 'it'];
 
-        // 1. Language determination
+        let resolvedUiLang: InterfaceLang = initialLang || 'en';
         if (initialLang && supportedLangs.includes(initialLang)) {
-          setInterfaceLang(initialLang);
+          resolvedUiLang = initialLang;
         } else {
           const savedUiLang = localStorage.getItem(INTERFACE_LANG_KEY) as InterfaceLang;
           if (savedUiLang && supportedLangs.includes(savedUiLang)) {
-            setInterfaceLang(savedUiLang);
+            resolvedUiLang = savedUiLang;
           }
         }
+        setInterfaceLangState(resolvedUiLang);
 
-        // 2. Saved template
         const savedTemplate = localStorage.getItem(TEMPLATE_KEY) as TemplateId;
         if (savedTemplate && ['habit-tracker', 'roadmap-90', 'welcome-packet'].includes(savedTemplate)) {
           setActiveTemplate(savedTemplate);
         }
 
-        // 3. Saved Brand Kit
         const savedBrand = localStorage.getItem(STORAGE_KEY);
         if (savedBrand) {
           const parsed = JSON.parse(savedBrand);
+          const docLang: DocumentLang = parsed.documentLang || (resolvedUiLang as DocumentLang);
           setBrandKit((prev) => ({
             ...prev,
             ...parsed,
-            // Pro status cannot be set by unverified raw localStorage or URL query
+            documentLang: docLang,
+            habitTrackerContent: parsed.habitTrackerContent || getDefaultHabitTrackerContent(docLang, 'wellbeing'),
             isPro: false,
             removeWatermark: false,
-            documentLang: parsed.documentLang || (initialLang === 'fr' ? 'fr' : 'en'),
+          }));
+        } else {
+          setBrandKit((prev) => ({
+            ...prev,
+            documentLang: resolvedUiLang as DocumentLang,
+            habitTrackerContent: getDefaultHabitTrackerContent(resolvedUiLang as DocumentLang, 'wellbeing'),
           }));
         }
 
-        // 4. Server-Side Pro Subscription Entitlement Verification
+        // Server-Side Pro Subscription Entitlement Verification
         const urlParams = new URLSearchParams(window.location.search);
         const sessionId = urlParams.get('session_id');
         const storedToken = localStorage.getItem(PRO_TOKEN_KEY);
@@ -101,7 +150,6 @@ export function useBrandKit(initialLang?: InterfaceLang) {
                   isPro: true,
                   removeWatermark: true,
                 }));
-                // Clean URL query params if returning from checkout
                 if (sessionId) {
                   const cleanUrl = window.location.pathname;
                   window.history.replaceState({}, '', cleanUrl);
@@ -153,6 +201,19 @@ export function useBrandKit(initialLang?: InterfaceLang) {
     });
   }, []);
 
+  const setInterfaceLang = useCallback((lang: InterfaceLang) => {
+    setInterfaceLangState(lang);
+    // When changing UI language, also sync document language if document language was matching previous
+    setBrandKit((prev) => {
+      if (prev.documentLang === lang) return prev;
+      return {
+        ...prev,
+        documentLang: lang as DocumentLang,
+        habitTrackerContent: getDefaultHabitTrackerContent(lang as DocumentLang, prev.habitTrackerContent?.packId || 'wellbeing'),
+      };
+    });
+  }, []);
+
   const setUploadedLogo = useCallback(
     async (dataUrl: string) => {
       setIsExtractingColor(true);
@@ -182,7 +243,33 @@ export function useBrandKit(initialLang?: InterfaceLang) {
     setExtractedColorSuggestion(null);
   }, [updateBrandKit]);
 
-  // Method for subscriber to restore access
+  const resetSection = useCallback(
+    (section: 'details' | 'habitTracker' | 'all') => {
+      if (section === 'details') {
+        updateBrandKit({
+          companyName: '',
+          tagline: '',
+          coachName: '',
+          clientName: '',
+          contactEmail: '',
+          qrUrl: '',
+          qrLabel: '',
+        });
+      } else if (section === 'habitTracker') {
+        updateBrandKit({
+          habitTrackerContent: getDefaultHabitTrackerContent(brandKit.documentLang, 'wellbeing'),
+        });
+      } else if (section === 'all') {
+        updateBrandKit({
+          ...DEFAULT_BRAND_KIT,
+          documentLang: brandKit.documentLang,
+          habitTrackerContent: getDefaultHabitTrackerContent(brandKit.documentLang, 'wellbeing'),
+        });
+      }
+    },
+    [brandKit.documentLang, updateBrandKit]
+  );
+
   const restoreProSubscription = useCallback(async (email: string) => {
     try {
       const res = await fetch('/api/subscription/restore', {
@@ -214,6 +301,7 @@ export function useBrandKit(initialLang?: InterfaceLang) {
     extractedColorSuggestion,
     setUploadedLogo,
     resetLogo,
+    resetSection,
     restoreProSubscription,
   };
 }
