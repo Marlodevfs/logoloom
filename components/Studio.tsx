@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { Sliders, X, Sparkles, Layers } from 'lucide-react';
+import { Sliders, X } from 'lucide-react';
 import { useBrandKit } from '@/lib/use-brand-kit';
 import { UI_TRANSLATIONS } from '@/lib/i18n/interface';
 import { Header } from './Header';
@@ -12,6 +12,7 @@ import { MoreOptions } from './MoreOptions';
 import { LivePreview } from './LivePreview';
 import { DownloadButton } from './DownloadButton';
 import { ProModal } from './ProModal';
+import { LandingSections } from './LandingSections';
 
 export const Studio: React.FC = () => {
   const {
@@ -53,9 +54,9 @@ export const Studio: React.FC = () => {
         onOpenProModal={() => setIsProModalOpen(true)}
       />
 
-      {/* Main Split Layout: Desktop 2-Column, Mobile Stacked */}
-      <main className="flex-1 max-w-7xl w-full mx-auto p-3 sm:p-5 lg:p-6 flex flex-col lg:flex-row gap-5 overflow-hidden">
-        {/* Left Panel: Core Controls (Desktop: Fixed 380px, Mobile: Drawer / Bottom Stack) */}
+      {/* Hero Section: Live Studio Above the Fold */}
+      <div className="max-w-7xl w-full mx-auto p-3 sm:p-5 lg:p-6 flex flex-col lg:flex-row gap-5 overflow-hidden">
+        {/* Left Panel: Core Controls (Desktop: Fixed 390px) */}
         <div className="hidden lg:flex flex-col w-[390px] shrink-0 bg-white dark:bg-slate-900 rounded-2xl border border-slate-200/80 dark:border-slate-800 shadow-xs p-5 space-y-4 h-[calc(100vh-6rem)] overflow-y-auto">
           {/* 1. Drag-and-drop logo upload */}
           <LogoUploader
@@ -197,7 +198,14 @@ export const Studio: React.FC = () => {
             </div>
           </div>
         )}
-      </main>
+      </div>
+
+      {/* Landing Page Content: How it works, templates showcase, privacy, pricing, footer */}
+      <LandingSections
+        interfaceLang={interfaceLang}
+        onSelectTemplate={setActiveTemplate}
+        onOpenProModal={() => setIsProModalOpen(true)}
+      />
 
       {/* Pro Modal */}
       <ProModal
