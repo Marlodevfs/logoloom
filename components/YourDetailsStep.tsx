@@ -260,7 +260,7 @@ export const YourDetailsStep: React.FC<YourDetailsStepProps> = ({
             value={brandKit.companyName || ''}
             onChange={(e) => onUpdate({ companyName: e.target.value })}
             placeholder={l.businessPlaceholder}
-            className="w-full px-3 py-1.5 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-xs text-slate-900 dark:text-slate-100 placeholder-slate-400 focus:outline-none focus:ring-1 focus:ring-indigo-500 transition-all"
+            className="w-full px-3 py-2.5 sm:py-1.5 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-base sm:text-xs text-slate-900 dark:text-slate-100 placeholder-slate-400 focus:outline-none focus:ring-1 focus:ring-indigo-500 transition-all"
           />
         </div>
 
@@ -291,7 +291,7 @@ export const YourDetailsStep: React.FC<YourDetailsStepProps> = ({
             value={brandKit.tagline || ''}
             onChange={(e) => onUpdate({ tagline: e.target.value })}
             placeholder={l.taglinePlaceholder}
-            className="w-full px-3 py-1.5 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-xs text-slate-900 dark:text-slate-100 placeholder-slate-400 focus:outline-none focus:ring-1 focus:ring-indigo-500 transition-all"
+            className="w-full px-3 py-2.5 sm:py-1.5 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-base sm:text-xs text-slate-900 dark:text-slate-100 placeholder-slate-400 focus:outline-none focus:ring-1 focus:ring-indigo-500 transition-all"
           />
         </div>
 
@@ -322,7 +322,7 @@ export const YourDetailsStep: React.FC<YourDetailsStepProps> = ({
             value={brandKit.coachName || ''}
             onChange={(e) => onUpdate({ coachName: e.target.value })}
             placeholder={l.practitionerPlaceholder}
-            className="w-full px-3 py-1.5 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-xs text-slate-900 dark:text-slate-100 placeholder-slate-400 focus:outline-none focus:ring-1 focus:ring-indigo-500 transition-all"
+            className="w-full px-3 py-2.5 sm:py-1.5 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-base sm:text-xs text-slate-900 dark:text-slate-100 placeholder-slate-400 focus:outline-none focus:ring-1 focus:ring-indigo-500 transition-all"
           />
         </div>
 
@@ -351,7 +351,7 @@ export const YourDetailsStep: React.FC<YourDetailsStepProps> = ({
             onChange={(e) => onUpdate({ qrUrl: e.target.value })}
             onBlur={handleUrlBlur}
             placeholder="https://calendly.com/your-name"
-            className="w-full px-3 py-1.5 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-xs text-slate-900 dark:text-slate-100 placeholder-slate-400 focus:outline-none focus:ring-1 focus:ring-indigo-500 transition-all font-mono text-[11px]"
+            className="w-full px-3 py-2.5 sm:py-1.5 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-base sm:text-xs text-slate-900 dark:text-slate-100 placeholder-slate-400 focus:outline-none focus:ring-1 focus:ring-indigo-500 transition-all font-mono"
           />
 
           <p className="text-[10px] text-slate-500 dark:text-slate-400 leading-tight">
@@ -379,14 +379,14 @@ export const YourDetailsStep: React.FC<YourDetailsStepProps> = ({
                 value={brandKit.qrLabel ?? ''}
                 onChange={(e) => onUpdate({ qrLabel: e.target.value })}
                 placeholder={defaultQrLabel}
-                className="w-full px-2.5 py-1 rounded-md border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-[11px] text-slate-900 dark:text-slate-100 placeholder-slate-400 focus:outline-none focus:ring-1 focus:ring-indigo-500"
+                className="w-full px-3 py-2 sm:py-1 rounded-md border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-base sm:text-xs text-slate-900 dark:text-slate-100 placeholder-slate-400 focus:outline-none focus:ring-1 focus:ring-indigo-500"
               />
             </div>
           )}
         </div>
 
         {/* Contact Email & Client Name */}
-        <div className="grid grid-cols-2 gap-2">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
           <div>
             <label
               htmlFor="field-contact-email"
@@ -401,7 +401,7 @@ export const YourDetailsStep: React.FC<YourDetailsStepProps> = ({
               value={brandKit.contactEmail || ''}
               onChange={(e) => onUpdate({ contactEmail: e.target.value })}
               placeholder="contact@studio.com"
-              className="w-full px-2.5 py-1.5 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-[11px] text-slate-900 dark:text-slate-100 placeholder-slate-400 focus:outline-none focus:ring-1 focus:ring-indigo-500"
+              className="w-full px-3 py-2.5 sm:py-1.5 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-base sm:text-xs text-slate-900 dark:text-slate-100 placeholder-slate-400 focus:outline-none focus:ring-1 focus:ring-indigo-500"
             />
           </div>
 
@@ -419,7 +419,7 @@ export const YourDetailsStep: React.FC<YourDetailsStepProps> = ({
               value={brandKit.clientName || ''}
               onChange={(e) => onUpdate({ clientName: e.target.value })}
               placeholder={l.clientPlaceholder}
-              className="w-full px-2.5 py-1.5 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-[11px] text-slate-900 dark:text-slate-100 placeholder-slate-400 focus:outline-none focus:ring-1 focus:ring-indigo-500"
+              className="w-full px-3 py-2.5 sm:py-1.5 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-base sm:text-xs text-slate-900 dark:text-slate-100 placeholder-slate-400 focus:outline-none focus:ring-1 focus:ring-indigo-500"
             />
           </div>
         </div>

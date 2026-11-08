@@ -66,8 +66,8 @@ export const ColorPicker: React.FC<ColorPickerProps> = ({
         </div>
       )}
 
-      {/* Curated Color Swatches */}
-      <div className="grid grid-cols-4 gap-2">
+      {/* Curated Color Swatches: 2 cols on mobile, 4 cols on desktop */}
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
         {CURATED_PALETTES.map((palette) => {
           const isSelected = currentColor.toLowerCase() === palette.hex.toLowerCase();
           return (
@@ -75,7 +75,7 @@ export const ColorPicker: React.FC<ColorPickerProps> = ({
               key={palette.hex}
               type="button"
               onClick={() => onColorSelect(palette.hex)}
-              className={`group flex items-center space-x-2 p-1.5 rounded-lg border text-left transition-all ${
+              className={`group flex items-center space-x-2 p-2 sm:p-1.5 rounded-lg border text-left transition-all min-h-[40px] sm:min-h-0 ${
                 isSelected
                   ? 'border-slate-800 dark:border-slate-100 ring-2 ring-slate-800/20 dark:ring-slate-100/20 bg-slate-50 dark:bg-slate-800'
                   : 'border-slate-200 dark:border-slate-700 hover:border-slate-300 dark:hover:border-slate-600'
@@ -87,7 +87,7 @@ export const ColorPicker: React.FC<ColorPickerProps> = ({
               >
                 {isSelected && <Check className="w-2.5 h-2.5" />}
               </span>
-              <span className="text-[10px] font-medium text-slate-700 dark:text-slate-300 truncate">
+              <span className="text-[11px] sm:text-[10px] font-medium text-slate-700 dark:text-slate-300 truncate">
                 {palette.name}
               </span>
             </button>
@@ -100,12 +100,12 @@ export const ColorPicker: React.FC<ColorPickerProps> = ({
         <label className="text-[11px] font-medium text-slate-500 shrink-0">
           {t.customHex}:
         </label>
-        <div className="flex items-center space-x-1.5 flex-1 bg-slate-50 dark:bg-slate-800/80 rounded-lg px-2 py-1 border border-slate-200 dark:border-slate-700">
+        <div className="flex items-center space-x-1.5 flex-1 bg-slate-50 dark:bg-slate-800/80 rounded-lg px-2.5 py-1.5 sm:py-1 border border-slate-200 dark:border-slate-700">
           <input
             type="color"
             value={currentColor.startsWith('#') ? currentColor : '#4F46E5'}
             onChange={(e) => onColorSelect(e.target.value)}
-            className="w-5 h-5 rounded cursor-pointer border-0 p-0 bg-transparent"
+            className="w-6 h-6 sm:w-5 sm:h-5 rounded cursor-pointer border-0 p-0 bg-transparent shrink-0"
           />
           <input
             type="text"
@@ -113,7 +113,7 @@ export const ColorPicker: React.FC<ColorPickerProps> = ({
             onChange={(e) => onColorSelect(e.target.value)}
             placeholder="#4F46E5"
             maxLength={7}
-            className="w-full text-xs font-mono font-bold bg-transparent text-slate-800 dark:text-slate-100 focus:outline-none uppercase"
+            className="w-full text-base sm:text-xs font-mono font-bold bg-transparent text-slate-800 dark:text-slate-100 focus:outline-none uppercase"
           />
         </div>
       </div>

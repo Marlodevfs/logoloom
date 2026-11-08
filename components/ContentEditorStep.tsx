@@ -473,7 +473,7 @@ export const ContentEditorStep: React.FC<ContentEditorStepProps> = ({
                     value={habitContent.title || ''}
                     onChange={(e) => updateHabitContent({ title: e.target.value })}
                     placeholder="30-Day Habit Tracker"
-                    className="w-full px-2.5 py-1.5 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-xs text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-1 focus:ring-indigo-500 font-medium"
+                    className="w-full px-3 py-2 sm:py-1.5 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-base sm:text-xs text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-1 focus:ring-indigo-500 font-medium"
                   />
                 </div>
 
@@ -492,7 +492,7 @@ export const ContentEditorStep: React.FC<ContentEditorStepProps> = ({
                     value={habitContent.subtitle || ''}
                     onChange={(e) => updateHabitContent({ subtitle: e.target.value })}
                     placeholder="Small daily actions lead to lasting change."
-                    className="w-full px-2.5 py-1.5 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-xs text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-1 focus:ring-indigo-500"
+                    className="w-full px-3 py-2 sm:py-1.5 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-base sm:text-xs text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-1 focus:ring-indigo-500"
                   />
                 </div>
               </div>
@@ -624,7 +624,7 @@ export const ContentEditorStep: React.FC<ContentEditorStepProps> = ({
                   value={habitContent.coachNote || ''}
                   onChange={(e) => updateHabitContent({ coachNote: e.target.value })}
                   placeholder="Consistency creates lasting results."
-                  className="w-full px-2.5 py-1.5 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-xs text-slate-800 dark:text-slate-200 focus:outline-none focus:ring-1 focus:ring-indigo-500"
+                  className="w-full px-3 py-2 sm:py-1.5 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-base sm:text-xs text-slate-800 dark:text-slate-200 focus:outline-none focus:ring-1 focus:ring-indigo-500"
                 />
               </div>
 
@@ -731,7 +731,7 @@ export const ContentEditorStep: React.FC<ContentEditorStepProps> = ({
                     type="text"
                     value={roadmapContent.title}
                     onChange={(e) => updateRoadmapContent({ title: e.target.value })}
-                    className="w-full px-2.5 py-1.5 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-xs text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-1 focus:ring-indigo-500 font-medium"
+                    className="w-full px-3 py-2 sm:py-1.5 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-base sm:text-xs text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-1 focus:ring-indigo-500 font-medium"
                   />
                 </div>
                 <div>
@@ -742,7 +742,7 @@ export const ContentEditorStep: React.FC<ContentEditorStepProps> = ({
                     type="text"
                     value={roadmapContent.subtitle}
                     onChange={(e) => updateRoadmapContent({ subtitle: e.target.value })}
-                    className="w-full px-2.5 py-1.5 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-xs text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-1 focus:ring-indigo-500"
+                    className="w-full px-3 py-2 sm:py-1.5 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-base sm:text-xs text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-1 focus:ring-indigo-500"
                   />
                 </div>
               </div>
@@ -757,7 +757,7 @@ export const ContentEditorStep: React.FC<ContentEditorStepProps> = ({
                     type="text"
                     value={roadmapContent.mission}
                     onChange={(e) => updateRoadmapContent({ mission: e.target.value })}
-                    className="w-full px-2.5 py-1.5 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-xs text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-1 focus:ring-indigo-500"
+                    className="w-full px-3 py-2 sm:py-1.5 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-base sm:text-xs text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-1 focus:ring-indigo-500"
                   />
                 </div>
                 <div>
@@ -768,7 +768,7 @@ export const ContentEditorStep: React.FC<ContentEditorStepProps> = ({
                     type="text"
                     value={roadmapContent.horizon}
                     onChange={(e) => updateRoadmapContent({ horizon: e.target.value })}
-                    className="w-full px-2.5 py-1.5 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-xs text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-1 focus:ring-indigo-500"
+                    className="w-full px-3 py-2 sm:py-1.5 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-base sm:text-xs text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-1 focus:ring-indigo-500"
                   />
                 </div>
               </div>
@@ -882,7 +882,7 @@ export const ContentEditorStep: React.FC<ContentEditorStepProps> = ({
                     type="text"
                     value={welcomeContent.title}
                     onChange={(e) => updateWelcomeContent({ title: e.target.value })}
-                    className="w-full px-2.5 py-1.5 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-xs text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-1 focus:ring-indigo-500 font-medium"
+                    className="w-full px-3 py-2 sm:py-1.5 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-base sm:text-xs text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-1 focus:ring-indigo-500 font-medium"
                   />
                 </div>
                 <div>
@@ -893,7 +893,7 @@ export const ContentEditorStep: React.FC<ContentEditorStepProps> = ({
                     type="text"
                     value={welcomeContent.subtitle}
                     onChange={(e) => updateWelcomeContent({ subtitle: e.target.value })}
-                    className="w-full px-2.5 py-1.5 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-xs text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-1 focus:ring-indigo-500"
+                    className="w-full px-3 py-2 sm:py-1.5 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-base sm:text-xs text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-1 focus:ring-indigo-500"
                   />
                 </div>
                 <div>
@@ -904,7 +904,7 @@ export const ContentEditorStep: React.FC<ContentEditorStepProps> = ({
                     rows={3}
                     value={welcomeContent.welcomeMessage}
                     onChange={(e) => updateWelcomeContent({ welcomeMessage: e.target.value })}
-                    className="w-full px-2.5 py-1.5 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-xs text-slate-800 dark:text-slate-200 focus:outline-none focus:ring-1 focus:ring-indigo-500"
+                    className="w-full px-3 py-2 sm:py-1.5 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-base sm:text-xs text-slate-800 dark:text-slate-200 focus:outline-none focus:ring-1 focus:ring-indigo-500"
                   />
                 </div>
               </div>

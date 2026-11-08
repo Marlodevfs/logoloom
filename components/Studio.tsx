@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { Sliders, X } from 'lucide-react';
+import { Sliders, Eye } from 'lucide-react';
 import { useBrandKit } from '@/lib/use-brand-kit';
 import { UI_TRANSLATIONS } from '@/lib/i18n/interface';
 import { InterfaceLang } from '@/types';
@@ -37,7 +37,7 @@ export const Studio: React.FC<StudioProps> = ({ initialLang }) => {
     restoreProSubscription,
   } = useBrandKit(initialLang);
 
-  const [isMobileSheetOpen, setIsMobileSheetOpen] = useState(false);
+  const [mobileTab, setMobileTab] = useState<'editor' | 'preview'>('editor');
   const [isProModalOpen, setIsProModalOpen] = useState(false);
 
   const t = UI_TRANSLATIONS[interfaceLang] || UI_TRANSLATIONS.en;
@@ -45,6 +45,62 @@ export const Studio: React.FC<StudioProps> = ({ initialLang }) => {
   const handleLanguageChange = (lang: InterfaceLang) => {
     setInterfaceLang(lang);
   };
+
+  const renderCustomizer = () => (
+    <>
+      {/* 1. Drag-and-drop logo upload */}
+      <LogoUploader
+        logoUrl={brandKit.logoUrl}
+        onLogoUpload={setUploadedLogo}
+        onLogoReset={resetLogo}
+        isExtractingColor={isExtractingColor}
+        interfaceLang={interfaceLang}
+      />
+
+      <div className="border-t border-slate-100 dark:border-slate-800/80" />
+
+      {/* 2. Color choice */}
+      <ColorPicker
+        currentColor={brandKit.brandColor}
+        extractedColor={extractedColorSuggestion}
+        onColorSelect={(brandColor) => updateBrandKit({ brandColor })}
+        interfaceLang={interfaceLang}
+      />
+
+      <div className="border-t border-slate-100 dark:border-slate-800/80" />
+
+      {/* 3. Document template selector */}
+      <TemplateSelector
+        activeTemplate={activeTemplate}
+        onSelect={setActiveTemplate}
+        brandColor={brandKit.brandColor}
+        designStyle={brandKit.designStyle}
+        onStyleChange={(designStyle) => updateBrandKit({ designStyle })}
+        interfaceLang={interfaceLang}
+      />
+
+      <div className="border-t border-slate-100 dark:border-slate-800/80" />
+
+      {/* 4. Step 4: Your Details (Always visible, compact) */}
+      <YourDetailsStep
+        brandKit={brandKit}
+        onUpdate={updateBrandKit}
+        interfaceLang={interfaceLang}
+        onReset={() => resetSection('details')}
+      />
+
+      <div className="border-t border-slate-100 dark:border-slate-800/80" />
+
+      {/* 5. Step 5: Customize Content (Accordion, collapsed by default) */}
+      <ContentEditorStep
+        brandKit={brandKit}
+        onUpdate={updateBrandKit}
+        activeTemplate={activeTemplate}
+        interfaceLang={interfaceLang}
+        onResetSection={() => resetSection(activeTemplate === 'roadmap-90' ? 'roadmap' : activeTemplate === 'welcome-packet' ? 'welcomePacket' : 'habitTracker')}
+      />
+    </>
+  );
 
   return (
     <div className="min-h-screen bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 flex flex-col font-sans transition-colors">
@@ -57,63 +113,39 @@ export const Studio: React.FC<StudioProps> = ({ initialLang }) => {
 
       {/* Hero Section: Live Studio Above the Fold */}
       <div className="max-w-7xl w-full mx-auto p-3 sm:p-5 lg:p-6 flex flex-col lg:flex-row gap-5">
-        {/* Left Panel: Calm 5-Step Progressive Disclosure (Desktop: Fixed 410px) */}
+        {/* Mobile View Mode Switcher: [ ✏️ 1. Personnaliser | 👁️ 2. Aperçu direct ] */}
+        <div className="lg:hidden flex items-center p-1 bg-slate-200/90 dark:bg-slate-800/90 rounded-2xl mb-1 shadow-inner border border-slate-200 dark:border-slate-700/80 shrink-0">
+          <button
+            type="button"
+            onClick={() => setMobileTab('editor')}
+            className={`flex-1 py-2.5 px-3 rounded-xl text-xs font-bold transition-all flex items-center justify-center space-x-1.5 ${
+              mobileTab === 'editor'
+                ? 'bg-white dark:bg-slate-900 text-slate-900 dark:text-white shadow-xs'
+                : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
+            }`}
+          >
+            <Sliders className="w-4 h-4 text-indigo-600 dark:text-indigo-400" />
+            <span>{interfaceLang === 'fr' ? '1. Personnaliser' : '1. Customize'}</span>
+          </button>
+          <button
+            type="button"
+            onClick={() => setMobileTab('preview')}
+            className={`flex-1 py-2.5 px-3 rounded-xl text-xs font-bold transition-all flex items-center justify-center space-x-1.5 ${
+              mobileTab === 'preview'
+                ? 'bg-white dark:bg-slate-900 text-slate-900 dark:text-white shadow-xs'
+                : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
+            }`}
+          >
+            <Eye className="w-4 h-4 text-indigo-600 dark:text-indigo-400" />
+            <span>{interfaceLang === 'fr' ? '2. Aperçu du document' : '2. Live Document'}</span>
+            <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse ml-0.5" />
+          </button>
+        </div>
+
+        {/* Desktop Left Panel: Calm 5-Step Progressive Disclosure (Fixed 410px) */}
         <div className="hidden lg:flex flex-col w-[410px] shrink-0 bg-white dark:bg-slate-900 rounded-2xl border border-slate-200/80 dark:border-slate-800 shadow-xs p-5 space-y-4 h-[calc(100vh-6rem)] overflow-y-auto">
-          {/* 1. Drag-and-drop logo upload */}
-          <LogoUploader
-            logoUrl={brandKit.logoUrl}
-            onLogoUpload={setUploadedLogo}
-            onLogoReset={resetLogo}
-            isExtractingColor={isExtractingColor}
-            interfaceLang={interfaceLang}
-          />
-
-          <div className="border-t border-slate-100 dark:border-slate-800/80" />
-
-          {/* 2. Color choice */}
-          <ColorPicker
-            currentColor={brandKit.brandColor}
-            extractedColor={extractedColorSuggestion}
-            onColorSelect={(brandColor) => updateBrandKit({ brandColor })}
-            interfaceLang={interfaceLang}
-          />
-
-          <div className="border-t border-slate-100 dark:border-slate-800/80" />
-
-          {/* 3. Document template selector */}
-          <TemplateSelector
-            activeTemplate={activeTemplate}
-            onSelect={setActiveTemplate}
-            brandColor={brandKit.brandColor}
-            designStyle={brandKit.designStyle}
-            onStyleChange={(designStyle) => updateBrandKit({ designStyle })}
-            interfaceLang={interfaceLang}
-          />
-
-          <div className="border-t border-slate-100 dark:border-slate-800/80" />
-
-          {/* 4. Step 4: Your Details (Always visible, compact) */}
-          <YourDetailsStep
-            brandKit={brandKit}
-            onUpdate={updateBrandKit}
-            interfaceLang={interfaceLang}
-            onReset={() => resetSection('details')}
-          />
-
-          <div className="border-t border-slate-100 dark:border-slate-800/80" />
-
-          {/* 5. Step 5: Customize Content (Accordion, collapsed by default) */}
-          <ContentEditorStep
-            brandKit={brandKit}
-            onUpdate={updateBrandKit}
-            activeTemplate={activeTemplate}
-            interfaceLang={interfaceLang}
-            onResetSection={() => resetSection(activeTemplate === 'roadmap-90' ? 'roadmap' : activeTemplate === 'welcome-packet' ? 'welcomePacket' : 'habitTracker')}
-          />
-
+          {renderCustomizer()}
           <div className="flex-1" />
-
-          {/* Sticky Download PDF button */}
           <div className="pt-2 sticky bottom-0 bg-white dark:bg-slate-900 pb-1">
             <DownloadButton
               brandKit={brandKit}
@@ -123,8 +155,21 @@ export const Studio: React.FC<StudioProps> = ({ initialLang }) => {
           </div>
         </div>
 
-        {/* Right Panel: Large Live Preview with Click-To-Edit */}
-        <div className="flex-1 min-w-0 flex flex-col h-[calc(100vh-6rem)] min-h-[500px]">
+        {/* Mobile Editor View (When mobileTab === 'editor') */}
+        <div
+          className={`lg:hidden flex flex-col w-full bg-white dark:bg-slate-900 rounded-2xl border border-slate-200/80 dark:border-slate-800 shadow-xs p-4 sm:p-5 space-y-4 pb-28 ${
+            mobileTab === 'editor' ? 'flex' : 'hidden'
+          }`}
+        >
+          {renderCustomizer()}
+        </div>
+
+        {/* Desktop & Mobile Live Preview */}
+        <div
+          className={`flex-1 min-w-0 flex-col ${
+            mobileTab === 'preview' ? 'flex h-[calc(100vh-10.5rem)] min-h-[460px] pb-24' : 'hidden'
+          } lg:flex lg:h-[calc(100vh-6rem)] lg:min-h-[500px] lg:pb-0`}
+        >
           <LivePreview
             brandKit={brandKit}
             activeTemplate={activeTemplate}
@@ -133,16 +178,28 @@ export const Studio: React.FC<StudioProps> = ({ initialLang }) => {
           />
         </div>
 
-        {/* Mobile Sticky Action Bar */}
-        <div className="lg:hidden fixed bottom-0 left-0 right-0 p-3 bg-white/95 dark:bg-slate-900/95 backdrop-blur-md border-t border-slate-200 dark:border-slate-800 z-30 flex items-center space-x-3">
-          <button
-            type="button"
-            onClick={() => setIsMobileSheetOpen(true)}
-            className="flex-1 py-3 px-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-xs font-bold text-slate-800 dark:text-slate-200 flex items-center justify-center space-x-1.5"
-          >
-            <Sliders className="w-4 h-4 text-indigo-600 dark:text-indigo-400" />
-            <span>{t.mobileEditButton}</span>
-          </button>
+        {/* Mobile Floating Sticky Action Bar */}
+        <div className="lg:hidden fixed bottom-0 left-0 right-0 p-3 bg-white/95 dark:bg-slate-900/95 backdrop-blur-md border-t border-slate-200 dark:border-slate-800 z-30 flex items-center space-x-2.5 shadow-xl">
+          {mobileTab === 'editor' ? (
+            <button
+              type="button"
+              onClick={() => setMobileTab('preview')}
+              className="flex-1 py-3 px-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-xs font-bold text-slate-800 dark:text-slate-200 flex items-center justify-center space-x-1.5 shadow-2xs hover:bg-slate-100"
+            >
+              <Eye className="w-4 h-4 text-indigo-600 dark:text-indigo-400" />
+              <span>{interfaceLang === 'fr' ? 'Voir l’aperçu' : 'View Preview'}</span>
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse ml-0.5" />
+            </button>
+          ) : (
+            <button
+              type="button"
+              onClick={() => setMobileTab('editor')}
+              className="flex-1 py-3 px-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-xs font-bold text-slate-800 dark:text-slate-200 flex items-center justify-center space-x-1.5 shadow-2xs hover:bg-slate-100"
+            >
+              <Sliders className="w-4 h-4 text-indigo-600 dark:text-indigo-400" />
+              <span>{interfaceLang === 'fr' ? 'Modifier les options' : 'Edit Options'}</span>
+            </button>
+          )}
 
           <div className="flex-1">
             <DownloadButton
@@ -152,77 +209,6 @@ export const Studio: React.FC<StudioProps> = ({ initialLang }) => {
             />
           </div>
         </div>
-
-        {/* Mobile Slide-Up Controls Sheet */}
-        {isMobileSheetOpen && (
-          <div className="lg:hidden fixed inset-0 z-50 flex flex-col justify-end bg-slate-900/60 backdrop-blur-xs">
-            <div className="bg-white dark:bg-slate-900 rounded-t-2xl max-h-[85vh] overflow-y-auto p-5 space-y-4 border-t border-slate-200 dark:border-slate-800 animate-in slide-in-from-bottom duration-200 shadow-2xl">
-              <div className="flex items-center justify-between pb-2 border-b border-slate-100 dark:border-slate-800">
-                <div className="flex items-center space-x-2">
-                  <Sliders className="w-4 h-4 text-indigo-600" />
-                  <h3 className="text-sm font-bold text-slate-900 dark:text-white">
-                    {interfaceLang === 'fr' ? 'Personnaliser le document' : 'Customize Document'}
-                  </h3>
-                </div>
-                <button
-                  type="button"
-                  onClick={() => setIsMobileSheetOpen(false)}
-                  className="p-1 rounded-lg text-slate-400 hover:text-slate-700 dark:hover:text-white"
-                >
-                  <X className="w-5 h-5" />
-                </button>
-              </div>
-
-              {/* Mobile controls list */}
-              <LogoUploader
-                logoUrl={brandKit.logoUrl}
-                onLogoUpload={setUploadedLogo}
-                onLogoReset={resetLogo}
-                isExtractingColor={isExtractingColor}
-                interfaceLang={interfaceLang}
-              />
-
-              <ColorPicker
-                currentColor={brandKit.brandColor}
-                extractedColor={extractedColorSuggestion}
-                onColorSelect={(brandColor) => updateBrandKit({ brandColor })}
-                interfaceLang={interfaceLang}
-              />
-
-              <TemplateSelector
-                activeTemplate={activeTemplate}
-                onSelect={setActiveTemplate}
-                brandColor={brandKit.brandColor}
-                designStyle={brandKit.designStyle}
-                onStyleChange={(designStyle) => updateBrandKit({ designStyle })}
-                interfaceLang={interfaceLang}
-              />
-
-              <YourDetailsStep
-                brandKit={brandKit}
-                onUpdate={updateBrandKit}
-                interfaceLang={interfaceLang}
-                onReset={() => resetSection('details')}
-              />
-
-              <ContentEditorStep
-                brandKit={brandKit}
-                onUpdate={updateBrandKit}
-                activeTemplate={activeTemplate}
-                interfaceLang={interfaceLang}
-                onResetSection={() => resetSection(activeTemplate === 'roadmap-90' ? 'roadmap' : activeTemplate === 'welcome-packet' ? 'welcomePacket' : 'habitTracker')}
-              />
-
-              <button
-                type="button"
-                onClick={() => setIsMobileSheetOpen(false)}
-                className="w-full py-3 rounded-xl bg-slate-900 dark:bg-slate-100 text-white dark:text-slate-900 font-bold text-xs"
-              >
-                {t.mobileCloseButton}
-              </button>
-            </div>
-          </div>
-        )}
       </div>
 
       {/* Landing Page Content: How it works, templates showcase, privacy, pricing, footer */}

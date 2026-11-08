@@ -72,7 +72,7 @@ export const TemplateSelector: React.FC<TemplateSelectorProps> = ({
         <button
           type="button"
           onClick={() => onStyleChange('minimal')}
-          className={`flex-1 py-1.5 px-3 rounded-lg text-xs font-bold transition-all flex items-center justify-center space-x-1.5 ${
+          className={`flex-1 py-2 sm:py-1.5 px-3 rounded-lg text-xs font-bold transition-all flex items-center justify-center space-x-1.5 ${
             designStyle === 'minimal'
               ? 'bg-white dark:bg-slate-900 text-slate-900 dark:text-white shadow-xs border border-slate-200/60 dark:border-slate-700'
               : 'text-slate-500 hover:text-slate-800 dark:hover:text-slate-200'
@@ -88,7 +88,7 @@ export const TemplateSelector: React.FC<TemplateSelectorProps> = ({
         <button
           type="button"
           onClick={() => onStyleChange('complete')}
-          className={`flex-1 py-1.5 px-3 rounded-lg text-xs font-bold transition-all flex items-center justify-center space-x-1.5 ${
+          className={`flex-1 py-2 sm:py-1.5 px-3 rounded-lg text-xs font-bold transition-all flex items-center justify-center space-x-1.5 ${
             designStyle === 'complete'
               ? 'bg-white dark:bg-slate-900 text-slate-900 dark:text-white shadow-xs border border-slate-200/60 dark:border-slate-700'
               : 'text-slate-500 hover:text-slate-800 dark:hover:text-slate-200'
@@ -109,7 +109,7 @@ export const TemplateSelector: React.FC<TemplateSelectorProps> = ({
               key={tmpl.id}
               type="button"
               onClick={() => onSelect(tmpl.id)}
-              className={`flex items-start space-x-3 p-2.5 rounded-xl border text-left transition-all ${
+              className={`flex items-start space-x-3 p-3 sm:p-2.5 rounded-xl border text-left transition-all ${
                 isSelected
                   ? 'bg-slate-50/90 dark:bg-slate-800/90 shadow-2xs'
                   : 'border-slate-200 dark:border-slate-800 hover:border-slate-300 dark:hover:border-slate-700 bg-white dark:bg-slate-900/40'
