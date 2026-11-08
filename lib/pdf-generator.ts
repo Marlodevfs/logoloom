@@ -1,66 +1,51 @@
-import { toPng } from 'html-to-image';
-import { jsPDF } from 'jspdf';
+import React from 'react';
+import { pdf } from '@react-pdf/renderer';
 import confetti from 'canvas-confetti';
 import { BrandKit, PaperSize, TemplateId } from '@/types';
+import { DocumentCompiler } from './pdf/DocumentCompiler';
 
 export interface PDFExportOptions {
-  element: HTMLElement;
-  paperSize: PaperSize;
+  element?: HTMLElement;
+  paperSize?: PaperSize;
   fileName?: string;
   brandKit: BrandKit;
   templateId: TemplateId;
 }
 
 export async function exportToPDF({
-  element,
   paperSize,
   fileName,
   brandKit,
   templateId,
 }: PDFExportOptions): Promise<void> {
   try {
-    // 1. Capture high-res PNG (scale 3x for 300 DPI print quality)
-    const dataUrl = await toPng(element, {
-      quality: 0.98,
-      pixelRatio: 3,
-      cacheBust: true,
-      skipFonts: false,
-    });
+    const finalKit: BrandKit = {
+      ...brandKit,
+      paperSize: paperSize || brandKit.paperSize || 'a4',
+      selectedTemplate: templateId,
+    };
 
-    // 2. Set dimensions according to paper standard
-    const isA4 = paperSize === 'a4';
-    const pdfWidth = isA4 ? 210 : 215.9; // mm
-    const pdfHeight = isA4 ? 297 : 279.4; // mm
+    // 1. Compile pure vector PDF with embedded Roboto fonts & selectable text
+    const docElement = React.createElement(DocumentCompiler, { brandKit: finalKit });
+    const blob = await pdf(docElement as any).toBlob();
 
-    const pdf = new jsPDF({
-      orientation: 'portrait',
-      unit: 'mm',
-      format: isA4 ? 'a4' : 'letter',
-      compress: true,
-    });
-
-    // Set PDF Document Properties
-    const docTitle = `${brandKit.companyName || 'Branded Document'} - ${templateId}`;
-    pdf.setProperties({
-      title: docTitle,
-      subject: 'Print-ready branded document',
-      author: brandKit.companyName || 'LogoLoom User',
-      keywords: 'LogoLoom, habit tracker, roadmap, welcome packet, branding',
-      creator: 'LogoLoom (https://logoloom.app)',
-    });
-
-    // 3. Add high-res image stretching to exact page boundary
-    pdf.addImage(dataUrl, 'PNG', 0, 0, pdfWidth, pdfHeight, undefined, 'FAST');
-
-    // 4. Save and trigger browser download
-    const cleanCompanyName = (brandKit.companyName || 'LogoLoom')
+    // 2. Format download filename
+    const cleanCompanyName = (finalKit.companyName || 'LogoLoom')
       .replace(/[^a-zA-Z0-9_-]/g, '_')
       .slice(0, 30);
     const finalFileName = fileName || `${cleanCompanyName}_${templateId}.pdf`;
 
-    pdf.save(finalFileName);
+    // 3. Trigger direct browser download
+    const blobUrl = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = blobUrl;
+    link.download = finalFileName;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    setTimeout(() => URL.revokeObjectURL(blobUrl), 1000);
 
-    // 5. Tactile micro-celebration
+    // 4. Tactile celebration confetti
     confetti({
       particleCount: 50,
       spread: 60,
@@ -69,7 +54,7 @@ export async function exportToPDF({
       disableForReducedMotion: true,
     });
   } catch (error) {
-    console.error('Error generating PDF:', error);
+    console.error('Error generating vector PDF:', error);
     throw error;
   }
 }

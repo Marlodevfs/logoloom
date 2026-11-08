@@ -19,6 +19,7 @@ export interface BrandKit {
   documentLang: DocumentLang;
   isPro: boolean;
   removeWatermark: boolean;
+  selectedTemplate?: TemplateId;
 }
 
 export interface HabitCategory {
