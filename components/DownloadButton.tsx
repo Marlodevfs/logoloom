@@ -12,12 +12,43 @@ interface DownloadButtonProps {
   interfaceLang: InterfaceLang;
 }
 
+const DOWNLOAD_I18N: Record<InterfaceLang, {
+  printQualityNotice: string;
+  errorAlert: string;
+}> = {
+  fr: {
+    printQualityNotice: 'PDF vectoriel, prêt à imprimer',
+    errorAlert: 'La génération du PDF a échoué. Veuillez réessayer.',
+  },
+  en: {
+    printQualityNotice: 'Vector PDF, print-ready',
+    errorAlert: 'PDF generation encountered an error. Please retry.',
+  },
+  de: {
+    printQualityNotice: 'Vektor-PDF, druckfertig',
+    errorAlert: 'PDF-Erstellung fehlgeschlagen. Bitte versuchen Sie es erneut.',
+  },
+  es: {
+    printQualityNotice: 'PDF vectorial, listo para imprimir',
+    errorAlert: 'La generación del PDF falló. Inténtelo de nuevo.',
+  },
+  it: {
+    printQualityNotice: 'PDF vettoriale, pronto per la stampa',
+    errorAlert: 'La generazione del PDF non è riuscita. Riprova.',
+  },
+  pt: {
+    printQualityNotice: 'PDF vetorial, pronto para impressão',
+    errorAlert: 'A geração do PDF falhou. Tente novamente.',
+  },
+};
+
 export const DownloadButton: React.FC<DownloadButtonProps> = ({
   brandKit,
   activeTemplate,
   interfaceLang,
 }) => {
   const t = UI_TRANSLATIONS[interfaceLang] || UI_TRANSLATIONS.en;
+  const dI18n = DOWNLOAD_I18N[interfaceLang] || DOWNLOAD_I18N.en;
   const [isExporting, setIsExporting] = useState(false);
   const [hasExported, setHasExported] = useState(false);
 
@@ -36,7 +67,7 @@ export const DownloadButton: React.FC<DownloadButtonProps> = ({
       setTimeout(() => setHasExported(false), 3000);
     } catch (err) {
       console.error('Failed to export PDF', err);
-      alert(interfaceLang === 'fr' ? 'La génération du PDF a échoué. Veuillez réessayer.' : 'PDF generation encountered an error. Please retry.');
+      alert(dI18n.errorAlert);
     } finally {
       setIsExporting(false);
     }
@@ -79,7 +110,7 @@ export const DownloadButton: React.FC<DownloadButtonProps> = ({
         <span>🔒</span>
         <span>{t.privacyBadge}</span>
         <span>•</span>
-        <span>300 DPI Print Quality</span>
+        <span>{dI18n.printQualityNotice}</span>
       </p>
     </div>
   );

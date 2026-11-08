@@ -20,6 +20,50 @@ interface StudioProps {
   initialLang?: InterfaceLang;
 }
 
+const STUDIO_I18N: Record<InterfaceLang, {
+  tabEditor: string;
+  tabPreview: string;
+  viewPreview: string;
+  editOptions: string;
+}> = {
+  fr: {
+    tabEditor: '1. Personnaliser',
+    tabPreview: '2. Aperçu du document',
+    viewPreview: 'Voir l’aperçu',
+    editOptions: 'Modifier les options',
+  },
+  en: {
+    tabEditor: '1. Customize',
+    tabPreview: '2. Live Document',
+    viewPreview: 'View Preview',
+    editOptions: 'Edit Options',
+  },
+  de: {
+    tabEditor: '1. Anpassen',
+    tabPreview: '2. Dokumentenvorschau',
+    viewPreview: 'Vorschau anzeigen',
+    editOptions: 'Optionen bearbeiten',
+  },
+  es: {
+    tabEditor: '1. Personalizar',
+    tabPreview: '2. Vista previa',
+    viewPreview: 'Ver vista previa',
+    editOptions: 'Editar opciones',
+  },
+  it: {
+    tabEditor: '1. Personalizza',
+    tabPreview: '2. Anteprima documento',
+    viewPreview: 'Vedi anteprima',
+    editOptions: 'Modifica opzioni',
+  },
+  pt: {
+    tabEditor: '1. Personalizar',
+    tabPreview: '2. Pré-visualização',
+    viewPreview: 'Ver prévia',
+    editOptions: 'Editar opções',
+  },
+};
+
 export const Studio: React.FC<StudioProps> = ({ initialLang }) => {
   const {
     brandKit,
@@ -41,6 +85,7 @@ export const Studio: React.FC<StudioProps> = ({ initialLang }) => {
   const [isProModalOpen, setIsProModalOpen] = useState(false);
 
   const t = UI_TRANSLATIONS[interfaceLang] || UI_TRANSLATIONS.en;
+  const sI18n = STUDIO_I18N[interfaceLang] || STUDIO_I18N.en;
 
   const handleLanguageChange = (lang: InterfaceLang) => {
     setInterfaceLang(lang);
@@ -125,7 +170,7 @@ export const Studio: React.FC<StudioProps> = ({ initialLang }) => {
             }`}
           >
             <Sliders className="w-4 h-4 text-indigo-600 dark:text-indigo-400" />
-            <span>{interfaceLang === 'fr' ? '1. Personnaliser' : '1. Customize'}</span>
+            <span>{sI18n.tabEditor}</span>
           </button>
           <button
             type="button"
@@ -137,7 +182,7 @@ export const Studio: React.FC<StudioProps> = ({ initialLang }) => {
             }`}
           >
             <Eye className="w-4 h-4 text-indigo-600 dark:text-indigo-400" />
-            <span>{interfaceLang === 'fr' ? '2. Aperçu du document' : '2. Live Document'}</span>
+            <span>{sI18n.tabPreview}</span>
             <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse ml-0.5" />
           </button>
         </div>
@@ -187,7 +232,7 @@ export const Studio: React.FC<StudioProps> = ({ initialLang }) => {
               className="flex-1 py-3 px-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-xs font-bold text-slate-800 dark:text-slate-200 flex items-center justify-center space-x-1.5 shadow-2xs hover:bg-slate-100"
             >
               <Eye className="w-4 h-4 text-indigo-600 dark:text-indigo-400" />
-              <span>{interfaceLang === 'fr' ? 'Voir l’aperçu' : 'View Preview'}</span>
+              <span>{sI18n.viewPreview}</span>
               <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse ml-0.5" />
             </button>
           ) : (
@@ -197,7 +242,7 @@ export const Studio: React.FC<StudioProps> = ({ initialLang }) => {
               className="flex-1 py-3 px-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-xs font-bold text-slate-800 dark:text-slate-200 flex items-center justify-center space-x-1.5 shadow-2xs hover:bg-slate-100"
             >
               <Sliders className="w-4 h-4 text-indigo-600 dark:text-indigo-400" />
-              <span>{interfaceLang === 'fr' ? 'Modifier les options' : 'Edit Options'}</span>
+              <span>{sI18n.editOptions}</span>
             </button>
           )}
 

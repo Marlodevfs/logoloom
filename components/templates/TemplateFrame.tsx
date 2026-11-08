@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import { BrandKit } from '@/types';
+import { BrandKit, DocumentLang } from '@/types';
 import { DOCUMENT_TRANSLATIONS } from '@/lib/i18n/documents';
 import { generateQRCodeDataURL } from '@/lib/qr-engine';
 
@@ -12,6 +12,43 @@ interface TemplateFrameProps {
   orientation?: 'portrait' | 'landscape';
 }
 
+const FRAME_PLACEHOLDERS: Record<DocumentLang, {
+  company: string;
+  tagline: string;
+  taglineShort: string;
+}> = {
+  fr: {
+    company: 'Votre Cabinet / Studio',
+    tagline: 'Votre spécialité ou sous-titre',
+    taglineShort: 'Votre spécialité',
+  },
+  en: {
+    company: 'Your Business / Studio',
+    tagline: 'Your tagline or focus',
+    taglineShort: 'Your tagline',
+  },
+  de: {
+    company: 'Ihre Praxis / Studio',
+    tagline: 'Ihr Slogan oder Schwerpunkt',
+    taglineShort: 'Ihr Schwerpunkt',
+  },
+  es: {
+    company: 'Tu Empresa / Estudio',
+    tagline: 'Tu lema o especialidad',
+    taglineShort: 'Tu especialidad',
+  },
+  it: {
+    company: 'Il Tuo Studio',
+    tagline: 'La tua specialità o slogan',
+    taglineShort: 'La tua specialità',
+  },
+  pt: {
+    company: 'Sua Empresa / Estúdio',
+    tagline: 'Seu foco ou especialidade',
+    taglineShort: 'Sua especialidade',
+  },
+};
+
 export const TemplateFrame: React.FC<TemplateFrameProps> = ({
   brandKit,
   children,
@@ -21,8 +58,9 @@ export const TemplateFrame: React.FC<TemplateFrameProps> = ({
   const [customQrDataUrl, setCustomQrDataUrl] = useState<string>('');
   const [logoLoomQrDataUrl, setLogoLoomQrDataUrl] = useState<string>('');
 
-  const docLang = brandKit.documentLang || 'en';
+  const docLang: DocumentLang = brandKit.documentLang || 'en';
   const docText = DOCUMENT_TRANSLATIONS[docLang] || DOCUMENT_TRANSLATIONS.en;
+  const pl = FRAME_PLACEHOLDERS[docLang] || FRAME_PLACEHOLDERS.en;
 
   // Generate QR codes
   useEffect(() => {
@@ -95,12 +133,12 @@ export const TemplateFrame: React.FC<TemplateFrameProps> = ({
               <span className={`font-serif font-bold text-lg tracking-tight leading-tight ${
                 brandKit.companyName ? 'text-slate-900' : 'text-slate-400 italic font-medium'
               }`}>
-                {brandKit.companyName || (docLang === 'fr' ? 'Votre Cabinet / Studio' : 'Your Business / Studio')}
+                {brandKit.companyName || pl.company}
               </span>
               <span className={`text-[11px] font-sans mt-0.5 ${
                 brandKit.tagline ? 'text-slate-500' : 'text-slate-400 italic'
               }`}>
-                {brandKit.tagline || (docLang === 'fr' ? 'Votre spécialité ou sous-titre' : 'Your tagline or focus')}
+                {brandKit.tagline || pl.tagline}
               </span>
             </div>
           )}
@@ -110,13 +148,13 @@ export const TemplateFrame: React.FC<TemplateFrameProps> = ({
               <h2 className={`text-sm font-bold tracking-tight leading-tight ${
                 brandKit.companyName ? 'text-slate-900' : 'text-slate-400 italic font-medium'
               }`}>
-                {brandKit.companyName || (docLang === 'fr' ? 'Votre Cabinet / Studio' : 'Your Business / Studio')}
+                {brandKit.companyName || pl.company}
               </h2>
               {brandKit.tagline ? (
                 <p className="text-[11px] text-slate-500 font-medium">{brandKit.tagline}</p>
               ) : (
                 <p className="text-[11px] text-slate-400 italic font-normal">
-                  {docLang === 'fr' ? 'Votre spécialité' : 'Your tagline'}
+                  {pl.taglineShort}
                 </p>
               )}
             </div>

@@ -1,7 +1,9 @@
 import React from 'react';
 import { Page, View, Text, Image, StyleSheet } from '@react-pdf/renderer';
-import { BrandKit, HabitItem, HabitTrackerCustomContent } from '@/types';
+import { BrandKit, DocumentLang, HabitItem, HabitTrackerCustomContent } from '@/types';
 import { DOCUMENT_TRANSLATIONS } from '@/lib/i18n/documents';
+import { HABIT_PACKS } from '@/lib/i18n/habit-packs';
+import { MINIMAL_HABIT_LABELS } from '@/lib/i18n/minimal-labels';
 import { getDefaultHabitTrackerContent } from '@/lib/use-brand-kit';
 import { VectorQR } from './VectorQR';
 
@@ -354,22 +356,22 @@ export const VectorMinimalHabitTrackerPDF: React.FC<VectorMinimalHabitTrackerPDF
   brandKit,
 }) => {
   const isA4 = brandKit.paperSize === 'a4';
-  const docLang = brandKit.documentLang || 'en';
-  const isFrench = docLang === 'fr';
+  const docLang: DocumentLang = brandKit.documentLang || 'en';
+  const l = MINIMAL_HABIT_LABELS[docLang] || MINIMAL_HABIT_LABELS.en;
   const t = DOCUMENT_TRANSLATIONS[docLang] || DOCUMENT_TRANSLATIONS.en;
 
   const habitContent: HabitTrackerCustomContent =
     brandKit.habitTrackerContent || getDefaultHabitTrackerContent(docLang, 'wellbeing');
 
+  const defaultHabitsForLang = (HABIT_PACKS[docLang]?.wellbeing?.habits || HABIT_PACKS.en.wellbeing.habits).map((h, i) => ({
+    id: `habit-${i + 1}`,
+    title: h.title,
+    subtitle: h.subtitle,
+  }));
+
   const habits: HabitItem[] = habitContent.habits && habitContent.habits.length > 0
     ? habitContent.habits.slice(0, 7) // 3 to 7 habits in minimal style
-    : [
-        { id: '1', title: 'Hydratation & Vitalité', subtitle: '1,5L à 2L d’eau' },
-        { id: '2', title: 'Marche quotidienne', subtitle: '20 à 30 min' },
-        { id: '3', title: 'Pause calme & respiration', subtitle: '5 à 10 min' },
-        { id: '4', title: 'Déconnexion du soir', subtitle: '30 min avant coucher' },
-        { id: '5', title: 'Gratitude du jour', subtitle: 'Moment positif' },
-      ];
+    : defaultHabitsForLang.slice(0, 5);
 
   const days = Array.from({ length: 30 }, (_, i) => i + 1);
 
@@ -379,7 +381,7 @@ export const VectorMinimalHabitTrackerPDF: React.FC<VectorMinimalHabitTrackerPDF
     brandKit.qrUrl !== 'https://logoloom.app'
   );
 
-  const defaultQrLabel = isFrench ? 'Scannez pour réserver' : 'Scan to book a session';
+  const defaultQrLabel = l.defaultQr;
   const qrDisplayLabel = brandKit.qrLabel || defaultQrLabel;
 
   const normalizedLogo = normalizeLogoUrl(brandKit.logoUrl);
@@ -458,19 +460,19 @@ export const VectorMinimalHabitTrackerPDF: React.FC<VectorMinimalHabitTrackerPDF
               { color: brandKit.brandColor || '#0F172A' },
             ]}
           >
-            {habitContent.title || (isFrench ? 'Suivi d’habitudes 30 jours' : '30-Day Habit Tracker')}
+            {habitContent.title || l.defaultTitle}
           </Text>
 
           {/* Name & Start Date lines */}
           <View style={styles.writingLinesBlock}>
             <View style={styles.writingField}>
-              <Text style={styles.writingLabel}>{isFrench ? 'Nom :' : 'Name:'}</Text>
+              <Text style={styles.writingLabel}>{l.name}</Text>
               <Text style={styles.writingLine}>
                 {brandKit.clientName || '________________________'}
               </Text>
             </View>
             <View style={styles.writingField}>
-              <Text style={styles.writingLabel}>{isFrench ? 'Date :' : 'Date:'}</Text>
+              <Text style={styles.writingLabel}>{l.date}</Text>
               <Text style={styles.writingLine}>____ / ____ / 20___</Text>
             </View>
           </View>
@@ -482,7 +484,7 @@ export const VectorMinimalHabitTrackerPDF: React.FC<VectorMinimalHabitTrackerPDF
         {/* Table Header Row */}
         <View style={styles.tableHeaderRow}>
           <View style={styles.dayHeaderCell}>
-            <Text style={styles.dayHeaderText}>{isFrench ? 'Jour' : 'Day'}</Text>
+            <Text style={styles.dayHeaderText}>{l.day}</Text>
           </View>
 
           {habits.map((habit, idx) => (
@@ -496,7 +498,7 @@ export const VectorMinimalHabitTrackerPDF: React.FC<VectorMinimalHabitTrackerPDF
 
           {showNotes ? (
             <View style={styles.notesHeaderCell}>
-              <Text style={styles.notesHeaderText}>{isFrench ? 'Notes' : 'Notes'}</Text>
+              <Text style={styles.notesHeaderText}>{l.notes}</Text>
             </View>
           ) : null}
         </View>
@@ -558,7 +560,7 @@ export const VectorMinimalHabitTrackerPDF: React.FC<VectorMinimalHabitTrackerPDF
         {showScore ? (
           <View style={styles.scoreRow}>
             <View style={styles.scoreLabelCell}>
-              <Text style={styles.scoreLabelText}>{isFrench ? 'Tot.' : 'Score'}</Text>
+              <Text style={styles.scoreLabelText}>{l.score}</Text>
             </View>
             {habits.map((_, hIdx) => (
               <View key={hIdx} style={styles.scoreValueCell}>
@@ -579,15 +581,13 @@ export const VectorMinimalHabitTrackerPDF: React.FC<VectorMinimalHabitTrackerPDF
               <Text style={styles.footerDot}>•</Text>
             </>
           ) : null}
-          <Text style={styles.footerPage}>
-            {isFrench ? 'Document personnel • Page 1 sur 1' : 'Personal Document • Page 1 of 1'}
-          </Text>
+          <Text style={styles.footerPage}>{l.footerPage}</Text>
         </View>
 
         {/* Watermark / LogoLoom Badge (Free) or Verified (Pro) */}
         <View>
           {brandKit.removeWatermark ? (
-            <Text style={styles.proVerified}>VERIFIED PRINT DOCUMENT</Text>
+            <Text style={styles.proVerified}>{l.verified.toUpperCase()}</Text>
           ) : (
             <View style={styles.watermarkBadge}>
               <VectorQR
@@ -597,7 +597,7 @@ export const VectorMinimalHabitTrackerPDF: React.FC<VectorMinimalHabitTrackerPDF
                 lightColor="#FFFFFF"
               />
               <View style={styles.watermarkTextCol}>
-                <Text style={styles.watermarkText}>{t.footer.madeWith}</Text>
+                <Text style={styles.watermarkText}>{l.madeWith}</Text>
                 <Text style={styles.watermarkDomain}>logoloom.app</Text>
               </View>
             </View>

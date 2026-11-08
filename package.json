@@ -11,7 +11,8 @@
     "test:pdf": "tsx scripts/test-phase1-vector.ts",
     "test:i18n": "tsx scripts/test-translations-complete.ts",
     "test:quality": "tsx scripts/test-habit-tracker-quality-gates.ts && python scripts/audit-quality-gates.py",
-    "test": "npm run test:pdf && npm run test:i18n && npm run test:quality"
+    "test:languages": "tsx scripts/test-all-6-languages.ts",
+    "test": "npm run test:pdf && npm run test:i18n && npm run test:quality && npm run test:languages"
   },
   "dependencies": {
     "@react-pdf/renderer": "^4.9.0",

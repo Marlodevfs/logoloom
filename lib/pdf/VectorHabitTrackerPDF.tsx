@@ -2,6 +2,7 @@ import React from 'react';
 import { View, Text, StyleSheet, Svg, Path } from '@react-pdf/renderer';
 import { BrandKit, DocumentLang, HabitItem, HabitTrackerCustomContent } from '@/types';
 import { DOCUMENT_TRANSLATIONS } from '@/lib/i18n/documents';
+import { MINIMAL_HABIT_LABELS } from '@/lib/i18n/minimal-labels';
 import { getDefaultHabitTrackerContent } from '@/lib/use-brand-kit';
 import { PDFTemplateFrame } from './PDFTemplateFrame';
 import { VectorQR } from './VectorQR';
@@ -402,7 +403,7 @@ export const VectorHabitTrackerPDF: React.FC<VectorHabitTrackerPDFProps> = ({ br
     brandKit.qrUrl !== 'https://logoloom.app'
   );
 
-  const defaultQrLabel = docLang === 'fr' ? 'Scannez pour réserver' : 'Scan to book a session';
+  const defaultQrLabel = (MINIMAL_HABIT_LABELS[docLang] || MINIMAL_HABIT_LABELS.en).defaultQr;
   const qrDisplayLabel = brandKit.qrLabel || defaultQrLabel;
 
   // Blank handwriting line format for physical print
@@ -627,7 +628,7 @@ export const VectorHabitTrackerPDF: React.FC<VectorHabitTrackerPDFProps> = ({ br
                       ]}
                     />
                     <Text style={styles.reflectionCardTitle}>
-                      {t.weekNames?.[idx] || (docLang === 'fr' ? `Semaine ${idx + 1}` : `Week ${idx + 1}`)}
+                      {t.weekNames?.[idx] || `Week ${idx + 1}`}
                     </Text>
                   </View>
                   <Text style={styles.reflectionPrompt}>{prompt}</Text>

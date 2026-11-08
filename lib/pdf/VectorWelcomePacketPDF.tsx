@@ -1,7 +1,8 @@
 import React from 'react';
 import { View, Text, StyleSheet } from '@react-pdf/renderer';
-import { BrandKit } from '@/types';
+import { BrandKit, DocumentLang } from '@/types';
 import { DOCUMENT_TRANSLATIONS } from '@/lib/i18n/documents';
+import { MINIMAL_WELCOME_LABELS } from '@/lib/i18n/minimal-labels';
 import { PDFTemplateFrame } from './PDFTemplateFrame';
 import { VectorQR } from './VectorQR';
 
@@ -502,7 +503,7 @@ export const VectorWelcomePacketPDF: React.FC<VectorWelcomePacketPDFProps> = ({ 
               <Text style={styles.kickoffSubtitle}>
                 {contactPrompt}{' '}
                 <Text style={styles.kickoffCoachHighlight}>
-                  {brandKit.coachName || (brandKit.companyName ? brandKit.companyName : (docLang === 'fr' ? 'Votre Référent' : 'Your Practitioner'))}
+                  {brandKit.coachName || (brandKit.companyName ? brandKit.companyName : ((MINIMAL_WELCOME_LABELS[docLang as DocumentLang] || MINIMAL_WELCOME_LABELS.en).practitionerPlaceholder))}
                 </Text>
               </Text>
             </View>

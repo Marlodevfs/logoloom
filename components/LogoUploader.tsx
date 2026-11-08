@@ -13,6 +13,50 @@ interface LogoUploaderProps {
   interfaceLang: InterfaceLang;
 }
 
+const LOGO_I18N: Record<InterfaceLang, {
+  logoActive: string;
+  ready: string;
+  replace: string;
+  analyzingColors: string;
+}> = {
+  fr: {
+    logoActive: 'Logo actif',
+    ready: 'Prêt',
+    replace: 'Remplacer',
+    analyzingColors: 'Analyse des couleurs...',
+  },
+  en: {
+    logoActive: 'Logo Active',
+    ready: 'Ready',
+    replace: 'Replace',
+    analyzingColors: 'Analyzing colors...',
+  },
+  de: {
+    logoActive: 'Logo aktiv',
+    ready: 'Bereit',
+    replace: 'Ersetzen',
+    analyzingColors: 'Farben werden analysiert...',
+  },
+  es: {
+    logoActive: 'Logo activo',
+    ready: 'Listo',
+    replace: 'Reemplazar',
+    analyzingColors: 'Analizando colores...',
+  },
+  it: {
+    logoActive: 'Logo attivo',
+    ready: 'Pronto',
+    replace: 'Sostituisci',
+    analyzingColors: 'Analisi dei colori...',
+  },
+  pt: {
+    logoActive: 'Logo ativo',
+    ready: 'Pronto',
+    replace: 'Substituir',
+    analyzingColors: 'A analisar cores...',
+  },
+};
+
 export const LogoUploader: React.FC<LogoUploaderProps> = ({
   logoUrl,
   onLogoUpload,
@@ -21,6 +65,7 @@ export const LogoUploader: React.FC<LogoUploaderProps> = ({
   interfaceLang,
 }) => {
   const t = UI_TRANSLATIONS[interfaceLang] || UI_TRANSLATIONS.en;
+  const l = LOGO_I18N[interfaceLang] || LOGO_I18N.en;
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [isDragging, setIsDragging] = useState(false);
 
@@ -75,7 +120,7 @@ export const LogoUploader: React.FC<LogoUploaderProps> = ({
         {isExtractingColor && (
           <span className="inline-flex items-center space-x-1 text-[11px] text-indigo-600 dark:text-indigo-400 font-medium animate-pulse">
             <Sparkles className="w-3 h-3" />
-            <span>Analyzing colors...</span>
+            <span>{l.analyzingColors}</span>
           </span>
         )}
       </div>
@@ -102,10 +147,10 @@ export const LogoUploader: React.FC<LogoUploaderProps> = ({
             <div>
               <div className="flex items-center space-x-1.5">
                 <span className="text-xs font-semibold text-slate-800 dark:text-slate-200">
-                  Logo Active
+                  {l.logoActive}
                 </span>
                 <span className="inline-flex items-center px-1.5 py-0.2 rounded text-[10px] font-medium bg-emerald-100 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-300">
-                  <Check className="w-2.5 h-2.5 mr-0.5" /> Ready
+                  <Check className="w-2.5 h-2.5 mr-0.5" /> {l.ready}
                 </span>
               </div>
               <p className="text-[11px] text-slate-400 dark:text-slate-400">
@@ -120,7 +165,7 @@ export const LogoUploader: React.FC<LogoUploaderProps> = ({
               onClick={() => fileInputRef.current?.click()}
               className="text-[11px] font-medium text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white px-2.5 py-1.5 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 transition-colors"
             >
-              Replace
+              {l.replace}
             </button>
             <button
               type="button"

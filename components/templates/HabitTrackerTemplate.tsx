@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { BrandKit, DocumentLang, HabitItem, HabitTrackerCustomContent } from '@/types';
 import { DOCUMENT_TRANSLATIONS } from '@/lib/i18n/documents';
+import { MINIMAL_HABIT_LABELS, MINIMAL_WELCOME_LABELS } from '@/lib/i18n/minimal-labels';
 import { generateQRCodeDataURL } from '@/lib/qr-engine';
 import { getDefaultHabitTrackerContent } from '@/lib/use-brand-kit';
 import { TemplateFrame } from './TemplateFrame';
@@ -71,7 +72,7 @@ export const HabitTrackerTemplate: React.FC<HabitTrackerTemplateProps> = ({
 
   const isA4 = brandKit.paperSize === 'a4';
 
-  const defaultQrLabel = docLang === 'fr' ? 'Scannez pour réserver' : 'Scan to book a session';
+  const defaultQrLabel = (MINIMAL_HABIT_LABELS[docLang] || MINIMAL_HABIT_LABELS.en).defaultQr;
   const qrDisplayLabel = brandKit.qrLabel || defaultQrLabel;
 
   return (
@@ -286,7 +287,7 @@ export const HabitTrackerTemplate: React.FC<HabitTrackerTemplateProps> = ({
                         style={{ backgroundColor: brandKit.brandColor }}
                       />
                       <span className="text-[10px] font-bold text-slate-900 tracking-tight">
-                        {t.weekNames?.[idx] || (docLang === 'fr' ? `Semaine ${idx + 1}` : `Week ${idx + 1}`)}
+                        {t.weekNames?.[idx] || `Week ${idx + 1}`}
                       </span>
                     </div>
                     <p className="text-[9.5px] text-slate-600 leading-snug">
@@ -339,7 +340,7 @@ export const HabitTrackerTemplate: React.FC<HabitTrackerTemplateProps> = ({
                     <span className="text-slate-800 font-semibold">{brandKit.coachName}</span>
                   ) : (
                     <span className="text-slate-400 italic">
-                      {docLang === 'fr' ? 'Votre Référent' : 'Your Practitioner'}
+                      {(MINIMAL_WELCOME_LABELS[docLang] || MINIMAL_WELCOME_LABELS.en).practitionerPlaceholder}
                     </span>
                   )}
                   {brandKit.companyName ? ` — ${brandKit.companyName}` : ''}

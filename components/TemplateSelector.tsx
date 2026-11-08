@@ -3,7 +3,6 @@
 import React from 'react';
 import { Calendar, Milestone, FileText, Feather, Layers } from 'lucide-react';
 import { TemplateId, DesignStyle, InterfaceLang } from '@/types';
-import { UI_TRANSLATIONS } from '@/lib/i18n/interface';
 
 interface TemplateSelectorProps {
   activeTemplate: TemplateId;
@@ -14,6 +13,199 @@ interface TemplateSelectorProps {
   interfaceLang: InterfaceLang;
 }
 
+interface SelectorStrings {
+  stepTitle: string;
+  countModels: string;
+  minimalLabel: string;
+  defaultBadge: string;
+  completeLabel: string;
+  templates: {
+    'habit-tracker': {
+      title: string;
+      descMinimal: string;
+      descComplete: string;
+      tag: string;
+    };
+    'roadmap-90': {
+      title: string;
+      descMinimal: string;
+      descComplete: string;
+      tag: string;
+    };
+    'welcome-packet': {
+      title: string;
+      descMinimal: string;
+      descComplete: string;
+      tag: string;
+    };
+  };
+}
+
+const SELECTOR_I18N: Record<InterfaceLang, SelectorStrings> = {
+  fr: {
+    stepTitle: '3. Modèle de document',
+    countModels: '3 modèles prêts à imprimer',
+    minimalLabel: 'Minimal',
+    defaultBadge: 'Défaut',
+    completeLabel: 'Complet',
+    templates: {
+      'habit-tracker': {
+        title: 'Suivi d’habitudes 30 jours',
+        descMinimal: 'Grille épurée 30 jours, portrait, blanc aéré',
+        descComplete: 'Grille 30 jours paysage, bilans et conseils',
+        tag: 'Santé & Habitudes',
+      },
+      'roadmap-90': {
+        title: 'Feuille de route 90 jours',
+        descMinimal: '3 phases horizontales aérées avec objectifs et cases à cocher',
+        descComplete: 'Plan d’action stratégique pas à pas pour consultants',
+        tag: 'Stratégie & Jalons',
+      },
+      'welcome-packet': {
+        title: 'Pack d’accueil client',
+        descMinimal: 'Guide d’onboarding sobre, canaux et accords de travail',
+        descComplete: 'Guide complet avec règles de collaboration et étapes',
+        tag: 'Accueil client',
+      },
+    },
+  },
+  en: {
+    stepTitle: '3. Document Template',
+    countModels: '3 Print-ready models',
+    minimalLabel: 'Minimal',
+    defaultBadge: 'Default',
+    completeLabel: 'Complete',
+    templates: {
+      'habit-tracker': {
+        title: '30-Day Habit Tracker',
+        descMinimal: 'Clean portrait grid, 30 days, airy whitespace',
+        descComplete: 'Landscape grid with weekly check-ins and coaching note',
+        tag: 'Health & Habits',
+      },
+      'roadmap-90': {
+        title: '90-Day Strategic Roadmap',
+        descMinimal: '3 airy horizontal phases with milestones and checkboxes',
+        descComplete: 'Step-by-step strategic action plan for consultants',
+        tag: 'Strategy & Milestones',
+      },
+      'welcome-packet': {
+        title: 'Client Welcome Packet',
+        descMinimal: 'Clean onboarding guide, channels and working agreements',
+        descComplete: 'Comprehensive guide with rules of engagement and next steps',
+        tag: 'Client Onboarding',
+      },
+    },
+  },
+  de: {
+    stepTitle: '3. Dokumenten-Vorlage',
+    countModels: '3 druckfertige Vorlagen',
+    minimalLabel: 'Minimal',
+    defaultBadge: 'Standard',
+    completeLabel: 'Vollständig',
+    templates: {
+      'habit-tracker': {
+        title: '30-Tage-Gewohnheitstracker',
+        descMinimal: 'Klare 30-Tage-Matrix im Hochformat mit viel Weißraum',
+        descComplete: 'Querformat mit wöchentlichen Reflexionen und Coach-Notiz',
+        tag: 'Gesundheit & Gewohnheiten',
+      },
+      'roadmap-90': {
+        title: 'Strategische 90-Tage-Roadmap',
+        descMinimal: '3 übersichtliche Phasen mit Meilensteinen und Checkboxen',
+        descComplete: 'Schritt-für-Schritt Aktionsplan für Berater & Coaches',
+        tag: 'Strategie & Meilensteine',
+      },
+      'welcome-packet': {
+        title: 'Kunden-Willkommenspaket',
+        descMinimal: 'Klarer Onboarding-Leitfaden mit Kommunikationsregeln',
+        descComplete: 'Umfassender Leitfaden mit Zusammenarbeitsregeln und Schritten',
+        tag: 'Kunden-Onboarding',
+      },
+    },
+  },
+  es: {
+    stepTitle: '3. Plantilla de documento',
+    countModels: '3 modelos listos para imprimir',
+    minimalLabel: 'Mínimo',
+    defaultBadge: 'Por defecto',
+    completeLabel: 'Completo',
+    templates: {
+      'habit-tracker': {
+        title: 'Seguimiento de hábitos 30 días',
+        descMinimal: 'Cuadrícula limpia de 30 días, vertical y espaciosa',
+        descComplete: 'Cuadrícula apaisada con revisiones semanales y nota del coach',
+        tag: 'Salud y Hábitos',
+      },
+      'roadmap-90': {
+        title: 'Hoja de ruta estratégica 90 días',
+        descMinimal: '3 fases horizontales con hitos y casillas de verificación',
+        descComplete: 'Plan de acción paso a paso para consultores y coaches',
+        tag: 'Estrategia e Hitos',
+      },
+      'welcome-packet': {
+        title: 'Paquete de bienvenida al cliente',
+        descMinimal: 'Guía clara de onboarding, canales y acuerdos de trabajo',
+        descComplete: 'Guía completa con reglas de colaboración y primeros pasos',
+        tag: 'Onboarding de Clientes',
+      },
+    },
+  },
+  it: {
+    stepTitle: '3. Modello di Documento',
+    countModels: '3 modelli pronti per la stampa',
+    minimalLabel: 'Minimale',
+    defaultBadge: 'Predefinito',
+    completeLabel: 'Completo',
+    templates: {
+      'habit-tracker': {
+        title: 'Registro abitudini 30 giorni',
+        descMinimal: 'Griglia essenziale di 30 giorni, verticale e ariosa',
+        descComplete: 'Griglia orizzontale con verifiche settimanali e nota del coach',
+        tag: 'Salute & Abitudini',
+      },
+      'roadmap-90': {
+        title: 'Tabella di marcia 90 giorni',
+        descMinimal: '3 fasi orizzontali ariose con traguardi e caselle di controllo',
+        descComplete: 'Piano d’azione strategico passo dopo passo per consulenti',
+        tag: 'Strategia & Obiettivi',
+      },
+      'welcome-packet': {
+        title: 'Kit di benvenuto per i clienti',
+        descMinimal: 'Guida onboarding chiara, canali e accordi di lavoro',
+        descComplete: 'Guida completa con regole di collaborazione e prossimi passi',
+        tag: 'Onboarding Clienti',
+      },
+    },
+  },
+  pt: {
+    stepTitle: '3. Modelo de Documento',
+    countModels: '3 modelos prontos para impressão',
+    minimalLabel: 'Mínimo',
+    defaultBadge: 'Padrão',
+    completeLabel: 'Completo',
+    templates: {
+      'habit-tracker': {
+        title: 'Rastreador de hábitos 30 dias',
+        descMinimal: 'Grelha limpa de 30 dias, vertical com bastante espaço',
+        descComplete: 'Grelha paisagem com balanços semanais e nota do mentor',
+        tag: 'Saúde e Hábitos',
+      },
+      'roadmap-90': {
+        title: 'Roteiro estratégico de 90 dias',
+        descMinimal: '3 fases horizontais com marcos e caixas de seleção',
+        descComplete: 'Plano de ação estratégico passo a passo para consultores',
+        tag: 'Estratégia e Metas',
+      },
+      'welcome-packet': {
+        title: 'Kit de boas-vindas ao cliente',
+        descMinimal: 'Guia de onboarding direto, canais e acordos de trabalho',
+        descComplete: 'Guia completo com regras de colaboração e primeiros passos',
+        tag: 'Integração de Clientes',
+      },
+    },
+  },
+};
+
 export const TemplateSelector: React.FC<TemplateSelectorProps> = ({
   activeTemplate,
   onSelect,
@@ -22,36 +214,35 @@ export const TemplateSelector: React.FC<TemplateSelectorProps> = ({
   onStyleChange,
   interfaceLang,
 }) => {
-  const isFrench = interfaceLang === 'fr';
-  const t = UI_TRANSLATIONS[interfaceLang] || UI_TRANSLATIONS.en;
+  const i18n = SELECTOR_I18N[interfaceLang] || SELECTOR_I18N.en;
 
   const templates = [
     {
       id: 'habit-tracker' as TemplateId,
-      title: isFrench ? 'Suivi d’habitudes 30 jours' : '30-Day Habit Tracker',
-      desc: isFrench
-        ? (designStyle === 'minimal' ? 'Grille épurée 30 jours, portrait, blanc aéré' : 'Grille 30 jours paysage, bilans et conseils')
-        : (designStyle === 'minimal' ? 'Clean portrait grid, 30 days, airy whitespace' : 'Landscape grid with weekly check-ins and coaching note'),
+      title: i18n.templates['habit-tracker'].title,
+      desc: designStyle === 'minimal'
+        ? i18n.templates['habit-tracker'].descMinimal
+        : i18n.templates['habit-tracker'].descComplete,
       icon: Calendar,
-      tag: isFrench ? 'Santé & Habitudes' : 'Health & Habits',
+      tag: i18n.templates['habit-tracker'].tag,
     },
     {
       id: 'roadmap-90' as TemplateId,
-      title: isFrench ? 'Feuille de route 90 jours' : '90-Day Strategic Roadmap',
-      desc: isFrench
-        ? (designStyle === 'minimal' ? '3 phases horizontales aérées avec objectifs et cases à cocher' : 'Plan d’action stratégique pas à pas pour consultants')
-        : (designStyle === 'minimal' ? '3 airy horizontal phases with milestones and checkboxes' : 'Step-by-step strategic action plan for consultants'),
+      title: i18n.templates['roadmap-90'].title,
+      desc: designStyle === 'minimal'
+        ? i18n.templates['roadmap-90'].descMinimal
+        : i18n.templates['roadmap-90'].descComplete,
       icon: Milestone,
-      tag: isFrench ? 'Stratégie & Jalons' : 'Strategy & Milestones',
+      tag: i18n.templates['roadmap-90'].tag,
     },
     {
       id: 'welcome-packet' as TemplateId,
-      title: isFrench ? 'Pack d’accueil client' : 'Client Welcome Packet',
-      desc: isFrench
-        ? (designStyle === 'minimal' ? 'Guide d’onboarding sobre, canaux et accords de travail' : 'Guide complet avec règles de collaboration et étapes')
-        : (designStyle === 'minimal' ? 'Clean onboarding guide, channels and working agreements' : 'Comprehensive guide with rules of engagement and next steps'),
+      title: i18n.templates['welcome-packet'].title,
+      desc: designStyle === 'minimal'
+        ? i18n.templates['welcome-packet'].descMinimal
+        : i18n.templates['welcome-packet'].descComplete,
       icon: FileText,
-      tag: isFrench ? 'Accueil client' : 'Client Onboarding',
+      tag: i18n.templates['welcome-packet'].tag,
     },
   ];
 
@@ -60,10 +251,10 @@ export const TemplateSelector: React.FC<TemplateSelectorProps> = ({
       {/* Step Header */}
       <div className="flex items-center justify-between">
         <label className="text-xs font-bold text-slate-800 dark:text-slate-100 uppercase tracking-wider">
-          {isFrench ? '3. Modèle de document' : '3. Document Template'}
+          {i18n.stepTitle}
         </label>
         <span className="text-[10px] text-slate-400 font-medium">
-          {isFrench ? '3 modèles prêts à imprimer' : '3 Print-ready models'}
+          {i18n.countModels}
         </span>
       </div>
 
@@ -79,9 +270,9 @@ export const TemplateSelector: React.FC<TemplateSelectorProps> = ({
           }`}
         >
           <Feather className="w-3.5 h-3.5 text-indigo-600 dark:text-indigo-400" />
-          <span>{isFrench ? 'Minimal' : 'Minimal'}</span>
+          <span>{i18n.minimalLabel}</span>
           <span className="text-[9px] px-1 py-0.2 rounded font-normal text-indigo-700 dark:text-indigo-300 bg-indigo-50 dark:bg-indigo-950/60 ml-0.5">
-            {isFrench ? 'Défaut' : 'Default'}
+            {i18n.defaultBadge}
           </span>
         </button>
 
@@ -95,7 +286,7 @@ export const TemplateSelector: React.FC<TemplateSelectorProps> = ({
           }`}
         >
           <Layers className="w-3.5 h-3.5 text-slate-500" />
-          <span>{isFrench ? 'Complet' : 'Complete'}</span>
+          <span>{i18n.completeLabel}</span>
         </button>
       </div>
 

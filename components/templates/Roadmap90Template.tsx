@@ -3,6 +3,7 @@
 import React from 'react';
 import { BrandKit, DocumentLang, RoadmapPhaseCustom } from '@/types';
 import { DOCUMENT_TRANSLATIONS } from '@/lib/i18n/documents';
+import { MINIMAL_ROADMAP_LABELS } from '@/lib/i18n/minimal-labels';
 import { getDefaultRoadmapContent } from '@/lib/use-brand-kit';
 import { TemplateFrame } from './TemplateFrame';
 
@@ -13,6 +14,7 @@ interface Roadmap90TemplateProps {
 export const Roadmap90Template: React.FC<Roadmap90TemplateProps> = ({ brandKit }) => {
   const docLang = brandKit.documentLang || 'en';
   const t = (DOCUMENT_TRANSLATIONS[docLang] || DOCUMENT_TRANSLATIONS.en).roadmap90;
+  const l = MINIMAL_ROADMAP_LABELS[docLang] || MINIMAL_ROADMAP_LABELS.en;
   const content = brandKit.roadmapContent || getDefaultRoadmapContent(docLang);
 
   const subtitleRight = docLang === 'fr'
@@ -88,12 +90,12 @@ export const Roadmap90Template: React.FC<Roadmap90TemplateProps> = ({ brandKit }
             <div className="flex items-center space-x-3 bg-slate-50 border border-slate-200/80 rounded-lg p-2 text-xs">
               <div>
                 <span className="text-[10px] text-slate-400 block uppercase font-medium">{t.initiativePrompt}</span>
-                <span className="font-bold text-slate-800">{content.mission || (docLang === 'fr' ? 'Définir l’objectif clé' : 'Define primary goal')}</span>
+                <span className="font-bold text-slate-800">{content.mission || l.missionPlaceholder}</span>
               </div>
               <div className="w-px h-6 bg-slate-200" />
               <div>
                 <span className="text-[10px] text-slate-400 block uppercase font-medium">{t.timelinePrompt}</span>
-                <span className="font-bold text-slate-800">{content.horizon || (docLang === 'fr' ? '90 jours ouvrés' : '90 Business Days')}</span>
+                <span className="font-bold text-slate-800">{content.horizon || l.horizonPlaceholder}</span>
               </div>
             </div>
           </div>
@@ -156,7 +158,7 @@ export const Roadmap90Template: React.FC<Roadmap90TemplateProps> = ({ brandKit }
               {/* Phase KPI Target */}
               <div className="p-2.5 bg-slate-50 border-t border-slate-100">
                 <span className="text-[9px] font-bold text-slate-500 uppercase block">
-                  {(phase as any).kpiLabel || (docLang === 'fr' ? 'Cible Clé :' : 'Key Target:')}
+                  {(phase as any).kpiLabel || l.targetKpi}
                 </span>
                 <p className="text-[10px] font-semibold text-slate-800 mt-0.5 leading-snug">
                   {(phase as any).kpiValue || (phase as any).kpi}
@@ -174,7 +176,7 @@ export const Roadmap90Template: React.FC<Roadmap90TemplateProps> = ({ brandKit }
                 {t.signoffTitle}
               </span>
               <span className="text-[10px] text-slate-400">
-                {docLang === 'fr' ? 'Validation pour exécution bilatérale' : 'Valid for execution upon bilateral sign-off'}
+                {l.bilateralNotice}
               </span>
             </div>
 
@@ -186,7 +188,7 @@ export const Roadmap90Template: React.FC<Roadmap90TemplateProps> = ({ brandKit }
                 <div className="border-b border-slate-300 border-dashed h-4" />
                 <div className="flex justify-between text-[9px] text-slate-400">
                   <span>Date: ____ / ____ / ________</span>
-                  <span>{docLang === 'fr' ? 'Signature' : 'Signature'}</span>
+                  <span>{l.signature}</span>
                 </div>
               </div>
 
@@ -197,7 +199,7 @@ export const Roadmap90Template: React.FC<Roadmap90TemplateProps> = ({ brandKit }
                 <div className="border-b border-slate-300 border-dashed h-4" />
                 <div className="flex justify-between text-[9px] text-slate-400">
                   <span>Date: ____ / ____ / ________</span>
-                  <span>{docLang === 'fr' ? 'Signature' : 'Signature'}</span>
+                  <span>{l.signature}</span>
                 </div>
               </div>
             </div>

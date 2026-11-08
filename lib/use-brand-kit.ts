@@ -64,11 +64,28 @@ export function getDefaultHabitTrackerContent(
 
 export function getDefaultRoadmapContent(lang: DocumentLang): RoadmapCustomContent {
   const t = (DOCUMENT_TRANSLATIONS[lang] || DOCUMENT_TRANSLATIONS.en).roadmap90;
+  const missions: Record<DocumentLang, string> = {
+    fr: 'Optimisation opérationnelle & Accélération',
+    en: 'Operational Excellence & Growth',
+    de: 'Operative Exzellenz & Skalierung',
+    es: 'Excelencia Operativa & Crecimiento',
+    it: 'Eccellenza Operativa & Crescita',
+    pt: 'Excelência Operacional & Crescimento',
+  };
+  const horizons: Record<DocumentLang, string> = {
+    fr: '90 jours ouvrés',
+    en: '90 Business Days',
+    de: '90 Arbeitstage',
+    es: '90 días laborables',
+    it: '90 giorni lavorativi',
+    pt: '90 dias úteis',
+  };
+
   return {
     title: t.title,
     subtitle: t.subtitle,
-    mission: lang === 'fr' ? 'Optimisation opérationnelle & Accélération' : 'Operational Excellence & Growth',
-    horizon: lang === 'fr' ? '90 jours ouvrés' : '90 Business Days',
+    mission: missions[lang] || missions.en,
+    horizon: horizons[lang] || horizons.en,
     phases: [
       {
         title: t.phase1.title,
@@ -171,15 +188,26 @@ export function useBrandKit(initialLang?: InterfaceLang) {
         const savedBrand = localStorage.getItem(STORAGE_KEY);
         if (savedBrand) {
           const parsed = JSON.parse(savedBrand);
-          const docLang: DocumentLang = parsed.documentLang || (resolvedUiLang as DocumentLang);
+          const isUrlLocaleSpecified = Boolean(initialLang && supportedLangs.includes(initialLang));
+          const docLang: DocumentLang = isUrlLocaleSpecified
+            ? (initialLang as DocumentLang)
+            : (parsed.documentLang || (resolvedUiLang as DocumentLang));
+          const shouldRefreshLanguageContent = isUrlLocaleSpecified && parsed.documentLang !== initialLang;
+
           setBrandKit((prev) => ({
             ...prev,
             ...parsed,
             designStyle: parsed.designStyle || initialStyle,
             documentLang: docLang,
-            habitTrackerContent: parsed.habitTrackerContent || getDefaultHabitTrackerContent(docLang, 'wellbeing'),
-            roadmapContent: parsed.roadmapContent || getDefaultRoadmapContent(docLang),
-            welcomePacketContent: parsed.welcomePacketContent || getDefaultWelcomePacketContent(docLang),
+            habitTrackerContent: shouldRefreshLanguageContent || !parsed.habitTrackerContent
+              ? getDefaultHabitTrackerContent(docLang, 'wellbeing')
+              : parsed.habitTrackerContent,
+            roadmapContent: shouldRefreshLanguageContent || !parsed.roadmapContent
+              ? getDefaultRoadmapContent(docLang)
+              : parsed.roadmapContent,
+            welcomePacketContent: shouldRefreshLanguageContent || !parsed.welcomePacketContent
+              ? getDefaultWelcomePacketContent(docLang)
+              : parsed.welcomePacketContent,
             isPro: false,
             removeWatermark: false,
           }));
@@ -262,6 +290,15 @@ export function useBrandKit(initialLang?: InterfaceLang) {
         next.contrastText = getOptimalTextColor(accessibleColor);
       }
 
+      // When document language changes in Step 4, synchronize content defaults
+      if (updates.documentLang && updates.documentLang !== prev.documentLang) {
+        const dLang = updates.documentLang;
+        next.documentLang = dLang;
+        next.habitTrackerContent = getDefaultHabitTrackerContent(dLang, prev.habitTrackerContent?.packId || 'wellbeing');
+        next.roadmapContent = getDefaultRoadmapContent(dLang);
+        next.welcomePacketContent = getDefaultWelcomePacketContent(dLang);
+      }
+
       return next;
     });
   }, []);
@@ -269,7 +306,6 @@ export function useBrandKit(initialLang?: InterfaceLang) {
   const setInterfaceLang = useCallback((lang: InterfaceLang) => {
     setInterfaceLangState(lang);
     setBrandKit((prev) => {
-      if (prev.documentLang === lang) return prev;
       const dLang = lang as DocumentLang;
       return {
         ...prev,

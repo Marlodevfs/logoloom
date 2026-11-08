@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { BrandKit, DocumentLang, WelcomePacketCustomContent } from '@/types';
 import { DOCUMENT_TRANSLATIONS } from '@/lib/i18n/documents';
+import { MINIMAL_WELCOME_LABELS } from '@/lib/i18n/minimal-labels';
 import { generateQRCodeDataURL } from '@/lib/qr-engine';
 import { getDefaultWelcomePacketContent } from '@/lib/use-brand-kit';
 
@@ -61,30 +62,9 @@ export const MinimalWelcomePacketTemplate: React.FC<MinimalWelcomePacketTemplate
   const frameWidth = isA4 ? '794px' : '816px';
   const frameHeight = isA4 ? '1123px' : '1056px';
 
-  const defaultQrLabel = docLang === 'fr'
-    ? 'Scannez pour planifier'
-    : docLang === 'de'
-    ? 'Scannen zum Planen'
-    : docLang === 'es'
-    ? 'Escanear para planificar'
-    : docLang === 'it'
-    ? 'Scansiona per pianificare'
-    : docLang === 'pt'
-    ? 'Digitalize para agendar'
-    : 'Scan to book onboarding';
-  const qrDisplayLabel = brandKit.qrLabel || defaultQrLabel;
-
-  const pageLabel = docLang === 'fr'
-    ? 'Guide de bienvenue • Page 1 sur 1'
-    : docLang === 'de'
-    ? 'Willkommensleitfaden • Seite 1 von 1'
-    : docLang === 'es'
-    ? 'Guía de bienvenida • Página 1 de 1'
-    : docLang === 'it'
-    ? 'Guida di benvenuto • Pagina 1 di 1'
-    : docLang === 'pt'
-    ? 'Guia de boas-vindas • Página 1 de 1'
-    : 'Welcome Guide • Page 1 of 1';
+  const l = MINIMAL_WELCOME_LABELS[docLang] || MINIMAL_WELCOME_LABELS.en;
+  const qrDisplayLabel = brandKit.qrLabel || l.defaultQr;
+  const pageLabel = l.page;
 
   const hasUserQR = Boolean(brandKit.qrUrl && brandKit.qrUrl.trim().length > 0 && userQrDataUrl);
 
@@ -139,7 +119,7 @@ export const MinimalWelcomePacketTemplate: React.FC<MinimalWelcomePacketTemplate
               <h2 className="text-sm font-bold tracking-tight text-slate-900">
                 {brandKit.companyName || (
                   <span className="text-slate-300 font-normal italic">
-                    {docLang === 'fr' ? 'Votre Entreprise / Studio' : 'Your Business Name'}
+                    {l.companyPlaceholder}
                   </span>
                 )}
               </h2>

@@ -1,8 +1,10 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { BrandKit, HabitItem, HabitTrackerCustomContent } from '@/types';
+import { BrandKit, DocumentLang, HabitItem, HabitTrackerCustomContent } from '@/types';
 import { DOCUMENT_TRANSLATIONS } from '@/lib/i18n/documents';
+import { HABIT_PACKS } from '@/lib/i18n/habit-packs';
+import { MINIMAL_HABIT_LABELS } from '@/lib/i18n/minimal-labels';
 import { generateQRCodeDataURL } from '@/lib/qr-engine';
 import { getDefaultHabitTrackerContent } from '@/lib/use-brand-kit';
 
@@ -15,9 +17,9 @@ export const MinimalHabitTrackerTemplate: React.FC<MinimalHabitTrackerTemplatePr
   brandKit,
   onUpdate,
 }) => {
-  const docLang = brandKit.documentLang || 'en';
+  const docLang: DocumentLang = brandKit.documentLang || 'en';
   const t = (DOCUMENT_TRANSLATIONS[docLang] || DOCUMENT_TRANSLATIONS.en).habitTracker;
-  const isFrench = docLang === 'fr';
+  const l = MINIMAL_HABIT_LABELS[docLang] || MINIMAL_HABIT_LABELS.en;
 
   const [userQrDataUrl, setUserQrDataUrl] = useState<string>('');
   const [loomQrDataUrl, setLoomQrDataUrl] = useState<string>('');
@@ -60,15 +62,15 @@ export const MinimalHabitTrackerTemplate: React.FC<MinimalHabitTrackerTemplatePr
     };
   }, [brandKit.qrUrl]);
 
+  const defaultHabitsForLang = (HABIT_PACKS[docLang]?.wellbeing?.habits || HABIT_PACKS.en.wellbeing.habits).map((h, i) => ({
+    id: `habit-${i + 1}`,
+    title: h.title,
+    subtitle: h.subtitle,
+  }));
+
   const habits: HabitItem[] = habitContent.habits && habitContent.habits.length > 0
     ? habitContent.habits.slice(0, 7) // 3 to 7 habits in minimal style
-    : [
-        { id: '1', title: 'Hydratation & Vitalité', subtitle: '1,5L à 2L d’eau' },
-        { id: '2', title: 'Marche quotidienne', subtitle: '20 à 30 min' },
-        { id: '3', title: 'Pause calme & respiration', subtitle: '5 à 10 min' },
-        { id: '4', title: 'Déconnexion du soir', subtitle: '30 min avant coucher' },
-        { id: '5', title: 'Gratitude du jour', subtitle: 'Moment positif' },
-      ];
+    : defaultHabitsForLang.slice(0, 5);
 
   const days = Array.from({ length: 30 }, (_, i) => i + 1);
 
@@ -76,7 +78,7 @@ export const MinimalHabitTrackerTemplate: React.FC<MinimalHabitTrackerTemplatePr
   const frameWidth = isA4 ? '794px' : '816px';
   const frameHeight = isA4 ? '1123px' : '1056px';
 
-  const defaultQrLabel = isFrench ? 'Scannez pour réserver' : 'Scan to book a session';
+  const defaultQrLabel = l.defaultQr;
   const qrDisplayLabel = brandKit.qrLabel || defaultQrLabel;
 
   const hasUserQR = Boolean(brandKit.qrUrl && brandKit.qrUrl.trim().length > 0 && userQrDataUrl);
@@ -123,7 +125,7 @@ export const MinimalHabitTrackerTemplate: React.FC<MinimalHabitTrackerTemplatePr
                     brandKit.companyName ? 'text-slate-900' : 'text-slate-400 italic'
                   }`}
                 >
-                  {brandKit.companyName || (isFrench ? 'Votre Cabinet / Studio' : 'Your Business / Studio')}
+                  {brandKit.companyName || l.companyPlaceholder}
                 </span>
                 {brandKit.tagline && (
                   <span className="text-[10px] text-slate-500 font-normal mt-0.5">{brandKit.tagline}</span>
@@ -175,7 +177,7 @@ export const MinimalHabitTrackerTemplate: React.FC<MinimalHabitTrackerTemplatePr
                   }`}
                   style={{ color: brandKit.brandColor }}
                 >
-                  {habitContent.title || (isFrench ? 'Suivi d’habitudes 30 jours' : '30-Day Habit Tracker')}
+                  {habitContent.title || l.defaultTitle}
                 </h1>
               )}
             </div>
@@ -183,13 +185,13 @@ export const MinimalHabitTrackerTemplate: React.FC<MinimalHabitTrackerTemplatePr
             {/* Handwriting Blank Lines: Name and Start Date */}
             <div className="flex items-center space-x-4 text-[10.5px] text-slate-600 shrink-0">
               <div className="flex items-center space-x-1.5">
-                <span className="font-semibold text-slate-700">{isFrench ? 'Nom :' : 'Name:'}</span>
+                <span className="font-semibold text-slate-700">{l.name}</span>
                 <span className={`min-w-[130px] border-b border-slate-400 pb-0.5 ${brandKit.clientName ? 'font-medium text-slate-900' : 'text-slate-400'}`}>
                   {brandKit.clientName || '____________________'}
                 </span>
               </div>
               <div className="flex items-center space-x-1.5">
-                <span className="font-semibold text-slate-700">{isFrench ? 'Date :' : 'Date:'}</span>
+                <span className="font-semibold text-slate-700">{l.date}</span>
                 <span className="min-w-[90px] border-b border-slate-400 pb-0.5 text-slate-400">
                   ____ / ____ / 20___
                 </span>
@@ -205,7 +207,7 @@ export const MinimalHabitTrackerTemplate: React.FC<MinimalHabitTrackerTemplatePr
               <tr className="border-b border-slate-300 text-slate-800 text-[10px]">
                 {/* Left Day column header */}
                 <th className="w-[48px] py-1 text-left font-bold uppercase tracking-wider text-slate-500 pl-1">
-                  {isFrench ? 'Jour' : 'Day'}
+                  {l.day}
                 </th>
 
                 {/* Habit columns headers (wrap cleanly to two lines, never truncated) */}
@@ -230,7 +232,7 @@ export const MinimalHabitTrackerTemplate: React.FC<MinimalHabitTrackerTemplatePr
                 {/* Optional Notes column */}
                 {showNotes && (
                   <th className="w-[85px] py-1 text-center font-bold text-slate-600 border-l border-slate-200 uppercase tracking-wider text-[9.5px]">
-                    {isFrench ? 'Notes' : 'Notes'}
+                    {l.notes}
                   </th>
                 )}
               </tr>
@@ -293,7 +295,7 @@ export const MinimalHabitTrackerTemplate: React.FC<MinimalHabitTrackerTemplatePr
               {showScore && (
                 <tr className="border-t-2 border-slate-400 bg-slate-50/80 font-bold text-[9.5px]">
                   <td className="pl-1 py-1 text-slate-800 uppercase tracking-wider">
-                    {isFrench ? 'Total' : 'Score'}
+                    {l.score}
                   </td>
                   {habits.map((_, hIdx) => (
                     <td key={hIdx} className="text-center py-1 border-l border-slate-200 text-slate-500">
@@ -316,13 +318,13 @@ export const MinimalHabitTrackerTemplate: React.FC<MinimalHabitTrackerTemplatePr
                 <span>•</span>
               </>
             )}
-            <span>{isFrench ? 'Document personnel • Page 1 sur 1' : 'Personal Document • Page 1 of 1'}</span>
+            <span>{l.footerPage}</span>
           </div>
 
           <div>
             {brandKit.removeWatermark ? (
               <span className="text-[9px] text-slate-400 font-medium tracking-wider uppercase">
-                {isFrench ? 'Document vérifié' : 'Verified Document'}
+                {l.verified}
               </span>
             ) : (
               <div className="flex items-center space-x-1.5 opacity-80">
@@ -335,7 +337,7 @@ export const MinimalHabitTrackerTemplate: React.FC<MinimalHabitTrackerTemplatePr
                   />
                 )}
                 <span className="text-[8.5px] text-slate-500">
-                  {isFrench ? 'Créé avec' : 'Made with'}{' '}
+                  {l.madeWith}{' '}
                   <span className="font-semibold text-indigo-600">logoloom.app</span>
                 </span>
               </div>

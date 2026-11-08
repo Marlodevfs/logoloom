@@ -2,6 +2,7 @@ import React from 'react';
 import { Page, View, Text, Image, StyleSheet } from '@react-pdf/renderer';
 import { BrandKit, DocumentLang, WelcomePacketCustomContent } from '@/types';
 import { DOCUMENT_TRANSLATIONS } from '@/lib/i18n/documents';
+import { MINIMAL_WELCOME_LABELS } from '@/lib/i18n/minimal-labels';
 import { getDefaultWelcomePacketContent } from '@/lib/use-brand-kit';
 import { VectorQR } from './VectorQR';
 
@@ -315,30 +316,9 @@ export const VectorMinimalWelcomePacketPDF: React.FC<VectorMinimalWelcomePacketP
   const normalizedLogo = normalizeLogoUrl(brandKit.logoUrl);
   const hasUserQR = Boolean(brandKit.qrUrl && brandKit.qrUrl.trim().length > 0 && brandKit.qrUrl !== 'https://logoloom.app');
 
-  const defaultQrLabel = docLang === 'fr'
-    ? 'Scannez pour planifier'
-    : docLang === 'de'
-    ? 'Scannen zum Planen'
-    : docLang === 'es'
-    ? 'Escanear para planificar'
-    : docLang === 'it'
-    ? 'Scansiona per pianificare'
-    : docLang === 'pt'
-    ? 'Digitalize para agendar'
-    : 'Scan to book onboarding';
-  const qrDisplayLabel = brandKit.qrLabel || defaultQrLabel;
-
-  const pageLabel = docLang === 'fr'
-    ? 'Guide de bienvenue • Page 1 sur 1'
-    : docLang === 'de'
-    ? 'Willkommensleitfaden • Seite 1 von 1'
-    : docLang === 'es'
-    ? 'Guía de bienvenida • Página 1 de 1'
-    : docLang === 'it'
-    ? 'Guida di benvenuto • Pagina 1 di 1'
-    : docLang === 'pt'
-    ? 'Guia de boas-vindas • Página 1 de 1'
-    : 'Welcome Guide • Page 1 of 1';
+  const l = MINIMAL_WELCOME_LABELS[docLang] || MINIMAL_WELCOME_LABELS.en;
+  const qrDisplayLabel = brandKit.qrLabel || l.defaultQr;
+  const pageLabel = l.page;
 
   const commItems = [
     { label: t.commItems[0]?.label || 'Primary Channel', text: content.channels || t.commItems[0]?.text },
@@ -502,7 +482,7 @@ export const VectorMinimalWelcomePacketPDF: React.FC<VectorMinimalWelcomePacketP
         {/* Watermark / LogoLoom Badge (Free) or Verified (Pro) */}
         <View>
           {brandKit.removeWatermark ? (
-            <Text style={styles.proVerified}>VERIFIED PRINT DOCUMENT</Text>
+            <Text style={styles.proVerified}>{l.verified.toUpperCase()}</Text>
           ) : (
             <View style={styles.watermarkBadge}>
               <VectorQR
@@ -512,7 +492,7 @@ export const VectorMinimalWelcomePacketPDF: React.FC<VectorMinimalWelcomePacketP
                 lightColor="#FFFFFF"
               />
               <View style={styles.watermarkTextCol}>
-                <Text style={styles.watermarkText}>Made with</Text>
+                <Text style={styles.watermarkText}>{l.madeWith}</Text>
                 <Text style={styles.watermarkDomain}>logoloom.app</Text>
               </View>
             </View>

@@ -341,10 +341,19 @@ export const ContentEditorStep: React.FC<ContentEditorStepProps> = ({
   const handleAddHabit = () => {
     if (habitContent.habits.length >= 8) return;
     const newIdx = habitContent.habits.length + 1;
+    const defaultNewHabits: Record<InterfaceLang, { titlePrefix: string; subtitle: string }> = {
+      fr: { titlePrefix: 'Habitude', subtitle: 'Objectif quotidien convenu' },
+      en: { titlePrefix: 'Habit', subtitle: 'Daily action to track' },
+      de: { titlePrefix: 'Gewohnheit', subtitle: 'Vereinbarte tägliche Routine' },
+      es: { titlePrefix: 'Hábito', subtitle: 'Acción diaria acordada' },
+      it: { titlePrefix: 'Abitudine', subtitle: 'Azione quotidiana concordata' },
+      pt: { titlePrefix: 'Hábito', subtitle: 'Ação diária combinada' },
+    };
+    const habitDef = defaultNewHabits[interfaceLang] || defaultNewHabits.en;
     const newHabit: HabitItem = {
       id: `custom-habit-${Date.now()}`,
-      title: interfaceLang === 'fr' ? `Habitude ${newIdx} : ________` : `Habit ${newIdx}: ________`,
-      subtitle: interfaceLang === 'fr' ? 'Objectif quotidien convenu' : 'Daily action to track',
+      title: `${habitDef.titlePrefix} ${newIdx} : ________`,
+      subtitle: habitDef.subtitle,
     };
     updateHabitContent({ habits: [...habitContent.habits, newHabit] });
   };

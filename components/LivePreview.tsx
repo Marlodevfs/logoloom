@@ -18,6 +18,43 @@ interface LivePreviewProps {
   onUpdate?: (updates: Partial<BrandKit>) => void;
 }
 
+const PREVIEW_I18N: Record<InterfaceLang, {
+  clickToEdit: string;
+  width: string;
+  landscapeSuffix: string;
+}> = {
+  fr: {
+    clickToEdit: 'Édition directe en cliquant sur le texte',
+    width: 'Largeur',
+    landscapeSuffix: 'Paysage',
+  },
+  en: {
+    clickToEdit: 'Click text to edit directly',
+    width: 'Width',
+    landscapeSuffix: 'Landscape',
+  },
+  de: {
+    clickToEdit: 'Text direkt anklicken zum Bearbeiten',
+    width: 'Breite',
+    landscapeSuffix: 'Querformat',
+  },
+  es: {
+    clickToEdit: 'Clic en el texto para editar directamente',
+    width: 'Ancho',
+    landscapeSuffix: 'Apaisado',
+  },
+  it: {
+    clickToEdit: 'Clicca sul testo per modificare direttamente',
+    width: 'Larghezza',
+    landscapeSuffix: 'Orizzontale',
+  },
+  pt: {
+    clickToEdit: 'Clique no texto para editar diretamente',
+    width: 'Largura',
+    landscapeSuffix: 'Paisagem',
+  },
+};
+
 export const LivePreview: React.FC<LivePreviewProps> = ({
   brandKit,
   activeTemplate,
@@ -25,6 +62,7 @@ export const LivePreview: React.FC<LivePreviewProps> = ({
   onUpdate,
 }) => {
   const t = UI_TRANSLATIONS[interfaceLang] || UI_TRANSLATIONS.en;
+  const pI18n = PREVIEW_I18N[interfaceLang] || PREVIEW_I18N.en;
   const isMinimal = (brandKit.designStyle || 'minimal') === 'minimal';
   const isLandscape = activeTemplate === 'habit-tracker' && !isMinimal;
   const isA4 = brandKit.paperSize === 'a4';
@@ -126,10 +164,10 @@ export const LivePreview: React.FC<LivePreviewProps> = ({
             {t.livePreview}
           </span>
           <span className="text-[10px] font-mono px-1.5 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400 font-medium shrink-0">
-            {isLandscape ? (isA4 ? 'A4 Paysage' : 'Letter Landscape') : (isA4 ? 'A4' : 'US Letter')}
+            {isLandscape ? (isA4 ? `A4 ${pI18n.landscapeSuffix}` : `Letter ${pI18n.landscapeSuffix}`) : (isA4 ? 'A4' : 'US Letter')}
           </span>
           <span className="hidden xl:inline-block text-[10px] text-slate-400 italic truncate">
-            • {interfaceLang === 'fr' ? 'Édition directe en cliquant sur le texte' : 'Click text to edit directly'}
+            • {pI18n.clickToEdit}
           </span>
         </div>
 
@@ -141,7 +179,7 @@ export const LivePreview: React.FC<LivePreviewProps> = ({
             className="px-2 py-1 text-[10px] font-bold text-slate-600 dark:text-slate-300 hover:bg-white dark:hover:bg-slate-700 rounded transition-colors hidden sm:block"
             title="Fit to width"
           >
-            {interfaceLang === 'fr' ? 'Largeur' : 'Width'}
+            {pI18n.width}
           </button>
           <button
             type="button"

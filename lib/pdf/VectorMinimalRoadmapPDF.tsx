@@ -2,6 +2,7 @@ import React from 'react';
 import { Page, View, Text, Image, StyleSheet } from '@react-pdf/renderer';
 import { BrandKit, DocumentLang, RoadmapCustomContent, RoadmapPhaseCustom } from '@/types';
 import { DOCUMENT_TRANSLATIONS } from '@/lib/i18n/documents';
+import { MINIMAL_ROADMAP_LABELS } from '@/lib/i18n/minimal-labels';
 import { getDefaultRoadmapContent } from '@/lib/use-brand-kit';
 import { VectorQR } from './VectorQR';
 
@@ -353,90 +354,14 @@ export const VectorMinimalRoadmapPDF: React.FC<VectorMinimalRoadmapPDFProps> = (
   const normalizedLogo = normalizeLogoUrl(brandKit.logoUrl);
   const hasUserQR = Boolean(brandKit.qrUrl && brandKit.qrUrl.trim().length > 0 && brandKit.qrUrl !== 'https://logoloom.app');
 
-  const defaultQrLabel = docLang === 'fr'
-    ? 'Scannez pour réserver'
-    : docLang === 'de'
-    ? 'Scannen zum Buchen'
-    : docLang === 'es'
-    ? 'Escanear para reservar'
-    : docLang === 'it'
-    ? 'Scansiona per prenotare'
-    : docLang === 'pt'
-    ? 'Digitalize para agendar'
-    : 'Scan to book a session';
-  const qrDisplayLabel = brandKit.qrLabel || defaultQrLabel;
-
-  const projectLabel = docLang === 'fr'
-    ? 'Projet / Client :'
-    : docLang === 'de'
-    ? 'Projekt / Kunde:'
-    : docLang === 'es'
-    ? 'Proyecto / Cliente:'
-    : docLang === 'it'
-    ? 'Progetto / Cliente:'
-    : docLang === 'pt'
-    ? 'Projeto / Cliente:'
-    : 'Project / Client:';
-
-  const horizonLabel = docLang === 'fr'
-    ? 'Horizon cible :'
-    : docLang === 'de'
-    ? 'Zielhorizont:'
-    : docLang === 'es'
-    ? 'Horizonte objetivo:'
-    : docLang === 'it'
-    ? 'Orizzonte obiettivo:'
-    : docLang === 'pt'
-    ? 'Horizonte alvo:'
-    : 'Target Horizon:';
-
-  const milestoneLabel = docLang === 'fr'
-    ? 'Jalon clé :'
-    : docLang === 'de'
-    ? 'Hauptmeilenstein:'
-    : docLang === 'es'
-    ? 'Hito clave:'
-    : docLang === 'it'
-    ? 'Traguardo chiave:'
-    : docLang === 'pt'
-    ? 'Marco principal:'
-    : 'Key Milestone:';
-
-  const clientSignLabel = docLang === 'fr'
-    ? 'Validation client :'
-    : docLang === 'de'
-    ? 'Kundenfreigabe:'
-    : docLang === 'es'
-    ? 'Firma del cliente:'
-    : docLang === 'it'
-    ? 'Firma del cliente:'
-    : docLang === 'pt'
-    ? 'Assinatura do cliente:'
-    : 'Client Sign-off:';
-
-  const advisorSignLabel = docLang === 'fr'
-    ? 'Signature conseil :'
-    : docLang === 'de'
-    ? 'Berater-Freigabe:'
-    : docLang === 'es'
-    ? 'Firma del asesor:'
-    : docLang === 'it'
-    ? 'Firma del consulente:'
-    : docLang === 'pt'
-    ? 'Assinatura do consultor:'
-    : 'Advisor Sign-off:';
-
-  const pageLabel = docLang === 'fr'
-    ? 'Feuille de route stratégique • Page 1 sur 1'
-    : docLang === 'de'
-    ? 'Strategische Roadmap • Seite 1 von 1'
-    : docLang === 'es'
-    ? 'Hoja de ruta estratégica • Página 1 de 1'
-    : docLang === 'it'
-    ? 'Tabella di marcia strategica • Pagina 1 di 1'
-    : docLang === 'pt'
-    ? 'Roteiro estratégico • Página 1 de 1'
-    : 'Strategic Roadmap • Page 1 of 1';
+  const l = MINIMAL_ROADMAP_LABELS[docLang] || MINIMAL_ROADMAP_LABELS.en;
+  const qrDisplayLabel = brandKit.qrLabel || l.defaultQr;
+  const projectLabel = l.project;
+  const horizonLabel = l.horizon;
+  const milestoneLabel = l.milestone;
+  const clientSignLabel = l.clientSign;
+  const advisorSignLabel = l.advisorSign;
+  const pageLabel = l.page;
 
   const phases: RoadmapPhaseCustom[] = content.phases || [
     { title: t.phase1.title, daysLabel: t.phase1.range, deliverables: t.phase1.deliverables, kpi: t.phase1.kpiValue },
@@ -593,7 +518,7 @@ export const VectorMinimalRoadmapPDF: React.FC<VectorMinimalRoadmapPDFProps> = (
         {/* Watermark / LogoLoom Badge (Free) or Verified (Pro) */}
         <View>
           {brandKit.removeWatermark ? (
-            <Text style={styles.proVerified}>VERIFIED PRINT DOCUMENT</Text>
+            <Text style={styles.proVerified}>{l.verified.toUpperCase()}</Text>
           ) : (
             <View style={styles.watermarkBadge}>
               <VectorQR
@@ -603,7 +528,7 @@ export const VectorMinimalRoadmapPDF: React.FC<VectorMinimalRoadmapPDFProps> = (
                 lightColor="#FFFFFF"
               />
               <View style={styles.watermarkTextCol}>
-                <Text style={styles.watermarkText}>Made with</Text>
+                <Text style={styles.watermarkText}>{l.madeWith}</Text>
                 <Text style={styles.watermarkDomain}>logoloom.app</Text>
               </View>
             </View>

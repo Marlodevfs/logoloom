@@ -1,8 +1,9 @@
 'use client';
 
 import React from 'react';
-import { BrandKit } from '@/types';
+import { BrandKit, DocumentLang } from '@/types';
 import { DOCUMENT_TRANSLATIONS } from '@/lib/i18n/documents';
+import { MINIMAL_WELCOME_LABELS } from '@/lib/i18n/minimal-labels';
 import { getDefaultWelcomePacketContent } from '@/lib/use-brand-kit';
 import { TemplateFrame } from './TemplateFrame';
 
@@ -11,8 +12,9 @@ interface WelcomePacketTemplateProps {
 }
 
 export const WelcomePacketTemplate: React.FC<WelcomePacketTemplateProps> = ({ brandKit }) => {
-  const docLang = brandKit.documentLang || 'en';
+  const docLang: DocumentLang = brandKit.documentLang || 'en';
   const t = (DOCUMENT_TRANSLATIONS[docLang] || DOCUMENT_TRANSLATIONS.en).welcomePacket;
+  const l = MINIMAL_WELCOME_LABELS[docLang] || MINIMAL_WELCOME_LABELS.en;
   const content = brandKit.welcomePacketContent || getDefaultWelcomePacketContent(docLang);
 
   const subtitleRight = docLang === 'fr'
@@ -202,9 +204,9 @@ export const WelcomePacketTemplate: React.FC<WelcomePacketTemplateProps> = ({ br
                 {t.schedulePrompt}
               </p>
               <p className="text-[10px] text-slate-400">
-                {docLang === 'fr' ? 'Votre interlocuteur principal est ' : 'Your primary point of contact is '}
+                {l.contactPrompt}
                 <span className="text-white font-medium">
-                  {brandKit.coachName || (docLang === 'fr' ? 'Votre Référent' : 'Your Practitioner')}
+                  {brandKit.coachName || l.practitionerPlaceholder}
                 </span>
               </p>
             </div>
@@ -212,7 +214,7 @@ export const WelcomePacketTemplate: React.FC<WelcomePacketTemplateProps> = ({ br
 
           <div className="text-right">
             <span className="text-[10px] font-mono text-slate-300 bg-slate-800 px-2.5 py-1 rounded border border-slate-700">
-              {docLang === 'fr' ? 'SESSION DE CADRAGE 01' : 'KICKOFF SESSION 01'}
+              {l.kickoffBadge}
             </span>
           </div>
         </div>

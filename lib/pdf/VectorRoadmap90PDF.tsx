@@ -1,7 +1,8 @@
 import React from 'react';
 import { View, Text, StyleSheet } from '@react-pdf/renderer';
-import { BrandKit } from '@/types';
+import { BrandKit, DocumentLang } from '@/types';
 import { DOCUMENT_TRANSLATIONS } from '@/lib/i18n/documents';
+import { MINIMAL_ROADMAP_LABELS } from '@/lib/i18n/minimal-labels';
 import { PDFTemplateFrame } from './PDFTemplateFrame';
 
 interface VectorRoadmap90PDFProps {
@@ -313,8 +314,9 @@ export const VectorRoadmap90PDF: React.FC<VectorRoadmap90PDFProps> = ({ brandKit
     ? 'Assinatura'
     : 'Signature';
 
-  const goalText = docLang === 'fr' ? 'Définir l’objectif clé' : 'Define primary goal';
-  const horizonText = docLang === 'fr' ? '90 jours ouvrés' : '90 Business Days';
+  const l = MINIMAL_ROADMAP_LABELS[docLang as DocumentLang] || MINIMAL_ROADMAP_LABELS.en;
+  const goalText = l.missionPlaceholder;
+  const horizonText = l.horizonPlaceholder;
 
   return (
     <PDFTemplateFrame
