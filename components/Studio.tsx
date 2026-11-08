@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import { Sliders, X } from 'lucide-react';
 import { useBrandKit } from '@/lib/use-brand-kit';
 import { UI_TRANSLATIONS } from '@/lib/i18n/interface';
+import { InterfaceLang } from '@/types';
 import { Header } from './Header';
 import { LogoUploader } from './LogoUploader';
 import { ColorPicker } from './ColorPicker';
@@ -34,6 +35,11 @@ export const Studio: React.FC = () => {
 
   const t = UI_TRANSLATIONS[interfaceLang] || UI_TRANSLATIONS.en;
 
+  const handleLanguageChange = (lang: InterfaceLang) => {
+    setInterfaceLang(lang);
+    updateBrandKit({ documentLang: lang });
+  };
+
   if (!isLoaded) {
     return (
       <div className="min-h-screen bg-slate-50 dark:bg-slate-950 flex items-center justify-center">
@@ -50,7 +56,7 @@ export const Studio: React.FC = () => {
       {/* Top Application Header */}
       <Header
         interfaceLang={interfaceLang}
-        onLanguageChange={setInterfaceLang}
+        onLanguageChange={handleLanguageChange}
         onOpenProModal={() => setIsProModalOpen(true)}
       />
 
