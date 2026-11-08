@@ -56,7 +56,7 @@ export const Studio: React.FC<StudioProps> = ({ initialLang }) => {
       />
 
       {/* Hero Section: Live Studio Above the Fold */}
-      <div className="max-w-7xl w-full mx-auto p-3 sm:p-5 lg:p-6 flex flex-col lg:flex-row gap-5 overflow-hidden">
+      <div className="max-w-7xl w-full mx-auto p-3 sm:p-5 lg:p-6 flex flex-col lg:flex-row gap-5">
         {/* Left Panel: Calm 5-Step Progressive Disclosure (Desktop: Fixed 410px) */}
         <div className="hidden lg:flex flex-col w-[410px] shrink-0 bg-white dark:bg-slate-900 rounded-2xl border border-slate-200/80 dark:border-slate-800 shadow-xs p-5 space-y-4 h-[calc(100vh-6rem)] overflow-y-auto">
           {/* 1. Drag-and-drop logo upload */}
@@ -122,7 +122,7 @@ export const Studio: React.FC<StudioProps> = ({ initialLang }) => {
         </div>
 
         {/* Right Panel: Large Live Preview with Click-To-Edit */}
-        <div className="flex-1 flex flex-col h-[calc(100vh-6rem)] min-h-[500px]">
+        <div className="flex-1 min-w-0 flex flex-col h-[calc(100vh-6rem)] min-h-[500px]">
           <LivePreview
             brandKit={brandKit}
             activeTemplate={activeTemplate}

@@ -31,7 +31,7 @@ function waitForServer(url, timeout = 30000) {
 }
 
 async function run() {
-  console.log('🚀 Starting Next.js server on 127.0.0.1:3010 for Template A verification...');
+  console.log('🚀 Starting Next.js server on 127.0.0.1:3010 for verification...');
   const server = spawn('cmd.exe', ['/c', 'npx.cmd', 'next', 'start', '-H', '127.0.0.1', '-p', '3010'], {
     cwd: path.join(__dirname, '..'),
     stdio: 'inherit',
@@ -44,31 +44,43 @@ async function run() {
 
     const browser = await chromium.launch();
 
-    // 1. Desktop French Studio with Template A
-    const desktopContext = await browser.newContext({
-      viewport: { width: 1440, height: 960 },
+    // 1. Laptop Viewport (1280x800) - Exactly matching user screen width!
+    const laptopContext = await browser.newContext({
+      viewport: { width: 1280, height: 800 },
       deviceScaleFactor: 2,
     });
-    const pageFr = await desktopContext.newPage();
-    await pageFr.goto('http://127.0.0.1:3010/fr', { waitUntil: 'networkidle' });
-    await pageFr.waitForSelector('#logoloom-pdf-target', { timeout: 10000 });
+    const pageLaptop = await laptopContext.newPage();
+    await pageLaptop.goto('http://127.0.0.1:3010/fr', { waitUntil: 'networkidle' });
+    await pageLaptop.waitForSelector('#logoloom-pdf-target', { timeout: 10000 });
+    await pageLaptop.waitForTimeout(1000);
 
-    // Ensure document lang is FR and habit-tracker is active
-    await pageFr.waitForTimeout(1000);
+    const laptopPath = path.join(artifactDir, 'template-a-redesign-fr.png');
+    await pageLaptop.screenshot({ path: laptopPath });
+    console.log(`📸 Saved Laptop (1280x800) screenshot to ${laptopPath}`);
 
-    const desktopFrPath = path.join(artifactDir, 'template-a-redesign-fr.png');
-    await pageFr.screenshot({ path: desktopFrPath });
-    console.log(`📸 Saved Desktop FR screenshot to ${desktopFrPath}`);
-
-    // Also take a focused screenshot of the #logoloom-pdf-target
-    const templateElement = await pageFr.$('#logoloom-pdf-target');
+    // Capture the document target on laptop
+    const templateElement = await pageLaptop.$('#logoloom-pdf-target');
     if (templateElement) {
       const targetOnlyPath = path.join(artifactDir, 'template-a-document-only.png');
       await templateElement.screenshot({ path: targetOnlyPath });
       console.log(`📸 Saved Document Only screenshot to ${targetOnlyPath}`);
     }
 
-    // 2. Mobile View
+    // 2. Large Desktop (1440x960)
+    const desktopContext = await browser.newContext({
+      viewport: { width: 1440, height: 960 },
+      deviceScaleFactor: 2,
+    });
+    const pageDesktop = await desktopContext.newPage();
+    await pageDesktop.goto('http://127.0.0.1:3010/fr', { waitUntil: 'networkidle' });
+    await pageDesktop.waitForSelector('#logoloom-pdf-target', { timeout: 10000 });
+    await pageDesktop.waitForTimeout(1000);
+
+    const desktopPath = path.join(artifactDir, 'template-a-desktop-1440.png');
+    await pageDesktop.screenshot({ path: desktopPath });
+    console.log(`📸 Saved Desktop (1440x960) screenshot to ${desktopPath}`);
+
+    // 3. Mobile View (390x844)
     const mobileContext = await browser.newContext({
       viewport: { width: 390, height: 844 },
       isMobile: true,
@@ -82,10 +94,10 @@ async function run() {
 
     const mobilePath = path.join(artifactDir, 'template-a-redesign-mobile.png');
     await mobilePage.screenshot({ path: mobilePath });
-    console.log(`📸 Saved Mobile FR screenshot to ${mobilePath}`);
+    console.log(`📸 Saved Mobile screenshot to ${mobilePath}`);
 
     await browser.close();
-    console.log('🎉 Template A screenshots captured successfully!');
+    console.log('🎉 All verification screenshots captured successfully!');
   } finally {
     server.kill('SIGTERM');
     try {
@@ -95,6 +107,6 @@ async function run() {
 }
 
 run().catch((err) => {
-  console.error('Template A test failed:', err);
+  console.error('Verification failed:', err);
   process.exit(1);
 });
