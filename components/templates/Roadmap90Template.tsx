@@ -78,9 +78,13 @@ export const Roadmap90Template: React.FC<Roadmap90TemplateProps> = ({ brandKit }
                   {categoryLabel}
                 </span>
               </div>
-              <h1 className="text-xl font-extrabold text-slate-900 mt-0.5 tracking-tight">
+              <div
+                role="heading"
+                aria-level={2}
+                className="text-xl font-extrabold text-slate-900 mt-0.5 tracking-tight"
+              >
                 {content.title || t.title}
-              </h1>
+              </div>
               <p className="text-xs text-slate-500 mt-0.5 max-w-xl">
                 {content.subtitle || t.subtitle}
               </p>

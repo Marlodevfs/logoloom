@@ -108,7 +108,9 @@ export const HabitTrackerTemplate: React.FC<HabitTrackerTemplateProps> = ({
                 className="text-xl font-serif font-bold text-slate-900 tracking-tight leading-tight w-full bg-indigo-50/50 border border-indigo-400 rounded px-1.5 py-0.5 outline-none"
               />
             ) : (
-              <h1
+              <div
+                role="heading"
+                aria-level={2}
                 onClick={() => onUpdate && setEditingField('title')}
                 title={onUpdate ? 'Cliquez pour modifier le titre' : undefined}
                 className={`text-xl font-serif font-bold text-slate-900 tracking-tight leading-tight ${
@@ -116,7 +118,7 @@ export const HabitTrackerTemplate: React.FC<HabitTrackerTemplateProps> = ({
                 }`}
               >
                 {habitContent.title || t.title}
-              </h1>
+              </div>
             )}
 
             {/* Editable Subtitle */}

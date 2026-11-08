@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
+import Link from 'next/link';
 import { Sparkles, ShieldCheck, Download, Zap, Eye, Check, Lock, ChevronRight, FileText } from 'lucide-react';
 import { InterfaceLang, TemplateId } from '@/types';
 import { UI_TRANSLATIONS } from '@/lib/i18n/interface';
@@ -27,7 +28,7 @@ export const LandingSections: React.FC<LandingSectionsProps> = ({
     <div className="w-full bg-white dark:bg-slate-900 border-t border-slate-200/80 dark:border-slate-800 transition-colors">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-24 space-y-20 sm:space-y-28">
         {/* SECTION 1: How It Works in 3 Steps */}
-        <section className="space-y-12">
+        <section id="how-it-works" className="space-y-12">
           <div className="text-center max-w-2xl mx-auto space-y-2.5">
             <span className="text-xs font-bold uppercase tracking-widest text-indigo-600 dark:text-indigo-400">
               Effortless Workflow
@@ -99,7 +100,7 @@ export const LandingSections: React.FC<LandingSectionsProps> = ({
         </section>
 
         {/* SECTION 2: Handcrafted Templates Showcase */}
-        <section className="space-y-12">
+        <section id="templates" className="space-y-12">
           <div className="text-center max-w-2xl mx-auto space-y-2.5">
             <span className="text-xs font-bold uppercase tracking-widest text-indigo-600 dark:text-indigo-400">
               Print-Ready Excellence
@@ -295,7 +296,7 @@ export const LandingSections: React.FC<LandingSectionsProps> = ({
         </section>
 
         {/* SECTION 3: Privacy by Design */}
-        <section className="rounded-3xl bg-slate-900 text-white p-8 sm:p-12 relative overflow-hidden">
+        <section id="privacy" className="rounded-3xl bg-slate-900 text-white p-8 sm:p-12 relative overflow-hidden">
           <div className="max-w-2xl space-y-4 relative z-10">
             <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-slate-800 border border-slate-700 text-xs text-emerald-400 font-semibold">
               <Lock className="w-3.5 h-3.5" />
@@ -328,7 +329,7 @@ export const LandingSections: React.FC<LandingSectionsProps> = ({
         </section>
 
         {/* SECTION 4: Simple Pricing */}
-        <section className="space-y-12">
+        <section id="pricing" className="space-y-12">
           <div className="text-center max-w-2xl mx-auto space-y-2.5">
             <span className="text-xs font-bold uppercase tracking-widest text-indigo-600 dark:text-indigo-400">
               Transparent Pricing
@@ -442,28 +443,145 @@ export const LandingSections: React.FC<LandingSectionsProps> = ({
         </section>
 
         {/* SECTION 5: Footer */}
-        <footer className="pt-8 border-t border-slate-200/80 dark:border-slate-800 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-400 space-y-4 sm:space-y-0">
-          <div className="flex items-center space-x-3">
-            <span className="font-extrabold text-slate-700 dark:text-slate-300">LogoLoom</span>
-            <span>•</span>
-            <span>{t.footerRights}</span>
+        <footer className="pt-10 pb-6 border-t border-slate-200/80 dark:border-slate-800 space-y-8 text-xs text-slate-500 dark:text-slate-400">
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-6">
+            {/* Col 1: Brand & Tagline */}
+            <div className="col-span-2 sm:col-span-1 space-y-2">
+              <div className="flex items-center space-x-2">
+                <span className="font-extrabold text-sm text-slate-900 dark:text-white">LogoLoom</span>
+                <span className="text-[10px] font-mono px-1.5 py-0.2 rounded bg-indigo-50 dark:bg-indigo-950/60 text-indigo-600 dark:text-indigo-400 font-semibold border border-indigo-200/60 dark:border-indigo-800/40">app</span>
+              </div>
+              <p className="text-[11px] text-slate-500 leading-relaxed">
+                {t.appTagline}
+              </p>
+              <div className="pt-2 flex items-center space-x-2">
+                <a
+                  href={`https://twitter.com/intent/tweet?text=${encodeURIComponent('Turn generic client documents into branded PDFs in 2 minutes with LogoLoom')}&url=${encodeURIComponent('https://logoloom.app')}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="px-2 py-1 rounded bg-slate-100 dark:bg-slate-800 hover:text-indigo-600 dark:hover:text-indigo-400 text-[10px] font-semibold transition-colors"
+                >
+                  Share on X
+                </a>
+                <a
+                  href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent('https://logoloom.app')}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="px-2 py-1 rounded bg-slate-100 dark:bg-slate-800 hover:text-indigo-600 dark:hover:text-indigo-400 text-[10px] font-semibold transition-colors"
+                >
+                  Share on LinkedIn
+                </a>
+              </div>
+            </div>
+
+            {/* Col 2: Navigation Links */}
+            <div className="space-y-2">
+              <span className="font-bold text-slate-900 dark:text-white uppercase tracking-wider text-[10px]">
+                Product
+              </span>
+              <ul className="space-y-1.5 text-[11px]">
+                <li>
+                  <Link href="#how-it-works" className="hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">
+                    {t.howItWorksTitle}
+                  </Link>
+                </li>
+                <li>
+                  <Link href="#templates" className="hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">
+                    {t.showcaseTitle}
+                  </Link>
+                </li>
+                <li>
+                  <Link href="#pricing" className="hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">
+                    {t.pricingTitle}
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/pricing" className="hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors font-medium text-indigo-600 dark:text-indigo-400">
+                    Pro White-Label Plan
+                  </Link>
+                </li>
+              </ul>
+            </div>
+
+            {/* Col 3: Languages */}
+            <div className="space-y-2">
+              <span className="font-bold text-slate-900 dark:text-white uppercase tracking-wider text-[10px]">
+                Languages
+              </span>
+              <ul className="grid grid-cols-2 gap-1 text-[11px]">
+                <li><Link href="/en" className="hover:text-indigo-600">English</Link></li>
+                <li><Link href="/fr" className="hover:text-indigo-600">Français</Link></li>
+                <li><Link href="/de" className="hover:text-indigo-600">Deutsch</Link></li>
+                <li><Link href="/es" className="hover:text-indigo-600">Español</Link></li>
+                <li><Link href="/it" className="hover:text-indigo-600">Italiano</Link></li>
+                <li><Link href="/pt" className="hover:text-indigo-600">Português</Link></li>
+              </ul>
+            </div>
+
+            {/* Col 4: Legal & External */}
+            <div className="space-y-2">
+              <span className="font-bold text-slate-900 dark:text-white uppercase tracking-wider text-[10px]">
+                Legal & Connect
+              </span>
+              <ul className="space-y-1.5 text-[11px]">
+                <li>
+                  <button
+                    type="button"
+                    onClick={() => setActiveLegalModal('privacy')}
+                    className="hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors text-left"
+                  >
+                    {t.footerPrivacy}
+                  </button>
+                </li>
+                <li>
+                  <button
+                    type="button"
+                    onClick={() => setActiveLegalModal('terms')}
+                    className="hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors text-left"
+                  >
+                    {t.footerTerms}
+                  </button>
+                </li>
+                <li>
+                  <a
+                    href="https://github.com/Marlodevfs/logoloom"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors inline-flex items-center space-x-1"
+                  >
+                    <span>GitHub</span>
+                    <span>↗</span>
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="https://twitter.com/logoloom"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors inline-flex items-center space-x-1"
+                  >
+                    <span>Twitter / X</span>
+                    <span>↗</span>
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="mailto:support@logoloom.app"
+                    className="hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors"
+                  >
+                    support@logoloom.app
+                  </a>
+                </li>
+              </ul>
+            </div>
           </div>
 
-          <div className="flex items-center space-x-6">
-            <button
-              type="button"
-              onClick={() => setActiveLegalModal('privacy')}
-              className="hover:text-slate-600 dark:hover:text-slate-200 transition-colors"
-            >
-              {t.footerPrivacy}
-            </button>
-            <button
-              type="button"
-              onClick={() => setActiveLegalModal('terms')}
-              className="hover:text-slate-600 dark:hover:text-slate-200 transition-colors"
-            >
-              {t.footerTerms}
-            </button>
+          <div className="pt-6 border-t border-slate-200/60 dark:border-slate-800/60 flex flex-col sm:flex-row items-center justify-between text-[11px] text-slate-400">
+            <span>© {new Date().getFullYear()} LogoLoom. {t.footerRights}</span>
+            <div className="flex items-center space-x-2 mt-2 sm:mt-0">
+              <ShieldCheck className="w-3.5 h-3.5 text-emerald-500" />
+              <span>100% Client-Side Privacy</span>
+            </div>
           </div>
         </footer>
       </div>

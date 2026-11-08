@@ -161,13 +161,15 @@ export const MinimalWelcomePacketTemplate: React.FC<MinimalWelcomePacketTemplate
               className="text-xl font-extrabold tracking-tight text-slate-900 border-b-2 border-indigo-500 outline-none w-full bg-indigo-50/40 px-1 py-0.5 rounded"
             />
           ) : (
-            <h1
+            <div
+              role="heading"
+              aria-level={2}
               onClick={() => setEditingField('title')}
               title="Click to edit title"
               className="text-xl font-bold tracking-tight text-slate-900 hover:text-indigo-600 transition-colors cursor-pointer"
             >
               {content.title || t.title}
-            </h1>
+            </div>
           )}
           {content.subtitle && (
             <p className="text-[11px] text-slate-500 mt-0.5">{content.subtitle}</p>
@@ -176,7 +178,7 @@ export const MinimalWelcomePacketTemplate: React.FC<MinimalWelcomePacketTemplate
       </header>
 
       {/* Body: 4 Clean Minimal Sections */}
-      <main className="flex-1 flex flex-col justify-between py-1">
+      <section className="flex-1 flex flex-col justify-between py-1">
         {/* 1. Welcome Message */}
         <section className="py-2 border-b border-slate-100">
           <div className="flex items-center space-x-2 mb-1.5">
@@ -277,7 +279,7 @@ export const MinimalWelcomePacketTemplate: React.FC<MinimalWelcomePacketTemplate
             ))}
           </div>
         </section>
-      </main>
+      </section>
 
       {/* Footer */}
       <footer className="border-t border-slate-200 pt-2 mt-1 flex items-center justify-between text-xs text-slate-500 shrink-0">

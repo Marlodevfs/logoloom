@@ -11,23 +11,23 @@ export interface LocaleMeta {
 
 export const LOCALES_METADATA: Record<InterfaceLang, LocaleMeta> = {
   en: {
-    title: 'LogoLoom — Brand Client Documents in 2 Minutes (Zero Friction)',
+    title: 'LogoLoom — Brand Client Documents in 2 Minutes',
     description:
-      'Turn generic client documents into branded, print-ready PDFs in under 2 minutes. Drop your logo, pick your brand color, and download instant PDFs with zero account or signup.',
+      'Turn generic client documents into branded, print-ready PDFs in 2 minutes. Add your logo, pick colors, and download vector PDFs with zero signup.',
     ogLocale: 'en_US',
     langName: 'English',
     flag: '🇺🇸',
   },
   fr: {
-    title: 'LogoLoom — Personnalisez vos documents clients en 2 minutes (Gratuit & Privé)',
+    title: 'LogoLoom — Documents clients personnalisés en 2 minutes',
     description:
-      'Transformez vos modèles en PDF prêts à imprimer avec votre logo, vos couleurs et un QR code vectoriel. 100% privé, sans compte ni inscription.',
+      'Transformez vos modèles en PDF prêts à imprimer avec votre logo et vos couleurs. Export vectoriel haute résolution, 100% privé et sans inscription.',
     ogLocale: 'fr_FR',
     langName: 'Français',
     flag: '🇫🇷',
   },
   es: {
-    title: 'LogoLoom — Personaliza documentos para clientes en 2 minutos (Sin registro)',
+    title: 'LogoLoom — Documentos para clientes en 2 minutos',
     description:
       'Convierte documentos en PDFs profesionales con tu logotipo, color de marca y código QR vectorial en minutos. 100% privado y gratuito.',
     ogLocale: 'es_ES',
@@ -35,25 +35,25 @@ export const LOCALES_METADATA: Record<InterfaceLang, LocaleMeta> = {
     flag: '🇪🇸',
   },
   de: {
-    title: 'LogoLoom — Kundendokumente in 2 Minuten branden (100% lokal & privat)',
+    title: 'LogoLoom — Kundendokumente in 2 Minuten erstellen',
     description:
-      'Erstellen Sie druckfertige Vektor-PDFs mit Ihrem Logo, Ihrer Markenfarbe und individuellem QR-Code. Ohne Konto, ohne Registrierung, sofort einsatzbereit.',
+      'Erstellen Sie druckfertige Vektor-PDFs mit Ihrem Logo und Ihrer Markenfarbe in 2 Minuten. 100% lokal und privat, ohne Registrierung.',
     ogLocale: 'de_DE',
     langName: 'Deutsch',
     flag: '🇩🇪',
   },
   pt: {
-    title: 'LogoLoom — Personalize documentos de clientes em 2 minutos (Sem cadastro)',
+    title: 'LogoLoom — Documentos para clientes em 2 minutos',
     description:
-      'Gere PDFs vetoriais prontos para impressão com seu logotipo, paleta de cores e QR code integrado. Gratuito, sem criação de conta e 100% privado.',
+      'Gere PDFs vetoriais para impressão com seu logotipo e cores de marca em 2 minutos. Rápido, 100% privado e sem necessidade de cadastro.',
     ogLocale: 'pt_PT',
     langName: 'Português',
     flag: '🇵🇹',
   },
   it: {
-    title: 'LogoLoom — Personalizza i documenti dei tuoi clienti in 2 minuti (Senza registrazione)',
+    title: 'LogoLoom — Documenti cliente pronti in 2 minuti',
     description:
-      'Crea PDF vettoriali stampabili con il tuo logo, colore del brand e QR code personalizzato in meno di 2 minuti. Gratuito e 100% nel tuo browser.',
+      'Crea PDF vettoriali per la stampa con il tuo logo e i tuoi colori in meno di 2 minuti. Gratuito, 100% privato e senza registrazione.',
     ogLocale: 'it_IT',
     langName: 'Italiano',
     flag: '🇮🇹',

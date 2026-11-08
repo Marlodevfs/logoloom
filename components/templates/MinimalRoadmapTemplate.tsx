@@ -158,13 +158,15 @@ export const MinimalRoadmapTemplate: React.FC<MinimalRoadmapTemplateProps> = ({
                 className="text-xl font-extrabold tracking-tight text-slate-900 border-b-2 border-indigo-500 outline-none w-full bg-indigo-50/40 px-1 py-0.5 rounded"
               />
             ) : (
-              <h1
+              <div
+                role="heading"
+                aria-level={2}
                 onClick={() => setEditingField('title')}
                 title="Click to edit title"
                 className="text-xl font-bold tracking-tight text-slate-900 hover:text-indigo-600 transition-colors cursor-pointer"
               >
                 {content.title || t.title}
-              </h1>
+              </div>
             )}
             {content.subtitle && (
               <p className="text-[11px] text-slate-500 mt-0.5">{content.subtitle}</p>

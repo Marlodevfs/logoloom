@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import { Sliders, Eye } from 'lucide-react';
 import { useBrandKit } from '@/lib/use-brand-kit';
 import { UI_TRANSLATIONS } from '@/lib/i18n/interface';
+import { LOCALES_METADATA } from '@/lib/i18n/meta';
 import { InterfaceLang } from '@/types';
 import { Header } from './Header';
 import { LogoUploader } from './LogoUploader';
@@ -156,8 +157,18 @@ export const Studio: React.FC<StudioProps> = ({ initialLang }) => {
         onOpenProModal={() => setIsProModalOpen(true)}
       />
 
-      {/* Hero Section: Live Studio Above the Fold */}
-      <div className="max-w-7xl w-full mx-auto p-3 sm:p-5 lg:p-6 flex flex-col lg:flex-row gap-5">
+      <main className="flex-1 w-full flex flex-col">
+        {/* Semantic SEO Page Heading & Intro Paragraph */}
+        <header className="sr-only">
+          <h1>{LOCALES_METADATA[interfaceLang]?.title || 'LogoLoom — Brand Client Documents in 2 Minutes'}</h1>
+          <p>
+            {LOCALES_METADATA[interfaceLang]?.description ||
+              'Turn generic client documents into branded, print-ready PDFs in 2 minutes. Add your logo, choose colors, and download vector PDFs with zero signup.'}
+          </p>
+        </header>
+
+        {/* Hero Section: Live Studio Above the Fold */}
+        <div className="max-w-7xl w-full mx-auto p-3 sm:p-5 lg:p-6 flex flex-col lg:flex-row gap-5">
         {/* Mobile View Mode Switcher: [ ✏️ 1. Personnaliser | 👁️ 2. Aperçu direct ] */}
         <div className="lg:hidden flex items-center p-1 bg-slate-200/90 dark:bg-slate-800/90 rounded-2xl mb-1 shadow-inner border border-slate-200 dark:border-slate-700/80 shrink-0">
           <button
@@ -262,6 +273,7 @@ export const Studio: React.FC<StudioProps> = ({ initialLang }) => {
         onSelectTemplate={setActiveTemplate}
         onOpenProModal={() => setIsProModalOpen(true)}
       />
+      </main>
 
       {/* Pro Modal */}
       <ProModal
