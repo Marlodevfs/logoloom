@@ -355,8 +355,8 @@ export const ContentEditorStep: React.FC<ContentEditorStepProps> = ({
                 </div>
               </div>
 
-              {/* Weekly Questions */}
-              {habitContent.showWeeklyCheckins && (
+              {/* Weekly Questions (Complete style only) */}
+              {brandKit.designStyle === 'complete' && habitContent.showWeeklyCheckins && (
                 <div className="space-y-2 pt-1 border-t border-slate-100 dark:border-slate-800/80">
                   <label className="text-[11px] font-bold text-slate-700 dark:text-slate-300 block">
                     {isFrench ? 'Questions de bilan hebdomadaire (4 semaines)' : 'Weekly Check-in Prompts (4 weeks)'}
@@ -380,8 +380,8 @@ export const ContentEditorStep: React.FC<ContentEditorStepProps> = ({
                 </div>
               )}
 
-              {/* Coach Note */}
-              {habitContent.showCoachNote && (
+              {/* Coach Note (Complete style only) */}
+              {brandKit.designStyle === 'complete' && habitContent.showCoachNote && (
                 <div className="space-y-1.5 pt-1 border-t border-slate-100 dark:border-slate-800/80">
                   <div className="flex justify-between items-center mb-1">
                     <label className="text-[11px] font-semibold text-slate-700 dark:text-slate-300">
@@ -413,46 +413,74 @@ export const ContentEditorStep: React.FC<ContentEditorStepProps> = ({
               {/* Display Toggles */}
               <div className="space-y-2 pt-2 border-t border-slate-100 dark:border-slate-800/80">
                 <label className="text-[11px] font-bold text-slate-700 dark:text-slate-300 block">
-                  {isFrench ? 'Éléments affichés sur le PDF' : 'Display Options'}
+                  {isFrench ? 'Options d’affichage sur le PDF' : 'Display Options'}
                 </label>
 
-                <div className="space-y-1.5">
-                  <label className="flex items-center justify-between p-2 rounded-lg border border-slate-200 dark:border-slate-700/80 hover:bg-slate-50 dark:hover:bg-slate-800/50 cursor-pointer">
-                    <span className="text-[11px] text-slate-700 dark:text-slate-300">
-                      {isFrench ? 'Colonne score (___ / 30)' : 'Score column (___ / 30)'}
-                    </span>
-                    <input
-                      type="checkbox"
-                      checked={habitContent.showScoreColumn}
-                      onChange={(e) => updateHabitContent({ showScoreColumn: e.target.checked })}
-                      className="rounded border-slate-300 text-indigo-600 focus:ring-indigo-500 h-4 w-4"
-                    />
-                  </label>
+                {brandKit.designStyle === 'minimal' ? (
+                  <div className="space-y-1.5">
+                    <label className="flex items-center justify-between p-2 rounded-lg border border-slate-200 dark:border-slate-700/80 hover:bg-slate-50 dark:hover:bg-slate-800/50 cursor-pointer">
+                      <span className="text-[11px] text-slate-700 dark:text-slate-300">
+                        {isFrench ? 'Colonne "Notes" à droite' : '"Notes" column on the right'}
+                      </span>
+                      <input
+                        type="checkbox"
+                        checked={Boolean(habitContent.showNotesColumn)}
+                        onChange={(e) => updateHabitContent({ showNotesColumn: e.target.checked })}
+                        className="rounded border-slate-300 text-indigo-600 focus:ring-indigo-500 h-4 w-4"
+                      />
+                    </label>
 
-                  <label className="flex items-center justify-between p-2 rounded-lg border border-slate-200 dark:border-slate-700/80 hover:bg-slate-50 dark:hover:bg-slate-800/50 cursor-pointer">
-                    <span className="text-[11px] text-slate-700 dark:text-slate-300">
-                      {isFrench ? 'Bilans hebdomadaires (4 semaines)' : 'Weekly check-in cards'}
-                    </span>
-                    <input
-                      type="checkbox"
-                      checked={habitContent.showWeeklyCheckins}
-                      onChange={(e) => updateHabitContent({ showWeeklyCheckins: e.target.checked })}
-                      className="rounded border-slate-300 text-indigo-600 focus:ring-indigo-500 h-4 w-4"
-                    />
-                  </label>
+                    <label className="flex items-center justify-between p-2 rounded-lg border border-slate-200 dark:border-slate-700/80 hover:bg-slate-50 dark:hover:bg-slate-800/50 cursor-pointer">
+                      <span className="text-[11px] text-slate-700 dark:text-slate-300">
+                        {isFrench ? 'Ligne "Score total" en bas' : '"Total Score" row at the bottom'}
+                      </span>
+                      <input
+                        type="checkbox"
+                        checked={Boolean(habitContent.showScoreRow)}
+                        onChange={(e) => updateHabitContent({ showScoreRow: e.target.checked })}
+                        className="rounded border-slate-300 text-indigo-600 focus:ring-indigo-500 h-4 w-4"
+                      />
+                    </label>
+                  </div>
+                ) : (
+                  <div className="space-y-1.5">
+                    <label className="flex items-center justify-between p-2 rounded-lg border border-slate-200 dark:border-slate-700/80 hover:bg-slate-50 dark:hover:bg-slate-800/50 cursor-pointer">
+                      <span className="text-[11px] text-slate-700 dark:text-slate-300">
+                        {isFrench ? 'Colonne score (___ / 30)' : 'Score column (___ / 30)'}
+                      </span>
+                      <input
+                        type="checkbox"
+                        checked={habitContent.showScoreColumn}
+                        onChange={(e) => updateHabitContent({ showScoreColumn: e.target.checked })}
+                        className="rounded border-slate-300 text-indigo-600 focus:ring-indigo-500 h-4 w-4"
+                      />
+                    </label>
 
-                  <label className="flex items-center justify-between p-2 rounded-lg border border-slate-200 dark:border-slate-700/80 hover:bg-slate-50 dark:hover:bg-slate-800/50 cursor-pointer">
-                    <span className="text-[11px] text-slate-700 dark:text-slate-300">
-                      {isFrench ? 'Encadré conseil du référent' : 'Practitioner advice block'}
-                    </span>
-                    <input
-                      type="checkbox"
-                      checked={habitContent.showCoachNote}
-                      onChange={(e) => updateHabitContent({ showCoachNote: e.target.checked })}
-                      className="rounded border-slate-300 text-indigo-600 focus:ring-indigo-500 h-4 w-4"
-                    />
-                  </label>
-                </div>
+                    <label className="flex items-center justify-between p-2 rounded-lg border border-slate-200 dark:border-slate-700/80 hover:bg-slate-50 dark:hover:bg-slate-800/50 cursor-pointer">
+                      <span className="text-[11px] text-slate-700 dark:text-slate-300">
+                        {isFrench ? 'Bilans hebdomadaires (4 semaines)' : 'Weekly check-in cards'}
+                      </span>
+                      <input
+                        type="checkbox"
+                        checked={habitContent.showWeeklyCheckins}
+                        onChange={(e) => updateHabitContent({ showWeeklyCheckins: e.target.checked })}
+                        className="rounded border-slate-300 text-indigo-600 focus:ring-indigo-500 h-4 w-4"
+                      />
+                    </label>
+
+                    <label className="flex items-center justify-between p-2 rounded-lg border border-slate-200 dark:border-slate-700/80 hover:bg-slate-50 dark:hover:bg-slate-800/50 cursor-pointer">
+                      <span className="text-[11px] text-slate-700 dark:text-slate-300">
+                        {isFrench ? 'Encadré conseil du référent' : 'Practitioner advice block'}
+                      </span>
+                      <input
+                        type="checkbox"
+                        checked={habitContent.showCoachNote}
+                        onChange={(e) => updateHabitContent({ showCoachNote: e.target.checked })}
+                        className="rounded border-slate-300 text-indigo-600 focus:ring-indigo-500 h-4 w-4"
+                      />
+                    </label>
+                  </div>
+                )}
               </div>
 
               {/* Reset to defaults button */}

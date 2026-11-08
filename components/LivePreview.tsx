@@ -5,6 +5,7 @@ import { ZoomIn, ZoomOut, Maximize2 } from 'lucide-react';
 import { BrandKit, TemplateId, InterfaceLang } from '@/types';
 import { UI_TRANSLATIONS } from '@/lib/i18n/interface';
 import { HabitTrackerTemplate } from './templates/HabitTrackerTemplate';
+import { MinimalHabitTrackerTemplate } from './templates/MinimalHabitTrackerTemplate';
 import { Roadmap90Template } from './templates/Roadmap90Template';
 import { WelcomePacketTemplate } from './templates/WelcomePacketTemplate';
 
@@ -22,7 +23,8 @@ export const LivePreview: React.FC<LivePreviewProps> = ({
   onUpdate,
 }) => {
   const t = UI_TRANSLATIONS[interfaceLang] || UI_TRANSLATIONS.en;
-  const isLandscape = activeTemplate === 'habit-tracker';
+  const isMinimal = (brandKit.designStyle || 'minimal') === 'minimal';
+  const isLandscape = activeTemplate === 'habit-tracker' && !isMinimal;
   const isA4 = brandKit.paperSize === 'a4';
 
   const baseWidth = isLandscape ? (isA4 ? 1123 : 1056) : (isA4 ? 794 : 816);
@@ -67,18 +69,26 @@ export const LivePreview: React.FC<LivePreviewProps> = ({
       clearTimeout(timer);
       window.removeEventListener('resize', handleResize);
     };
-  }, [calculateFitScale, activeTemplate, brandKit.paperSize]);
+  }, [calculateFitScale, activeTemplate, brandKit.paperSize, brandKit.designStyle]);
 
   const renderActiveTemplate = () => {
     switch (activeTemplate) {
       case 'habit-tracker':
-        return <HabitTrackerTemplate brandKit={brandKit} onUpdate={onUpdate} />;
+        return isMinimal ? (
+          <MinimalHabitTrackerTemplate brandKit={brandKit} onUpdate={onUpdate} />
+        ) : (
+          <HabitTrackerTemplate brandKit={brandKit} onUpdate={onUpdate} />
+        );
       case 'roadmap-90':
         return <Roadmap90Template brandKit={brandKit} />;
       case 'welcome-packet':
         return <WelcomePacketTemplate brandKit={brandKit} />;
       default:
-        return <HabitTrackerTemplate brandKit={brandKit} onUpdate={onUpdate} />;
+        return isMinimal ? (
+          <MinimalHabitTrackerTemplate brandKit={brandKit} onUpdate={onUpdate} />
+        ) : (
+          <HabitTrackerTemplate brandKit={brandKit} onUpdate={onUpdate} />
+        );
     }
   };
 

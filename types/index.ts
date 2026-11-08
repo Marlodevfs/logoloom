@@ -2,6 +2,8 @@ export type PaperSize = 'a4' | 'letter';
 
 export type TemplateId = 'habit-tracker' | 'roadmap-90' | 'welcome-packet';
 
+export type DesignStyle = 'minimal' | 'complete';
+
 export type InterfaceLang = 'en' | 'fr' | 'es' | 'de' | 'pt' | 'it';
 export type DocumentLang = 'en' | 'fr' | 'es' | 'de' | 'pt' | 'it';
 
@@ -23,6 +25,8 @@ export interface HabitTrackerCustomContent {
   showScoreColumn: boolean;
   showWeeklyCheckins: boolean;
   showCoachNote: boolean;
+  showNotesColumn?: boolean;
+  showScoreRow?: boolean;
 }
 
 export interface RoadmapPhaseCustom {
@@ -71,6 +75,7 @@ export interface BrandKit {
   qrLabel?: string;
   paperSize: PaperSize;
   documentLang: DocumentLang;
+  designStyle: DesignStyle;
   isPro: boolean;
   removeWatermark: boolean;
   selectedTemplate?: TemplateId;

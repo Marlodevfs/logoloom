@@ -3,6 +3,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import {
   BrandKit,
+  DesignStyle,
   DocumentLang,
   HabitPackId,
   HabitTrackerCustomContent,
@@ -16,6 +17,7 @@ import { DOCUMENT_TRANSLATIONS } from './i18n/documents';
 const STORAGE_KEY = 'logoloom_brand_kit_v2';
 const TEMPLATE_KEY = 'logoloom_template_id_v2';
 const INTERFACE_LANG_KEY = 'logoloom_ui_lang_v2';
+const STYLE_KEY = 'logoloom_design_style_v1';
 const PRO_TOKEN_KEY = 'logoloom_pro_token_v1';
 
 // Elegant default sample logo (Vector SVG Data URL base64) so new users immediately see a gorgeous branded preview
@@ -53,6 +55,8 @@ export function getDefaultHabitTrackerContent(
     showScoreColumn: true,
     showWeeklyCheckins: true,
     showCoachNote: true,
+    showNotesColumn: false,
+    showScoreRow: false,
   };
 }
 
@@ -69,6 +73,7 @@ export const DEFAULT_BRAND_KIT: BrandKit = {
   qrLabel: '',
   paperSize: 'a4',
   documentLang: 'en',
+  designStyle: 'minimal', // Minimal is the DEFAULT design style
   isPro: false,
   removeWatermark: false,
 };
@@ -110,6 +115,9 @@ export function useBrandKit(initialLang?: InterfaceLang) {
           setActiveTemplate(savedTemplate);
         }
 
+        const savedStyle = localStorage.getItem(STYLE_KEY) as DesignStyle;
+        const initialStyle: DesignStyle = (savedStyle === 'minimal' || savedStyle === 'complete') ? savedStyle : 'minimal';
+
         const savedBrand = localStorage.getItem(STORAGE_KEY);
         if (savedBrand) {
           const parsed = JSON.parse(savedBrand);
@@ -117,6 +125,7 @@ export function useBrandKit(initialLang?: InterfaceLang) {
           setBrandKit((prev) => ({
             ...prev,
             ...parsed,
+            designStyle: parsed.designStyle || initialStyle,
             documentLang: docLang,
             habitTrackerContent: parsed.habitTrackerContent || getDefaultHabitTrackerContent(docLang, 'wellbeing'),
             isPro: false,
@@ -125,6 +134,7 @@ export function useBrandKit(initialLang?: InterfaceLang) {
         } else {
           setBrandKit((prev) => ({
             ...prev,
+            designStyle: initialStyle,
             documentLang: resolvedUiLang as DocumentLang,
             habitTrackerContent: getDefaultHabitTrackerContent(resolvedUiLang as DocumentLang, 'wellbeing'),
           }));
@@ -182,6 +192,7 @@ export function useBrandKit(initialLang?: InterfaceLang) {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(brandKit));
       localStorage.setItem(TEMPLATE_KEY, activeTemplate);
       localStorage.setItem(INTERFACE_LANG_KEY, interfaceLang);
+      localStorage.setItem(STYLE_KEY, brandKit.designStyle);
     } catch (e) {
       console.warn('Failed to save to localStorage', e);
     }

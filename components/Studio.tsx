@@ -85,6 +85,8 @@ export const Studio: React.FC<StudioProps> = ({ initialLang }) => {
             activeTemplate={activeTemplate}
             onSelect={setActiveTemplate}
             brandColor={brandKit.brandColor}
+            designStyle={brandKit.designStyle}
+            onStyleChange={(designStyle) => updateBrandKit({ designStyle })}
             interfaceLang={interfaceLang}
           />
 
@@ -191,6 +193,8 @@ export const Studio: React.FC<StudioProps> = ({ initialLang }) => {
                 activeTemplate={activeTemplate}
                 onSelect={setActiveTemplate}
                 brandColor={brandKit.brandColor}
+                designStyle={brandKit.designStyle}
+                onStyleChange={(designStyle) => updateBrandKit({ designStyle })}
                 interfaceLang={interfaceLang}
               />
 
