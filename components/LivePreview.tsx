@@ -1,7 +1,7 @@
 'use client';
 
-import React, { useState } from 'react';
-import { ZoomIn, ZoomOut, Maximize2, Sparkles } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { ZoomIn, ZoomOut, Maximize2 } from 'lucide-react';
 import { BrandKit, TemplateId, InterfaceLang } from '@/types';
 import { UI_TRANSLATIONS } from '@/lib/i18n/interface';
 import { HabitTrackerTemplate } from './templates/HabitTrackerTemplate';
@@ -20,7 +20,21 @@ export const LivePreview: React.FC<LivePreviewProps> = ({
   interfaceLang,
 }) => {
   const t = UI_TRANSLATIONS[interfaceLang] || UI_TRANSLATIONS.en;
-  const [zoomScale, setZoomScale] = useState<number>(0.68); // Default crisp scale to fit typical laptop viewport
+  const [zoomScale, setZoomScale] = useState<number>(0.68);
+
+  // Auto-adjust scale on mount based on screen width
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const width = window.innerWidth;
+      if (width < 640) {
+        setZoomScale(0.42); // Fits 390px iPhone perfectly
+      } else if (width < 1024) {
+        setZoomScale(0.55); // Fits iPad/tablets
+      } else {
+        setZoomScale(0.68); // Fits desktop split panel
+      }
+    }
+  }, []);
 
   const renderActiveTemplate = () => {
     switch (activeTemplate) {
@@ -36,6 +50,15 @@ export const LivePreview: React.FC<LivePreviewProps> = ({
   };
 
   const isA4 = brandKit.paperSize === 'a4';
+
+  const resetToFit = () => {
+    if (typeof window !== 'undefined') {
+      const width = window.innerWidth;
+      if (width < 640) setZoomScale(0.42);
+      else if (width < 1024) setZoomScale(0.55);
+      else setZoomScale(0.68);
+    }
+  };
 
   return (
     <div className="flex-1 flex flex-col h-full bg-slate-100/90 dark:bg-slate-950 rounded-2xl border border-slate-200/80 dark:border-slate-800/80 overflow-hidden relative shadow-inner">
@@ -55,7 +78,7 @@ export const LivePreview: React.FC<LivePreviewProps> = ({
         <div className="flex items-center space-x-1 bg-slate-100 dark:bg-slate-800/80 p-0.5 rounded-lg border border-slate-200/70 dark:border-slate-700">
           <button
             type="button"
-            onClick={() => setZoomScale(Math.max(0.45, zoomScale - 0.08))}
+            onClick={() => setZoomScale(Math.max(0.35, zoomScale - 0.08))}
             className="p-1 text-slate-500 hover:text-slate-800 dark:hover:text-white rounded hover:bg-white dark:hover:bg-slate-700 transition-colors"
             title="Zoom out"
           >
@@ -74,7 +97,7 @@ export const LivePreview: React.FC<LivePreviewProps> = ({
           </button>
           <button
             type="button"
-            onClick={() => setZoomScale(0.68)}
+            onClick={resetToFit}
             className="p-1 text-slate-500 hover:text-slate-800 dark:hover:text-white rounded hover:bg-white dark:hover:bg-slate-700 transition-colors border-l border-slate-200 dark:border-slate-700 pl-1.5 ml-0.5"
             title={t.zoomFit}
           >
@@ -84,9 +107,9 @@ export const LivePreview: React.FC<LivePreviewProps> = ({
       </div>
 
       {/* Viewport Canvas with Smooth Scroll & Scaling */}
-      <div className="flex-1 overflow-auto p-4 md:p-8 flex items-start justify-center">
+      <div className="flex-1 overflow-auto p-2 sm:p-4 md:p-8 flex items-start justify-center pb-24 lg:pb-8">
         <div
-          className="transition-transform duration-150 ease-out origin-top"
+          className="transition-transform duration-150 ease-out origin-top shrink-0"
           style={{
             transform: `scale(${zoomScale})`,
             marginBottom: '40px',
