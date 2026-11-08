@@ -5,7 +5,9 @@ import { registerPDFFonts } from './fonts';
 import { VectorHabitTrackerPDF } from './VectorHabitTrackerPDF';
 import { VectorMinimalHabitTrackerPDF } from './VectorMinimalHabitTrackerPDF';
 import { VectorRoadmap90PDF } from './VectorRoadmap90PDF';
+import { VectorMinimalRoadmapPDF } from './VectorMinimalRoadmapPDF';
 import { VectorWelcomePacketPDF } from './VectorWelcomePacketPDF';
+import { VectorMinimalWelcomePacketPDF } from './VectorMinimalWelcomePacketPDF';
 
 interface DocumentCompilerProps {
   brandKit: BrandKit;
@@ -25,9 +27,17 @@ export const DocumentCompiler: React.FC<DocumentCompilerProps> = ({ brandKit }) 
       keywords="pdf, brand, client, vector, print-ready"
     >
       {brandKit.selectedTemplate === 'roadmap-90' ? (
-        <VectorRoadmap90PDF brandKit={brandKit} />
+        isMinimal ? (
+          <VectorMinimalRoadmapPDF brandKit={brandKit} />
+        ) : (
+          <VectorRoadmap90PDF brandKit={brandKit} />
+        )
       ) : brandKit.selectedTemplate === 'welcome-packet' ? (
-        <VectorWelcomePacketPDF brandKit={brandKit} />
+        isMinimal ? (
+          <VectorMinimalWelcomePacketPDF brandKit={brandKit} />
+        ) : (
+          <VectorWelcomePacketPDF brandKit={brandKit} />
+        )
       ) : isMinimal ? (
         <VectorMinimalHabitTrackerPDF brandKit={brandKit} />
       ) : (

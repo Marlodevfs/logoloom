@@ -7,7 +7,9 @@ import { UI_TRANSLATIONS } from '@/lib/i18n/interface';
 import { HabitTrackerTemplate } from './templates/HabitTrackerTemplate';
 import { MinimalHabitTrackerTemplate } from './templates/MinimalHabitTrackerTemplate';
 import { Roadmap90Template } from './templates/Roadmap90Template';
+import { MinimalRoadmapTemplate } from './templates/MinimalRoadmapTemplate';
 import { WelcomePacketTemplate } from './templates/WelcomePacketTemplate';
+import { MinimalWelcomePacketTemplate } from './templates/MinimalWelcomePacketTemplate';
 
 interface LivePreviewProps {
   brandKit: BrandKit;
@@ -80,9 +82,17 @@ export const LivePreview: React.FC<LivePreviewProps> = ({
           <HabitTrackerTemplate brandKit={brandKit} onUpdate={onUpdate} />
         );
       case 'roadmap-90':
-        return <Roadmap90Template brandKit={brandKit} />;
+        return isMinimal ? (
+          <MinimalRoadmapTemplate brandKit={brandKit} onUpdate={onUpdate} />
+        ) : (
+          <Roadmap90Template brandKit={brandKit} />
+        );
       case 'welcome-packet':
-        return <WelcomePacketTemplate brandKit={brandKit} />;
+        return isMinimal ? (
+          <MinimalWelcomePacketTemplate brandKit={brandKit} onUpdate={onUpdate} />
+        ) : (
+          <WelcomePacketTemplate brandKit={brandKit} />
+        );
       default:
         return isMinimal ? (
           <MinimalHabitTrackerTemplate brandKit={brandKit} onUpdate={onUpdate} />

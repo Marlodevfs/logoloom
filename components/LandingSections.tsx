@@ -113,18 +113,52 @@ export const LandingSections: React.FC<LandingSectionsProps> = ({
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {/* Card 1 */}
+            {/* Card 1: Minimal 30-Day Habit Tracker */}
             <div className="rounded-2xl border border-slate-200/90 dark:border-slate-800 p-6 flex flex-col justify-between space-y-4 hover:border-indigo-400 dark:hover:border-indigo-500 transition-colors bg-white dark:bg-slate-900 shadow-xs">
-              <div className="space-y-2">
-                <span className="text-[10px] font-extrabold uppercase px-2 py-0.5 rounded bg-indigo-50 dark:bg-indigo-950 text-indigo-600 dark:text-indigo-400">
-                  Fitness & Executive Coaches
-                </span>
-                <h3 className="text-base font-bold text-slate-900 dark:text-white">
-                  {t.templateHabitTitle}
-                </h3>
-                <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
-                  {t.templateHabitDesc}
-                </p>
+              <div className="space-y-3">
+                <div className="flex items-center justify-between">
+                  <span className="text-[10px] font-extrabold uppercase px-2 py-0.5 rounded bg-indigo-50 dark:bg-indigo-950 text-indigo-600 dark:text-indigo-400">
+                    Fitness & Executive Coaches
+                  </span>
+                  <span className="text-[9px] font-mono font-semibold px-1.5 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-slate-500">
+                    A4 & Letter • Portrait
+                  </span>
+                </div>
+
+                {/* Mini Stylized Minimal Preview Mockup */}
+                <div className="h-32 bg-slate-50 dark:bg-slate-950/60 rounded-xl border border-slate-200/80 dark:border-slate-800 p-3 flex flex-col justify-between overflow-hidden relative shadow-inner">
+                  <div className="h-[2px] w-full bg-indigo-600 dark:bg-indigo-500 absolute top-0 left-0" />
+                  <div className="flex items-center justify-between border-b border-slate-200/60 dark:border-slate-800 pb-1.5">
+                    <div className="w-16 h-2 rounded bg-slate-300 dark:bg-slate-700" />
+                    <div className="w-4 h-4 rounded border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900" />
+                  </div>
+                  <div className="space-y-1.5 my-auto">
+                    {[1, 2, 3].map((r) => (
+                      <div key={r} className="flex items-center space-x-1.5 border-b border-slate-100 dark:border-slate-800/60 pb-1">
+                        <div className="w-2.5 h-2.5 rounded-xs border border-slate-400 dark:border-slate-600" />
+                        <div className="h-1.5 bg-slate-200 dark:bg-slate-700 rounded flex-1" />
+                        <div className="flex space-x-0.5">
+                          {[1, 2, 3, 4, 5].map((d) => (
+                            <div key={d} className="w-1.5 h-1.5 rounded-xs border border-slate-300 dark:border-slate-700" />
+                          ))}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                  <div className="flex justify-between items-center text-[8px] text-slate-400 border-t border-slate-200/60 dark:border-slate-800 pt-1">
+                    <span>30-Day Minimal Grid</span>
+                    <span>100% Vector PDF</span>
+                  </div>
+                </div>
+
+                <div>
+                  <h3 className="text-base font-bold text-slate-900 dark:text-white">
+                    {t.templateHabitTitle}
+                  </h3>
+                  <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed mt-1">
+                    {t.templateHabitDesc}
+                  </p>
+                </div>
               </div>
               <button
                 type="button"
@@ -139,18 +173,53 @@ export const LandingSections: React.FC<LandingSectionsProps> = ({
               </button>
             </div>
 
-            {/* Card 2 */}
+            {/* Card 2: Minimal 90-Day Roadmap */}
             <div className="rounded-2xl border border-slate-200/90 dark:border-slate-800 p-6 flex flex-col justify-between space-y-4 hover:border-indigo-400 dark:hover:border-indigo-500 transition-colors bg-white dark:bg-slate-900 shadow-xs">
-              <div className="space-y-2">
-                <span className="text-[10px] font-extrabold uppercase px-2 py-0.5 rounded bg-indigo-50 dark:bg-indigo-950 text-indigo-600 dark:text-indigo-400">
-                  Consultants & Advisors
-                </span>
-                <h3 className="text-base font-bold text-slate-900 dark:text-white">
-                  {t.templateRoadmapTitle}
-                </h3>
-                <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
-                  {t.templateRoadmapDesc}
-                </p>
+              <div className="space-y-3">
+                <div className="flex items-center justify-between">
+                  <span className="text-[10px] font-extrabold uppercase px-2 py-0.5 rounded bg-indigo-50 dark:bg-indigo-950 text-indigo-600 dark:text-indigo-400">
+                    Consultants & Advisors
+                  </span>
+                  <span className="text-[9px] font-mono font-semibold px-1.5 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-slate-500">
+                    A4 & Letter • Portrait
+                  </span>
+                </div>
+
+                {/* Mini Stylized Minimal Preview Mockup */}
+                <div className="h-32 bg-slate-50 dark:bg-slate-950/60 rounded-xl border border-slate-200/80 dark:border-slate-800 p-3 flex flex-col justify-between overflow-hidden relative shadow-inner">
+                  <div className="h-[2px] w-full bg-indigo-600 dark:bg-indigo-500 absolute top-0 left-0" />
+                  <div className="flex items-center justify-between border-b border-slate-200/60 dark:border-slate-800 pb-1.5">
+                    <div className="w-20 h-2 rounded bg-slate-300 dark:bg-slate-700" />
+                    <div className="w-4 h-4 rounded border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900" />
+                  </div>
+                  <div className="space-y-2 my-auto">
+                    {[1, 2, 3].map((p) => (
+                      <div key={p} className="flex flex-col space-y-0.5 border-b border-slate-100 dark:border-slate-800/60 pb-1">
+                        <div className="flex items-center justify-between">
+                          <div className="h-1.5 w-12 bg-indigo-500/80 rounded" />
+                          <div className="h-1.5 w-8 bg-slate-200 dark:bg-slate-700 rounded" />
+                        </div>
+                        <div className="flex items-center space-x-1">
+                          <div className="w-2 h-2 rounded-xs border border-slate-400 dark:border-slate-600" />
+                          <div className="h-1 bg-slate-200 dark:bg-slate-700 rounded flex-1" />
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                  <div className="flex justify-between items-center text-[8px] text-slate-400 border-t border-slate-200/60 dark:border-slate-800 pt-1">
+                    <span>3 Horizontal Phases</span>
+                    <span>Signature Block</span>
+                  </div>
+                </div>
+
+                <div>
+                  <h3 className="text-base font-bold text-slate-900 dark:text-white">
+                    {t.templateRoadmapTitle}
+                  </h3>
+                  <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed mt-1">
+                    {t.templateRoadmapDesc}
+                  </p>
+                </div>
               </div>
               <button
                 type="button"
@@ -165,18 +234,50 @@ export const LandingSections: React.FC<LandingSectionsProps> = ({
               </button>
             </div>
 
-            {/* Card 3 */}
+            {/* Card 3: Minimal Welcome Packet */}
             <div className="rounded-2xl border border-slate-200/90 dark:border-slate-800 p-6 flex flex-col justify-between space-y-4 hover:border-indigo-400 dark:hover:border-indigo-500 transition-colors bg-white dark:bg-slate-900 shadow-xs">
-              <div className="space-y-2">
-                <span className="text-[10px] font-extrabold uppercase px-2 py-0.5 rounded bg-indigo-50 dark:bg-indigo-950 text-indigo-600 dark:text-indigo-400">
-                  Freelancers & Agencies
-                </span>
-                <h3 className="text-base font-bold text-slate-900 dark:text-white">
-                  {t.templateWelcomeTitle}
-                </h3>
-                <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
-                  {t.templateWelcomeDesc}
-                </p>
+              <div className="space-y-3">
+                <div className="flex items-center justify-between">
+                  <span className="text-[10px] font-extrabold uppercase px-2 py-0.5 rounded bg-indigo-50 dark:bg-indigo-950 text-indigo-600 dark:text-indigo-400">
+                    Freelancers & Agencies
+                  </span>
+                  <span className="text-[9px] font-mono font-semibold px-1.5 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-slate-500">
+                    A4 & Letter • Portrait
+                  </span>
+                </div>
+
+                {/* Mini Stylized Minimal Preview Mockup */}
+                <div className="h-32 bg-slate-50 dark:bg-slate-950/60 rounded-xl border border-slate-200/80 dark:border-slate-800 p-3 flex flex-col justify-between overflow-hidden relative shadow-inner">
+                  <div className="h-[2px] w-full bg-indigo-600 dark:bg-indigo-500 absolute top-0 left-0" />
+                  <div className="flex items-center justify-between border-b border-slate-200/60 dark:border-slate-800 pb-1.5">
+                    <div className="w-18 h-2 rounded bg-slate-300 dark:bg-slate-700" />
+                    <div className="w-4 h-4 rounded border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900" />
+                  </div>
+                  <div className="space-y-1.5 my-auto">
+                    <div className="h-2 w-3/4 bg-slate-200 dark:bg-slate-700 rounded" />
+                    <div className="grid grid-cols-2 gap-1">
+                      <div className="h-4 bg-slate-100 dark:bg-slate-800 border border-slate-200/60 dark:border-slate-700 rounded-xs" />
+                      <div className="h-4 bg-slate-100 dark:bg-slate-800 border border-slate-200/60 dark:border-slate-700 rounded-xs" />
+                    </div>
+                    <div className="flex items-center space-x-1">
+                      <div className="w-2 h-2 rounded-xs border border-slate-400 dark:border-slate-600" />
+                      <div className="h-1 bg-slate-200 dark:bg-slate-700 rounded flex-1" />
+                    </div>
+                  </div>
+                  <div className="flex justify-between items-center text-[8px] text-slate-400 border-t border-slate-200/60 dark:border-slate-800 pt-1">
+                    <span>Guidelines & SLAs</span>
+                    <span>72h Kickoff List</span>
+                  </div>
+                </div>
+
+                <div>
+                  <h3 className="text-base font-bold text-slate-900 dark:text-white">
+                    {t.templateWelcomeTitle}
+                  </h3>
+                  <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed mt-1">
+                    {t.templateWelcomeDesc}
+                  </p>
+                </div>
               </div>
               <button
                 type="button"
