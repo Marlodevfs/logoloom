@@ -86,6 +86,14 @@ const LABELS: Record<
     welcomeMessage: string;
     workingAgreements: string;
     checklist72h: string;
+    moveUp: string;
+    moveDown: string;
+    deleteHabit: string;
+    docTitlePlaceholder: string;
+    docSubtitlePlaceholder: string;
+    habitTitlePlaceholder: string;
+    habitSubtitlePlaceholder: string;
+    coachNotePlaceholder: string;
   }
 > = {
   fr: {
@@ -119,6 +127,14 @@ const LABELS: Record<
     welcomeMessage: 'Message d’accueil & engagement',
     workingAgreements: 'Règles du jeu & modalités de collaboration',
     checklist72h: 'Checklist des 72 premières heures',
+    moveUp: 'Monter',
+    moveDown: 'Descendre',
+    deleteHabit: 'Supprimer',
+    docTitlePlaceholder: 'Suivi d’habitudes 30 jours',
+    docSubtitlePlaceholder: 'De petits gestes quotidiens créent de grands changements.',
+    habitTitlePlaceholder: 'Titre de l’habitude',
+    habitSubtitlePlaceholder: 'Objectif court / description',
+    coachNotePlaceholder: 'La régularité prime sur la perfection.',
   },
   en: {
     stepTitle: '5. Customize Content',
@@ -151,6 +167,14 @@ const LABELS: Record<
     welcomeMessage: 'Welcome statement & commitment',
     workingAgreements: 'Working agreements & protocols',
     checklist72h: 'First 72 Hours Checklist',
+    moveUp: 'Move up',
+    moveDown: 'Move down',
+    deleteHabit: 'Delete',
+    docTitlePlaceholder: '30-Day Habit Tracker',
+    docSubtitlePlaceholder: 'Small daily actions lead to lasting change.',
+    habitTitlePlaceholder: 'Habit title',
+    habitSubtitlePlaceholder: 'Short target / description',
+    coachNotePlaceholder: 'Consistency creates lasting results.',
   },
   de: {
     stepTitle: '5. Inhalt anpassen',
@@ -183,6 +207,14 @@ const LABELS: Record<
     welcomeMessage: 'Willkommensnachricht & Verpflichtung',
     workingAgreements: 'Zusammenarbeitsregeln & Protokolle',
     checklist72h: 'Checkliste für die ersten 72 Stunden',
+    moveUp: 'Nach oben',
+    moveDown: 'Nach unten',
+    deleteHabit: 'Löschen',
+    docTitlePlaceholder: '30-Tage-Gewohnheitstracker',
+    docSubtitlePlaceholder: 'Kleine tägliche Schritte führen zu nachhaltigen Veränderungen.',
+    habitTitlePlaceholder: 'Gewohnheitstitel',
+    habitSubtitlePlaceholder: 'Kurzziel / Beschreibung',
+    coachNotePlaceholder: 'Beständigkeit schafft nachhaltige Ergebnisse.',
   },
   es: {
     stepTitle: '5. Personalizar contenido',
@@ -215,6 +247,14 @@ const LABELS: Record<
     welcomeMessage: 'Mensaje de bienvenida y compromiso',
     workingAgreements: 'Pautas de trabajo y comunicación',
     checklist72h: 'Lista de verificación primeras 72h',
+    moveUp: 'Subir',
+    moveDown: 'Bajar',
+    deleteHabit: 'Eliminar',
+    docTitlePlaceholder: 'Seguimiento de hábitos 30 días',
+    docSubtitlePlaceholder: 'Pequeñas acciones diarias generan grandes cambios.',
+    habitTitlePlaceholder: 'Título del hábito',
+    habitSubtitlePlaceholder: 'Objetivo breve / descripción',
+    coachNotePlaceholder: 'La constancia crea resultados duraderos.',
   },
   it: {
     stepTitle: '5. Personalizza i contenuti',
@@ -247,6 +287,14 @@ const LABELS: Record<
     welcomeMessage: 'Messaggio di benvenuto & impegno',
     workingAgreements: 'Accordi di lavoro e canali',
     checklist72h: 'Checklist prime 72 ore',
+    moveUp: 'Sposta su',
+    moveDown: 'Sposta giù',
+    deleteHabit: 'Elimina',
+    docTitlePlaceholder: 'Registro abitudini 30 giorni',
+    docSubtitlePlaceholder: 'Piccole azioni quotidiane creano grandi cambiamenti.',
+    habitTitlePlaceholder: 'Titolo dell’abitudine',
+    habitSubtitlePlaceholder: 'Obiettivo breve / descrizione',
+    coachNotePlaceholder: 'La costanza crea risultati duraturi.',
   },
   pt: {
     stepTitle: '5. Personalizar conteúdo',
@@ -279,6 +327,14 @@ const LABELS: Record<
     welcomeMessage: 'Mensagem de boas-vindas & compromisso',
     workingAgreements: 'Acordos de trabalho e protocolos',
     checklist72h: 'Checklist das primeiras 72 horas',
+    moveUp: 'Mover para cima',
+    moveDown: 'Mover para baixo',
+    deleteHabit: 'Eliminar',
+    docTitlePlaceholder: 'Rastreador de hábitos 30 dias',
+    docSubtitlePlaceholder: 'Pequenas ações diárias criam grandes mudanças.',
+    habitTitlePlaceholder: 'Título do hábito',
+    habitSubtitlePlaceholder: 'Meta curta / descrição',
+    coachNotePlaceholder: 'A consistência gera resultados duradouros.',
   },
 };
 
@@ -481,7 +537,7 @@ export const ContentEditorStep: React.FC<ContentEditorStepProps> = ({
                     maxLength={45}
                     value={habitContent.title || ''}
                     onChange={(e) => updateHabitContent({ title: e.target.value })}
-                    placeholder="30-Day Habit Tracker"
+                    placeholder={l.docTitlePlaceholder}
                     className="w-full px-3 py-2 sm:py-1.5 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-base sm:text-xs text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-1 focus:ring-indigo-500 font-medium"
                   />
                 </div>
@@ -500,7 +556,7 @@ export const ContentEditorStep: React.FC<ContentEditorStepProps> = ({
                     maxLength={100}
                     value={habitContent.subtitle || ''}
                     onChange={(e) => updateHabitContent({ subtitle: e.target.value })}
-                    placeholder="Small daily actions lead to lasting change."
+                    placeholder={l.docSubtitlePlaceholder}
                     className="w-full px-3 py-2 sm:py-1.5 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-base sm:text-xs text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-1 focus:ring-indigo-500"
                   />
                 </div>
@@ -547,7 +603,7 @@ export const ContentEditorStep: React.FC<ContentEditorStepProps> = ({
                             onClick={() => handleMoveHabit(idx, 'up')}
                             disabled={idx === 0}
                             className="p-1 text-slate-400 hover:text-slate-700 disabled:opacity-30 disabled:cursor-not-allowed"
-                            title="Monter"
+                            title={l.moveUp}
                           >
                             <ArrowUp className="w-3 h-3" />
                           </button>
@@ -556,7 +612,7 @@ export const ContentEditorStep: React.FC<ContentEditorStepProps> = ({
                             onClick={() => handleMoveHabit(idx, 'down')}
                             disabled={idx === habitContent.habits.length - 1}
                             className="p-1 text-slate-400 hover:text-slate-700 disabled:opacity-30 disabled:cursor-not-allowed"
-                            title="Descendre"
+                            title={l.moveDown}
                           >
                             <ArrowDown className="w-3 h-3" />
                           </button>
@@ -565,7 +621,7 @@ export const ContentEditorStep: React.FC<ContentEditorStepProps> = ({
                               type="button"
                               onClick={() => handleRemoveHabit(idx)}
                               className="p-1 text-slate-400 hover:text-rose-600 transition-colors"
-                              title="Supprimer"
+                              title={l.deleteHabit}
                             >
                               <Trash2 className="w-3 h-3" />
                             </button>
@@ -578,7 +634,7 @@ export const ContentEditorStep: React.FC<ContentEditorStepProps> = ({
                         maxLength={40}
                         value={h.title}
                         onChange={(e) => handleUpdateHabit(idx, 'title', e.target.value)}
-                        placeholder="Habit title"
+                        placeholder={l.habitTitlePlaceholder}
                         className="w-full px-2 py-1 rounded border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-xs font-semibold text-slate-900 dark:text-slate-100"
                       />
                       <input
@@ -586,7 +642,7 @@ export const ContentEditorStep: React.FC<ContentEditorStepProps> = ({
                         maxLength={55}
                         value={h.subtitle}
                         onChange={(e) => handleUpdateHabit(idx, 'subtitle', e.target.value)}
-                        placeholder="Short target / description"
+                        placeholder={l.habitSubtitlePlaceholder}
                         className="w-full px-2 py-1 rounded border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-[10.5px] text-slate-600 dark:text-slate-300"
                       />
                     </div>
@@ -632,7 +688,7 @@ export const ContentEditorStep: React.FC<ContentEditorStepProps> = ({
                   maxLength={120}
                   value={habitContent.coachNote || ''}
                   onChange={(e) => updateHabitContent({ coachNote: e.target.value })}
-                  placeholder="Consistency creates lasting results."
+                  placeholder={l.coachNotePlaceholder}
                   className="w-full px-3 py-2 sm:py-1.5 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-base sm:text-xs text-slate-800 dark:text-slate-200 focus:outline-none focus:ring-1 focus:ring-indigo-500"
                 />
               </div>

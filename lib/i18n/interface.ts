@@ -60,6 +60,7 @@ export interface UIStrings {
   instantUpdate: string;
   mobileEditButton: string;
   mobileCloseButton: string;
+  toggleTheme: string;
 
   // Pro Banner / White-label
   whiteLabelPro: string;
@@ -156,6 +157,7 @@ export const UI_TRANSLATIONS: Record<InterfaceLang, UIStrings> = {
     instantUpdate: 'Updates live with every change',
     mobileEditButton: 'Customize Brand & Options',
     mobileCloseButton: 'View Live Preview',
+    toggleTheme: 'Toggle dark / light mode',
 
     whiteLabelPro: 'Pro White-Label',
     proBadge: 'PRO',
@@ -248,6 +250,7 @@ export const UI_TRANSLATIONS: Record<InterfaceLang, UIStrings> = {
     instantUpdate: 'Mise à jour instantanée',
     mobileEditButton: 'Modifier le style & options',
     mobileCloseButton: 'Voir l\'aperçu',
+    toggleTheme: 'Basculer le mode sombre / clair',
 
     whiteLabelPro: 'Pro White-Label',
     proBadge: 'PRO',
@@ -340,6 +343,7 @@ export const UI_TRANSLATIONS: Record<InterfaceLang, UIStrings> = {
     instantUpdate: 'Actualización en vivo',
     mobileEditButton: 'Personalizar marca y opciones',
     mobileCloseButton: 'Ver vista previa',
+    toggleTheme: 'Alternar modo oscuro / claro',
 
     whiteLabelPro: 'Pro Marca Blanca',
     proBadge: 'PRO',
@@ -432,6 +436,7 @@ export const UI_TRANSLATIONS: Record<InterfaceLang, UIStrings> = {
     instantUpdate: 'Aktualisiert in Echtzeit',
     mobileEditButton: 'Design & Optionen anpassen',
     mobileCloseButton: 'Vorschau ansehen',
+    toggleTheme: 'Dunkel- / Hellmodus umschalten',
 
     whiteLabelPro: 'Pro White-Label',
     proBadge: 'PRO',
@@ -524,6 +529,7 @@ export const UI_TRANSLATIONS: Record<InterfaceLang, UIStrings> = {
     instantUpdate: 'Atualização imediata',
     mobileEditButton: 'Personalizar Marca & Opções',
     mobileCloseButton: 'Ver Pré-visualização',
+    toggleTheme: 'Alternar modo escuro / claro',
 
     whiteLabelPro: 'Pro Marca Branca',
     proBadge: 'PRO',
@@ -616,6 +622,7 @@ export const UI_TRANSLATIONS: Record<InterfaceLang, UIStrings> = {
     instantUpdate: 'Aggiornamento in tempo reale',
     mobileEditButton: 'Personalizza Stile & Opzioni',
     mobileCloseButton: 'Vedi Anteprima',
+    toggleTheme: 'Attiva/disattiva modalità scura / chiara',
 
     whiteLabelPro: 'Pro White-Label',
     proBadge: 'PRO',

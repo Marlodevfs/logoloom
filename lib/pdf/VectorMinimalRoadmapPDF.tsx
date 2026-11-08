@@ -517,7 +517,7 @@ export const VectorMinimalRoadmapPDF: React.FC<VectorMinimalRoadmapPDFProps> = (
 
         {/* Watermark / LogoLoom Badge (Free) or Verified (Pro) */}
         <View>
-          {brandKit.removeWatermark ? (
+          {Boolean(brandKit.removeWatermark || brandKit.isPro) ? (
             <Text style={styles.proVerified}>{l.verified.toUpperCase()}</Text>
           ) : (
             <View style={styles.watermarkBadge}>

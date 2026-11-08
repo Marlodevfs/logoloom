@@ -22,36 +22,57 @@ const PREVIEW_I18N: Record<InterfaceLang, {
   clickToEdit: string;
   width: string;
   landscapeSuffix: string;
+  fitToWidthTooltip: string;
+  zoomOutTooltip: string;
+  zoomInTooltip: string;
 }> = {
   fr: {
     clickToEdit: 'Édition directe en cliquant sur le texte',
     width: 'Largeur',
     landscapeSuffix: 'Paysage',
+    fitToWidthTooltip: 'Ajuster à la largeur',
+    zoomOutTooltip: 'Zoom arrière',
+    zoomInTooltip: 'Zoom avant',
   },
   en: {
     clickToEdit: 'Click text to edit directly',
     width: 'Width',
     landscapeSuffix: 'Landscape',
+    fitToWidthTooltip: 'Fit to width',
+    zoomOutTooltip: 'Zoom out',
+    zoomInTooltip: 'Zoom in',
   },
   de: {
     clickToEdit: 'Text direkt anklicken zum Bearbeiten',
     width: 'Breite',
     landscapeSuffix: 'Querformat',
+    fitToWidthTooltip: 'An Breite anpassen',
+    zoomOutTooltip: 'Verkleinern',
+    zoomInTooltip: 'Vergrößern',
   },
   es: {
     clickToEdit: 'Clic en el texto para editar directamente',
     width: 'Ancho',
     landscapeSuffix: 'Apaisado',
+    fitToWidthTooltip: 'Ajustar al ancho',
+    zoomOutTooltip: 'Alejar',
+    zoomInTooltip: 'Acercar',
   },
   it: {
     clickToEdit: 'Clicca sul testo per modificare direttamente',
     width: 'Larghezza',
     landscapeSuffix: 'Orizzontale',
+    fitToWidthTooltip: 'Adatta alla larghezza',
+    zoomOutTooltip: 'Rimpicciolisci',
+    zoomInTooltip: 'Ingrandisci',
   },
   pt: {
     clickToEdit: 'Clique no texto para editar diretamente',
     width: 'Largura',
     landscapeSuffix: 'Paisagem',
+    fitToWidthTooltip: 'Ajustar à largura',
+    zoomOutTooltip: 'Diminuir zoom',
+    zoomInTooltip: 'Aumentar zoom',
   },
 };
 
@@ -177,7 +198,8 @@ export const LivePreview: React.FC<LivePreviewProps> = ({
             type="button"
             onClick={fitToWidth}
             className="px-2 py-1 text-[10px] font-bold text-slate-600 dark:text-slate-300 hover:bg-white dark:hover:bg-slate-700 rounded transition-colors hidden sm:block"
-            title="Fit to width"
+            title={pI18n.fitToWidthTooltip}
+            aria-label={pI18n.fitToWidthTooltip}
           >
             {pI18n.width}
           </button>
@@ -185,7 +207,8 @@ export const LivePreview: React.FC<LivePreviewProps> = ({
             type="button"
             onClick={() => setZoomScale((prev) => Math.max(0.20, Number((prev - 0.05).toFixed(2))))}
             className="p-1.5 text-slate-500 hover:text-slate-800 dark:hover:text-white rounded hover:bg-white dark:hover:bg-slate-700 transition-colors"
-            title="Zoom out"
+            title={pI18n.zoomOutTooltip}
+            aria-label={pI18n.zoomOutTooltip}
           >
             <ZoomOut className="w-3.5 h-3.5" />
           </button>
@@ -196,7 +219,8 @@ export const LivePreview: React.FC<LivePreviewProps> = ({
             type="button"
             onClick={() => setZoomScale((prev) => Math.min(1.0, Number((prev + 0.05).toFixed(2))))}
             className="p-1.5 text-slate-500 hover:text-slate-800 dark:hover:text-white rounded hover:bg-white dark:hover:bg-slate-700 transition-colors"
-            title="Zoom in"
+            title={pI18n.zoomInTooltip}
+            aria-label={pI18n.zoomInTooltip}
           >
             <ZoomIn className="w-3.5 h-3.5" />
           </button>

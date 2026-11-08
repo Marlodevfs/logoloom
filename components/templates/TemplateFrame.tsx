@@ -175,9 +175,9 @@ export const TemplateFrame: React.FC<TemplateFrameProps> = ({
       </header>
 
       {/* Main Dynamic Content */}
-      <main className="flex-1 py-2 flex flex-col justify-start overflow-hidden">
+      <section className="flex-1 py-2 flex flex-col justify-start overflow-hidden">
         {children}
-      </main>
+      </section>
 
       {/* Elegant Print-Ready Footer */}
       <footer className="pt-2 border-t border-slate-200/80 flex items-center justify-between text-[10px] text-slate-500">
@@ -195,9 +195,9 @@ export const TemplateFrame: React.FC<TemplateFrameProps> = ({
 
         {/* Right: Free vs Pro Watermark */}
         <div>
-          {brandKit.removeWatermark ? (
+          {Boolean(brandKit.removeWatermark || brandKit.isPro) ? (
             <span className="text-[9px] text-slate-400 tracking-wider uppercase font-medium">
-              Verified Client Document
+              {docText.footer.verified || 'Verified Client Document'}
             </span>
           ) : (
             <div className="flex items-center space-x-1.5 opacity-85 hover:opacity-100 transition-opacity">

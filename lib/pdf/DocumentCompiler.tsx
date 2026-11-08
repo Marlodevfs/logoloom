@@ -17,13 +17,14 @@ export const DocumentCompiler: React.FC<DocumentCompilerProps> = ({ brandKit }) 
   registerPDFFonts();
 
   const isMinimal = (brandKit.designStyle || 'minimal') === 'minimal';
+  const isProMode = Boolean(brandKit.removeWatermark || brandKit.isPro);
 
   return (
     <Document
       title={`${brandKit.companyName || 'Document'} - ${brandKit.selectedTemplate || 'habit-tracker'}`}
-      author={brandKit.coachName || 'LogoLoom'}
+      author={brandKit.coachName || brandKit.companyName || (isProMode ? 'Document' : 'LogoLoom')}
       subject="Brand Document"
-      creator="LogoLoom Studio (https://logoloom.app)"
+      creator={isProMode ? (brandKit.companyName || 'Vector PDF') : 'LogoLoom Studio (https://logoloom.app)'}
       keywords="pdf, brand, client, vector, print-ready"
     >
       {brandKit.selectedTemplate === 'roadmap-90' ? (

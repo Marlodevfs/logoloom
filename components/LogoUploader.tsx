@@ -18,42 +18,49 @@ const LOGO_I18N: Record<InterfaceLang, {
   ready: string;
   replace: string;
   analyzingColors: string;
+  invalidFormatAlert: string;
 }> = {
   fr: {
     logoActive: 'Logo actif',
     ready: 'Prêt',
     replace: 'Remplacer',
     analyzingColors: 'Analyse des couleurs...',
+    invalidFormatAlert: 'Veuillez téléverser une image valide au format PNG, JPG ou SVG.',
   },
   en: {
     logoActive: 'Logo Active',
     ready: 'Ready',
     replace: 'Replace',
     analyzingColors: 'Analyzing colors...',
+    invalidFormatAlert: 'Please upload a valid PNG, JPG, or SVG image.',
   },
   de: {
     logoActive: 'Logo aktiv',
     ready: 'Bereit',
     replace: 'Ersetzen',
     analyzingColors: 'Farben werden analysiert...',
+    invalidFormatAlert: 'Bitte laden Sie ein gültiges PNG-, JPG- oder SVG-Bild hoch.',
   },
   es: {
     logoActive: 'Logo activo',
     ready: 'Listo',
     replace: 'Reemplazar',
     analyzingColors: 'Analizando colores...',
+    invalidFormatAlert: 'Por favor, suba una imagen válida en formato PNG, JPG o SVG.',
   },
   it: {
     logoActive: 'Logo attivo',
     ready: 'Pronto',
     replace: 'Sostituisci',
     analyzingColors: 'Analisi dei colori...',
+    invalidFormatAlert: 'Carica un’immagine valida in formato PNG, JPG o SVG.',
   },
   pt: {
     logoActive: 'Logo ativo',
     ready: 'Pronto',
     replace: 'Substituir',
     analyzingColors: 'A analisar cores...',
+    invalidFormatAlert: 'Por favor, carregue uma imagem válida em formato PNG, JPG ou SVG.',
   },
 };
 
@@ -73,7 +80,7 @@ export const LogoUploader: React.FC<LogoUploaderProps> = ({
     if (!file) return;
     const validTypes = ['image/png', 'image/jpeg', 'image/jpg', 'image/svg+xml'];
     if (!validTypes.includes(file.type)) {
-      alert('Please upload a valid PNG, JPG, or SVG image.');
+      alert(l.invalidFormatAlert);
       return;
     }
 

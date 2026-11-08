@@ -12,6 +12,7 @@ export interface MinimalHabitLabels {
   footerPage: string;
   verified: string;
   madeWith: string;
+  clickToEditTitle: string;
 }
 
 export const MINIMAL_HABIT_LABELS: Record<DocumentLang, MinimalHabitLabels> = {
@@ -27,6 +28,7 @@ export const MINIMAL_HABIT_LABELS: Record<DocumentLang, MinimalHabitLabels> = {
     footerPage: 'Document personnel • Page 1 sur 1',
     verified: 'Document vérifié',
     madeWith: 'Créé avec',
+    clickToEditTitle: 'Cliquer pour modifier le titre',
   },
   en: {
     name: 'Name:',
@@ -40,6 +42,7 @@ export const MINIMAL_HABIT_LABELS: Record<DocumentLang, MinimalHabitLabels> = {
     footerPage: 'Personal Document • Page 1 of 1',
     verified: 'Verified Document',
     madeWith: 'Made with',
+    clickToEditTitle: 'Click to edit title',
   },
   de: {
     name: 'Name:',
@@ -53,6 +56,7 @@ export const MINIMAL_HABIT_LABELS: Record<DocumentLang, MinimalHabitLabels> = {
     footerPage: 'Persönliches Dokument • Seite 1 von 1',
     verified: 'Verifiziertes Dokument',
     madeWith: 'Erstellt mit',
+    clickToEditTitle: 'Klicken zum Bearbeiten des Titels',
   },
   es: {
     name: 'Nombre:',
@@ -66,6 +70,7 @@ export const MINIMAL_HABIT_LABELS: Record<DocumentLang, MinimalHabitLabels> = {
     footerPage: 'Documento personal • Página 1 de 1',
     verified: 'Documento verificado',
     madeWith: 'Creado con',
+    clickToEditTitle: 'Haga clic para editar el título',
   },
   it: {
     name: 'Nome:',
@@ -79,6 +84,7 @@ export const MINIMAL_HABIT_LABELS: Record<DocumentLang, MinimalHabitLabels> = {
     footerPage: 'Documento personale • Pagina 1 di 1',
     verified: 'Documento verificato',
     madeWith: 'Creato con',
+    clickToEditTitle: 'Clicca per modificare il titolo',
   },
   pt: {
     name: 'Nome:',
@@ -92,6 +98,7 @@ export const MINIMAL_HABIT_LABELS: Record<DocumentLang, MinimalHabitLabels> = {
     footerPage: 'Documento pessoal • Página 1 de 1',
     verified: 'Documento verificado',
     madeWith: 'Criado com',
+    clickToEditTitle: 'Clique para editar o título',
   },
 };
 
@@ -111,6 +118,7 @@ export interface MinimalRoadmapLabels {
   signature: string;
   verified: string;
   madeWith: string;
+  clickToEditTitle: string;
 }
 
 export const MINIMAL_ROADMAP_LABELS: Record<DocumentLang, MinimalRoadmapLabels> = {
@@ -130,6 +138,7 @@ export const MINIMAL_ROADMAP_LABELS: Record<DocumentLang, MinimalRoadmapLabels> 
     signature: 'Signature',
     verified: 'Document vérifié',
     madeWith: 'Créé avec',
+    clickToEditTitle: 'Cliquer pour modifier le titre',
   },
   en: {
     project: 'Project / Client:',
@@ -147,6 +156,7 @@ export const MINIMAL_ROADMAP_LABELS: Record<DocumentLang, MinimalRoadmapLabels> 
     signature: 'Signature',
     verified: 'Verified Document',
     madeWith: 'Made with',
+    clickToEditTitle: 'Click to edit title',
   },
   de: {
     project: 'Projekt / Kunde:',
@@ -164,6 +174,7 @@ export const MINIMAL_ROADMAP_LABELS: Record<DocumentLang, MinimalRoadmapLabels> 
     signature: 'Unterschrift',
     verified: 'Verifiziertes Dokument',
     madeWith: 'Erstellt mit',
+    clickToEditTitle: 'Klicken zum Bearbeiten des Titels',
   },
   es: {
     project: 'Proyecto / Cliente:',
@@ -181,6 +192,7 @@ export const MINIMAL_ROADMAP_LABELS: Record<DocumentLang, MinimalRoadmapLabels> 
     signature: 'Firma',
     verified: 'Documento verificado',
     madeWith: 'Creado con',
+    clickToEditTitle: 'Haga clic para editar el título',
   },
   it: {
     project: 'Progetto / Cliente:',
@@ -198,6 +210,7 @@ export const MINIMAL_ROADMAP_LABELS: Record<DocumentLang, MinimalRoadmapLabels> 
     signature: 'Firma',
     verified: 'Documento verificato',
     madeWith: 'Creato con',
+    clickToEditTitle: 'Clicca per modificare il titolo',
   },
   pt: {
     project: 'Projeto / Cliente:',
@@ -215,6 +228,7 @@ export const MINIMAL_ROADMAP_LABELS: Record<DocumentLang, MinimalRoadmapLabels> 
     signature: 'Assinatura',
     verified: 'Documento verificado',
     madeWith: 'Criado com',
+    clickToEditTitle: 'Clique para editar o título',
   },
 };
 
@@ -227,6 +241,7 @@ export interface MinimalWelcomeLabels {
   kickoffBadge: string;
   verified: string;
   madeWith: string;
+  clickToEditTitle: string;
 }
 
 export const MINIMAL_WELCOME_LABELS: Record<DocumentLang, MinimalWelcomeLabels> = {
@@ -239,6 +254,7 @@ export const MINIMAL_WELCOME_LABELS: Record<DocumentLang, MinimalWelcomeLabels> 
     kickoffBadge: 'SESSION DE CADRAGE 01',
     verified: 'Document vérifié',
     madeWith: 'Créé avec',
+    clickToEditTitle: 'Cliquer pour modifier le titre',
   },
   en: {
     page: 'Welcome Guide • Page 1 of 1',
@@ -249,6 +265,7 @@ export const MINIMAL_WELCOME_LABELS: Record<DocumentLang, MinimalWelcomeLabels> 
     kickoffBadge: 'KICKOFF SESSION 01',
     verified: 'Verified Document',
     madeWith: 'Made with',
+    clickToEditTitle: 'Click to edit title',
   },
   de: {
     page: 'Willkommensleitfaden • Seite 1 von 1',
@@ -259,6 +276,7 @@ export const MINIMAL_WELCOME_LABELS: Record<DocumentLang, MinimalWelcomeLabels> 
     kickoffBadge: 'KICKOFF-SITZUNG 01',
     verified: 'Verifiziertes Dokument',
     madeWith: 'Erstellt mit',
+    clickToEditTitle: 'Klicken zum Bearbeiten des Titels',
   },
   es: {
     page: 'Guía de bienvenida • Página 1 de 1',
@@ -269,6 +287,7 @@ export const MINIMAL_WELCOME_LABELS: Record<DocumentLang, MinimalWelcomeLabels> 
     kickoffBadge: 'SESIÓN DE INICIO 01',
     verified: 'Documento verificado',
     madeWith: 'Creado con',
+    clickToEditTitle: 'Haga clic para editar el título',
   },
   it: {
     page: 'Guida di benvenuto • Pagina 1 di 1',
@@ -279,6 +298,7 @@ export const MINIMAL_WELCOME_LABELS: Record<DocumentLang, MinimalWelcomeLabels> 
     kickoffBadge: 'SESSIONE DI AVVIO 01',
     verified: 'Documento verificato',
     madeWith: 'Creato con',
+    clickToEditTitle: 'Clicca per modificare il titolo',
   },
   pt: {
     page: 'Guia de boas-vindas • Página 1 de 1',
@@ -289,5 +309,6 @@ export const MINIMAL_WELCOME_LABELS: Record<DocumentLang, MinimalWelcomeLabels> 
     kickoffBadge: 'SESSÃO INICIAL 01',
     verified: 'Documento verificado',
     madeWith: 'Criado com',
+    clickToEditTitle: 'Clique para editar o título',
   },
 };

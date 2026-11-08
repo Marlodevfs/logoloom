@@ -162,7 +162,7 @@ export const MinimalRoadmapTemplate: React.FC<MinimalRoadmapTemplateProps> = ({
                 role="heading"
                 aria-level={2}
                 onClick={() => setEditingField('title')}
-                title="Click to edit title"
+                title={l.clickToEditTitle}
                 className="text-xl font-bold tracking-tight text-slate-900 hover:text-indigo-600 transition-colors cursor-pointer"
               >
                 {content.title || t.title}
@@ -183,7 +183,7 @@ export const MinimalRoadmapTemplate: React.FC<MinimalRoadmapTemplateProps> = ({
             <div className="flex items-baseline space-x-1.5">
               <span className="font-bold text-slate-500 text-[11px]">{horizonLabel}</span>
               <span className="border-b border-slate-300 min-w-[90px] text-slate-800 font-medium pb-0.5">
-                {content.horizon || '90 Business Days'}
+                {content.horizon || l.horizonPlaceholder}
               </span>
             </div>
           </div>
@@ -191,7 +191,7 @@ export const MinimalRoadmapTemplate: React.FC<MinimalRoadmapTemplateProps> = ({
       </header>
 
       {/* Body: 3 Horizontal Bands */}
-      <main className="flex-1 flex flex-col justify-between py-1">
+      <section className="flex-1 flex flex-col justify-between py-1">
         {phases.map((phase, idx) => (
           <div
             key={idx}
@@ -239,7 +239,7 @@ export const MinimalRoadmapTemplate: React.FC<MinimalRoadmapTemplateProps> = ({
             )}
           </div>
         ))}
-      </main>
+      </section>
 
       {/* Optional Signature Block */}
       {content.showSignatureBlock !== false && (
@@ -271,9 +271,9 @@ export const MinimalRoadmapTemplate: React.FC<MinimalRoadmapTemplateProps> = ({
           <span>{pageLabel}</span>
         </div>
 
-        {brandKit.removeWatermark ? (
+        {Boolean(brandKit.removeWatermark || brandKit.isPro) ? (
           <span className="text-[10px] font-mono font-bold text-emerald-600 tracking-wider">
-            VERIFIED PRINT DOCUMENT
+            {l.verified.toUpperCase()}
           </span>
         ) : (
           <div className="flex items-center space-x-2">
@@ -285,7 +285,7 @@ export const MinimalRoadmapTemplate: React.FC<MinimalRoadmapTemplateProps> = ({
               />
             )}
             <div className="text-right">
-              <p className="text-[9px] text-slate-400 leading-tight">Made with</p>
+              <p className="text-[9px] text-slate-400 leading-tight">{l.madeWith}</p>
               <p className="text-[10px] font-bold text-slate-800 font-mono leading-tight">
                 logoloom.app
               </p>

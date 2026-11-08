@@ -100,6 +100,7 @@ export interface DocumentContent {
     confidential: string;
     scanToBook: string;
     page: string;
+    verified: string;
   };
 }
 
@@ -239,6 +240,7 @@ export const DOCUMENT_TRANSLATIONS: Record<DocumentLang, DocumentContent> = {
       confidential: 'Client document',
       scanToBook: 'Scan to contact or book',
       page: 'Page 1 of 1',
+      verified: 'Verified Client Document',
     },
   },
   fr: {
@@ -376,6 +378,7 @@ export const DOCUMENT_TRANSLATIONS: Record<DocumentLang, DocumentContent> = {
       confidential: 'Document client',
       scanToBook: 'Scannez pour nous contacter',
       page: 'Page 1 sur 1',
+      verified: 'Document client vérifié',
     },
   },
   de: {
@@ -513,6 +516,7 @@ export const DOCUMENT_TRANSLATIONS: Record<DocumentLang, DocumentContent> = {
       confidential: 'Vertraulich & Geschützt',
       scanToBook: 'Scannen für Kontakt oder Termin',
       page: 'Seite 1 von 1',
+      verified: 'Verifiziertes Kundendokument',
     },
   },
   es: {
@@ -650,6 +654,7 @@ export const DOCUMENT_TRANSLATIONS: Record<DocumentLang, DocumentContent> = {
       confidential: 'Documento cliente',
       scanToBook: 'Escanea para contactar o reservar',
       page: 'Página 1 de 1',
+      verified: 'Documento de cliente verificado',
     },
   },
   pt: {
@@ -787,6 +792,7 @@ export const DOCUMENT_TRANSLATIONS: Record<DocumentLang, DocumentContent> = {
       confidential: 'Documento Confidencial & Exclusivo',
       scanToBook: 'Escaneie para contato ou agendamento',
       page: 'Página 1 de 1',
+      verified: 'Documento de cliente verificado',
     },
   },
   it: {
@@ -924,6 +930,7 @@ export const DOCUMENT_TRANSLATIONS: Record<DocumentLang, DocumentContent> = {
       confidential: 'Documento Riservato & Confidenziale',
       scanToBook: 'Scansiona per contattarci o prenotare',
       page: 'Pagina 1 di 1',
+      verified: 'Documento cliente verificato',
     },
   },
 };

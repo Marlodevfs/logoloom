@@ -155,7 +155,8 @@ export const Header: React.FC<HeaderProps> = ({
             type="button"
             onClick={toggleDarkMode}
             className="p-1.5 rounded-lg text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
-            title="Toggle Dark Mode"
+            title={t.toggleTheme}
+            aria-label={t.toggleTheme}
           >
             {isDark ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
           </button>

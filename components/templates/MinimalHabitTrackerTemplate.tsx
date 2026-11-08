@@ -173,7 +173,7 @@ export const MinimalHabitTrackerTemplate: React.FC<MinimalHabitTrackerTemplatePr
                   role="heading"
                   aria-level={2}
                   onClick={() => onUpdate && setEditingField('title')}
-                  title={onUpdate ? 'Cliquez pour modifier le titre' : undefined}
+                  title={onUpdate ? l.clickToEditTitle : undefined}
                   className={`text-2xl font-bold tracking-tight text-slate-900 ${
                     onUpdate ? 'cursor-pointer hover:bg-slate-100/70 rounded px-1 -mx-1 transition-colors' : ''
                   }`}
@@ -203,7 +203,7 @@ export const MinimalHabitTrackerTemplate: React.FC<MinimalHabitTrackerTemplatePr
         </header>
 
         {/* Minimal Grid: Days 1 to 30 as ROWS, Habits as COLUMNS */}
-        <main className="flex-1 my-2 flex flex-col justify-start">
+        <section className="flex-1 my-2 flex flex-col justify-start">
           <table className="w-full border-collapse table-fixed">
             <thead>
               <tr className="border-b border-slate-300 text-slate-800 text-[10px]">
@@ -309,7 +309,7 @@ export const MinimalHabitTrackerTemplate: React.FC<MinimalHabitTrackerTemplatePr
               )}
             </tbody>
           </table>
-        </main>
+        </section>
 
         {/* Minimal Footer: Hairline + Discreet LogoLoom Badge (Free) or Clean (Pro) */}
         <footer className="pt-2 border-t border-slate-200 flex items-center justify-between text-[9.5px] text-slate-500">
@@ -324,7 +324,7 @@ export const MinimalHabitTrackerTemplate: React.FC<MinimalHabitTrackerTemplatePr
           </div>
 
           <div>
-            {brandKit.removeWatermark ? (
+            {Boolean(brandKit.removeWatermark || brandKit.isPro) ? (
               <span className="text-[9px] text-slate-400 font-medium tracking-wider uppercase">
                 {l.verified}
               </span>

@@ -194,18 +194,29 @@ export function useBrandKit(initialLang?: InterfaceLang) {
             : (parsed.documentLang || (resolvedUiLang as DocumentLang));
           const shouldRefreshLanguageContent = isUrlLocaleSpecified && parsed.documentLang !== initialLang;
 
+          const isStaleCrossLanguage = (content: any, type: 'habitTracker' | 'roadmap90' | 'welcomePacket') => {
+            if (!content || !content.title) return false;
+            return Object.entries(DOCUMENT_TRANSLATIONS).some(
+              ([lCode, tDoc]) => lCode !== docLang && tDoc[type]?.title === content.title
+            );
+          };
+
+          const staleHabits = isStaleCrossLanguage(parsed.habitTrackerContent, 'habitTracker');
+          const staleRoadmap = isStaleCrossLanguage(parsed.roadmapContent, 'roadmap90');
+          const staleWelcome = isStaleCrossLanguage(parsed.welcomePacketContent, 'welcomePacket');
+
           setBrandKit((prev) => ({
             ...prev,
             ...parsed,
             designStyle: parsed.designStyle || initialStyle,
             documentLang: docLang,
-            habitTrackerContent: shouldRefreshLanguageContent || !parsed.habitTrackerContent
-              ? getDefaultHabitTrackerContent(docLang, 'wellbeing')
+            habitTrackerContent: shouldRefreshLanguageContent || staleHabits || !parsed.habitTrackerContent
+              ? getDefaultHabitTrackerContent(docLang, parsed.habitTrackerContent?.packId || 'wellbeing')
               : parsed.habitTrackerContent,
-            roadmapContent: shouldRefreshLanguageContent || !parsed.roadmapContent
+            roadmapContent: shouldRefreshLanguageContent || staleRoadmap || !parsed.roadmapContent
               ? getDefaultRoadmapContent(docLang)
               : parsed.roadmapContent,
-            welcomePacketContent: shouldRefreshLanguageContent || !parsed.welcomePacketContent
+            welcomePacketContent: shouldRefreshLanguageContent || staleWelcome || !parsed.welcomePacketContent
               ? getDefaultWelcomePacketContent(docLang)
               : parsed.welcomePacketContent,
             isPro: false,

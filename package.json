@@ -12,7 +12,8 @@
     "test:i18n": "tsx scripts/test-translations-complete.ts",
     "test:quality": "tsx scripts/test-habit-tracker-quality-gates.ts && python scripts/audit-quality-gates.py",
     "test:languages": "tsx scripts/test-all-6-languages.ts",
-    "test": "npm run test:pdf && npm run test:i18n && npm run test:quality && npm run test:languages"
+    "test:e2e": "tsx scripts/test-all-features-e2e.ts",
+    "test": "npm run test:pdf && npm run test:i18n && npm run test:quality && npm run test:languages && npm run test:e2e"
   },
   "dependencies": {
     "@react-pdf/renderer": "^4.9.0",

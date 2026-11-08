@@ -13,6 +13,15 @@ interface ColorPickerProps {
   interfaceLang: InterfaceLang;
 }
 
+const COLOR_I18N: Record<InterfaceLang, { apply: string; contrast: string }> = {
+  fr: { apply: 'Appliquer', contrast: 'contraste' },
+  en: { apply: 'Apply', contrast: 'contrast' },
+  de: { apply: 'Übernehmen', contrast: 'Kontrast' },
+  es: { apply: 'Aplicar', contrast: 'contraste' },
+  it: { apply: 'Applica', contrast: 'contrasto' },
+  pt: { apply: 'Aplicar', contrast: 'contraste' },
+};
+
 export const ColorPicker: React.FC<ColorPickerProps> = ({
   currentColor,
   extractedColor,
@@ -20,6 +29,7 @@ export const ColorPicker: React.FC<ColorPickerProps> = ({
   interfaceLang,
 }) => {
   const t = UI_TRANSLATIONS[interfaceLang] || UI_TRANSLATIONS.en;
+  const cI18n = COLOR_I18N[interfaceLang] || COLOR_I18N.en;
   const contrastRatio = getContrastRatio(currentColor, '#FFFFFF');
   const isAccessible = contrastRatio >= 4.5;
 
@@ -31,7 +41,7 @@ export const ColorPicker: React.FC<ColorPickerProps> = ({
         </label>
         <span className="flex items-center space-x-1 text-[10px] text-slate-500 font-medium">
           <ShieldCheck className={`w-3.5 h-3.5 ${isAccessible ? 'text-emerald-500' : 'text-amber-500'}`} />
-          <span>{contrastRatio.toFixed(1)}:1 contrast</span>
+          <span>{contrastRatio.toFixed(1)}:1 {cI18n.contrast}</span>
         </span>
       </div>
 
@@ -61,7 +71,7 @@ export const ColorPicker: React.FC<ColorPickerProps> = ({
             onClick={() => onColorSelect(extractedColor)}
             className="text-[10.5px] font-bold text-indigo-600 dark:text-indigo-400 hover:underline px-2 py-1"
           >
-            Use
+            {cI18n.apply}
           </button>
         </div>
       )}

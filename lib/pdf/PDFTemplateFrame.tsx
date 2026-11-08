@@ -297,8 +297,8 @@ export const PDFTemplateFrame: React.FC<PDFTemplateFrameProps> = ({
 
         {/* Right: Free LogoLoom Watermark (12 mm vector QR) or Clean Pro */}
         <View>
-          {brandKit.removeWatermark ? (
-            <Text style={styles.proVerified}>VERIFIED PRINT DOCUMENT</Text>
+          {Boolean(brandKit.removeWatermark || brandKit.isPro) ? (
+            <Text style={styles.proVerified}>{(t.footer.verified || 'VERIFIED PRINT DOCUMENT').toUpperCase()}</Text>
           ) : (
             <View style={styles.watermarkBadge}>
               <VectorQR

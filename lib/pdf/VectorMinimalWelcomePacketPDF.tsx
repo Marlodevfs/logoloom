@@ -481,7 +481,7 @@ export const VectorMinimalWelcomePacketPDF: React.FC<VectorMinimalWelcomePacketP
 
         {/* Watermark / LogoLoom Badge (Free) or Verified (Pro) */}
         <View>
-          {brandKit.removeWatermark ? (
+          {Boolean(brandKit.removeWatermark || brandKit.isPro) ? (
             <Text style={styles.proVerified}>{l.verified.toUpperCase()}</Text>
           ) : (
             <View style={styles.watermarkBadge}>

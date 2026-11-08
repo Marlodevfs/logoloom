@@ -165,7 +165,7 @@ export const MinimalWelcomePacketTemplate: React.FC<MinimalWelcomePacketTemplate
               role="heading"
               aria-level={2}
               onClick={() => setEditingField('title')}
-              title="Click to edit title"
+              title={l.clickToEditTitle}
               className="text-xl font-bold tracking-tight text-slate-900 hover:text-indigo-600 transition-colors cursor-pointer"
             >
               {content.title || t.title}
@@ -293,9 +293,9 @@ export const MinimalWelcomePacketTemplate: React.FC<MinimalWelcomePacketTemplate
           <span>{pageLabel}</span>
         </div>
 
-        {brandKit.removeWatermark ? (
+        {Boolean(brandKit.removeWatermark || brandKit.isPro) ? (
           <span className="text-[10px] font-mono font-bold text-emerald-600 tracking-wider">
-            VERIFIED PRINT DOCUMENT
+            {l.verified.toUpperCase()}
           </span>
         ) : (
           <div className="flex items-center space-x-2">
@@ -307,7 +307,7 @@ export const MinimalWelcomePacketTemplate: React.FC<MinimalWelcomePacketTemplate
               />
             )}
             <div className="text-right">
-              <p className="text-[9px] text-slate-400 leading-tight">Made with</p>
+              <p className="text-[9px] text-slate-400 leading-tight">{l.madeWith}</p>
               <p className="text-[10px] font-bold text-slate-800 font-mono leading-tight">
                 logoloom.app
               </p>
