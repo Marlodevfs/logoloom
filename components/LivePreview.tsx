@@ -22,19 +22,20 @@ export const LivePreview: React.FC<LivePreviewProps> = ({
   const t = UI_TRANSLATIONS[interfaceLang] || UI_TRANSLATIONS.en;
   const [zoomScale, setZoomScale] = useState<number>(0.68);
 
-  // Auto-adjust scale on mount based on screen width
+  const isLandscape = activeTemplate === 'habit-tracker';
+
+  const calculateFitScale = () => {
+    if (typeof window === 'undefined') return 0.68;
+    const width = window.innerWidth;
+    if (width < 640) return isLandscape ? 0.32 : 0.42;
+    if (width < 1024) return isLandscape ? 0.46 : 0.55;
+    return isLandscape ? 0.58 : 0.68;
+  };
+
+  // Auto-adjust scale on mount and when activeTemplate changes
   useEffect(() => {
-    if (typeof window !== 'undefined') {
-      const width = window.innerWidth;
-      if (width < 640) {
-        setZoomScale(0.42); // Fits 390px iPhone perfectly
-      } else if (width < 1024) {
-        setZoomScale(0.55); // Fits iPad/tablets
-      } else {
-        setZoomScale(0.68); // Fits desktop split panel
-      }
-    }
-  }, []);
+    setZoomScale(calculateFitScale());
+  }, [activeTemplate, isLandscape]);
 
   const renderActiveTemplate = () => {
     switch (activeTemplate) {
@@ -52,12 +53,7 @@ export const LivePreview: React.FC<LivePreviewProps> = ({
   const isA4 = brandKit.paperSize === 'a4';
 
   const resetToFit = () => {
-    if (typeof window !== 'undefined') {
-      const width = window.innerWidth;
-      if (width < 640) setZoomScale(0.42);
-      else if (width < 1024) setZoomScale(0.55);
-      else setZoomScale(0.68);
-    }
+    setZoomScale(calculateFitScale());
   };
 
   return (

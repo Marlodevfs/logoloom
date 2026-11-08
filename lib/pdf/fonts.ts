@@ -8,6 +8,13 @@ export function registerPDFFonts() {
   try {
     if (typeof window !== 'undefined') {
       Font.register({
+        family: 'Georgia',
+        fonts: [
+          { src: '/fonts/Georgia-Regular.ttf', fontWeight: 'normal' },
+          { src: '/fonts/Georgia-Bold.ttf', fontWeight: 'bold' },
+        ],
+      });
+      Font.register({
         family: 'Roboto',
         fonts: [
           { src: '/fonts/Roboto-Regular.ttf', fontWeight: 'normal' },
@@ -20,6 +27,13 @@ export function registerPDFFonts() {
       // In Node.js / automated test environments
       const path = require('path');
       const base = path.join(process.cwd(), 'public', 'fonts');
+      Font.register({
+        family: 'Georgia',
+        fonts: [
+          { src: path.join(base, 'Georgia-Regular.ttf'), fontWeight: 'normal' },
+          { src: path.join(base, 'Georgia-Bold.ttf'), fontWeight: 'bold' },
+        ],
+      });
       Font.register({
         family: 'Roboto',
         fonts: [

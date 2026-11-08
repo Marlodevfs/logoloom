@@ -8,16 +8,30 @@ interface PDFTemplateFrameProps {
   brandKit: BrandKit;
   children: React.ReactNode;
   subtitleRight?: string;
+  orientation?: 'portrait' | 'landscape';
+  pageNumber?: number;
+  totalPages?: number;
 }
 
 const styles = StyleSheet.create({
-  page: {
+  pagePortrait: {
     fontFamily: 'Roboto',
     backgroundColor: '#FFFFFF',
     color: '#0F172A',
-    paddingTop: 28,
-    paddingBottom: 24,
-    paddingHorizontal: 32,
+    paddingTop: 36,
+    paddingBottom: 28,
+    paddingHorizontal: 42, // ~15 mm margins
+    flexDirection: 'column',
+    justifyContent: 'space-between',
+    position: 'relative',
+  },
+  pageLandscape: {
+    fontFamily: 'Roboto',
+    backgroundColor: '#FFFFFF',
+    color: '#0F172A',
+    paddingTop: 30,
+    paddingBottom: 22,
+    paddingHorizontal: 42, // ~15 mm margins
     flexDirection: 'column',
     justifyContent: 'space-between',
     position: 'relative',
@@ -27,15 +41,15 @@ const styles = StyleSheet.create({
     top: 0,
     left: 0,
     right: 0,
-    height: 6,
+    height: 3.5,
   },
   header: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    paddingBottom: 10,
-    borderBottomWidth: 1,
-    borderBottomColor: '#F1F5F9',
+    paddingBottom: 8,
+    borderBottomWidth: 0.75,
+    borderBottomColor: '#E2E8F0',
     marginBottom: 8,
   },
   headerBrand: {
@@ -44,129 +58,108 @@ const styles = StyleSheet.create({
     gap: 10,
   },
   logoImage: {
-    height: 32,
-    maxWidth: 110,
+    maxHeight: 28,
+    maxWidth: 120,
     objectFit: 'contain',
   },
-  monogram: {
-    width: 32,
-    height: 32,
-    borderRadius: 6,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  monogramText: {
-    fontSize: 14,
-    fontWeight: 'bold',
-  },
-  brandTextContainer: {
+  wordmarkContainer: {
     flexDirection: 'column',
   },
-  companyName: {
-    fontSize: 12,
+  wordmarkName: {
+    fontFamily: 'Georgia',
+    fontSize: 13,
     fontWeight: 'bold',
     color: '#0F172A',
+    letterSpacing: -0.2,
   },
   tagline: {
-    fontSize: 8,
+    fontSize: 7.5,
     color: '#64748B',
     marginTop: 1,
   },
   headerMeta: {
     flexDirection: 'column',
     alignItems: 'flex-end',
+    gap: 2,
   },
   clientBadge: {
-    backgroundColor: '#F1F5F9',
-    borderRadius: 12,
-    paddingHorizontal: 8,
+    backgroundColor: '#F8FAFC',
+    borderWidth: 0.75,
+    borderColor: '#E2E8F0',
+    borderRadius: 4,
+    paddingHorizontal: 6,
     paddingVertical: 2,
-    marginBottom: 2,
   },
   clientText: {
     fontSize: 8,
     fontWeight: 'bold',
-    color: '#334155',
+    color: '#1E293B',
   },
   subtitleRight: {
     fontSize: 7.5,
-    color: '#94A3B8',
-    letterSpacing: 0.5,
+    fontWeight: 'medium',
+    color: '#64748B',
+    letterSpacing: 0.4,
   },
   main: {
     flex: 1,
     flexDirection: 'column',
-    justifyContent: 'flex-start',
-    paddingVertical: 4,
   },
   footer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    paddingTop: 8,
-    borderTopWidth: 1,
-    borderTopColor: '#F1F5F9',
+    paddingTop: 6,
+    borderTopWidth: 0.75,
+    borderTopColor: '#E2E8F0',
     marginTop: 6,
   },
-  footerMeta: {
-    flexDirection: 'column',
+  footerLeft: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
   },
   footerCompany: {
-    fontSize: 8,
+    fontSize: 7.5,
     fontWeight: 'bold',
     color: '#334155',
   },
-  footerNotice: {
-    fontSize: 6.5,
-    color: '#94A3B8',
-    marginTop: 1,
-  },
-  footerQRContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 6,
-    backgroundColor: '#F8FAFC',
-    paddingHorizontal: 6,
-    paddingVertical: 3,
-    borderRadius: 4,
-    borderWidth: 1,
-    borderColor: '#F1F5F9',
-  },
-  footerQRText: {
-    flexDirection: 'column',
-  },
-  footerQRTitle: {
+  footerDot: {
     fontSize: 7,
-    fontWeight: 'bold',
-    color: '#1E293B',
+    color: '#CBD5E1',
   },
-  footerQRUrl: {
-    fontSize: 6,
+  footerNotice: {
+    fontSize: 7,
     color: '#64748B',
-    maxWidth: 120,
   },
-  footerRight: {
+  footerPage: {
+    fontSize: 7,
+    fontWeight: 'medium',
+    color: '#94A3B8',
+  },
+  watermarkBadge: {
     flexDirection: 'row',
     alignItems: 'center',
     gap: 5,
   },
+  watermarkTextCol: {
+    flexDirection: 'column',
+    alignItems: 'flex-end',
+  },
   watermarkText: {
     fontSize: 6.5,
     color: '#64748B',
-    textAlign: 'right',
   },
   watermarkDomain: {
-    fontSize: 6,
+    fontSize: 6.5,
     fontWeight: 'bold',
     color: '#4F46E5',
-    textAlign: 'right',
   },
   proVerified: {
     fontSize: 7,
-    fontWeight: 'medium',
+    fontWeight: 'bold',
     color: '#94A3B8',
     letterSpacing: 0.5,
-    textTransform: 'uppercase',
   },
 });
 
@@ -174,17 +167,26 @@ export const PDFTemplateFrame: React.FC<PDFTemplateFrameProps> = ({
   brandKit,
   children,
   subtitleRight,
+  orientation = 'portrait',
+  pageNumber,
+  totalPages,
 }) => {
   const isA4 = brandKit.paperSize === 'a4';
   const docLang = brandKit.documentLang || 'en';
   const t = DOCUMENT_TRANSLATIONS[docLang] || DOCUMENT_TRANSLATIONS.en;
+  const isLandscape = orientation === 'landscape';
+
+  const pageString = pageNumber && totalPages
+    ? `${t.footer.page.replace(/1/g, '').replace(/of/g, '').replace(/sur/g, '').trim()} ${pageNumber} / ${totalPages}`
+    : t.footer.page;
 
   return (
     <Page
       size={isA4 ? 'A4' : 'LETTER'}
-      style={styles.page}
+      orientation={orientation}
+      style={isLandscape ? styles.pageLandscape : styles.pagePortrait}
     >
-      {/* Top Accent Vector Color Bar */}
+      {/* Top Accent Color Line */}
       <View
         style={[
           styles.accentBar,
@@ -201,37 +203,34 @@ export const PDFTemplateFrame: React.FC<PDFTemplateFrameProps> = ({
               style={styles.logoImage}
             />
           ) : (
-            <View
-              style={[
-                styles.monogram,
-                { backgroundColor: brandKit.brandColor || '#4F46E5' },
-              ]}
-            >
-              <Text
-                style={[
-                  styles.monogramText,
-                  { color: brandKit.contrastText || '#FFFFFF' },
-                ]}
-              >
-                {(brandKit.companyName || 'L').charAt(0).toUpperCase()}
+            <View style={styles.wordmarkContainer}>
+              <Text style={styles.wordmarkName}>
+                {brandKit.companyName || 'LogoLoom Studio'}
               </Text>
+              {brandKit.tagline ? (
+                <Text style={styles.tagline}>{brandKit.tagline}</Text>
+              ) : null}
             </View>
           )}
 
-          <View style={styles.brandTextContainer}>
-            <Text style={styles.companyName}>
-              {brandKit.companyName || 'Your Brand Name'}
-            </Text>
-            {brandKit.tagline && (
-              <Text style={styles.tagline}>{brandKit.tagline}</Text>
-            )}
-          </View>
+          {brandKit.logoUrl && brandKit.companyName && (
+            <View style={styles.wordmarkContainer}>
+              <Text style={[styles.wordmarkName, { fontSize: 11 }]}>
+                {brandKit.companyName}
+              </Text>
+              {brandKit.tagline ? (
+                <Text style={styles.tagline}>{brandKit.tagline}</Text>
+              ) : null}
+            </View>
+          )}
         </View>
 
         <View style={styles.headerMeta}>
           {brandKit.clientName ? (
             <View style={styles.clientBadge}>
-              <Text style={styles.clientText}>{brandKit.clientName}</Text>
+              <Text style={styles.clientText}>
+                {brandKit.clientName}
+              </Text>
             </View>
           ) : null}
           {subtitleRight && (
@@ -240,52 +239,35 @@ export const PDFTemplateFrame: React.FC<PDFTemplateFrameProps> = ({
         </View>
       </View>
 
-      {/* Main Vector Content */}
+      {/* Main Content Area */}
       <View style={styles.main}>{children}</View>
 
-      {/* Print-Ready Vector Footer */}
+      {/* Editorial Print-Ready Footer */}
       <View style={styles.footer}>
-        {/* Left: Metadata */}
-        <View style={styles.footerMeta}>
+        {/* Left: Professional metadata */}
+        <View style={styles.footerLeft}>
           <Text style={styles.footerCompany}>
             {brandKit.companyName || 'LogoLoom Document'}
           </Text>
-          <Text style={styles.footerNotice}>
-            {t.footer.confidential} • {t.footer.page}
-          </Text>
+          <Text style={styles.footerDot}>•</Text>
+          <Text style={styles.footerNotice}>{t.footer.confidential}</Text>
+          <Text style={styles.footerDot}>•</Text>
+          <Text style={styles.footerPage}>{pageString}</Text>
         </View>
 
-        {/* Center: Custom QR Code */}
-        {brandKit.qrUrl && (
-          <View style={styles.footerQRContainer}>
-            <VectorQR
-              text={brandKit.qrUrl}
-              size={24}
-              darkColor="#0F172A"
-              lightColor="#FFFFFF"
-            />
-            <View style={styles.footerQRText}>
-              <Text style={styles.footerQRTitle}>{t.footer.scanToBook}</Text>
-              <Text style={styles.footerQRUrl}>
-                {brandKit.qrUrl.replace(/^https?:\/\//, '').slice(0, 30)}
-              </Text>
-            </View>
-          </View>
-        )}
-
-        {/* Right: Free vs Pro Watermark */}
+        {/* Right: Free LogoLoom Watermark (12 mm vector QR) or Clean Pro */}
         <View>
           {brandKit.removeWatermark ? (
-            <Text style={styles.proVerified}>Verified Client Document</Text>
+            <Text style={styles.proVerified}>VERIFIED PRINT DOCUMENT</Text>
           ) : (
-            <View style={styles.footerRight}>
+            <View style={styles.watermarkBadge}>
               <VectorQR
                 text="https://logoloom.app"
-                size={18}
+                size={34} // 12 mm
                 darkColor="#475569"
                 lightColor="#FFFFFF"
               />
-              <View style={{ flexDirection: 'column' }}>
+              <View style={styles.watermarkTextCol}>
                 <Text style={styles.watermarkText}>{t.footer.madeWith}</Text>
                 <Text style={styles.watermarkDomain}>logoloom.app</Text>
               </View>

@@ -3,29 +3,34 @@ import { Svg, Rect } from '@react-pdf/renderer';
 import QRCode from 'qrcode';
 
 interface VectorQRProps {
-  text: string;
-  size?: number;
+  text?: string | null;
+  size?: number; // Size in pt (52 pt = 18 mm, 35 pt = 12 mm)
   darkColor?: string;
   lightColor?: string;
 }
 
 export const VectorQR: React.FC<VectorQRProps> = ({
   text,
-  size = 36,
+  size = 52, // 18 mm standard
   darkColor = '#0F172A',
   lightColor = '#FFFFFF',
 }) => {
-  const cleanText = text && text.trim().length > 0 ? text.trim() : 'https://logoloom.app';
-  
+  if (!text || typeof text !== 'string' || text.trim().length === 0) {
+    return null;
+  }
+
+  const cleanText = text.trim();
+
   let qr;
   try {
     qr = QRCode.create(cleanText, { errorCorrectionLevel: 'H' });
   } catch (err) {
-    qr = QRCode.create('https://logoloom.app', { errorCorrectionLevel: 'H' });
+    console.warn('QR Code generation error:', err);
+    return null;
   }
 
   const moduleCount = qr.modules.size;
-  const margin = 2;
+  const margin = 2; // Quiet zone
   const totalGridSize = moduleCount + margin * 2;
 
   const rects: React.ReactNode[] = [];
