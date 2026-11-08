@@ -22,18 +22,11 @@ export const DownloadButton: React.FC<DownloadButtonProps> = ({
   const [hasExported, setHasExported] = useState(false);
 
   const handleDownload = async () => {
-    const targetElement = document.getElementById('logoloom-pdf-target');
-    if (!targetElement) {
-      alert('Document preview element not found. Please try again.');
-      return;
-    }
-
     setIsExporting(true);
     setHasExported(false);
 
     try {
       await exportToPDF({
-        element: targetElement,
         paperSize: brandKit.paperSize,
         brandKit,
         templateId: activeTemplate,
@@ -43,7 +36,7 @@ export const DownloadButton: React.FC<DownloadButtonProps> = ({
       setTimeout(() => setHasExported(false), 3000);
     } catch (err) {
       console.error('Failed to export PDF', err);
-      alert('PDF generation encountered an error. Please retry.');
+      alert(interfaceLang === 'fr' ? 'La génération du PDF a échoué. Veuillez réessayer.' : 'PDF generation encountered an error. Please retry.');
     } finally {
       setIsExporting(false);
     }

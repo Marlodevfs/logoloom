@@ -1,8 +1,9 @@
 'use client';
 
 import React from 'react';
-import { BrandKit } from '@/types';
+import { BrandKit, DocumentLang, RoadmapPhaseCustom } from '@/types';
 import { DOCUMENT_TRANSLATIONS } from '@/lib/i18n/documents';
+import { getDefaultRoadmapContent } from '@/lib/use-brand-kit';
 import { TemplateFrame } from './TemplateFrame';
 
 interface Roadmap90TemplateProps {
@@ -12,13 +13,54 @@ interface Roadmap90TemplateProps {
 export const Roadmap90Template: React.FC<Roadmap90TemplateProps> = ({ brandKit }) => {
   const docLang = brandKit.documentLang || 'en';
   const t = (DOCUMENT_TRANSLATIONS[docLang] || DOCUMENT_TRANSLATIONS.en).roadmap90;
+  const content = brandKit.roadmapContent || getDefaultRoadmapContent(docLang);
 
-  const phases = [t.phase1, t.phase2, t.phase3];
+  const subtitleRight = docLang === 'fr'
+    ? 'FEUILLE DE ROUTE STRATÉGIQUE • PLAN 90 JOURS'
+    : docLang === 'de'
+    ? 'STRATEGISCHE ROADMAP • 90-TAGE PLAN'
+    : docLang === 'es'
+    ? 'HOJA DE RUTA ESTRATÉGICA • PLAN DE 90 DÍAS'
+    : docLang === 'it'
+    ? 'TABELLA DI MARCIA STRATEGICA • PIANO A 90 GIORNI'
+    : docLang === 'pt'
+    ? 'ROTEIRO ESTRATÉGICO • PLANO DE 90 DIAS'
+    : 'STRATEGIC ROADMAP • 90-DAY EXECUTION';
+
+  const categoryLabel = docLang === 'fr'
+    ? 'Plan d’action stratégique'
+    : docLang === 'de'
+    ? 'Strategischer Aktionsplan'
+    : docLang === 'es'
+    ? 'Plan de acción estratégico'
+    : docLang === 'it'
+    ? 'Piano d’azione strategico'
+    : docLang === 'pt'
+    ? 'Plano de ação estratégico'
+    : 'Strategic Execution Framework';
+
+  const deliverablesTitle = docLang === 'fr'
+    ? 'Livrables & Jalons Clés'
+    : docLang === 'de'
+    ? 'Wichtigste Meilensteine'
+    : docLang === 'es'
+    ? 'Hitos y Entregables Clave'
+    : docLang === 'it'
+    ? 'Traguardi e Risultati Chiave'
+    : docLang === 'pt'
+    ? 'Marcos e Entregáveis Principais'
+    : 'Key Milestones & Deliverables';
+
+  const phases: RoadmapPhaseCustom[] = content.phases || [
+    { title: t.phase1.title, daysLabel: t.phase1.range, deliverables: t.phase1.deliverables, kpi: t.phase1.kpiValue },
+    { title: t.phase2.title, daysLabel: t.phase2.range, deliverables: t.phase2.deliverables, kpi: t.phase2.kpiValue },
+    { title: t.phase3.title, daysLabel: t.phase3.range, deliverables: t.phase3.deliverables, kpi: t.phase3.kpiValue },
+  ];
 
   return (
     <TemplateFrame
       brandKit={brandKit}
-      subtitleRight="STRATEGIC ROADMAP • 90-DAY EXECUTION"
+      subtitleRight={subtitleRight}
     >
       <div className="flex flex-col h-full justify-between space-y-4">
         {/* Document Header Info */}
@@ -31,14 +73,14 @@ export const Roadmap90Template: React.FC<Roadmap90TemplateProps> = ({ brandKit }
                   style={{ backgroundColor: brandKit.brandColor }}
                 />
                 <span className="text-xs font-semibold tracking-wider uppercase text-slate-500">
-                  Strategic Execution Framework
+                  {categoryLabel}
                 </span>
               </div>
               <h1 className="text-xl font-extrabold text-slate-900 mt-0.5 tracking-tight">
-                {t.title}
+                {content.title || t.title}
               </h1>
               <p className="text-xs text-slate-500 mt-0.5 max-w-xl">
-                {t.subtitle}
+                {content.subtitle || t.subtitle}
               </p>
             </div>
 
@@ -46,12 +88,12 @@ export const Roadmap90Template: React.FC<Roadmap90TemplateProps> = ({ brandKit }
             <div className="flex items-center space-x-3 bg-slate-50 border border-slate-200/80 rounded-lg p-2 text-xs">
               <div>
                 <span className="text-[10px] text-slate-400 block uppercase font-medium">{t.initiativePrompt}</span>
-                <span className="font-bold text-slate-800">Q1 Growth & Scale</span>
+                <span className="font-bold text-slate-800">{content.mission || (docLang === 'fr' ? 'Définir l’objectif clé' : 'Define primary goal')}</span>
               </div>
               <div className="w-px h-6 bg-slate-200" />
               <div>
                 <span className="text-[10px] text-slate-400 block uppercase font-medium">{t.timelinePrompt}</span>
-                <span className="font-bold text-slate-800">90 Business Days</span>
+                <span className="font-bold text-slate-800">{content.horizon || (docLang === 'fr' ? '90 jours ouvrés' : '90 Business Days')}</span>
               </div>
             </div>
           </div>
@@ -59,7 +101,7 @@ export const Roadmap90Template: React.FC<Roadmap90TemplateProps> = ({ brandKit }
 
         {/* 3 Horizontal / Vertical Phases */}
         <div className="grid grid-cols-3 gap-3.5 flex-1">
-          {phases.map((phase, idx) => (
+          {phases.map((phase: RoadmapPhaseCustom, idx: number) => (
             <div
               key={idx}
               className="bg-white rounded-xl border border-slate-200 flex flex-col justify-between overflow-hidden shadow-xs hover:border-slate-300 transition-colors"
@@ -76,21 +118,21 @@ export const Roadmap90Template: React.FC<Roadmap90TemplateProps> = ({ brandKit }
                     className="text-[10px] font-extrabold tracking-wider uppercase block"
                     style={{ color: brandKit.brandColor }}
                   >
-                    {phase.number}
+                    {(phase as any).number || `PHASE 0${idx + 1}`}
                   </span>
                   <h3 className="text-xs font-bold text-slate-900 mt-0.5 leading-snug">
                     {phase.title}
                   </h3>
                 </div>
                 <span className="text-[10px] font-mono font-semibold bg-white border border-slate-200 text-slate-600 px-1.5 py-0.5 rounded shadow-2xs">
-                  {phase.range}
+                  {(phase as any).range || (phase as any).daysLabel}
                 </span>
               </div>
 
               {/* Deliverables Checklist */}
               <div className="p-3 flex-1 flex flex-col justify-start space-y-2.5">
                 <span className="text-[9.5px] uppercase tracking-wider font-bold text-slate-400">
-                  Key Milestones & Deliverables
+                  {deliverablesTitle}
                 </span>
                 <ul className="space-y-2">
                   {phase.deliverables.map((item, dIdx) => (
@@ -114,10 +156,10 @@ export const Roadmap90Template: React.FC<Roadmap90TemplateProps> = ({ brandKit }
               {/* Phase KPI Target */}
               <div className="p-2.5 bg-slate-50 border-t border-slate-100">
                 <span className="text-[9px] font-bold text-slate-500 uppercase block">
-                  {phase.kpiLabel}
+                  {(phase as any).kpiLabel || (docLang === 'fr' ? 'Cible Clé :' : 'Key Target:')}
                 </span>
                 <p className="text-[10px] font-semibold text-slate-800 mt-0.5 leading-snug">
-                  {phase.kpiValue}
+                  {(phase as any).kpiValue || (phase as any).kpi}
                 </p>
               </div>
             </div>
@@ -125,40 +167,42 @@ export const Roadmap90Template: React.FC<Roadmap90TemplateProps> = ({ brandKit }
         </div>
 
         {/* Milestone Sign-off Block */}
-        <div className="bg-slate-50 rounded-xl p-3 border border-slate-200">
-          <div className="flex items-center justify-between mb-2 pb-1.5 border-b border-slate-200/80">
-            <span className="text-[11px] font-bold text-slate-800 uppercase tracking-wide">
-              {t.signoffTitle}
-            </span>
-            <span className="text-[10px] text-slate-400">
-              Valid for execution upon bilateral sign-off
-            </span>
-          </div>
-
-          <div className="grid grid-cols-2 gap-8 pt-1">
-            <div className="flex flex-col space-y-3">
-              <span className="text-[10px] font-semibold text-slate-600">
-                {t.clientSign}: <span className="font-normal text-slate-400">{brandKit.clientName || 'Authorized Representative'}</span>
+        {content.showSignatureBlock !== false && (
+          <div className="bg-slate-50 rounded-xl p-3 border border-slate-200">
+            <div className="flex items-center justify-between mb-2 pb-1.5 border-b border-slate-200/80">
+              <span className="text-[11px] font-bold text-slate-800 uppercase tracking-wide">
+                {t.signoffTitle}
               </span>
-              <div className="border-b border-slate-300 border-dashed h-4" />
-              <div className="flex justify-between text-[9px] text-slate-400">
-                <span>Date: ____ / ____ / 2026</span>
-                <span>Signature</span>
-              </div>
+              <span className="text-[10px] text-slate-400">
+                {docLang === 'fr' ? 'Validation pour exécution bilatérale' : 'Valid for execution upon bilateral sign-off'}
+              </span>
             </div>
 
-            <div className="flex flex-col space-y-3">
-              <span className="text-[10px] font-semibold text-slate-600">
-                {t.leadSign}: <span className="font-bold text-slate-800">{brandKit.coachName || 'Alexandre Martin'}</span>
-              </span>
-              <div className="border-b border-slate-300 border-dashed h-4" />
-              <div className="flex justify-between text-[9px] text-slate-400">
-                <span>Date: ____ / ____ / 2026</span>
-                <span>Signature</span>
+            <div className="grid grid-cols-2 gap-8 pt-1">
+              <div className="flex flex-col space-y-3">
+                <span className="text-[10px] font-semibold text-slate-600">
+                  {t.clientSign}: <span className="font-normal text-slate-400">{brandKit.clientName || '__________________________'}</span>
+                </span>
+                <div className="border-b border-slate-300 border-dashed h-4" />
+                <div className="flex justify-between text-[9px] text-slate-400">
+                  <span>Date: ____ / ____ / ________</span>
+                  <span>{docLang === 'fr' ? 'Signature' : 'Signature'}</span>
+                </div>
+              </div>
+
+              <div className="flex flex-col space-y-3">
+                <span className="text-[10px] font-semibold text-slate-600">
+                  {t.leadSign}: <span className="font-bold text-slate-800">{brandKit.coachName || '__________________________'}</span>
+                </span>
+                <div className="border-b border-slate-300 border-dashed h-4" />
+                <div className="flex justify-between text-[9px] text-slate-400">
+                  <span>Date: ____ / ____ / ________</span>
+                  <span>{docLang === 'fr' ? 'Signature' : 'Signature'}</span>
+                </div>
               </div>
             </div>
           </div>
-        </div>
+        )}
       </div>
     </TemplateFrame>
   );

@@ -14,6 +14,8 @@ export async function POST(req: NextRequest) {
     const stripeKey = process.env.STRIPE_SECRET_KEY;
     const isProduction = process.env.NODE_ENV === 'production';
 
+    const separator = returnUrl.includes('?') ? '&' : '?';
+
     // If Stripe keys are configured, create real Stripe Checkout session
     if (stripeKey && PRO_CONFIG.stripePriceId) {
       const stripe = new Stripe(stripeKey);
@@ -26,7 +28,7 @@ export async function POST(req: NextRequest) {
           },
         ],
         mode: 'subscription',
-        success_url: `${returnUrl}?session_id={CHECKOUT_SESSION_ID}`,
+        success_url: `${returnUrl}${separator}session_id={CHECKOUT_SESSION_ID}`,
         cancel_url: `${origin}/pricing`,
         customer_email: body.email || undefined,
         allow_promotion_codes: true,
@@ -48,7 +50,7 @@ export async function POST(req: NextRequest) {
 
     // In local development only: simulated checkout flow
     return NextResponse.json({
-      url: `${returnUrl}?session_id=demo_pro_session_success`,
+      url: `${returnUrl}${separator}session_id=demo_pro_session_success`,
       simulated: true,
     });
   } catch (error: any) {

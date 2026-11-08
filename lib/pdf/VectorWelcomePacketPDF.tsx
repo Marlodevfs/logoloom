@@ -3,6 +3,7 @@ import { View, Text, StyleSheet } from '@react-pdf/renderer';
 import { BrandKit } from '@/types';
 import { DOCUMENT_TRANSLATIONS } from '@/lib/i18n/documents';
 import { PDFTemplateFrame } from './PDFTemplateFrame';
+import { VectorQR } from './VectorQR';
 
 interface VectorWelcomePacketPDFProps {
   brandKit: BrandKit;
@@ -283,10 +284,64 @@ export const VectorWelcomePacketPDF: React.FC<VectorWelcomePacketPDFProps> = ({ 
   const docLang = brandKit.documentLang || 'en';
   const t = (DOCUMENT_TRANSLATIONS[docLang] || DOCUMENT_TRANSLATIONS.en).welcomePacket;
 
+  const subtitleRight = docLang === 'fr'
+    ? 'PACK D’ACCUEIL CLIENT • GUIDE & PROTOCOLES'
+    : docLang === 'de'
+    ? 'WILLKOMMENSPAKET • LEITFADEN & PROTOKOLLE'
+    : docLang === 'es'
+    ? 'PAQUETE DE BIENVENIDA • GUÍA Y PROTOCOLOS'
+    : docLang === 'it'
+    ? 'PACCHETTO DI BENVENUTO • GUIDA E PROTOCOLLI'
+    : docLang === 'pt'
+    ? 'PACOTE DE BOAS-VINDAS • GUIA E PROTOCOLOS'
+    : 'CLIENT ONBOARDING • GUIDE & PROTOCOLS';
+
+  const heroCategory = docLang === 'fr'
+    ? 'Accueil & Modalités de Collaboration'
+    : docLang === 'de'
+    ? 'Willkommen & Zusammenarbeitsstandards'
+    : docLang === 'es'
+    ? 'Bienvenida y Estándares de Trabajo'
+    : docLang === 'it'
+    ? 'Benvenuto e Standard di Collaborazione'
+    : docLang === 'pt'
+    ? 'Boas-vindas e Padrões de Colaboração'
+    : 'Welcome & Partnership Standards';
+
+  const contactPrompt = docLang === 'fr'
+    ? 'Votre interlocuteur principal est'
+    : docLang === 'de'
+    ? 'Ihr Hauptansprechpartner ist'
+    : docLang === 'es'
+    ? 'Su punto de contacto principal es'
+    : docLang === 'it'
+    ? 'Il vostro punto di contatto principale è'
+    : docLang === 'pt'
+    ? 'Seu principal ponto de contato é'
+    : 'Your primary point of contact is';
+
+  const kickoffBadge = docLang === 'fr'
+    ? 'SESSION DE CADRAGE 01'
+    : docLang === 'de'
+    ? 'KICKOFF-SITZUNG 01'
+    : docLang === 'es'
+    ? 'SESIÓN DE INICIO 01'
+    : docLang === 'it'
+    ? 'SESSIONE DI AVVIO 01'
+    : docLang === 'pt'
+    ? 'SESSÃO INICIAL 01'
+    : 'KICKOFF SESSION 01';
+
+  const hasUserQR = Boolean(
+    brandKit.qrUrl &&
+    brandKit.qrUrl.trim().length > 0 &&
+    brandKit.qrUrl !== 'https://logoloom.app'
+  );
+
   return (
     <PDFTemplateFrame
       brandKit={brandKit}
-      subtitleRight="CLIENT ONBOARDING • GUIDE & PROTOCOLS"
+      subtitleRight={subtitleRight}
     >
       <View style={styles.container}>
         {/* Hero Section */}
@@ -298,7 +353,7 @@ export const VectorWelcomePacketPDF: React.FC<VectorWelcomePacketPDFProps> = ({ 
                 { backgroundColor: brandKit.brandColor || '#4F46E5' },
               ]}
             />
-            <Text style={styles.heroCategory}>Welcome & Partnership Standards</Text>
+            <Text style={styles.heroCategory}>{heroCategory}</Text>
           </View>
           <Text style={styles.heroTitle}>{t.title}</Text>
           <Text style={styles.heroSubtitle}>{t.subtitle}</Text>
@@ -361,12 +416,14 @@ export const VectorWelcomePacketPDF: React.FC<VectorWelcomePacketPDFProps> = ({ 
               </View>
             </View>
 
-            <Text style={styles.contactMeta}>
-              Contact:{' '}
-              <Text style={styles.contactEmail}>
-                {brandKit.contactEmail || 'team@studio.io'}
+            {brandKit.contactEmail ? (
+              <Text style={styles.contactMeta}>
+                Contact:{' '}
+                <Text style={styles.contactEmail}>
+                  {brandKit.contactEmail}
+                </Text>
               </Text>
-            </Text>
+            ) : null}
           </View>
 
           {/* Right Column: Working Agreements & First Steps */}
@@ -443,17 +500,31 @@ export const VectorWelcomePacketPDF: React.FC<VectorWelcomePacketPDFProps> = ({ 
             <View>
               <Text style={styles.kickoffTitle}>{t.schedulePrompt}</Text>
               <Text style={styles.kickoffSubtitle}>
-                Your primary point of contact is{' '}
+                {contactPrompt}{' '}
                 <Text style={styles.kickoffCoachHighlight}>
-                  {brandKit.coachName || 'Alexandre Martin'}
+                  {brandKit.coachName || (brandKit.companyName ? brandKit.companyName : (docLang === 'fr' ? 'Votre Référent' : 'Your Practitioner'))}
                 </Text>
               </Text>
             </View>
           </View>
 
-          <View style={styles.kickoffBadge}>
-            <Text style={styles.kickoffBadgeText}>KICKOFF SESSION 01</Text>
-          </View>
+          {hasUserQR ? (
+            <View style={{ flexDirection: 'row', alignItems: 'center', gap: 6 }}>
+              <VectorQR
+                text={brandKit.qrUrl}
+                size={40} // ~14 mm
+                darkColor="#0F172A"
+                lightColor="#FFFFFF"
+              />
+              <View style={styles.kickoffBadge}>
+                <Text style={styles.kickoffBadgeText}>{kickoffBadge}</Text>
+              </View>
+            </View>
+          ) : (
+            <View style={styles.kickoffBadge}>
+              <Text style={styles.kickoffBadgeText}>{kickoffBadge}</Text>
+            </View>
+          )}
         </View>
       </View>
     </PDFTemplateFrame>

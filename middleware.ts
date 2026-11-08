@@ -11,7 +11,7 @@ export function middleware(request: NextRequest) {
   // 1. PHASE 3: Canonical Apex Host Enforcement (301 Permanent Redirect)
   if (
     host === 'www.logoloom.app' ||
-    (host.endsWith('.vercel.app') && !host.includes('localhost'))
+    host === 'logoloom-one.vercel.app'
   ) {
     const canonicalUrl = new URL(`https://logoloom.app${pathname}${search}`);
     return NextResponse.redirect(canonicalUrl, 301);

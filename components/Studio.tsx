@@ -108,7 +108,7 @@ export const Studio: React.FC<StudioProps> = ({ initialLang }) => {
             onUpdate={updateBrandKit}
             activeTemplate={activeTemplate}
             interfaceLang={interfaceLang}
-            onResetSection={() => resetSection('habitTracker')}
+            onResetSection={() => resetSection(activeTemplate === 'roadmap-90' ? 'roadmap' : activeTemplate === 'welcome-packet' ? 'welcomePacket' : 'habitTracker')}
           />
 
           <div className="flex-1" />
@@ -210,7 +210,7 @@ export const Studio: React.FC<StudioProps> = ({ initialLang }) => {
                 onUpdate={updateBrandKit}
                 activeTemplate={activeTemplate}
                 interfaceLang={interfaceLang}
-                onResetSection={() => resetSection('habitTracker')}
+                onResetSection={() => resetSection(activeTemplate === 'roadmap-90' ? 'roadmap' : activeTemplate === 'welcome-packet' ? 'welcomePacket' : 'habitTracker')}
               />
 
               <button

@@ -13,6 +13,24 @@ interface PDFTemplateFrameProps {
   totalPages?: number;
 }
 
+function formatPageString(lang: string, current?: number, total?: number, fallback?: string): string {
+  if (!current || !total) return fallback || 'Page 1 of 1';
+  switch (lang) {
+    case 'fr':
+      return `Page ${current} sur ${total}`;
+    case 'de':
+      return `Seite ${current} von ${total}`;
+    case 'es':
+    case 'pt':
+      return `Página ${current} de ${total}`;
+    case 'it':
+      return `Pagina ${current} di ${total}`;
+    case 'en':
+    default:
+      return `Page ${current} of ${total}`;
+  }
+}
+
 function normalizeLogoUrl(url: string | null | undefined): string | null {
   if (!url || typeof url !== 'string' || url.trim() === '') return null;
   const trimmed = url.trim();
@@ -200,9 +218,7 @@ export const PDFTemplateFrame: React.FC<PDFTemplateFrameProps> = ({
 
   const normalizedLogo = normalizeLogoUrl(brandKit.logoUrl);
 
-  const pageString = pageNumber && totalPages
-    ? `${t.footer.page.replace(/1/g, '').replace(/of/g, '').replace(/sur/g, '').trim()} ${pageNumber} / ${totalPages}`
-    : t.footer.page;
+  const pageString = formatPageString(docLang, pageNumber, totalPages, t.footer.page);
 
   return (
     <Page

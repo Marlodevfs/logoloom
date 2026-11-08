@@ -7,6 +7,8 @@ import {
   DocumentLang,
   HabitPackId,
   HabitTrackerCustomContent,
+  RoadmapCustomContent,
+  WelcomePacketCustomContent,
   InterfaceLang,
   TemplateId,
 } from '@/types';
@@ -60,6 +62,52 @@ export function getDefaultHabitTrackerContent(
   };
 }
 
+export function getDefaultRoadmapContent(lang: DocumentLang): RoadmapCustomContent {
+  const t = (DOCUMENT_TRANSLATIONS[lang] || DOCUMENT_TRANSLATIONS.en).roadmap90;
+  return {
+    title: t.title,
+    subtitle: t.subtitle,
+    mission: lang === 'fr' ? 'Optimisation opérationnelle & Accélération' : 'Operational Excellence & Growth',
+    horizon: lang === 'fr' ? '90 jours ouvrés' : '90 Business Days',
+    phases: [
+      {
+        title: t.phase1.title,
+        daysLabel: t.phase1.range,
+        deliverables: [...t.phase1.deliverables],
+        kpi: t.phase1.kpiValue,
+      },
+      {
+        title: t.phase2.title,
+        daysLabel: t.phase2.range,
+        deliverables: [...t.phase2.deliverables],
+        kpi: t.phase2.kpiValue,
+      },
+      {
+        title: t.phase3.title,
+        daysLabel: t.phase3.range,
+        deliverables: [...t.phase3.deliverables],
+        kpi: t.phase3.kpiValue,
+      },
+    ],
+    showSignatureBlock: true,
+  };
+}
+
+export function getDefaultWelcomePacketContent(lang: DocumentLang): WelcomePacketCustomContent {
+  const t = (DOCUMENT_TRANSLATIONS[lang] || DOCUMENT_TRANSLATIONS.en).welcomePacket;
+  return {
+    title: t.title,
+    subtitle: t.subtitle,
+    welcomeMessage: t.welcomeBody,
+    channels: t.commItems[0]?.text || '',
+    turnaroundTime: t.commItems[1]?.text || '',
+    meetingRhythm: t.commItems[2]?.text || '',
+    urgentProcedure: t.commItems[3]?.text || '',
+    workingAgreements: t.agreements.map((a) => ({ title: a.title, description: a.desc })),
+    checklist72h: [...t.firstSteps],
+  };
+}
+
 export const DEFAULT_BRAND_KIT: BrandKit = {
   logoUrl: DEFAULT_SAMPLE_LOGO,
   brandColor: '#4F46E5', // Royal Indigo
@@ -85,6 +133,8 @@ export function useBrandKit(initialLang?: InterfaceLang) {
     ...DEFAULT_BRAND_KIT,
     documentLang: initialDocLang,
     habitTrackerContent: getDefaultHabitTrackerContent(initialDocLang, 'wellbeing'),
+    roadmapContent: getDefaultRoadmapContent(initialDocLang),
+    welcomePacketContent: getDefaultWelcomePacketContent(initialDocLang),
   }));
 
   const [activeTemplate, setActiveTemplate] = useState<TemplateId>('habit-tracker');
@@ -128,6 +178,8 @@ export function useBrandKit(initialLang?: InterfaceLang) {
             designStyle: parsed.designStyle || initialStyle,
             documentLang: docLang,
             habitTrackerContent: parsed.habitTrackerContent || getDefaultHabitTrackerContent(docLang, 'wellbeing'),
+            roadmapContent: parsed.roadmapContent || getDefaultRoadmapContent(docLang),
+            welcomePacketContent: parsed.welcomePacketContent || getDefaultWelcomePacketContent(docLang),
             isPro: false,
             removeWatermark: false,
           }));
@@ -137,6 +189,8 @@ export function useBrandKit(initialLang?: InterfaceLang) {
             designStyle: initialStyle,
             documentLang: resolvedUiLang as DocumentLang,
             habitTrackerContent: getDefaultHabitTrackerContent(resolvedUiLang as DocumentLang, 'wellbeing'),
+            roadmapContent: getDefaultRoadmapContent(resolvedUiLang as DocumentLang),
+            welcomePacketContent: getDefaultWelcomePacketContent(resolvedUiLang as DocumentLang),
           }));
         }
 
@@ -214,13 +268,15 @@ export function useBrandKit(initialLang?: InterfaceLang) {
 
   const setInterfaceLang = useCallback((lang: InterfaceLang) => {
     setInterfaceLangState(lang);
-    // When changing UI language, also sync document language if document language was matching previous
     setBrandKit((prev) => {
       if (prev.documentLang === lang) return prev;
+      const dLang = lang as DocumentLang;
       return {
         ...prev,
-        documentLang: lang as DocumentLang,
-        habitTrackerContent: getDefaultHabitTrackerContent(lang as DocumentLang, prev.habitTrackerContent?.packId || 'wellbeing'),
+        documentLang: dLang,
+        habitTrackerContent: getDefaultHabitTrackerContent(dLang, prev.habitTrackerContent?.packId || 'wellbeing'),
+        roadmapContent: getDefaultRoadmapContent(dLang),
+        welcomePacketContent: getDefaultWelcomePacketContent(dLang),
       };
     });
   }, []);
@@ -255,7 +311,7 @@ export function useBrandKit(initialLang?: InterfaceLang) {
   }, [updateBrandKit]);
 
   const resetSection = useCallback(
-    (section: 'details' | 'habitTracker' | 'all') => {
+    (section: 'details' | 'habitTracker' | 'roadmap' | 'welcomePacket' | 'all') => {
       if (section === 'details') {
         updateBrandKit({
           companyName: '',
@@ -270,11 +326,21 @@ export function useBrandKit(initialLang?: InterfaceLang) {
         updateBrandKit({
           habitTrackerContent: getDefaultHabitTrackerContent(brandKit.documentLang, 'wellbeing'),
         });
+      } else if (section === 'roadmap') {
+        updateBrandKit({
+          roadmapContent: getDefaultRoadmapContent(brandKit.documentLang),
+        });
+      } else if (section === 'welcomePacket') {
+        updateBrandKit({
+          welcomePacketContent: getDefaultWelcomePacketContent(brandKit.documentLang),
+        });
       } else if (section === 'all') {
         updateBrandKit({
           ...DEFAULT_BRAND_KIT,
           documentLang: brandKit.documentLang,
           habitTrackerContent: getDefaultHabitTrackerContent(brandKit.documentLang, 'wellbeing'),
+          roadmapContent: getDefaultRoadmapContent(brandKit.documentLang),
+          welcomePacketContent: getDefaultWelcomePacketContent(brandKit.documentLang),
         });
       }
     },

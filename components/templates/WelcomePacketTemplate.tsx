@@ -3,6 +3,7 @@
 import React from 'react';
 import { BrandKit } from '@/types';
 import { DOCUMENT_TRANSLATIONS } from '@/lib/i18n/documents';
+import { getDefaultWelcomePacketContent } from '@/lib/use-brand-kit';
 import { TemplateFrame } from './TemplateFrame';
 
 interface WelcomePacketTemplateProps {
@@ -12,11 +13,36 @@ interface WelcomePacketTemplateProps {
 export const WelcomePacketTemplate: React.FC<WelcomePacketTemplateProps> = ({ brandKit }) => {
   const docLang = brandKit.documentLang || 'en';
   const t = (DOCUMENT_TRANSLATIONS[docLang] || DOCUMENT_TRANSLATIONS.en).welcomePacket;
+  const content = brandKit.welcomePacketContent || getDefaultWelcomePacketContent(docLang);
+
+  const subtitleRight = docLang === 'fr'
+    ? 'PACK D’ACCUEIL CLIENT • GUIDE & PROTOCOLES'
+    : docLang === 'de'
+    ? 'WILLKOMMENSPAKET • LEITFADEN & PROTOKOLLE'
+    : docLang === 'es'
+    ? 'PAQUETE DE BIENVENIDA • GUÍA Y PROTOCOLOS'
+    : docLang === 'it'
+    ? 'PACCHETTO DI BENVENUTO • GUIDA E PROTOCOLLI'
+    : docLang === 'pt'
+    ? 'PACOTE DE BOAS-VINDAS • GUIA E PROTOCOLOS'
+    : 'CLIENT ONBOARDING • GUIDE & PROTOCOLS';
+
+  const categoryLabel = docLang === 'fr'
+    ? 'Accueil & Modalités de Collaboration'
+    : docLang === 'de'
+    ? 'Willkommen & Zusammenarbeitsstandards'
+    : docLang === 'es'
+    ? 'Bienvenida y Estándares de Trabajo'
+    : docLang === 'it'
+    ? 'Benvenuto e Standard di Collaborazione'
+    : docLang === 'pt'
+    ? 'Boas-vindas e Padrões de Colaboração'
+    : 'Welcome & Partnership Standards';
 
   return (
     <TemplateFrame
       brandKit={brandKit}
-      subtitleRight="CLIENT ONBOARDING • GUIDE & PROTOCOLS"
+      subtitleRight={subtitleRight}
     >
       <div className="flex flex-col h-full justify-between space-y-4">
         {/* Document Header Info */}
@@ -27,14 +53,14 @@ export const WelcomePacketTemplate: React.FC<WelcomePacketTemplateProps> = ({ br
               style={{ backgroundColor: brandKit.brandColor }}
             />
             <span className="text-xs font-semibold tracking-wider uppercase text-slate-500">
-              Welcome & Partnership Standards
+              {categoryLabel}
             </span>
           </div>
           <h1 className="text-xl font-extrabold text-slate-900 mt-0.5 tracking-tight">
-            {t.title}
+            {content.title || t.title}
           </h1>
           <p className="text-xs text-slate-500 mt-0.5 max-w-xl">
-            {t.subtitle}
+            {content.subtitle || t.subtitle}
           </p>
         </div>
 
@@ -176,14 +202,17 @@ export const WelcomePacketTemplate: React.FC<WelcomePacketTemplateProps> = ({ br
                 {t.schedulePrompt}
               </p>
               <p className="text-[10px] text-slate-400">
-                Your primary point of contact is <span className="text-white font-medium">{brandKit.coachName || 'Alexandre Martin'}</span>
+                {docLang === 'fr' ? 'Votre interlocuteur principal est ' : 'Your primary point of contact is '}
+                <span className="text-white font-medium">
+                  {brandKit.coachName || (docLang === 'fr' ? 'Votre Référent' : 'Your Practitioner')}
+                </span>
               </p>
             </div>
           </div>
 
           <div className="text-right">
             <span className="text-[10px] font-mono text-slate-300 bg-slate-800 px-2.5 py-1 rounded border border-slate-700">
-              KICKOFF SESSION 01
+              {docLang === 'fr' ? 'SESSION DE CADRAGE 01' : 'KICKOFF SESSION 01'}
             </span>
           </div>
         </div>

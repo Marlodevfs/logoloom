@@ -255,10 +255,71 @@ export const VectorRoadmap90PDF: React.FC<VectorRoadmap90PDFProps> = ({ brandKit
   const t = (DOCUMENT_TRANSLATIONS[docLang] || DOCUMENT_TRANSLATIONS.en).roadmap90;
   const phases = [t.phase1, t.phase2, t.phase3];
 
+  const subtitleRight = docLang === 'fr'
+    ? 'FEUILLE DE ROUTE STRATÉGIQUE • PLAN 90 JOURS'
+    : docLang === 'de'
+    ? 'STRATEGISCHE ROADMAP • 90-TAGE PLAN'
+    : docLang === 'es'
+    ? 'HOJA DE RUTA ESTRATÉGICA • PLAN DE 90 DÍAS'
+    : docLang === 'it'
+    ? 'TABELLA DI MARCIA STRATEGICA • PIANO A 90 GIORNI'
+    : docLang === 'pt'
+    ? 'ROTEIRO ESTRATÉGICO • PLANO DE 90 DIAS'
+    : 'STRATEGIC ROADMAP • 90-DAY EXECUTION';
+
+  const heroCategory = docLang === 'fr'
+    ? 'Plan d’action stratégique'
+    : docLang === 'de'
+    ? 'Strategischer Aktionsplan'
+    : docLang === 'es'
+    ? 'Plan de acción estratégico'
+    : docLang === 'it'
+    ? 'Piano d’azione strategico'
+    : docLang === 'pt'
+    ? 'Plano de ação estratégico'
+    : 'Strategic Execution Framework';
+
+  const deliverablesTitle = docLang === 'fr'
+    ? 'Livrables & Jalons Clés'
+    : docLang === 'de'
+    ? 'Wichtigste Meilensteine'
+    : docLang === 'es'
+    ? 'Hitos y Entregables Clave'
+    : docLang === 'it'
+    ? 'Traguardi e Risultati Chiave'
+    : docLang === 'pt'
+    ? 'Marcos e Entregáveis Principais'
+    : 'Key Milestones & Deliverables';
+
+  const signoffNotice = docLang === 'fr'
+    ? 'Validation pour exécution bilatérale'
+    : docLang === 'de'
+    ? 'Gültig zur Ausführung nach beiderseitiger Unterzeichnung'
+    : docLang === 'es'
+    ? 'Válido para ejecución tras firma bilateral'
+    : docLang === 'it'
+    ? 'Valido per l’esecuzione previa firma bilaterale'
+    : docLang === 'pt'
+    ? 'Válido para execução mediante assinatura bilateral'
+    : 'Valid for execution upon bilateral sign-off';
+
+  const signLabel = docLang === 'fr'
+    ? 'Signature'
+    : docLang === 'de'
+    ? 'Unterschrift'
+    : docLang === 'es' || docLang === 'it'
+    ? 'Firma'
+    : docLang === 'pt'
+    ? 'Assinatura'
+    : 'Signature';
+
+  const goalText = docLang === 'fr' ? 'Définir l’objectif clé' : 'Define primary goal';
+  const horizonText = docLang === 'fr' ? '90 jours ouvrés' : '90 Business Days';
+
   return (
     <PDFTemplateFrame
       brandKit={brandKit}
-      subtitleRight="STRATEGIC ROADMAP • 90-DAY EXECUTION"
+      subtitleRight={subtitleRight}
     >
       <View style={styles.container}>
         {/* Hero Section */}
@@ -271,7 +332,7 @@ export const VectorRoadmap90PDF: React.FC<VectorRoadmap90PDFProps> = ({ brandKit
                   { backgroundColor: brandKit.brandColor || '#4F46E5' },
                 ]}
               />
-              <Text style={styles.heroCategory}>Strategic Execution Framework</Text>
+              <Text style={styles.heroCategory}>{heroCategory}</Text>
             </View>
             <Text style={styles.heroTitle}>{t.title}</Text>
             <Text style={styles.heroSubtitle}>{t.subtitle}</Text>
@@ -280,12 +341,12 @@ export const VectorRoadmap90PDF: React.FC<VectorRoadmap90PDFProps> = ({ brandKit
           <View style={styles.heroRight}>
             <View style={styles.heroMetaBlock}>
               <Text style={styles.heroMetaLabel}>{t.initiativePrompt}</Text>
-              <Text style={styles.heroMetaValue}>Q1 Growth & Scale</Text>
+              <Text style={styles.heroMetaValue}>{goalText}</Text>
             </View>
             <View style={styles.heroDivider} />
             <View style={styles.heroMetaBlock}>
               <Text style={styles.heroMetaLabel}>{t.timelinePrompt}</Text>
-              <Text style={styles.heroMetaValue}>90 Business Days</Text>
+              <Text style={styles.heroMetaValue}>{horizonText}</Text>
             </View>
           </View>
         </View>
@@ -318,7 +379,7 @@ export const VectorRoadmap90PDF: React.FC<VectorRoadmap90PDFProps> = ({ brandKit
               {/* Deliverables Checklist */}
               <View style={styles.deliverablesList}>
                 <Text style={styles.deliverablesSectionTitle}>
-                  Key Milestones & Deliverables
+                  {deliverablesTitle}
                 </Text>
                 {phase.deliverables.map((item, dIdx) => (
                   <View key={dIdx} style={styles.deliverableItem}>
@@ -352,44 +413,46 @@ export const VectorRoadmap90PDF: React.FC<VectorRoadmap90PDFProps> = ({ brandKit
         </View>
 
         {/* Bilateral Milestone Sign-off Block */}
-        <View style={styles.signoffContainer}>
-          <View style={styles.signoffHeader}>
-            <Text style={styles.signoffTitle}>{t.signoffTitle}</Text>
-            <Text style={styles.signoffNotice}>
-              Valid for execution upon bilateral sign-off
-            </Text>
-          </View>
-
-          <View style={styles.signoffGrid}>
-            <View style={styles.signoffCol}>
-              <Text style={styles.signoffLabel}>
-                {t.clientSign}:{' '}
-                <Text style={styles.signoffName}>
-                  {brandKit.clientName || 'Authorized Representative'}
-                </Text>
+        {brandKit.roadmapContent?.showSignatureBlock !== false ? (
+          <View style={styles.signoffContainer}>
+            <View style={styles.signoffHeader}>
+              <Text style={styles.signoffTitle}>{t.signoffTitle}</Text>
+              <Text style={styles.signoffNotice}>
+                {signoffNotice}
               </Text>
-              <View style={styles.signoffLine} />
-              <View style={styles.signoffMeta}>
-                <Text>Date: ____ / ____ / 2026</Text>
-                <Text>Signature</Text>
-              </View>
             </View>
 
-            <View style={styles.signoffCol}>
-              <Text style={styles.signoffLabel}>
-                {t.leadSign}:{' '}
-                <Text style={styles.signoffName}>
-                  {brandKit.coachName || 'Alexandre Martin'}
+            <View style={styles.signoffGrid}>
+              <View style={styles.signoffCol}>
+                <Text style={styles.signoffLabel}>
+                  {t.clientSign}:{' '}
+                  <Text style={styles.signoffName}>
+                    {brandKit.clientName || '__________________________'}
+                  </Text>
                 </Text>
-              </Text>
-              <View style={styles.signoffLine} />
-              <View style={styles.signoffMeta}>
-                <Text>Date: ____ / ____ / 2026</Text>
-                <Text>Signature</Text>
+                <View style={styles.signoffLine} />
+                <View style={styles.signoffMeta}>
+                  <Text>Date: ____ / ____ / ________</Text>
+                  <Text>{signLabel}</Text>
+                </View>
+              </View>
+
+              <View style={styles.signoffCol}>
+                <Text style={styles.signoffLabel}>
+                  {t.leadSign}:{' '}
+                  <Text style={styles.signoffName}>
+                    {brandKit.coachName || '__________________________'}
+                  </Text>
+                </Text>
+                <View style={styles.signoffLine} />
+                <View style={styles.signoffMeta}>
+                  <Text>Date: ____ / ____ / ________</Text>
+                  <Text>{signLabel}</Text>
+                </View>
               </View>
             </View>
           </View>
-        </View>
+        ) : null}
       </View>
     </PDFTemplateFrame>
   );

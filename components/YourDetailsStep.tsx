@@ -32,14 +32,162 @@ const DOC_LANGUAGES: { code: DocumentLang; label: string; flag: string }[] = [
   { code: 'it', label: 'Italiano', flag: '🇮🇹' },
 ];
 
+const LABELS: Record<InterfaceLang, {
+  stepTitle: string;
+  visibleOnPrint: string;
+  clear: string;
+  businessName: string;
+  businessPlaceholder: string;
+  tagline: string;
+  taglinePlaceholder: string;
+  practitionerName: string;
+  practitionerPlaceholder: string;
+  bookingLink: string;
+  qrActive: string;
+  qrHelper: string;
+  qrLabel: string;
+  defaultQrLabel: string;
+  contactEmail: string;
+  clientName: string;
+  clientPlaceholder: string;
+  paperFormat: string;
+  documentLanguage: string;
+}> = {
+  fr: {
+    stepTitle: '4. Vos coordonnées',
+    visibleOnPrint: 'Toujours visible',
+    clear: 'Effacer',
+    businessName: 'Nom du cabinet / studio',
+    businessPlaceholder: 'Ex. Studio Équilibre & Santé',
+    tagline: 'Slogan ou sous-titre (facultatif)',
+    taglinePlaceholder: 'Ex. Accompagnement santé & performance',
+    practitionerName: 'Votre nom / Référent',
+    practitionerPlaceholder: 'Ex. Camille Laurent, Coach Certifié',
+    bookingLink: 'Lien de réservation ou site web',
+    qrActive: 'QR code actif (≥18 mm)',
+    qrHelper: 'Ajoute un QR code scannable haute fidélité (≥18 mm) sur votre document imprimé.',
+    qrLabel: 'Libellé sous le QR code',
+    defaultQrLabel: 'Scannez pour réserver',
+    contactEmail: 'E-mail de contact',
+    clientName: 'Nom du client',
+    clientPlaceholder: 'Ex. Marie Dupont',
+    paperFormat: 'Format papier',
+    documentLanguage: 'Langue du document',
+  },
+  en: {
+    stepTitle: '4. Your Details',
+    visibleOnPrint: 'Visible on print',
+    clear: 'Clear',
+    businessName: 'Business / Studio Name',
+    businessPlaceholder: 'e.g. Balance & Wellness Studio',
+    tagline: 'Tagline or focus (optional)',
+    taglinePlaceholder: 'e.g. Health, Leadership & Performance',
+    practitionerName: 'Your Name / Practitioner',
+    practitionerPlaceholder: 'e.g. Sarah Jenkins, M.Sc.',
+    bookingLink: 'Booking link or website',
+    qrActive: 'QR active (≥18 mm)',
+    qrHelper: 'Adds a scannable high-res QR code (≥18 mm) to your printed document.',
+    qrLabel: 'Label below QR code',
+    defaultQrLabel: 'Scan to book a session',
+    contactEmail: 'Contact email',
+    clientName: 'Client name',
+    clientPlaceholder: 'e.g. John Doe',
+    paperFormat: 'Paper size',
+    documentLanguage: 'Document language',
+  },
+  de: {
+    stepTitle: '4. Ihre Angaben',
+    visibleOnPrint: 'Auf Druck sichtbar',
+    clear: 'Löschen',
+    businessName: 'Praxis- / Studioname',
+    businessPlaceholder: 'z.B. Balance & Vitalitäts-Studio',
+    tagline: 'Slogan oder Schwerpunkt (optional)',
+    taglinePlaceholder: 'z.B. Gesundheit, Führung & Performance',
+    practitionerName: 'Ihr Name / Ansprechpartner',
+    practitionerPlaceholder: 'z.B. Dr. Julia Schmidt',
+    bookingLink: 'Buchungslink oder Website',
+    qrActive: 'QR aktiv (≥18 mm)',
+    qrHelper: 'Fügt Ihrem gedruckten Dokument einen hochauflösenden QR-Code (≥18 mm) hinzu.',
+    qrLabel: 'Beschriftung unter dem QR-Code',
+    defaultQrLabel: 'Scannen für Terminbuchung',
+    contactEmail: 'Kontakt-E-Mail',
+    clientName: 'Kundenname',
+    clientPlaceholder: 'z.B. Max Mustermann',
+    paperFormat: 'Papierformat',
+    documentLanguage: 'Dokumentsprache',
+  },
+  es: {
+    stepTitle: '4. Sus datos de contacto',
+    visibleOnPrint: 'Visible al imprimir',
+    clear: 'Borrar',
+    businessName: 'Nombre del estudio / consulta',
+    businessPlaceholder: 'Ej. Estudio Equilibrio & Salud',
+    tagline: 'Lema o enfoque (opcional)',
+    taglinePlaceholder: 'Ej. Salud, Liderazgo y Rendimiento',
+    practitionerName: 'Su nombre / Especialista',
+    practitionerPlaceholder: 'Ej. Carlos Méndez, Coach',
+    bookingLink: 'Enlace de reserva o sitio web',
+    qrActive: 'QR activo (≥18 mm)',
+    qrHelper: 'Añade un código QR escaneable de alta resolución (≥18 mm) a su documento.',
+    qrLabel: 'Etiqueta debajo del código QR',
+    defaultQrLabel: 'Escanear para reservar cita',
+    contactEmail: 'Correo de contacto',
+    clientName: 'Nombre del cliente',
+    clientPlaceholder: 'Ej. María García',
+    paperFormat: 'Formato de papel',
+    documentLanguage: 'Idioma del documento',
+  },
+  it: {
+    stepTitle: '4. I tuoi recapiti',
+    visibleOnPrint: 'Visibile in stampa',
+    clear: 'Cancella',
+    businessName: 'Nome dello studio / attività',
+    businessPlaceholder: 'Es. Studio Equilibrio & Salute',
+    tagline: 'Slogan o sottotitolo (opzionale)',
+    taglinePlaceholder: 'Es. Salute, Leadership e Performance',
+    practitionerName: 'Tuo nome / Professionista',
+    practitionerPlaceholder: 'Es. Dott. Marco Rossi',
+    bookingLink: 'Link di prenotazione o sito web',
+    qrActive: 'QR attivo (≥18 mm)',
+    qrHelper: 'Aggiunge un codice QR scansionabile ad alta risoluzione (≥18 mm) al documento.',
+    qrLabel: 'Dicitura sotto il codice QR',
+    defaultQrLabel: 'Scansiona per prenotare',
+    contactEmail: 'Email di contatto',
+    clientName: 'Nome del cliente',
+    clientPlaceholder: 'Es. Giulia Bianchi',
+    paperFormat: 'Formato carta',
+    documentLanguage: 'Lingua del documento',
+  },
+  pt: {
+    stepTitle: '4. Seus dados de contato',
+    visibleOnPrint: 'Visível na impressão',
+    clear: 'Limpar',
+    businessName: 'Nome do consultório / estúdio',
+    businessPlaceholder: 'Ex. Estúdio Equilíbrio & Saúde',
+    tagline: 'Slogan ou foco (opcional)',
+    taglinePlaceholder: 'Ex. Saúde, Liderança e Performance',
+    practitionerName: 'Seu nome / Profissional',
+    practitionerPlaceholder: 'Ex. Ana Souza, Coach',
+    bookingLink: 'Link de agendamento ou site',
+    qrActive: 'QR ativo (≥18 mm)',
+    qrHelper: 'Adiciona um código QR legível de alta resolução (≥18 mm) ao seu documento.',
+    qrLabel: 'Legenda sob o código QR',
+    defaultQrLabel: 'Escanear para agendar',
+    contactEmail: 'E-mail de contato',
+    clientName: 'Nome do cliente',
+    clientPlaceholder: 'Ex. João Silva',
+    paperFormat: 'Formato do papel',
+    documentLanguage: 'Idioma do documento',
+  },
+};
+
 export const YourDetailsStep: React.FC<YourDetailsStepProps> = ({
   brandKit,
   onUpdate,
   interfaceLang,
   onReset,
 }) => {
-  const isFrench = interfaceLang === 'fr';
-
+  const l = LABELS[interfaceLang] || LABELS.en;
   const [urlTouched, setUrlTouched] = useState(false);
 
   // Normalize URL to https://
@@ -57,8 +205,7 @@ export const YourDetailsStep: React.FC<YourDetailsStepProps> = ({
   };
 
   const hasLink = Boolean(brandKit.qrUrl && brandKit.qrUrl.trim().length > 0);
-
-  const defaultQrLabel = isFrench ? 'Scannez pour réserver' : 'Scan to book a session';
+  const defaultQrLabel = l.defaultQrLabel;
 
   return (
     <div className="space-y-3.5">
@@ -66,10 +213,10 @@ export const YourDetailsStep: React.FC<YourDetailsStepProps> = ({
       <div className="flex items-center justify-between">
         <div className="flex items-center space-x-2">
           <span className="text-xs font-bold text-slate-900 dark:text-slate-100 uppercase tracking-wider">
-            {isFrench ? '4. Vos coordonnées' : '4. Your Details'}
+            {l.stepTitle}
           </span>
           <span className="text-[10px] text-emerald-600 dark:text-emerald-400 font-medium bg-emerald-50 dark:bg-emerald-950/50 px-1.5 py-0.5 rounded">
-            {isFrench ? 'Toujours visible' : 'Visible on print'}
+            {l.visibleOnPrint}
           </span>
         </div>
         {onReset && (
@@ -77,10 +224,10 @@ export const YourDetailsStep: React.FC<YourDetailsStepProps> = ({
             type="button"
             onClick={onReset}
             className="text-[11px] text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 flex items-center space-x-1 transition-colors"
-            title={isFrench ? 'Effacer vos coordonnées' : 'Reset details'}
+            title={l.clear}
           >
             <RotateCcw className="w-3 h-3" />
-            <span>{isFrench ? 'Effacer' : 'Clear'}</span>
+            <span>{l.clear}</span>
           </button>
         )}
       </div>
@@ -94,7 +241,7 @@ export const YourDetailsStep: React.FC<YourDetailsStepProps> = ({
               className="text-[11px] font-semibold text-slate-700 dark:text-slate-300 flex items-center space-x-1.5"
             >
               <Building2 className="w-3.5 h-3.5 text-slate-400" />
-              <span>{isFrench ? 'Nom du cabinet / studio' : 'Business / Studio Name'}</span>
+              <span>{l.businessName}</span>
             </label>
             <span
               className={`text-[10px] font-mono ${
@@ -112,7 +259,7 @@ export const YourDetailsStep: React.FC<YourDetailsStepProps> = ({
             maxLength={40}
             value={brandKit.companyName || ''}
             onChange={(e) => onUpdate({ companyName: e.target.value })}
-            placeholder={isFrench ? 'Ex. Studio Équilibre & Santé' : 'e.g. Apex Studio & Coaching'}
+            placeholder={l.businessPlaceholder}
             className="w-full px-3 py-1.5 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-xs text-slate-900 dark:text-slate-100 placeholder-slate-400 focus:outline-none focus:ring-1 focus:ring-indigo-500 transition-all"
           />
         </div>
@@ -125,7 +272,7 @@ export const YourDetailsStep: React.FC<YourDetailsStepProps> = ({
               className="text-[11px] font-medium text-slate-600 dark:text-slate-400 flex items-center space-x-1.5"
             >
               <Sparkles className="w-3 h-3 text-slate-400" />
-              <span>{isFrench ? 'Slogan ou sous-titre (facultatif)' : 'Tagline or subtitle (optional)'}</span>
+              <span>{l.tagline}</span>
             </label>
             <span
               className={`text-[10px] font-mono ${
@@ -143,7 +290,7 @@ export const YourDetailsStep: React.FC<YourDetailsStepProps> = ({
             maxLength={60}
             value={brandKit.tagline || ''}
             onChange={(e) => onUpdate({ tagline: e.target.value })}
-            placeholder={isFrench ? 'Ex. Accompagnement santé & performance' : 'e.g. High-Impact Consulting & Strategic Performance'}
+            placeholder={l.taglinePlaceholder}
             className="w-full px-3 py-1.5 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-xs text-slate-900 dark:text-slate-100 placeholder-slate-400 focus:outline-none focus:ring-1 focus:ring-indigo-500 transition-all"
           />
         </div>
@@ -156,7 +303,7 @@ export const YourDetailsStep: React.FC<YourDetailsStepProps> = ({
               className="text-[11px] font-semibold text-slate-700 dark:text-slate-300 flex items-center space-x-1.5"
             >
               <User className="w-3.5 h-3.5 text-slate-400" />
-              <span>{isFrench ? 'Votre nom / Référent' : 'Your Name / Practitioner'}</span>
+              <span>{l.practitionerName}</span>
             </label>
             <span
               className={`text-[10px] font-mono ${
@@ -174,7 +321,7 @@ export const YourDetailsStep: React.FC<YourDetailsStepProps> = ({
             maxLength={40}
             value={brandKit.coachName || ''}
             onChange={(e) => onUpdate({ coachName: e.target.value })}
-            placeholder={isFrench ? 'Ex. Alexandre Martin' : 'e.g. Sarah Jenkins, M.Sc.'}
+            placeholder={l.practitionerPlaceholder}
             className="w-full px-3 py-1.5 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-xs text-slate-900 dark:text-slate-100 placeholder-slate-400 focus:outline-none focus:ring-1 focus:ring-indigo-500 transition-all"
           />
         </div>
@@ -187,12 +334,12 @@ export const YourDetailsStep: React.FC<YourDetailsStepProps> = ({
               className="text-[11px] font-semibold text-slate-700 dark:text-slate-300 flex items-center space-x-1.5"
             >
               <LinkIcon className="w-3.5 h-3.5 text-indigo-500" />
-              <span>{isFrench ? 'Lien de réservation ou site web' : 'Booking link or website'}</span>
+              <span>{l.bookingLink}</span>
             </label>
             {hasLink && (
               <span className="inline-flex items-center space-x-1 text-[10px] text-emerald-600 dark:text-emerald-400 font-medium">
                 <CheckCircle2 className="w-3 h-3" />
-                <span>{isFrench ? 'QR code actif (≥18 mm)' : 'QR active (≥18 mm)'}</span>
+                <span>{l.qrActive}</span>
               </span>
             )}
           </div>
@@ -203,14 +350,12 @@ export const YourDetailsStep: React.FC<YourDetailsStepProps> = ({
             value={brandKit.qrUrl || ''}
             onChange={(e) => onUpdate({ qrUrl: e.target.value })}
             onBlur={handleUrlBlur}
-            placeholder={isFrench ? 'https://calendly.com/votre-nom' : 'https://calendly.com/your-name'}
+            placeholder="https://calendly.com/your-name"
             className="w-full px-3 py-1.5 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-xs text-slate-900 dark:text-slate-100 placeholder-slate-400 focus:outline-none focus:ring-1 focus:ring-indigo-500 transition-all font-mono text-[11px]"
           />
 
           <p className="text-[10px] text-slate-500 dark:text-slate-400 leading-tight">
-            {isFrench
-              ? 'Ajoute un QR code scannable haute fidélité (≥18 mm) sur votre document imprimé.'
-              : 'Adds a scannable high-res QR code (≥18 mm) to your printed document.'}
+            {l.qrHelper}
           </p>
 
           {/* Editable QR Label when Link is present */}
@@ -221,7 +366,7 @@ export const YourDetailsStep: React.FC<YourDetailsStepProps> = ({
                   htmlFor="field-qr-label"
                   className="text-[10.5px] font-medium text-slate-600 dark:text-slate-400"
                 >
-                  {isFrench ? 'Libellé sous le QR code' : 'Label below QR code'}
+                  {l.qrLabel}
                 </label>
                 <span className="text-[9.5px] font-mono text-slate-400">
                   {(brandKit.qrLabel || defaultQrLabel).length}/35
@@ -247,7 +392,7 @@ export const YourDetailsStep: React.FC<YourDetailsStepProps> = ({
               htmlFor="field-contact-email"
               className="text-[10.5px] font-medium text-slate-600 dark:text-slate-400 block mb-1 truncate"
             >
-              {isFrench ? 'E-mail de contact' : 'Contact email'}
+              {l.contactEmail}
             </label>
             <input
               id="field-contact-email"
@@ -265,7 +410,7 @@ export const YourDetailsStep: React.FC<YourDetailsStepProps> = ({
               htmlFor="field-client-name"
               className="text-[10.5px] font-medium text-slate-600 dark:text-slate-400 block mb-1 truncate"
             >
-              {isFrench ? 'Nom du client (optionnel)' : 'Client name (optional)'}
+              {l.clientName}
             </label>
             <input
               id="field-client-name"
@@ -273,7 +418,7 @@ export const YourDetailsStep: React.FC<YourDetailsStepProps> = ({
               maxLength={35}
               value={brandKit.clientName || ''}
               onChange={(e) => onUpdate({ clientName: e.target.value })}
-              placeholder={isFrench ? 'Ex. Thomas D.' : 'e.g. Sarah Jenkins'}
+              placeholder={l.clientPlaceholder}
               className="w-full px-2.5 py-1.5 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-[11px] text-slate-900 dark:text-slate-100 placeholder-slate-400 focus:outline-none focus:ring-1 focus:ring-indigo-500"
             />
           </div>
@@ -286,10 +431,7 @@ export const YourDetailsStep: React.FC<YourDetailsStepProps> = ({
             <label className="text-[10.5px] font-semibold text-slate-600 dark:text-slate-400 flex items-center justify-between mb-1">
               <span className="flex items-center space-x-1">
                 <Globe className="w-3 h-3 text-slate-400" />
-                <span>{isFrench ? 'Langue du document PDF' : 'Document PDF Language'}</span>
-              </span>
-              <span className="text-[9.5px] text-slate-400 font-normal">
-                {isFrench ? '100% vectoriel traduit' : 'Fully translated'}
+                <span>{l.documentLanguage}</span>
               </span>
             </label>
             <select
@@ -297,9 +439,9 @@ export const YourDetailsStep: React.FC<YourDetailsStepProps> = ({
               onChange={(e) => onUpdate({ documentLang: e.target.value as DocumentLang })}
               className="w-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg px-2.5 py-1.5 text-xs text-slate-800 dark:text-slate-200 focus:outline-none focus:ring-1 focus:ring-indigo-500"
             >
-              {DOC_LANGUAGES.map((l) => (
-                <option key={l.code} value={l.code}>
-                  {l.flag} {l.label}
+              {DOC_LANGUAGES.map((langItem) => (
+                <option key={langItem.code} value={langItem.code}>
+                  {langItem.flag} {langItem.label}
                 </option>
               ))}
             </select>
@@ -308,7 +450,7 @@ export const YourDetailsStep: React.FC<YourDetailsStepProps> = ({
           {/* Paper Size */}
           <div>
             <label className="text-[10.5px] font-semibold text-slate-600 dark:text-slate-400 block mb-1">
-              {isFrench ? 'Format du papier' : 'Paper size'}
+              {l.paperFormat}
             </label>
             <div className="grid grid-cols-2 gap-2">
               <button
