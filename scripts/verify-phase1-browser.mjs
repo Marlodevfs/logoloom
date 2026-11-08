@@ -13,7 +13,7 @@ function waitForServer(url, timeout = 30000) {
   return new Promise((resolve, reject) => {
     const check = () => {
       http.get(url, (res) => {
-        if (res.statusCode === 200) {
+        if (res.statusCode === 200 || res.statusCode === 307 || res.statusCode === 308) {
           resolve(true);
         } else {
           setTimeout(check, 500);
@@ -42,24 +42,30 @@ async function run() {
     await waitForServer('http://localhost:3009');
     console.log('✅ Server is ready at http://localhost:3009');
 
-    console.log('🌐 Launching headless browser...');
+    console.log('🌐 Launching headless browser for verification...');
     const browser = await chromium.launch();
 
-    // 1. Desktop Test
+    // 1. Desktop English Route
     const desktopContext = await browser.newContext({
       viewport: { width: 1440, height: 900 },
       deviceScaleFactor: 2,
     });
     const desktopPage = await desktopContext.newPage();
-    await desktopPage.goto('http://localhost:3009', { waitUntil: 'networkidle' });
-    
-    // Wait for the preview to be visible
+    await desktopPage.goto('http://localhost:3009/en', { waitUntil: 'networkidle' });
     await desktopPage.waitForSelector('#logoloom-pdf-target', { timeout: 10000 });
-    const desktopPath = path.join(artifactDir, 'phase1-vector-desktop.png');
-    await desktopPage.screenshot({ path: desktopPath, fullPage: false });
-    console.log(`📸 Saved desktop screenshot to ${desktopPath}`);
+    const desktopEnPath = path.join(artifactDir, 'phase-final-desktop-en.png');
+    await desktopPage.screenshot({ path: desktopEnPath });
+    console.log(`📸 Saved desktop EN screenshot to ${desktopEnPath}`);
 
-    // 2. Mobile Viewport Test (iPhone 14 style)
+    // 2. Desktop French Route
+    const desktopFrPage = await desktopContext.newPage();
+    await desktopFrPage.goto('http://localhost:3009/fr', { waitUntil: 'networkidle' });
+    await desktopFrPage.waitForSelector('#logoloom-pdf-target', { timeout: 10000 });
+    const desktopFrPath = path.join(artifactDir, 'phase-final-desktop-fr.png');
+    await desktopFrPage.screenshot({ path: desktopFrPath });
+    console.log(`📸 Saved desktop FR screenshot to ${desktopFrPath}`);
+
+    // 3. Mobile Viewport Test (iPhone 14 style: 390x844)
     const mobileContext = await browser.newContext({
       viewport: { width: 390, height: 844 },
       isMobile: true,
@@ -67,14 +73,21 @@ async function run() {
       deviceScaleFactor: 2,
     });
     const mobilePage = await mobileContext.newPage();
-    await mobilePage.goto('http://localhost:3009', { waitUntil: 'networkidle' });
+    await mobilePage.goto('http://localhost:3009/en', { waitUntil: 'networkidle' });
     await mobilePage.waitForSelector('#logoloom-pdf-target', { timeout: 10000 });
-    const mobilePath = path.join(artifactDir, 'phase1-vector-mobile.png');
-    await mobilePage.screenshot({ path: mobilePath, fullPage: false });
+    const mobilePath = path.join(artifactDir, 'phase-final-mobile.png');
+    await mobilePage.screenshot({ path: mobilePath });
     console.log(`📸 Saved mobile screenshot to ${mobilePath}`);
 
+    // 4. Pricing Page
+    const pricingPage = await desktopContext.newPage();
+    await pricingPage.goto('http://localhost:3009/pricing', { waitUntil: 'networkidle' });
+    const pricingPath = path.join(artifactDir, 'phase-final-pricing.png');
+    await pricingPage.screenshot({ path: pricingPath });
+    console.log(`📸 Saved pricing screenshot to ${pricingPath}`);
+
     await browser.close();
-    console.log('🎉 Browser verification finished successfully!');
+    console.log('🎉 Full browser verification finished successfully!');
   } finally {
     server.kill('SIGTERM');
     try {

@@ -15,7 +15,11 @@ import { DownloadButton } from './DownloadButton';
 import { ProModal } from './ProModal';
 import { LandingSections } from './LandingSections';
 
-export const Studio: React.FC = () => {
+interface StudioProps {
+  initialLang?: InterfaceLang;
+}
+
+export const Studio: React.FC<StudioProps> = ({ initialLang }) => {
   const {
     brandKit,
     updateBrandKit,
@@ -28,7 +32,8 @@ export const Studio: React.FC = () => {
     extractedColorSuggestion,
     setUploadedLogo,
     resetLogo,
-  } = useBrandKit();
+    restoreProSubscription,
+  } = useBrandKit(initialLang);
 
   const [isMobileSheetOpen, setIsMobileSheetOpen] = useState(false);
   const [isProModalOpen, setIsProModalOpen] = useState(false);
@@ -37,7 +42,6 @@ export const Studio: React.FC = () => {
 
   const handleLanguageChange = (lang: InterfaceLang) => {
     setInterfaceLang(lang);
-    updateBrandKit({ documentLang: lang });
   };
 
   return (
@@ -206,9 +210,7 @@ export const Studio: React.FC = () => {
       <ProModal
         isOpen={isProModalOpen}
         onClose={() => setIsProModalOpen(false)}
-        onActivateProMock={() => {
-          updateBrandKit({ isPro: true, removeWatermark: true });
-        }}
+        onRestoreSubscription={restoreProSubscription}
         interfaceLang={interfaceLang}
       />
     </div>

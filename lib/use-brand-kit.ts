@@ -7,6 +7,7 @@ import { extractDominantColorFromImage, ensureAccessibleOnWhite, getOptimalTextC
 const STORAGE_KEY = 'logoloom_brand_kit_v1';
 const TEMPLATE_KEY = 'logoloom_template_id_v1';
 const INTERFACE_LANG_KEY = 'logoloom_ui_lang_v1';
+const PRO_TOKEN_KEY = 'logoloom_pro_token_v1';
 
 // Elegant default sample logo (Vector SVG Data URL) so new users immediately see a gorgeous branded preview
 export const DEFAULT_SAMPLE_LOGO = `data:image/svg+xml;utf8,${encodeURIComponent(`
@@ -39,10 +40,13 @@ export const DEFAULT_BRAND_KIT: BrandKit = {
   removeWatermark: false,
 };
 
-export function useBrandKit() {
-  const [brandKit, setBrandKit] = useState<BrandKit>(DEFAULT_BRAND_KIT);
+export function useBrandKit(initialLang?: InterfaceLang) {
+  const [brandKit, setBrandKit] = useState<BrandKit>(() => ({
+    ...DEFAULT_BRAND_KIT,
+    documentLang: initialLang || 'en',
+  }));
   const [activeTemplate, setActiveTemplate] = useState<TemplateId>('habit-tracker');
-  const [interfaceLang, setInterfaceLang] = useState<InterfaceLang>('en');
+  const [interfaceLang, setInterfaceLang] = useState<InterfaceLang>(initialLang || 'en');
   const [isLoaded, setIsLoaded] = useState(false);
   const [isExtractingColor, setIsExtractingColor] = useState(false);
   const [extractedColorSuggestion, setExtractedColorSuggestion] = useState<string | null>(null);
@@ -50,19 +54,17 @@ export function useBrandKit() {
   // Initialize from LocalStorage and browser language
   useEffect(() => {
     try {
-      // 1. Detect browser language
       if (typeof window !== 'undefined') {
-        const browserLang = navigator.language?.split('-')[0]?.toLowerCase();
         const supportedLangs: InterfaceLang[] = ['en', 'fr', 'es', 'de', 'pt', 'it'];
-        const initialLang: InterfaceLang = supportedLangs.includes(browserLang as InterfaceLang)
-          ? (browserLang as InterfaceLang)
-          : 'en';
-        
-        const savedUiLang = localStorage.getItem(INTERFACE_LANG_KEY) as InterfaceLang;
-        if (savedUiLang && supportedLangs.includes(savedUiLang)) {
-          setInterfaceLang(savedUiLang);
-        } else {
+
+        // 1. Language determination
+        if (initialLang && supportedLangs.includes(initialLang)) {
           setInterfaceLang(initialLang);
+        } else {
+          const savedUiLang = localStorage.getItem(INTERFACE_LANG_KEY) as InterfaceLang;
+          if (savedUiLang && supportedLangs.includes(savedUiLang)) {
+            setInterfaceLang(savedUiLang);
+          }
         }
 
         // 2. Saved template
@@ -71,31 +73,57 @@ export function useBrandKit() {
           setActiveTemplate(savedTemplate);
         }
 
-        // Check if query params contain ?pro=true (e.g. from checkout return)
-        const urlParams = new URLSearchParams(window.location.search);
-        const proQuery = urlParams.get('pro');
-        const isProFromQuery = proQuery === 'true' || proQuery === 'activated';
-
         // 3. Saved Brand Kit
         const savedBrand = localStorage.getItem(STORAGE_KEY);
         if (savedBrand) {
           const parsed = JSON.parse(savedBrand);
-          setBrandKit(prev => ({
+          setBrandKit((prev) => ({
             ...prev,
             ...parsed,
-            isPro: isProFromQuery || parsed.isPro || false,
-            removeWatermark: isProFromQuery || parsed.removeWatermark || false,
-            // Ensure fallback documentLang defaults to matching interface language if not set
+            // Pro status cannot be set by unverified raw localStorage or URL query
+            isPro: false,
+            removeWatermark: false,
             documentLang: parsed.documentLang || (initialLang === 'fr' ? 'fr' : 'en'),
           }));
-        } else {
-          // If first visit in French, default document language to French
-          setBrandKit(prev => ({
-            ...prev,
-            isPro: isProFromQuery,
-            removeWatermark: isProFromQuery,
-            documentLang: initialLang === 'fr' ? 'fr' : 'en',
-          }));
+        }
+
+        // 4. Server-Side Pro Subscription Entitlement Verification
+        const urlParams = new URLSearchParams(window.location.search);
+        const sessionId = urlParams.get('session_id');
+        const storedToken = localStorage.getItem(PRO_TOKEN_KEY);
+
+        if (sessionId || storedToken) {
+          fetch('/api/subscription/verify', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ sessionId, token: storedToken }),
+          })
+            .then((res) => res.json())
+            .then((data) => {
+              if (data.verified && data.token) {
+                localStorage.setItem(PRO_TOKEN_KEY, data.token);
+                setBrandKit((prev) => ({
+                  ...prev,
+                  isPro: true,
+                  removeWatermark: true,
+                }));
+                // Clean URL query params if returning from checkout
+                if (sessionId) {
+                  const cleanUrl = window.location.pathname;
+                  window.history.replaceState({}, '', cleanUrl);
+                }
+              } else {
+                localStorage.removeItem(PRO_TOKEN_KEY);
+                setBrandKit((prev) => ({
+                  ...prev,
+                  isPro: false,
+                  removeWatermark: false,
+                }));
+              }
+            })
+            .catch((err) => {
+              console.warn('Subscription verification check failed', err);
+            });
         }
       }
     } catch (e) {
@@ -103,7 +131,7 @@ export function useBrandKit() {
     } finally {
       setIsLoaded(true);
     }
-  }, []);
+  }, [initialLang]);
 
   // Save to LocalStorage on change
   useEffect(() => {
@@ -117,49 +145,67 @@ export function useBrandKit() {
     }
   }, [brandKit, activeTemplate, interfaceLang, isLoaded]);
 
-  // Update specific field in brand kit
   const updateBrandKit = useCallback((updates: Partial<BrandKit>) => {
-    setBrandKit(prev => {
+    setBrandKit((prev) => {
       const next = { ...prev, ...updates };
-      // If brand color changed, recompute contrastText
+
       if (updates.brandColor && updates.brandColor !== prev.brandColor) {
-        next.contrastText = getOptimalTextColor(updates.brandColor);
+        const accessibleColor = ensureAccessibleOnWhite(updates.brandColor);
+        next.brandColor = accessibleColor;
+        next.contrastText = getOptimalTextColor(accessibleColor);
       }
+
       return next;
     });
   }, []);
 
-  // Process and apply uploaded logo
-  const setUploadedLogo = useCallback(async (logoDataUrl: string) => {
-    setIsExtractingColor(true);
-    try {
-      const analysis = await extractDominantColorFromImage(logoDataUrl);
-      setExtractedColorSuggestion(analysis.dominantHex);
+  const setUploadedLogo = useCallback(
+    async (dataUrl: string) => {
+      setIsExtractingColor(true);
+      try {
+        updateBrandKit({ logoUrl: dataUrl });
 
-      const accessibleColor = analysis.isAccessibleOnWhite
-        ? analysis.dominantHex
-        : analysis.suggestedHex;
+        const extracted = await extractDominantColorFromImage(dataUrl);
+        if (extracted && extracted.dominantHex) {
+          setExtractedColorSuggestion(extracted.dominantHex);
+          updateBrandKit({ brandColor: extracted.dominantHex });
+        }
+      } catch (err) {
+        console.error('Failed to process uploaded logo', err);
+      } finally {
+        setIsExtractingColor(false);
+      }
+    },
+    [updateBrandKit]
+  );
 
-      updateBrandKit({
-        logoUrl: logoDataUrl,
-        brandColor: accessibleColor,
-        contrastText: getOptimalTextColor(accessibleColor),
-      });
-    } catch (err) {
-      console.error('Error extracting color from logo', err);
-      updateBrandKit({ logoUrl: logoDataUrl });
-    } finally {
-      setIsExtractingColor(false);
-    }
-  }, [updateBrandKit]);
-
-  // Remove logo and restore sample
   const resetLogo = useCallback(() => {
     updateBrandKit({
       logoUrl: null,
       brandColor: '#4F46E5',
+      contrastText: '#FFFFFF',
     });
     setExtractedColorSuggestion(null);
+  }, [updateBrandKit]);
+
+  // Method for subscriber to restore access
+  const restoreProSubscription = useCallback(async (email: string) => {
+    try {
+      const res = await fetch('/api/subscription/restore', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email }),
+      });
+      const data = await res.json();
+      if (data.success && data.token) {
+        localStorage.setItem(PRO_TOKEN_KEY, data.token);
+        updateBrandKit({ isPro: true, removeWatermark: true });
+        return { success: true, message: data.message };
+      }
+      return { success: false, error: data.error || 'No active subscription found.' };
+    } catch (err: any) {
+      return { success: false, error: err.message || 'Restoration request failed.' };
+    }
   }, [updateBrandKit]);
 
   return {
@@ -174,5 +220,6 @@ export function useBrandKit() {
     extractedColorSuggestion,
     setUploadedLogo,
     resetLogo,
+    restoreProSubscription,
   };
 }
