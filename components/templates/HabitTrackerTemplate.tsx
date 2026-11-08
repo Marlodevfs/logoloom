@@ -43,7 +43,13 @@ export const HabitTrackerTemplate: React.FC<HabitTrackerTemplateProps> = ({ bran
     { title: 'Personalized Excellence Ritual', subtitle: 'Priority habit agreed with your coach' },
   ];
 
-  const hasUserQR = Boolean(brandKit.qrUrl && brandKit.qrUrl.trim().length > 0 && userQrDataUrl);
+  // User contact QR renders ONLY if user entered their own link (never defaults to logoloom.app)
+  const hasUserQR = Boolean(
+    brandKit.qrUrl &&
+    brandKit.qrUrl.trim().length > 0 &&
+    brandKit.qrUrl !== 'https://logoloom.app' &&
+    userQrDataUrl
+  );
 
   return (
     <TemplateFrame
@@ -210,15 +216,15 @@ export const HabitTrackerTemplate: React.FC<HabitTrackerTemplateProps> = ({ bran
                       style={{ backgroundColor: brandKit.brandColor }}
                     />
                     <span className="text-[10px] font-bold text-slate-900 tracking-tight">
-                      {t.weekNames?.[idx] || `SEMAINE 0${idx + 1}`}
+                      {t.weekNames?.[idx] || (docLang === 'fr' ? `Semaine ${idx + 1}` : `Week ${idx + 1}`)}
                     </span>
                   </div>
                   <p className="text-[9.5px] text-slate-600 leading-snug">
                     {prompt}
                   </p>
                 </div>
-                {/* 3 Physical Handwriting Lines */}
-                <div className="space-y-2 mt-2 pt-1">
+                {/* 3 Physical Handwriting Lines spaced 7mm apart */}
+                <div className="space-y-4 mt-3 pt-1">
                   <div className="border-b border-dashed border-slate-300 w-full" />
                   <div className="border-b border-dashed border-slate-300 w-full" />
                   <div className="border-b border-dashed border-slate-300 w-full" />
@@ -228,7 +234,7 @@ export const HabitTrackerTemplate: React.FC<HabitTrackerTemplateProps> = ({ bran
           </div>
         </div>
 
-        {/* Bottom Section: Coach Advice + 18mm User QR Code */}
+        {/* Bottom Section: Coach Advice + Optional User QR Code */}
         <div className="flex items-stretch space-x-3">
           <div
             className="flex-1 rounded border p-2.5 flex items-center space-x-3"
@@ -238,13 +244,15 @@ export const HabitTrackerTemplate: React.FC<HabitTrackerTemplateProps> = ({ bran
             }}
           >
             <div
-              className="w-8 h-8 rounded flex items-center justify-center font-bold text-sm shrink-0"
+              className="w-8 h-8 rounded flex items-center justify-center shrink-0"
               style={{
                 backgroundColor: brandKit.brandColor,
                 color: brandKit.contrastText,
               }}
             >
-              ✦
+              <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
+                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+              </svg>
             </div>
             <div className="flex-1 min-w-0">
               <p className="text-[10.5px] font-bold text-slate-900">

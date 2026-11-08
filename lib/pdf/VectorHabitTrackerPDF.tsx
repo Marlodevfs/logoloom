@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet } from '@react-pdf/renderer';
+import { View, Text, StyleSheet, Svg, Path } from '@react-pdf/renderer';
 import { BrandKit } from '@/types';
 import { DOCUMENT_TRANSLATIONS } from '@/lib/i18n/documents';
 import { PDFTemplateFrame } from './PDFTemplateFrame';
@@ -11,7 +11,6 @@ interface VectorHabitTrackerPDFProps {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     flexDirection: 'column',
     justifyContent: 'space-between',
   },
@@ -19,14 +18,14 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'flex-start',
-    paddingBottom: 6,
+    paddingBottom: 4,
     borderBottomWidth: 0.75,
-    borderBottomColor: '#E2E8F0',
-    marginBottom: 6,
+    borderBottomColor: '#CBD5E1',
+    marginBottom: 4,
   },
   heroLeft: {
     flex: 1,
-    paddingRight: 12,
+    paddingRight: 14,
   },
   heroBadge: {
     flexDirection: 'row',
@@ -40,10 +39,12 @@ const styles = StyleSheet.create({
     borderRadius: 2.5,
   },
   heroCategory: {
-    fontSize: 7.5,
+    fontFamily: 'Roboto',
+    fontSize: 8,
     fontWeight: 'bold',
     color: '#64748B',
     letterSpacing: 0.5,
+    textTransform: 'uppercase',
   },
   heroTitle: {
     fontFamily: 'Georgia',
@@ -53,37 +54,43 @@ const styles = StyleSheet.create({
     letterSpacing: -0.2,
   },
   heroSubtitle: {
-    fontSize: 8,
+    fontFamily: 'Roboto',
+    fontSize: 8.5,
     color: '#64748B',
-    marginTop: 1.5,
+    marginTop: 1,
     lineHeight: 1.25,
   },
   heroMetaBlock: {
-    width: 260,
+    width: 250,
     backgroundColor: '#F8FAFC',
     borderWidth: 0.75,
-    borderColor: '#E2E8F0',
+    borderColor: '#CBD5E1',
     borderRadius: 4,
-    padding: 6,
+    padding: 5,
     flexDirection: 'column',
     gap: 3.5,
   },
   metaField: {
     flexDirection: 'row',
     alignItems: 'center',
-    fontSize: 7.5,
   },
   metaLabel: {
+    fontFamily: 'Roboto',
+    fontSize: 8,
     fontWeight: 'bold',
     color: '#475569',
-    width: 75,
+    width: 72,
   },
   metaValue: {
+    fontFamily: 'Roboto',
+    fontSize: 8,
     color: '#0F172A',
     fontWeight: 'medium',
     flex: 1,
   },
-  metaLine: {
+  metaBlankLine: {
+    fontFamily: 'Roboto',
+    fontSize: 8,
     color: '#94A3B8',
     letterSpacing: 1,
   },
@@ -93,7 +100,7 @@ const styles = StyleSheet.create({
     borderRadius: 4,
     overflow: 'hidden',
     backgroundColor: '#FFFFFF',
-    marginBottom: 6,
+    marginBottom: 4,
   },
   tableHeader: {
     flexDirection: 'row',
@@ -104,15 +111,17 @@ const styles = StyleSheet.create({
     height: 18,
   },
   headerHabitLabel: {
+    fontFamily: 'Roboto',
     width: 175,
     paddingHorizontal: 8,
-    fontSize: 7.5,
+    fontSize: 8,
     fontWeight: 'bold',
     color: '#1E293B',
     letterSpacing: 0.3,
+    textTransform: 'uppercase',
   },
   headerDayCell: {
-    width: 18,
+    width: 18.5,
     height: '100%',
     justifyContent: 'center',
     alignItems: 'center',
@@ -120,7 +129,8 @@ const styles = StyleSheet.create({
     borderLeftColor: '#CBD5E1',
   },
   headerDayText: {
-    fontSize: 7,
+    fontFamily: 'Roboto',
+    fontSize: 8,
     fontWeight: 'bold',
     color: '#475569',
   },
@@ -133,7 +143,8 @@ const styles = StyleSheet.create({
     borderLeftColor: '#CBD5E1',
   },
   headerScoreText: {
-    fontSize: 7,
+    fontFamily: 'Roboto',
+    fontSize: 8,
     fontWeight: 'bold',
     color: '#1E293B',
     letterSpacing: 0.3,
@@ -143,12 +154,12 @@ const styles = StyleSheet.create({
     borderBottomWidth: 0.5,
     borderBottomColor: '#E2E8F0',
     alignItems: 'center',
-    minHeight: 28,
+    minHeight: 25,
   },
   habitCell: {
     width: 175,
     paddingHorizontal: 8,
-    paddingVertical: 3,
+    paddingVertical: 2,
     borderRightWidth: 0.75,
     borderRightColor: '#CBD5E1',
     flexDirection: 'row',
@@ -163,7 +174,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   habitNumberText: {
-    fontSize: 7.5,
+    fontFamily: 'Roboto',
+    fontSize: 8,
     fontWeight: 'bold',
   },
   habitTextContainer: {
@@ -171,19 +183,21 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
   },
   habitTitle: {
-    fontSize: 8.5,
+    fontFamily: 'Roboto',
+    fontSize: 9,
     fontWeight: 'bold',
     color: '#0F172A',
     lineHeight: 1.15,
   },
   habitSubtitle: {
-    fontSize: 7,
+    fontFamily: 'Roboto',
+    fontSize: 8,
     color: '#64748B',
-    marginTop: 1,
+    marginTop: 0.5,
     lineHeight: 1.1,
   },
   dayCell: {
-    width: 18,
+    width: 18.5,
     height: '100%',
     justifyContent: 'center',
     alignItems: 'center',
@@ -191,8 +205,8 @@ const styles = StyleSheet.create({
     borderLeftColor: '#E2E8F0',
   },
   checkbox: {
-    width: 13,
-    height: 13,
+    width: 16, // 5.64 mm physical printable box (>= 5.5 mm)
+    height: 16,
     borderRadius: 2,
     borderWidth: 0.75,
     borderColor: '#94A3B8',
@@ -208,7 +222,8 @@ const styles = StyleSheet.create({
     backgroundColor: '#FAFAFA',
   },
   scoreText: {
-    fontSize: 7.5,
+    fontFamily: 'Roboto',
+    fontSize: 8,
     color: '#94A3B8',
     fontWeight: 'medium',
   },
@@ -216,7 +231,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     paddingHorizontal: 10,
-    paddingVertical: 3.5,
+    paddingVertical: 3,
     backgroundColor: '#F8FAFC',
     borderTopWidth: 0.75,
     borderTopColor: '#CBD5E1',
@@ -232,19 +247,21 @@ const styles = StyleSheet.create({
     borderRadius: 2.25,
   },
   milestoneText: {
-    fontSize: 7,
+    fontFamily: 'Roboto',
+    fontSize: 8,
     color: '#475569',
   },
   reflectionsSection: {
     flexDirection: 'column',
-    marginBottom: 6,
+    marginBottom: 4,
   },
   reflectionsHeader: {
-    fontSize: 7.5,
+    fontFamily: 'Roboto',
+    fontSize: 8,
     fontWeight: 'bold',
     color: '#475569',
     letterSpacing: 0.4,
-    marginBottom: 3.5,
+    marginBottom: 3,
   },
   reflectionsGrid: {
     flexDirection: 'row',
@@ -256,10 +273,10 @@ const styles = StyleSheet.create({
     borderWidth: 0.75,
     borderColor: '#CBD5E1',
     borderRadius: 4,
-    padding: 6,
+    padding: 5,
     flexDirection: 'column',
     justifyContent: 'space-between',
-    minHeight: 68,
+    minHeight: 74, // Accommodate 3 lines spaced 7mm (20pt) apart
   },
   reflectionCardHeader: {
     flexDirection: 'row',
@@ -268,20 +285,23 @@ const styles = StyleSheet.create({
     marginBottom: 2,
   },
   reflectionCardTitle: {
-    fontSize: 7.5,
+    fontFamily: 'Roboto',
+    fontSize: 8,
     fontWeight: 'bold',
     color: '#0F172A',
   },
   reflectionPrompt: {
-    fontSize: 7,
+    fontFamily: 'Roboto',
+    fontSize: 8,
     color: '#475569',
     lineHeight: 1.15,
-    marginBottom: 4,
+    marginBottom: 3,
   },
   handwritingLines: {
     flexDirection: 'column',
-    gap: 10,
-    paddingTop: 2,
+    gap: 17, // ~6 mm to 7 mm physical spacing between writing lines
+    paddingTop: 6,
+    paddingBottom: 2,
   },
   dottedLine: {
     borderBottomWidth: 0.75,
@@ -298,45 +318,44 @@ const styles = StyleSheet.create({
     flex: 1,
     borderWidth: 0.75,
     borderRadius: 4,
-    padding: 6,
+    padding: 5,
     flexDirection: 'row',
     alignItems: 'center',
     gap: 8,
   },
   coachStarBadge: {
-    width: 22,
-    height: 22,
+    width: 24,
+    height: 24,
     borderRadius: 4,
     justifyContent: 'center',
     alignItems: 'center',
-  },
-  coachStarText: {
-    fontSize: 10,
-    fontWeight: 'bold',
   },
   coachAdviceContent: {
     flex: 1,
     flexDirection: 'column',
   },
   coachAdviceTitle: {
-    fontSize: 7.5,
+    fontFamily: 'Roboto',
+    fontSize: 8.5,
     fontWeight: 'bold',
     color: '#1E293B',
     marginBottom: 1,
   },
   coachAdviceText: {
-    fontSize: 7.5,
+    fontFamily: 'Roboto',
+    fontSize: 8,
     color: '#475569',
     fontStyle: 'italic',
     lineHeight: 1.2,
   },
   coachSignLine: {
-    fontSize: 7,
+    fontFamily: 'Roboto',
+    fontSize: 8,
     color: '#64748B',
     marginTop: 2,
   },
   qrActionCard: {
-    width: 175,
+    width: 180,
     backgroundColor: '#F8FAFC',
     borderWidth: 0.75,
     borderColor: '#CBD5E1',
@@ -351,13 +370,15 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
   },
   qrActionTitle: {
-    fontSize: 7.5,
+    fontFamily: 'Roboto',
+    fontSize: 8,
     fontWeight: 'bold',
     color: '#0F172A',
     lineHeight: 1.2,
   },
   qrActionUrl: {
-    fontSize: 6.5,
+    fontFamily: 'Roboto',
+    fontSize: 8,
     color: '#475569',
     marginTop: 2,
   },
@@ -369,14 +390,28 @@ export const VectorHabitTrackerPDF: React.FC<VectorHabitTrackerPDFProps> = ({ br
   const days = Array.from({ length: 30 }, (_, i) => i + 1);
 
   const habits = t.habitsList && t.habitsList.length >= 4 ? t.habitsList : [
-    { title: t.categories.movement, subtitle: '2L water & daily physical vitality' },
+    { title: t.categories.movement, subtitle: 'Water upon waking, daily movement' },
     { title: t.categories.mindset, subtitle: '90 min deep work without distraction' },
-    { title: t.categories.nutrition, subtitle: 'Balanced nutrition & restorative sleep' },
-    { title: t.categories.productivity, subtitle: 'Evening reflection & next day priorities' },
-    { title: 'Personalized Excellence Ritual', subtitle: 'Priority habit agreed with your coach' },
+    { title: t.categories.nutrition, subtitle: 'Balanced meals & restful sleep' },
+    { title: t.categories.productivity, subtitle: 'Daily reflection & next day focus' },
+    { title: 'Personal habit of choice', subtitle: 'Action agreed with your coach' },
   ];
 
-  const hasUserQR = Boolean(brandKit.qrUrl && brandKit.qrUrl.trim().length > 0);
+  // Contact QR renders ONLY if user provided their link (never defaults to logoloom.app)
+  const hasUserQR = Boolean(brandKit.qrUrl && brandKit.qrUrl.trim().length > 0 && brandKit.qrUrl !== 'https://logoloom.app');
+
+  // Blank handwriting line format for physical print
+  const blankPeriodLine = docLang === 'fr'
+    ? 'Du : ______________ au : ______________'
+    : docLang === 'de'
+    ? 'Vom: ______________ bis: ______________'
+    : docLang === 'es'
+    ? 'Del: ______________ al: ______________'
+    : docLang === 'pt'
+    ? 'De: ______________ até: ______________'
+    : docLang === 'it'
+    ? 'Dal: ______________ al: ______________'
+    : 'From: ______________ to: ______________';
 
   return (
     <PDFTemplateFrame
@@ -406,23 +441,23 @@ export const VectorHabitTrackerPDF: React.FC<VectorHabitTrackerPDFProps> = ({ br
             <View style={styles.metaField}>
               <Text style={styles.metaLabel}>{t.clientPrompt}</Text>
               <Text style={styles.metaValue}>
-                {brandKit.clientName || '________________________________'}
+                {brandKit.clientName || '________________________'}
               </Text>
             </View>
             <View style={styles.metaField}>
               <Text style={styles.metaLabel}>{t.periodPrompt}</Text>
-              <Text style={styles.metaValue}>{t.periodPlaceholder}</Text>
+              <Text style={styles.metaValue}>{blankPeriodLine}</Text>
             </View>
             <View style={styles.metaField}>
               <Text style={styles.metaLabel}>{t.goalPrompt}</Text>
-              <Text style={[styles.metaValue, { fontSize: 7, color: '#64748B' }]}>
-                {t.goalPlaceholder}
+              <Text style={styles.metaValue}>
+                _____________________________________________
               </Text>
             </View>
           </View>
         </View>
 
-        {/* 30-Day Grid Table (Full Width, Printable Checkboxes) */}
+        {/* 30-Day Grid Table (5.64 mm printable checkboxes) */}
         <View style={styles.tableContainer}>
           {/* Table Header */}
           <View style={styles.tableHeader}>
@@ -484,7 +519,7 @@ export const VectorHabitTrackerPDF: React.FC<VectorHabitTrackerPDFProps> = ({ br
                 </View>
               </View>
 
-              {/* 30 Day Checkbox Cells: 18 pt wide each */}
+              {/* 30 Day Checkbox Cells: 18.5 pt wide each with 16 pt (5.64 mm) checkboxes */}
               {days.map((day) => {
                 const isMilestone = [7, 14, 21, 30].includes(day);
                 return (
@@ -518,7 +553,7 @@ export const VectorHabitTrackerPDF: React.FC<VectorHabitTrackerPDFProps> = ({ br
             </View>
           ))}
 
-          {/* Milestones Bar */}
+          {/* Milestones Bar (encouraging neutral milestones) */}
           <View style={styles.milestonesBar}>
             <View style={styles.milestoneItem}>
               <View
@@ -561,7 +596,7 @@ export const VectorHabitTrackerPDF: React.FC<VectorHabitTrackerPDFProps> = ({ br
           </View>
         </View>
 
-        {/* Weekly Reflection Cards (Real Handwriting Space) */}
+        {/* Weekly Reflection Cards (Spaced 7mm / 20pt for physical handwriting) */}
         <View style={styles.reflectionsSection}>
           <Text style={styles.reflectionsHeader}>
             {t.weeklyReflectionTitle}
@@ -577,11 +612,11 @@ export const VectorHabitTrackerPDF: React.FC<VectorHabitTrackerPDFProps> = ({ br
                     ]}
                   />
                   <Text style={styles.reflectionCardTitle}>
-                    {t.weekNames?.[idx] || `SEMAINE 0${idx + 1}`}
+                    {t.weekNames?.[idx] || `Semaine ${idx + 1}`}
                   </Text>
                 </View>
                 <Text style={styles.reflectionPrompt}>{prompt}</Text>
-                {/* 3 Full Handwriting Lines */}
+                {/* 3 Full Handwriting Lines spaced >= 7 mm (20 pt) */}
                 <View style={styles.handwritingLines}>
                   <View style={styles.dottedLine} />
                   <View style={styles.dottedLine} />
@@ -592,7 +627,7 @@ export const VectorHabitTrackerPDF: React.FC<VectorHabitTrackerPDFProps> = ({ br
           </View>
         </View>
 
-        {/* Bottom Section: Coach Advice + 18mm User QR Code */}
+        {/* Bottom Section: Coach Advice + Optional User QR Code */}
         <View style={styles.bottomSection}>
           <View
             style={[
@@ -603,20 +638,19 @@ export const VectorHabitTrackerPDF: React.FC<VectorHabitTrackerPDFProps> = ({ br
               },
             ]}
           >
+            {/* Pure SVG Vector Star Icon (zero font glyphs or emojis) */}
             <View
               style={[
                 styles.coachStarBadge,
                 { backgroundColor: brandKit.brandColor || '#4F46E5' },
               ]}
             >
-              <Text
-                style={[
-                  styles.coachStarText,
-                  { color: brandKit.contrastText || '#FFFFFF' },
-                ]}
-              >
-                ✦
-              </Text>
+              <Svg width={12} height={12} viewBox="0 0 24 24">
+                <Path
+                  fill={brandKit.contrastText || '#FFFFFF'}
+                  d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"
+                />
+              </Svg>
             </View>
             <View style={styles.coachAdviceContent}>
               <Text style={styles.coachAdviceTitle}>{t.coachNoteTitle}</Text>
@@ -630,12 +664,12 @@ export const VectorHabitTrackerPDF: React.FC<VectorHabitTrackerPDFProps> = ({ br
             </View>
           </View>
 
-          {/* User QR Code Card (18 mm = 52 pt) - Only rendered when qrUrl is present */}
+          {/* User QR Code Card (>= 18 mm = 54 pt) - ONLY rendered when user provided link */}
           {hasUserQR ? (
             <View style={styles.qrActionCard}>
               <VectorQR
                 text={brandKit.qrUrl}
-                size={52} // 18 mm physical print size
+                size={54} // ~19 mm physical print size (at least 18 mm)
                 darkColor="#0F172A"
                 lightColor="#FFFFFF"
               />

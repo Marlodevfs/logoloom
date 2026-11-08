@@ -6,6 +6,9 @@ export function registerPDFFonts() {
   if (fontsRegistered) return;
 
   try {
+    // 1. Disable automatic hyphenation completely across all fonts (no mid-word breaks)
+    Font.registerHyphenationCallback((word) => [word]);
+
     if (typeof window !== 'undefined') {
       Font.register({
         family: 'Georgia',
@@ -20,6 +23,21 @@ export function registerPDFFonts() {
           { src: '/fonts/Roboto-Regular.ttf', fontWeight: 'normal' },
           { src: '/fonts/Roboto-Italic.ttf', fontStyle: 'italic' },
           { src: '/fonts/Roboto-Medium.ttf', fontWeight: 'medium' },
+          { src: '/fonts/Roboto-Bold.ttf', fontWeight: 'bold' },
+        ],
+      });
+      // Alias common fallbacks so no unembedded Helvetica or Arial is ever referenced
+      Font.register({
+        family: 'Helvetica',
+        fonts: [
+          { src: '/fonts/Roboto-Regular.ttf', fontWeight: 'normal' },
+          { src: '/fonts/Roboto-Bold.ttf', fontWeight: 'bold' },
+        ],
+      });
+      Font.register({
+        family: 'Arial',
+        fonts: [
+          { src: '/fonts/Roboto-Regular.ttf', fontWeight: 'normal' },
           { src: '/fonts/Roboto-Bold.ttf', fontWeight: 'bold' },
         ],
       });
@@ -43,9 +61,23 @@ export function registerPDFFonts() {
           { src: path.join(base, 'Roboto-Bold.ttf'), fontWeight: 'bold' },
         ],
       });
+      Font.register({
+        family: 'Helvetica',
+        fonts: [
+          { src: path.join(base, 'Roboto-Regular.ttf'), fontWeight: 'normal' },
+          { src: path.join(base, 'Roboto-Bold.ttf'), fontWeight: 'bold' },
+        ],
+      });
+      Font.register({
+        family: 'Arial',
+        fonts: [
+          { src: path.join(base, 'Roboto-Regular.ttf'), fontWeight: 'normal' },
+          { src: path.join(base, 'Roboto-Bold.ttf'), fontWeight: 'bold' },
+        ],
+      });
     }
     fontsRegistered = true;
   } catch (err) {
-    console.warn('Font registration fallback to Helvetica', err);
+    console.warn('Font registration error:', err);
   }
 }

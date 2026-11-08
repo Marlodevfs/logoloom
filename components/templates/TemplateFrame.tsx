@@ -28,16 +28,19 @@ export const TemplateFrame: React.FC<TemplateFrameProps> = ({
   useEffect(() => {
     let isMounted = true;
     const fetchQRs = async () => {
-      // User's custom QR (or fallback to their brand/booking link)
-      const userQr = await generateQRCodeDataURL(brandKit.qrUrl || 'https://logoloom.app', {
-        width: 140,
-        margin: 1,
-        color: { dark: '#0F172A', light: '#FFFFFF' },
-      });
-      // LogoLoom discreet free tier QR
+      // User's custom QR: only if user provided a link and not default
+      let userQr = '';
+      if (brandKit.qrUrl && brandKit.qrUrl.trim() !== '' && brandKit.qrUrl !== 'https://logoloom.app') {
+        userQr = await generateQRCodeDataURL(brandKit.qrUrl, {
+          width: 160,
+          margin: 2,
+          color: { dark: '#0F172A', light: '#FFFFFF' },
+        });
+      }
+      // LogoLoom discreet free tier QR (at least 12 mm print equivalent)
       const loomQr = await generateQRCodeDataURL('https://logoloom.app', {
-        width: 90,
-        margin: 1,
+        width: 120,
+        margin: 2,
         color: { dark: '#475569', light: '#FFFFFF' },
       });
 

@@ -9,20 +9,14 @@ const TEMPLATE_KEY = 'logoloom_template_id_v1';
 const INTERFACE_LANG_KEY = 'logoloom_ui_lang_v1';
 const PRO_TOKEN_KEY = 'logoloom_pro_token_v1';
 
-// Elegant default sample logo (Vector SVG Data URL) so new users immediately see a gorgeous branded preview
-export const DEFAULT_SAMPLE_LOGO = `data:image/svg+xml;utf8,${encodeURIComponent(`
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 160" width="160" height="160">
-  <defs>
-    <linearGradient id="brandGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#4F46E5" />
-      <stop offset="100%" stop-color="#7C3AED" />
-    </linearGradient>
-  </defs>
-  <rect width="160" height="160" rx="36" fill="url(#brandGrad)" />
+// Elegant default sample logo (Vector SVG Data URL base64) so new users immediately see a gorgeous branded preview
+const SAMPLE_SVG_RAW = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 160" width="160" height="160">
+  <rect width="160" height="160" rx="36" fill="#4F46E5" />
   <path d="M44 48 L80 112 L116 48" fill="none" stroke="#FFFFFF" stroke-width="12" stroke-linecap="round" stroke-linejoin="round" />
   <circle cx="80" cy="52" r="8" fill="#FFFFFF" />
-</svg>
-`)}`;
+</svg>`;
+
+export const DEFAULT_SAMPLE_LOGO = `data:image/svg+xml;base64,${typeof btoa !== 'undefined' ? btoa(SAMPLE_SVG_RAW) : Buffer.from(SAMPLE_SVG_RAW).toString('base64')}`;
 
 export const DEFAULT_BRAND_KIT: BrandKit = {
   logoUrl: DEFAULT_SAMPLE_LOGO,
@@ -33,7 +27,7 @@ export const DEFAULT_BRAND_KIT: BrandKit = {
   coachName: 'Alexandre Martin',
   clientName: '',
   contactEmail: 'hello@apexstudio.io',
-  qrUrl: 'https://logoloom.app',
+  qrUrl: '', // Default to empty so contact QR block only renders if user provided a link
   paperSize: 'a4',
   documentLang: 'en',
   isPro: false,
