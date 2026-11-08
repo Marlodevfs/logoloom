@@ -1,69 +1,111 @@
 import type { Metadata } from 'next';
 import './globals.css';
+import { siteConfig } from '@/config/site';
 
 export const metadata: Metadata = {
-  title: 'LogoLoom — Brand Client Documents in 2 Minutes (Zero Friction)',
-  description:
-    'Turn generic client documents into branded, print-ready PDFs in under two minutes. Drop your logo, pick your brand color, and download instant PDFs with zero account or signup.',
-  keywords: [
-    'LogoLoom',
-    'branded documents',
-    'habit tracker pdf',
-    'consulting roadmap',
-    'client welcome packet',
-    'pdf brand generator',
-    'freelance client onboarding',
-    'coach printables',
-  ],
-  authors: [{ name: 'LogoLoom Team', url: 'https://logoloom.app' }],
-  metadataBase: new URL('https://logoloom.app'),
+  title: siteConfig.defaultTitle,
+  description: siteConfig.description,
+  authors: [{ name: `${siteConfig.name} Team`, url: siteConfig.url }],
+  metadataBase: new URL(siteConfig.url),
   alternates: {
-    canonical: 'https://logoloom.app',
+    canonical: siteConfig.url,
     languages: {
-      'en': 'https://logoloom.app/?lang=en',
-      'fr': 'https://logoloom.app/?lang=fr',
-      'es': 'https://logoloom.app/?lang=es',
-      'de': 'https://logoloom.app/?lang=de',
-      'pt': 'https://logoloom.app/?lang=pt',
-      'it': 'https://logoloom.app/?lang=it',
-      'x-default': 'https://logoloom.app',
+      'en': `${siteConfig.url}/en`,
+      'fr': `${siteConfig.url}/fr`,
+      'es': `${siteConfig.url}/es`,
+      'de': `${siteConfig.url}/de`,
+      'pt': `${siteConfig.url}/pt`,
+      'it': `${siteConfig.url}/it`,
+      'x-default': siteConfig.url,
     },
   },
   openGraph: {
-    title: 'LogoLoom — Turn generic documents into branded client PDFs in 2 minutes',
-    description: 'Zero signup, 100% private in-browser PDF branding tool for coaches and consultants.',
-    url: 'https://logoloom.app',
-    siteName: 'LogoLoom',
+    title: siteConfig.defaultTitle,
+    description: siteConfig.description,
+    url: siteConfig.url,
+    siteName: siteConfig.name,
     type: 'website',
     locale: 'en_US',
     alternateLocale: ['fr_FR', 'es_ES', 'de_DE', 'pt_PT', 'it_IT'],
+    images: [
+      {
+        url: siteConfig.ogImage,
+        width: 1200,
+        height: 630,
+        alt: `${siteConfig.name} — ${siteConfig.tagline}`,
+      },
+    ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'LogoLoom — Zero-Friction Branded Document Generator',
-    description: 'Transform client documents into branded PDFs in 2 minutes. No account needed.',
+    title: siteConfig.defaultTitle,
+    description: siteConfig.description,
+    images: [siteConfig.ogImage],
   },
 };
 
 const jsonLd = {
   '@context': 'https://schema.org',
-  '@type': 'WebApplication',
-  name: 'LogoLoom',
-  url: 'https://logoloom.app',
-  description: 'In-browser tool letting freelancers and coaches brand client documents into print-ready PDFs in 2 minutes.',
-  applicationCategory: 'DesignApplication',
-  operatingSystem: 'Any',
-  offers: {
-    '@type': 'Offer',
-    price: '0',
-    priceCurrency: 'USD',
-  },
-  featureList: [
-    'Client-side 300 DPI PDF generation',
-    'Dominant brand color auto-extraction',
-    'Automated WCAG contrast checking',
-    'Custom vector QR code embedding',
-    '3 print-ready templates: Habit tracker, 90-day roadmap, client welcome packet',
+  '@graph': [
+    {
+      '@type': 'WebApplication',
+      '@id': `${siteConfig.url}/#webapp`,
+      name: siteConfig.name,
+      url: siteConfig.url,
+      description: siteConfig.description,
+      applicationCategory: 'DesignApplication',
+      operatingSystem: 'Any',
+      offers: {
+        '@type': 'Offer',
+        price: '0',
+        priceCurrency: 'USD',
+      },
+      featureList: [
+        'Vector 300 DPI PDF generation with embedded fonts',
+        'Dominant brand color auto-extraction with WCAG AA compliance',
+        'Pure vector SVG QR code generation',
+        'Zero-account & zero-signup privacy-first workflow',
+        '3 print-ready templates: Habit tracker, 90-day roadmap, client welcome packet',
+      ],
+    },
+    {
+      '@type': 'FAQPage',
+      '@id': `${siteConfig.url}/#faq`,
+      mainEntity: [
+        {
+          '@type': 'Question',
+          name: 'Are my logos and client documents stored on your servers?',
+          acceptedAnswer: {
+            '@type': 'Answer',
+            text: 'Never. LogoLoom operates 100% locally in your browser. Your images and documents are processed in memory and never leave your machine.',
+          },
+        },
+        {
+          '@type': 'Question',
+          name: 'Is LogoLoom really free without signup or credit card?',
+          acceptedAnswer: {
+            '@type': 'Answer',
+            text: 'Yes, completely free. You can upload logos, pick brand colors, generate vector QR codes, and download high-resolution PDFs without creating an account or providing an email address.',
+          },
+        },
+        {
+          '@type': 'Question',
+          name: 'What format are the exported PDFs?',
+          acceptedAnswer: {
+            '@type': 'Answer',
+            text: 'All PDFs are exported as pure vector documents with selectable text, embedded Unicode fonts, and sharp vector QR codes, ready for professional A4 and US Letter printing.',
+          },
+        },
+        {
+          '@type': 'Question',
+          name: 'What is LogoLoom Pro?',
+          acceptedAnswer: {
+            '@type': 'Answer',
+            text: 'LogoLoom Pro is an optional one-time upgrade for coaches and agencies who want 100% white-label exports without the discreet Made with LogoLoom footer tag.',
+          },
+        },
+      ],
+    },
   ],
 };
 
