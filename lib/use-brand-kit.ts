@@ -71,6 +71,11 @@ export function useBrandKit() {
           setActiveTemplate(savedTemplate);
         }
 
+        // Check if query params contain ?pro=true (e.g. from checkout return)
+        const urlParams = new URLSearchParams(window.location.search);
+        const proQuery = urlParams.get('pro');
+        const isProFromQuery = proQuery === 'true' || proQuery === 'activated';
+
         // 3. Saved Brand Kit
         const savedBrand = localStorage.getItem(STORAGE_KEY);
         if (savedBrand) {
@@ -78,14 +83,19 @@ export function useBrandKit() {
           setBrandKit(prev => ({
             ...prev,
             ...parsed,
+            isPro: isProFromQuery || parsed.isPro || false,
+            removeWatermark: isProFromQuery || parsed.removeWatermark || false,
             // Ensure fallback documentLang defaults to matching interface language if not set
             documentLang: parsed.documentLang || (initialLang === 'fr' ? 'fr' : 'en'),
           }));
         } else {
           // If first visit in French, default document language to French
-          if (initialLang === 'fr') {
-            setBrandKit(prev => ({ ...prev, documentLang: 'fr' }));
-          }
+          setBrandKit(prev => ({
+            ...prev,
+            isPro: isProFromQuery,
+            removeWatermark: isProFromQuery,
+            documentLang: initialLang === 'fr' ? 'fr' : 'en',
+          }));
         }
       }
     } catch (e) {
