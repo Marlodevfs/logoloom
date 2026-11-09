@@ -15,6 +15,8 @@ export const siteConfig = {
   contact: {
     email: 'support@logoloom.app',
   },
+  /** Buy Me a Coffee page (https://www.buymeacoffee.com/<slug>) */
+  buyMeACoffee: 'donotkyc',
   /**
    * Legal notice (mentions légales). TO FILL IN before going commercial:
    * French law (LCEN art. 6) requires the publisher's identity on the site.
