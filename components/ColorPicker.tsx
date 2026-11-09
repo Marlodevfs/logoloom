@@ -95,7 +95,7 @@ export const ColorPicker: React.FC<ColorPickerProps> = ({
               }`}
             >
               <span
-                className="w-4 h-4 rounded-md shadow-2xs shrink-0 flex items-center justify-center text-white text-[9px]"
+                className="w-4 h-4 rounded-md shadow-2xs shrink-0 ring-1 ring-black/10 dark:ring-white/30 flex items-center justify-center text-white text-[9px]"
                 style={{ backgroundColor: palette.hex }}
               >
                 {isSelected && <Check className="w-2.5 h-2.5" />}
