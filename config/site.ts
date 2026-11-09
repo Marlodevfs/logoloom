@@ -1,9 +1,9 @@
 export const siteConfig = {
   name: 'LogoLoom',
   shortName: 'LogoLoom',
-  domain: 'www.logoloom.app',
-  url: 'https://www.logoloom.app',
-  ogImage: 'https://www.logoloom.app/api/og',
+  domain: 'logoloom.app',
+  url: 'https://logoloom.app',
+  ogImage: 'https://logoloom.app/api/og',
   description:
     'Free printable planners and business documents you personalize in seconds. High-resolution vector PDFs, 100% private in browser, no signup.',
   tagline: 'Free Printable Planners & Business Documents',

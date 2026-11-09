@@ -1,18 +1,15 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 
-const CANONICAL_HOST = 'www.logoloom.app';
+const CANONICAL_HOST = 'logoloom.app';
 const DEFAULT_LOCALE = 'en';
 
 export function middleware(request: NextRequest) {
   const host = request.headers.get('host') || '';
   const { pathname, search } = request.nextUrl;
 
-  // 1. Canonical Host Enforcement (301 Permanent Redirect to www.logoloom.app)
-  if (
-    host === 'logoloom.app' ||
-    host === 'logoloom-one.vercel.app'
-  ) {
+  // 1. Preview Host Redirect (Redirect vercel preview to production domain)
+  if (host === 'logoloom-one.vercel.app') {
     const canonicalUrl = new URL(`https://${CANONICAL_HOST}${pathname}${search}`);
     return NextResponse.redirect(canonicalUrl, 301);
   }
