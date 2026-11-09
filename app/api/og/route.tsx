@@ -7,7 +7,7 @@ export async function GET(req: NextRequest) {
   try {
     const { searchParams } = new URL(req.url);
     const title = searchParams.get('title') || 'Free Printable Planners & Business Documents';
-    const subtitle = searchParams.get('subtitle') || 'Vector PDFs • 100% Client-Side & Private • Zero Signup';
+    const subtitle = searchParams.get('subtitle') || 'Vector PDFs | 100% Client-Side & Private | Zero Signup';
 
     return new ImageResponse(
       (
@@ -48,7 +48,7 @@ export async function GET(req: NextRequest) {
                 boxShadow: '0 10px 25px rgba(79, 70, 229, 0.4)',
               }}
             >
-              ✦
+              L
             </div>
             <div style={{ display: 'flex', flexDirection: 'column' }}>
               <span
@@ -78,11 +78,11 @@ export async function GET(req: NextRequest) {
                 border: '1px solid rgba(129, 140, 248, 0.3)',
                 padding: '8px 18px',
                 borderRadius: '999px',
-                width: 'fit-content',
+                alignSelf: 'flex-start', // 'fit-content' is not supported by the OG renderer (crashed every preview)
               }}
             >
               <span style={{ fontSize: '15px', color: '#A5B4FC', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '1px' }}>
-                Zero Account • Free Forever • Instant PDF
+                Zero Account | Free Forever | Instant PDF
               </span>
             </div>
 
@@ -125,18 +125,18 @@ export async function GET(req: NextRequest) {
           >
             <div style={{ display: 'flex', gap: '16px' }}>
               <span style={{ backgroundColor: '#1E293B', color: '#E2E8F0', padding: '8px 16px', borderRadius: '8px', fontSize: '15px', fontWeight: 600 }}>
-                📋 30-Day Habit Matrix
+                Habit Tracker
               </span>
               <span style={{ backgroundColor: '#1E293B', color: '#E2E8F0', padding: '8px 16px', borderRadius: '8px', fontSize: '15px', fontWeight: 600 }}>
-                🗺️ 90-Day Strategic Roadmap
+                Weekly Planner
               </span>
               <span style={{ backgroundColor: '#1E293B', color: '#E2E8F0', padding: '8px 16px', borderRadius: '8px', fontSize: '15px', fontWeight: 600 }}>
-                📁 Client Welcome Packet
+                Invoice &amp; Quote
               </span>
             </div>
 
             <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: '#10B981', fontSize: '16px', fontWeight: 700 }}>
-              <span>🔒 100% In-Browser Privacy</span>
+              <span>100% In-Browser Privacy</span>
             </div>
           </div>
         </div>

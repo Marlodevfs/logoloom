@@ -17,6 +17,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return {
     title: fr ? 'Mentions légales – LogoLoom' : 'Legal notice – LogoLoom',
     alternates: { canonical: `${siteConfig.url}/${locale}/legal` },
+    description: fr
+      ? 'Mentions légales du site LogoLoom : éditeur, hébergement, propriété intellectuelle.'
+      : 'Legal notice for LogoLoom: publisher, hosting and intellectual property.',
+    // Useful for visitors, worthless in search results (and EN text is reused for es/de/it/pt)
+    robots: { index: false, follow: true },
   };
 }
 

@@ -17,6 +17,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return {
     title: fr ? 'Politique de confidentialité – LogoLoom' : 'Privacy policy – LogoLoom',
     alternates: { canonical: `${siteConfig.url}/${locale}/privacy` },
+    description: fr
+      ? 'Politique de confidentialité de LogoLoom : aucun compte, documents traités dans votre navigateur, statistiques sans cookie.'
+      : 'LogoLoom privacy policy: no account, documents processed in your browser, cookieless analytics.',
+    // Useful for visitors, worthless in search results (and EN text is reused for es/de/it/pt)
+    robots: { index: false, follow: true },
   };
 }
 
