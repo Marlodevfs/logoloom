@@ -553,7 +553,9 @@ export const TemplateSelector: React.FC<TemplateSelectorProps> = ({
         </span>
       </div>
 
-      {/* Style Selector: Single 2-option Segmented Control (Minimal | Complete) */}
+      {/* Style Selector (Minimal | Complete): only the Habit Tracker has two real
+          layouts, so the toggle is shown for it only (it did nothing elsewhere). */}
+      {activeTemplate === 'habit-tracker' && (
       <div className="p-1 rounded-xl bg-slate-100 dark:bg-slate-800/90 border border-slate-200/80 dark:border-slate-700/80 flex items-center">
         <button
           type="button"
@@ -586,6 +588,7 @@ export const TemplateSelector: React.FC<TemplateSelectorProps> = ({
           <span>{i18n.completeLabel}</span>
         </button>
       </div>
+      )}
 
       {/* Family Pills (All | Personal (7) | Business (5)) */}
       <div className="flex items-center space-x-1.5 p-0.5 bg-slate-100/70 dark:bg-slate-800/50 rounded-lg text-[11px] whitespace-nowrap">
@@ -658,11 +661,10 @@ export const TemplateSelector: React.FC<TemplateSelectorProps> = ({
               }}
             >
               <div
-                className="w-8 h-8 rounded-lg flex items-center justify-center shrink-0 mt-0.5"
-                style={{
-                  backgroundColor: isSelected ? `${brandColor}15` : '#F1F5F9',
-                  color: isSelected ? brandColor : '#64748B',
-                }}
+                className={`w-8 h-8 rounded-lg flex items-center justify-center shrink-0 mt-0.5 ${
+                  isSelected ? '' : 'bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400'
+                }`}
+                style={isSelected ? { backgroundColor: `${brandColor}15`, color: brandColor } : undefined}
               >
                 <Icon className="w-4 h-4" />
               </div>
