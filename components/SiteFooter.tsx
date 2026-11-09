@@ -3,6 +3,7 @@ import { siteConfig } from '@/config/site';
 import { getSiteChrome } from '@/lib/i18n/site-chrome';
 import { CANONICAL_TEMPLATE_SLUGS } from '@/lib/seo/templates-metadata';
 import { BuyMeACoffeeButton } from '@/components/BuyMeACoffee';
+import { CookieSettingsLink } from '@/components/CookieConsent';
 
 /** Site-wide footer: product links, legal pages and contact. Server component. */
 export function SiteFooter({ lang, withStickyBar = false }: { lang: string; withStickyBar?: boolean }) {
@@ -69,6 +70,12 @@ export function SiteFooter({ lang, withStickyBar = false }: { lang: string; with
               <Link href={`/${lang}/privacy`} className="text-slate-500 hover:text-indigo-600 dark:text-slate-400 dark:hover:text-indigo-400">
                 {c.footer.privacy}
               </Link>
+            </li>
+            <li>
+              <CookieSettingsLink
+                lang={lang}
+                className="text-slate-500 hover:text-indigo-600 dark:text-slate-400 dark:hover:text-indigo-400"
+              />
             </li>
           </ul>
         </nav>

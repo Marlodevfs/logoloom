@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from 'next';
 import Script from 'next/script';
 import '../globals.css';
 import { siteConfig } from '@/config/site';
+import { CookieConsent } from '@/components/CookieConsent';
 
 export const viewport: Viewport = {
   width: 'device-width',
@@ -78,6 +79,7 @@ export default async function LocaleLayout({
       </head>
       <body className="antialiased min-h-screen bg-slate-50 dark:bg-slate-950 font-sans selection:bg-indigo-500 selection:text-white">
         {children}
+        <CookieConsent lang={lang} />
         {/* GoatCounter privacy-friendly analytics */}
         <Script
           data-goatcounter="https://logoloom.goatcounter.com/count"

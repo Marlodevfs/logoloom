@@ -17,6 +17,8 @@ export const siteConfig = {
   },
   /** Buy Me a Coffee page (https://www.buymeacoffee.com/<slug>) */
   buyMeACoffee: 'donotkyc',
+  /** Google Tag Manager container. Loaded ONLY after the visitor accepts cookies. */
+  gtmId: 'GTM-K28N223R',
   /**
    * Legal notice (mentions légales). TO FILL IN before going commercial:
    * French law (LCEN art. 6) requires the publisher's identity on the site.
