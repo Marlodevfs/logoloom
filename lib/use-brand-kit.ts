@@ -367,17 +367,32 @@ export function useBrandKit(initialLang?: InterfaceLang, initialTemplate?: Templ
     }
   }, [initialLang]);
 
-  // Save to LocalStorage on change
+  // Save to LocalStorage on change, debounced: the brand kit can contain a
+  // multi-MB base64 logo, and serializing it on every keystroke made typing laggy
+  // on phones. Pending changes are flushed when the tab is hidden/closed.
   useEffect(() => {
     if (!isLoaded) return;
-    try {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(brandKit));
-      localStorage.setItem(TEMPLATE_KEY, activeTemplate);
-      localStorage.setItem(INTERFACE_LANG_KEY, interfaceLang);
-      localStorage.setItem(STYLE_KEY, brandKit.designStyle);
-    } catch (e) {
-      console.warn('Failed to save to localStorage', e);
-    }
+    const save = () => {
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(brandKit));
+        localStorage.setItem(TEMPLATE_KEY, activeTemplate);
+        localStorage.setItem(INTERFACE_LANG_KEY, interfaceLang);
+        localStorage.setItem(STYLE_KEY, brandKit.designStyle);
+      } catch (e) {
+        console.warn('Failed to save to localStorage', e);
+      }
+    };
+    const timer = setTimeout(save, 400);
+    const flush = () => {
+      if (document.visibilityState === 'hidden') save();
+    };
+    document.addEventListener('visibilitychange', flush);
+    window.addEventListener('pagehide', save);
+    return () => {
+      clearTimeout(timer);
+      document.removeEventListener('visibilitychange', flush);
+      window.removeEventListener('pagehide', save);
+    };
   }, [brandKit, activeTemplate, interfaceLang, isLoaded]);
 
   const updateBrandKit = useCallback((updates: Partial<BrandKit>) => {

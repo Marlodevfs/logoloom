@@ -4,6 +4,14 @@ import type { NextRequest } from 'next/server';
 const CANONICAL_HOST = 'logoloom.app';
 const DEFAULT_LOCALE = 'en';
 
+// Pages that only exist under a locale prefix: a bare "/invoice" or "/legal"
+// (typed by hand or shared without the language) is redirected to English.
+const LOCALIZED_ONLY = new Set([
+  'habit-tracker', 'goal-planner', 'weekly-planner', 'monthly-calendar', 'daily-priorities',
+  'meal-planner', 'budget-tracker', 'quote', 'invoice', 'price-list', 'client-tracker', 'checklist',
+  'legal', 'privacy',
+]);
+
 export function middleware(request: NextRequest) {
   const host = request.headers.get('host') || '';
   const { pathname, search } = request.nextUrl;
@@ -22,6 +30,11 @@ export function middleware(request: NextRequest) {
   // 3. /pricing rewrite to /en/pricing for localized routing
   if (pathname === '/pricing') {
     return NextResponse.rewrite(new URL(`/${DEFAULT_LOCALE}/pricing${search}`, request.url));
+  }
+
+  const bare = pathname.replace(/^\/+|\/+$/g, '');
+  if (LOCALIZED_ONLY.has(bare)) {
+    return NextResponse.redirect(new URL(`/${DEFAULT_LOCALE}/${bare}${search}`, request.url), 308);
   }
 
   return NextResponse.next();

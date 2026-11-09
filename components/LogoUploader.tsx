@@ -15,6 +15,33 @@ interface LogoUploaderProps {
 
 const MAX_LOGO_BYTES = 2 * 1024 * 1024;
 
+// A logo is printed ~2-3 cm wide: 800 px is far above print resolution.
+// Downscaling big photos keeps localStorage, the preview and the PDF light.
+const MAX_LOGO_PX = 800;
+
+function downscaleRasterLogo(dataUrl: string, mime: string): Promise<string> {
+  if (mime === 'image/svg+xml') return Promise.resolve(dataUrl); // vector: keep as is
+  return new Promise((resolve) => {
+    const img = new Image();
+    img.onload = () => {
+      const max = Math.max(img.naturalWidth, img.naturalHeight);
+      if (!max || max <= MAX_LOGO_PX) return resolve(dataUrl);
+      const scale = MAX_LOGO_PX / max;
+      const canvas = document.createElement('canvas');
+      canvas.width = Math.round(img.naturalWidth * scale);
+      canvas.height = Math.round(img.naturalHeight * scale);
+      const ctx = canvas.getContext('2d');
+      if (!ctx) return resolve(dataUrl);
+      ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+      // PNG keeps transparency; JPEG stays JPEG (smaller for photos)
+      resolve(mime === 'image/jpeg' ? canvas.toDataURL('image/jpeg', 0.9) : canvas.toDataURL('image/png'));
+    };
+    img.onerror = () => resolve(dataUrl);
+    img.src = dataUrl;
+  });
+}
+
+
 const LOGO_I18N: Record<InterfaceLang, {
   logoActive: string;
   ready: string;
@@ -100,10 +127,10 @@ export const LogoUploader: React.FC<LogoUploaderProps> = ({
     }
 
     const reader = new FileReader();
-    reader.onload = (e) => {
+    reader.onload = async (e) => {
       const dataUrl = e.target?.result as string;
       if (dataUrl) {
-        onLogoUpload(dataUrl);
+        onLogoUpload(await downscaleRasterLogo(dataUrl, file.type));
       }
     };
     reader.readAsDataURL(file);

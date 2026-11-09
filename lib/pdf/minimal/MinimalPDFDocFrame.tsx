@@ -166,9 +166,10 @@ export const MinimalPDFDocFrame: React.FC<MinimalPDFDocFrameProps> = ({
               <Image src={brandKit.logoUrl} style={styles.logo} />
             ) : null}
             <View style={styles.brandTextCol}>
-              <Text style={styles.companyName}>
-                {brandKit.companyName || l.companyPlaceholder}
-              </Text>
+              {/* The placeholder is only a hint in the live preview: never print it */}
+              {brandKit.companyName ? (
+                <Text style={styles.companyName}>{brandKit.companyName}</Text>
+              ) : null}
               {brandKit.tagline ? (
                 <Text style={styles.tagline}>{brandKit.tagline}</Text>
               ) : null}
