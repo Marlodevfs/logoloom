@@ -6,6 +6,7 @@ import { usePathname } from 'next/navigation';
 import { Globe, Moon, Sun, Sparkles, ShieldCheck, ChevronDown } from 'lucide-react';
 import { InterfaceLang } from '@/types';
 import { UI_TRANSLATIONS } from '@/lib/i18n/interface';
+import { LogoMark } from '@/components/LogoMark';
 
 interface HeaderProps {
   interfaceLang: InterfaceLang;
@@ -84,21 +85,7 @@ export const Header: React.FC<HeaderProps> = ({
       <div className="max-w-7xl mx-auto px-4 sm:px-6 h-16 py-2 flex items-center justify-between">
         {/* Brand Logo */}
         <Link href={`/${interfaceLang}`} className="flex items-center space-x-3 group">
-          <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-indigo-600 to-violet-600 flex items-center justify-center text-white shadow-md shadow-indigo-500/20 group-hover:scale-105 transition-transform duration-200">
-            <svg
-              className="w-5 h-5"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2.5"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              <path d="M12 2L2 7l10 5 10-5-10-5z" />
-              <path d="M2 17l10 5 10-5" />
-              <path d="M2 12l10 5 10-5" />
-            </svg>
-          </div>
+          <LogoMark className="w-9 h-9 shrink-0 group-hover:scale-105 transition-transform duration-200" />
 
           <div>
             <div className="flex items-center space-x-2">
