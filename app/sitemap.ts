@@ -55,5 +55,17 @@ export default function sitemap(): MetadataRoute.Sitemap {
     });
   }
 
+  // 4. Legal pages
+  for (const locale of locales) {
+    for (const page of ['legal', 'privacy']) {
+      entries.push({
+        url: `${siteConfig.url}/${locale}/${page}`,
+        lastModified: now,
+        changeFrequency: 'yearly',
+        priority: 0.2,
+      });
+    }
+  }
+
   return entries;
 }

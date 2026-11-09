@@ -15,6 +15,22 @@ export const siteConfig = {
   contact: {
     email: 'support@logoloom.app',
   },
+  /**
+   * Legal notice (mentions légales). TO FILL IN before going commercial:
+   * French law (LCEN art. 6) requires the publisher's identity on the site.
+   * Empty fields are simply not displayed.
+   */
+  legal: {
+    publisherName: '', // e.g. "Prénom Nom" or company name
+    publisherStatus: '', // e.g. "Entrepreneur individuel – SIREN 123 456 789"
+    publisherAddress: '', // postal address
+    publicationDirector: '', // usually the publisher's name
+    host: {
+      name: 'Vercel Inc.',
+      address: '440 N Barranca Ave #4133, Covina, CA 91723, USA',
+      url: 'https://vercel.com',
+    },
+  },
   locales: ['en', 'fr', 'es', 'de', 'pt', 'it'] as const,
   defaultLocale: 'en' as const,
 };

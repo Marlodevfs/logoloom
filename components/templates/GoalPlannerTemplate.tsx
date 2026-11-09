@@ -73,7 +73,7 @@ export const GoalPlannerTemplate: React.FC<GoalPlannerTemplateProps> = ({
                 >
                   {idx + 1}
                 </span>
-                <input
+                <input aria-label="Goal"
                   type="text"
                   value={g}
                   onChange={(e) => handleUpdateGoal(idx, e.target.value)}
@@ -85,7 +85,7 @@ export const GoalPlannerTemplate: React.FC<GoalPlannerTemplateProps> = ({
           {/* Why it matters */}
           <div className="mt-2 pt-2 border-t border-slate-200/80 flex items-center space-x-2">
             <span className="text-[9.5px] font-bold text-slate-600 shrink-0">{labels.whyLabel}</span>
-            <input
+            <input aria-label="Why it matters"
               type="text"
               value={content.whyItMatters}
               onChange={(e) => updateContent({ whyItMatters: e.target.value })}
@@ -172,7 +172,7 @@ export const GoalPlannerTemplate: React.FC<GoalPlannerTemplateProps> = ({
         {/* Bottom Notes Area */}
         <div className="border-t border-slate-200 pt-1.5 flex items-center space-x-2 text-[9px] text-slate-600">
           <span className="font-bold text-slate-700 shrink-0">{labels.quarterNotesLabel}</span>
-          <input
+          <input aria-label="Notes"
             type="text"
             value={content.notes}
             onChange={(e) => updateContent({ notes: e.target.value })}

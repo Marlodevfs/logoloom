@@ -70,7 +70,7 @@ export const DailyPrioritiesTemplate: React.FC<DailyPrioritiesTemplateProps> = (
                 >
                   {idx + 1}
                 </span>
-                <input
+                <input aria-label="Priority"
                   type="text"
                   value={p}
                   onChange={(e) => handleUpdatePriority(idx, e.target.value)}
@@ -138,7 +138,7 @@ export const DailyPrioritiesTemplate: React.FC<DailyPrioritiesTemplateProps> = (
         {/* Gratitude & Daily Reflections */}
         <section className="border border-slate-200 rounded-lg p-2 bg-slate-50/70 flex items-center space-x-3 text-[9.5px]">
           <span className="font-bold text-slate-700 shrink-0">{labels.gratitudeLabel}</span>
-          <input
+          <input aria-label="Gratitude"
             type="text"
             value={content.gratitude}
             onChange={(e) => updateContent({ gratitude: e.target.value })}

@@ -52,7 +52,7 @@ export const BudgetTrackerTemplate: React.FC<BudgetTrackerTemplateProps> = ({
       metadataRight={
         <div className="flex items-center space-x-3 text-[11px] text-slate-700 shrink-0">
           <span className="font-semibold text-slate-700">{labels.monthLabel}</span>
-          <input
+          <input aria-label="Period"
             type="text"
             value={content.period}
             onChange={(e) => updateContent({ period: e.target.value })}

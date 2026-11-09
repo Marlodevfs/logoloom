@@ -147,8 +147,8 @@ export const UI_TRANSLATIONS: Record<InterfaceLang, UIStrings> = {
     qrCodePlaceholder: 'https://calendly.com/your-name',
     qrCodeHint: 'Scans directly to your booking link or client portal on the printed page',
 
-    downloadPdf: 'Download Ready PDF',
-    generatingPdf: 'Weaving PDF (300 DPI)...',
+    downloadPdf: 'Download PDF',
+    generatingPdf: 'Generating PDF...',
     downloadSuccess: 'Downloaded!',
 
     livePreview: 'Live Print Preview',
@@ -170,7 +170,7 @@ export const UI_TRANSLATIONS: Record<InterfaceLang, UIStrings> = {
     step2Title: '2. Watch it weave live',
     step2Desc: 'Pick a template and see the typography, accents, and QR code update seamlessly in real time.',
     step3Title: '3. Instant PDF Download',
-    step3Desc: 'Download ready-to-print 300 DPI documents for your clients. No signup, no account, zero delay.',
+    step3Desc: 'Download ready-to-print vector documents for your clients. No signup, no account, zero delay.',
 
     showcaseTitle: 'Handcrafted Templates for Coaches & Consultants',
     showcaseSubtitle: 'Designed specifically for high-ticket service providers who value craft and clarity.',
@@ -240,8 +240,8 @@ export const UI_TRANSLATIONS: Record<InterfaceLang, UIStrings> = {
     qrCodePlaceholder: 'https://calendly.com/votre-lien',
     qrCodeHint: 'Scannable directement depuis le PDF imprimé par votre client',
 
-    downloadPdf: 'Télécharger le PDF prêt à l\'envoi',
-    generatingPdf: 'Génération haute définition (300 DPI)...',
+    downloadPdf: 'Télécharger le PDF',
+    generatingPdf: 'Génération du PDF...',
     downloadSuccess: 'Téléchargé !',
 
     livePreview: 'Aperçu direct haute fidélité',
@@ -263,7 +263,7 @@ export const UI_TRANSLATIONS: Record<InterfaceLang, UIStrings> = {
     step2Title: '2. Prévisualisez en direct',
     step2Desc: 'Sélectionnez un modèle et admirez l\'alignement typographique, les contrastes et le QR code en temps réel.',
     step3Title: '3. Téléchargement immédiat',
-    step3Desc: 'Téléchargez un PDF prêt à l\'impression (300 DPI). Sans création de compte, sans friction.',
+    step3Desc: 'Téléchargez un PDF vectoriel prêt à l\'impression. Sans création de compte, sans friction.',
 
     showcaseTitle: 'Des modèles d\'exception pour consultants & coachs',
     showcaseSubtitle: 'Créés sur mesure pour valoriser votre accompagnement et impressionner vos clients.',
@@ -333,8 +333,8 @@ export const UI_TRANSLATIONS: Record<InterfaceLang, UIStrings> = {
     qrCodePlaceholder: 'https://calendly.com/tu-enlace',
     qrCodeHint: 'Escaneable directamente desde el PDF impreso por tu cliente',
 
-    downloadPdf: 'Descargar PDF listo',
-    generatingPdf: 'Generando PDF (300 DPI)...',
+    downloadPdf: 'Descargar PDF',
+    generatingPdf: 'Generando PDF...',
     downloadSuccess: '¡Descargado con éxito!',
 
     livePreview: 'Vista previa en directo',
@@ -356,7 +356,7 @@ export const UI_TRANSLATIONS: Record<InterfaceLang, UIStrings> = {
     step2Title: '2. Visualiza los cambios en vivo',
     step2Desc: 'Elige plantilla y observa los textos, contrastes y código QR actualizarse al instante.',
     step3Title: '3. Descarga inmediata',
-    step3Desc: 'Descarga PDFs de calidad de impresión (300 DPI) para tus clientes. Sin cuentas ni registros.',
+    step3Desc: 'Descarga PDFs vectoriales listos para imprimir para tus clientes. Sin cuentas ni registros.',
 
     showcaseTitle: 'Plantillas creadas para coaches y consultores',
     showcaseSubtitle: 'Diseñadas para reflejar excelencia y claridad ante tus clientes.',
@@ -426,8 +426,8 @@ export const UI_TRANSLATIONS: Record<InterfaceLang, UIStrings> = {
     qrCodePlaceholder: 'https://calendly.com/ihr-link',
     qrCodeHint: 'Wird direkt auf der gedruckten PDF-Seite scannbar abgebildet',
 
-    downloadPdf: 'Fertige PDF herunterladen',
-    generatingPdf: 'Erstelle PDF (300 DPI)...',
+    downloadPdf: 'PDF herunterladen',
+    generatingPdf: 'Erstelle PDF...',
     downloadSuccess: 'Erfolgreich heruntergeladen!',
 
     livePreview: 'Live-Druckvorschau',
@@ -449,7 +449,7 @@ export const UI_TRANSLATIONS: Record<InterfaceLang, UIStrings> = {
     step2Title: '2. Live-Vorschau beobachten',
     step2Desc: 'Wählen Sie eine Vorlage und sehen Sie Typografie, Kontraste und QR-Codes in Echtzeit.',
     step3Title: '3. Sofortige PDF-Erstellung',
-    step3Desc: 'Laden Sie druckfertige 300-DPI-Dokumente ohne Anmeldung oder Wartezeit herunter.',
+    step3Desc: 'Laden Sie druckfertige Vektor-Dokumente ohne Anmeldung oder Wartezeit herunter.',
 
     showcaseTitle: 'Erstklassige Vorlagen für Berater & Coaches',
     showcaseSubtitle: 'Entwickelt für Fachleute, die Wert auf Design, Klarheit und Wirkung legen.',
@@ -519,8 +519,8 @@ export const UI_TRANSLATIONS: Record<InterfaceLang, UIStrings> = {
     qrCodePlaceholder: 'https://calendly.com/seu-link',
     qrCodeHint: 'Pode ser lido diretamente a partir do PDF impresso pelo seu cliente',
 
-    downloadPdf: 'Descarregar PDF Pronto',
-    generatingPdf: 'A compor PDF (300 DPI)...',
+    downloadPdf: 'Descarregar PDF',
+    generatingPdf: 'A gerar PDF...',
     downloadSuccess: 'Descarregado com sucesso!',
 
     livePreview: 'Pré-visualização em Direto',
@@ -542,7 +542,7 @@ export const UI_TRANSLATIONS: Record<InterfaceLang, UIStrings> = {
     step2Title: '2. Acompanhe em tempo real',
     step2Desc: 'Escolha um modelo e veja a tipografia, contrastes e código QR alinharem-se em direto.',
     step3Title: '3. Descarregue o PDF final',
-    step3Desc: 'Gere ficheiros prontos para imprimir a 300 DPI sem registos nem demoras.',
+    step3Desc: 'Gere ficheiros vetoriais prontos para imprimir sem registos nem demoras.',
 
     showcaseTitle: 'Modelos de alta qualidade para consultores e coaches',
     showcaseSubtitle: 'Criados com requinte para demonstrar credibilidade e foco aos seus clientes.',
@@ -612,8 +612,8 @@ export const UI_TRANSLATIONS: Record<InterfaceLang, UIStrings> = {
     qrCodePlaceholder: 'https://calendly.com/tuo-link',
     qrCodeHint: 'Scansionabile direttamente dal PDF stampato dal tuo cliente',
 
-    downloadPdf: 'Scarica PDF Pronto',
-    generatingPdf: 'Composizione PDF (300 DPI)...',
+    downloadPdf: 'Scarica PDF',
+    generatingPdf: 'Generazione PDF...',
     downloadSuccess: 'Scaricato con successo!',
 
     livePreview: 'Anteprima di Stampa Live',
@@ -635,7 +635,7 @@ export const UI_TRANSLATIONS: Record<InterfaceLang, UIStrings> = {
     step2Title: '2. Osserva l\'anteprima live',
     step2Desc: 'Scegli il modello e vedi testi, stili e codice QR allinearsi in tempo reale.',
     step3Title: '3. Download immediato',
-    step3Desc: 'Scarica PDF a 300 DPI pronti per la stampa senza dover creare alcun account.',
+    step3Desc: 'Scarica PDF vettoriali pronti per la stampa senza dover creare alcun account.',
 
     showcaseTitle: 'Modelli artigianali per consulenti e coach',
     showcaseSubtitle: 'Pensati per valorizzare la tua autorevolezza e curare ogni dettaglio.',

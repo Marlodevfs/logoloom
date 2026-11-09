@@ -5,6 +5,7 @@ import { MinimalPDFDocFrame } from './minimal/MinimalPDFDocFrame';
 import { getDefaultInvoiceContent } from '@/lib/use-brand-kit';
 import { formatCurrencyAmount } from '@/lib/i18n/intl-helpers';
 import { CATALOG_LABELS } from '@/lib/i18n/catalog-labels';
+import { getPartyPlaceholders } from '@/lib/i18n/party-placeholders';
 
 interface VectorInvoicePDFProps {
   brandKit: BrandKit;
@@ -287,12 +288,12 @@ export const VectorInvoicePDF: React.FC<VectorInvoicePDFProps> = ({ brandKit }) 
         <View style={styles.addressesRow}>
           <View style={styles.addressCol}>
             <Text style={styles.addressTag}>{labels.fromLabel}</Text>
-            <Text style={styles.addressName}>{brandKit.companyName || 'Votre Entreprise'}</Text>
+            <Text style={styles.addressName}>{brandKit.companyName || getPartyPlaceholders(brandKit.documentLang).company}</Text>
             <Text style={styles.addressText}>{content.senderAddress}</Text>
           </View>
           <View style={styles.clientCard}>
             <Text style={styles.addressTag}>{labels.toLabel}</Text>
-            <Text style={styles.addressName}>{brandKit.clientName || 'Client / Société'}</Text>
+            <Text style={styles.addressName}>{brandKit.clientName || getPartyPlaceholders(brandKit.documentLang).client}</Text>
             <Text style={styles.addressText}>{content.clientAddress}</Text>
           </View>
         </View>

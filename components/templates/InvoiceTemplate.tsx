@@ -6,6 +6,7 @@ import { MinimalDocFrame } from './minimal/MinimalDocFrame';
 import { getDefaultInvoiceContent } from '@/lib/use-brand-kit';
 import { formatCurrencyAmount } from '@/lib/i18n/intl-helpers';
 import { CATALOG_LABELS } from '@/lib/i18n/catalog-labels';
+import { getPartyPlaceholders } from '@/lib/i18n/party-placeholders';
 
 interface InvoiceTemplateProps {
   brandKit: BrandKit;
@@ -42,7 +43,7 @@ export const InvoiceTemplate: React.FC<InvoiceTemplateProps> = ({
         <div className="flex flex-col text-right text-[10px] text-slate-600">
           <div className="flex items-center space-x-2 justify-end">
             <span className="font-semibold text-slate-700">{labels.invoiceNumberLabel}</span>
-            <input
+            <input aria-label="Invoice number"
               type="text"
               value={content.invoiceNumber}
               onChange={(e) => updateContent({ invoiceNumber: e.target.value })}
@@ -51,7 +52,7 @@ export const InvoiceTemplate: React.FC<InvoiceTemplateProps> = ({
           </div>
           <div className="flex items-center space-x-2 justify-end mt-0.5">
             <span className="font-semibold text-slate-700">{labels.dateLabel}</span>
-            <input
+            <input aria-label="Date"
               type="text"
               value={content.date}
               onChange={(e) => updateContent({ date: e.target.value })}
@@ -60,7 +61,7 @@ export const InvoiceTemplate: React.FC<InvoiceTemplateProps> = ({
           </div>
           <div className="flex items-center space-x-2 justify-end mt-0.5">
             <span className="font-semibold text-slate-700">{labels.dueDateLabel}</span>
-            <input
+            <input aria-label="Due date"
               type="text"
               value={content.dueDate}
               onChange={(e) => updateContent({ dueDate: e.target.value })}
@@ -78,8 +79,8 @@ export const InvoiceTemplate: React.FC<InvoiceTemplateProps> = ({
             <span className="font-bold text-slate-400 uppercase tracking-wider text-[8.5px] mb-1">
               {labels.fromLabel}
             </span>
-            <span className="font-bold text-slate-900">{brandKit.companyName || 'Votre Entreprise'}</span>
-            <textarea
+            <span className="font-bold text-slate-900">{brandKit.companyName || getPartyPlaceholders(brandKit.documentLang).company}</span>
+            <textarea aria-label="Sender address"
               rows={3}
               value={content.senderAddress}
               onChange={(e) => updateContent({ senderAddress: e.target.value })}
@@ -90,8 +91,8 @@ export const InvoiceTemplate: React.FC<InvoiceTemplateProps> = ({
             <span className="font-bold text-slate-500 uppercase tracking-wider text-[8.5px] mb-1">
               {labels.toLabel}
             </span>
-            <span className="font-bold text-slate-900">{brandKit.clientName || 'Client / Société'}</span>
-            <textarea
+            <span className="font-bold text-slate-900">{brandKit.clientName || getPartyPlaceholders(brandKit.documentLang).client}</span>
+            <textarea aria-label="Client address"
               rows={3}
               value={content.clientAddress}
               onChange={(e) => updateContent({ clientAddress: e.target.value })}
@@ -143,7 +144,7 @@ export const InvoiceTemplate: React.FC<InvoiceTemplateProps> = ({
               <span className="font-bold text-slate-700 uppercase tracking-wider text-[8px] block mb-1">
                 {labels.paymentDetailsTitle}
               </span>
-              <textarea
+              <textarea aria-label="Payment details"
                 rows={3}
                 value={content.paymentDetails}
                 onChange={(e) => updateContent({ paymentDetails: e.target.value })}

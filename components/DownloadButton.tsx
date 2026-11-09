@@ -3,13 +3,27 @@
 import React, { useState } from 'react';
 import { Download, Loader2, CheckCircle, Sparkles } from 'lucide-react';
 import { BrandKit, TemplateId, InterfaceLang } from '@/types';
-import { exportToPDF } from '@/lib/pdf-generator';
+import { trackEvent } from '@/lib/analytics';
 import { UI_TRANSLATIONS } from '@/lib/i18n/interface';
 
 interface DownloadButtonProps {
   brandKit: BrandKit;
   activeTemplate: TemplateId;
   interfaceLang: InterfaceLang;
+  /** Hide the reassurance caption (used in the mobile sticky bar) */
+  compact?: boolean;
+}
+
+// The PDF engine (@react-pdf + fonts) is heavy: load it only when needed.
+let pdfModulePromise: Promise<typeof import('@/lib/pdf-generator')> | null = null;
+function loadPdfEngine() {
+  if (!pdfModulePromise) {
+    pdfModulePromise = import('@/lib/pdf-generator').catch((err) => {
+      pdfModulePromise = null; // allow retry after a network error
+      throw err;
+    });
+  }
+  return pdfModulePromise;
 }
 
 const DOWNLOAD_I18N: Record<InterfaceLang, {
@@ -46,6 +60,7 @@ export const DownloadButton: React.FC<DownloadButtonProps> = ({
   brandKit,
   activeTemplate,
   interfaceLang,
+  compact = false,
 }) => {
   const t = UI_TRANSLATIONS[interfaceLang] || UI_TRANSLATIONS.en;
   const dI18n = DOWNLOAD_I18N[interfaceLang] || DOWNLOAD_I18N.en;
@@ -57,12 +72,14 @@ export const DownloadButton: React.FC<DownloadButtonProps> = ({
     setHasExported(false);
 
     try {
+      const { exportToPDF } = await loadPdfEngine();
       await exportToPDF({
         paperSize: brandKit.paperSize,
         brandKit,
         templateId: activeTemplate,
       });
 
+      trackEvent('pdf_download', { template: activeTemplate, paper: brandKit.paperSize });
       setHasExported(true);
       setTimeout(() => setHasExported(false), 3000);
     } catch (err) {
@@ -74,12 +91,16 @@ export const DownloadButton: React.FC<DownloadButtonProps> = ({
   };
 
   return (
-    <div className="space-y-1.5">
+    <div className={compact ? '' : 'space-y-1.5'}>
       <button
         type="button"
         onClick={handleDownload}
+        onMouseEnter={() => { loadPdfEngine().catch(() => {}); }}
+        onFocus={() => { loadPdfEngine().catch(() => {}); }}
+        onTouchStart={() => { loadPdfEngine().catch(() => {}); }}
         disabled={isExporting}
-        className="w-full relative group overflow-hidden py-3 px-4 rounded-xl font-bold text-sm text-white shadow-lg shadow-indigo-500/25 transition-all transform active:scale-[0.98] disabled:opacity-80 disabled:cursor-not-allowed flex items-center justify-center space-x-2"
+        aria-busy={isExporting}
+        className="w-full relative group overflow-hidden h-12 px-4 rounded-xl font-bold text-sm whitespace-nowrap text-white shadow-lg shadow-indigo-500/25 transition-all transform active:scale-[0.98] disabled:opacity-80 disabled:cursor-not-allowed flex items-center justify-center space-x-2"
         style={{
           backgroundColor: brandKit.brandColor,
         }}
@@ -106,12 +127,14 @@ export const DownloadButton: React.FC<DownloadButtonProps> = ({
       </button>
 
       {/* Trust reassurance pill */}
+      {!compact && (
       <p className="text-[10px] text-center text-slate-400 dark:text-slate-500 flex items-center justify-center space-x-1 font-medium">
         <span>🔒</span>
         <span>{t.privacyBadge}</span>
         <span>•</span>
         <span>{dI18n.printQualityNotice}</span>
       </p>
+      )}
     </div>
   );
 };

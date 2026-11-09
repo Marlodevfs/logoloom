@@ -97,7 +97,7 @@ export const HabitTrackerTemplate: React.FC<HabitTrackerTemplateProps> = ({
 
             {/* Editable Title */}
             {editingField === 'title' && onUpdate ? (
-              <input
+              <input aria-label="Title"
                 type="text"
                 autoFocus
                 maxLength={45}
@@ -123,7 +123,7 @@ export const HabitTrackerTemplate: React.FC<HabitTrackerTemplateProps> = ({
 
             {/* Editable Subtitle */}
             {editingField === 'subtitle' && onUpdate ? (
-              <input
+              <input aria-label="Subtitle"
                 type="text"
                 autoFocus
                 maxLength={90}

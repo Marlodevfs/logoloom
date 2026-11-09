@@ -7,7 +7,7 @@ export async function GET(req: NextRequest) {
   try {
     const { searchParams } = new URL(req.url);
     const title = searchParams.get('title') || 'Free Printable Planners & Business Documents';
-    const subtitle = searchParams.get('subtitle') || 'Vector 300 DPI PDFs • 100% Client-Side & Private • Zero Signup';
+    const subtitle = searchParams.get('subtitle') || 'Vector PDFs • 100% Client-Side & Private • Zero Signup';
 
     return new ImageResponse(
       (

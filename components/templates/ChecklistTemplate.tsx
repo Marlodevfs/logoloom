@@ -102,7 +102,7 @@ export const ChecklistTemplate: React.FC<ChecklistTemplateProps> = ({
         <section className="border border-slate-200 rounded-lg p-2 bg-slate-50/70 flex items-center justify-between text-[9px] text-slate-600">
           <div className="flex items-center space-x-2 flex-1 pr-4">
             <span className="font-bold text-slate-700 shrink-0">Remarques :</span>
-            <input
+            <input aria-label="Notes"
               type="text"
               value={content.notes}
               onChange={(e) => updateContent({ notes: e.target.value })}
