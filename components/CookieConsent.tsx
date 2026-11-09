@@ -31,6 +31,12 @@ function loadGTM() {
   gtmLoaded = true;
   const w = window as any;
   w.dataLayer = w.dataLayer || [];
+  // Same bootstrap as the snippet given by Google (gtag + gtm.start)
+  w.gtag = w.gtag || function gtag() {
+    // eslint-disable-next-line prefer-rest-params
+    w.dataLayer.push(arguments);
+  };
+  w.gtag('js', new Date());
   w.dataLayer.push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' });
   const s = document.createElement('script');
   s.async = true;
