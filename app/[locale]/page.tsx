@@ -86,6 +86,7 @@ const HOME_HERO_I18N: Record<
     intro: string;
     features: string[];
     faqTitle: string;
+    about: string[];
     faqs: { q: string; a: string }[];
     catalogTitle: string;
     catalogSubtitle: string;
@@ -103,6 +104,11 @@ const HOME_HERO_I18N: Record<
       '100% in-browser privacy • No signup',
     ],
     faqTitle: 'Frequently Asked Questions',
+    about: [
+      "LogoLoom is a free online studio for creating printable planners and business documents that look like they were made for you. Choose a template, add your logo, pick a brand color, and the whole document updates instantly. When you are happy with it, download a clean vector PDF ready for your home printer or a print shop.",
+      "The templates cover both everyday organization and small-business paperwork: habit trackers, weekly and monthly planners, daily priorities, meal plans and budgets, as well as quotes, invoices, price lists and client trackers. Every layout is designed to use little ink, stay readable once printed, and work in both A4 and US Letter formats.",
+      "Privacy is built in. There is no account to create and nothing to install: your logo and your text are processed directly in your browser and never sent to a server. Freelancers, coaches, small shops and anyone who likes paper planning can produce professional documents in a couple of minutes, for free.",
+    ],
     faqs: [
       {
         q: 'What is LogoLoom?',
@@ -136,6 +142,11 @@ const HOME_HERO_I18N: Record<
       '100% privé dans le navigateur • Sans inscription',
     ],
     faqTitle: 'Questions fréquentes',
+    about: [
+      "LogoLoom est un atelier en ligne gratuit pour créer des planners et des documents professionnels à imprimer, à votre image. Choisissez un modèle, ajoutez votre logo, sélectionnez une couleur de marque : tout le document se met à jour instantanément. Une fois satisfait, téléchargez un PDF vectoriel propre, prêt pour votre imprimante ou un imprimeur.",
+      "Les modèles couvrent l’organisation du quotidien comme la paperasse des petites entreprises : suivi d’habitudes, semainier, calendrier mensuel, priorités du jour, menus et budget, mais aussi devis, factures, grilles tarifaires et suivi client. Chaque mise en page consomme peu d’encre, reste lisible une fois imprimée et fonctionne en A4 comme en US Letter.",
+      "La confidentialité est au cœur du projet. Aucun compte à créer, rien à installer : votre logo et vos textes sont traités directement dans votre navigateur et ne sont jamais envoyés sur un serveur. Indépendants, coachs, commerçants ou amoureux du papier peuvent ainsi produire des documents professionnels en deux minutes, gratuitement.",
+    ],
     faqs: [
       {
         q: 'Qu\'est-ce que LogoLoom ?',
@@ -169,6 +180,11 @@ const HOME_HERO_I18N: Record<
       '100% Datenschutz ohne Registrierung',
     ],
     faqTitle: 'Häufig gestellte Fragen',
+    about: [
+      "LogoLoom ist ein kostenloses Online-Studio, mit dem Sie druckbare Planer und Geschäftsdokumente im eigenen Look erstellen. Wählen Sie eine Vorlage, fügen Sie Ihr Logo hinzu und bestimmen Sie Ihre Markenfarbe – das gesamte Dokument passt sich sofort an. Anschließend laden Sie ein sauberes Vektor-PDF herunter, bereit für Ihren Drucker oder die Druckerei.",
+      "Die Vorlagen decken sowohl die Alltagsorganisation als auch den Papierkram kleiner Unternehmen ab: Gewohnheitstracker, Wochen- und Monatsplaner, Tagesprioritäten, Essens- und Budgetplaner sowie Angebote, Rechnungen, Preislisten und Kundenübersichten. Jedes Layout spart Tinte, bleibt gedruckt gut lesbar und funktioniert in A4 und US Letter.",
+      "Datenschutz ist von Anfang an eingebaut. Kein Konto, keine Installation: Ihr Logo und Ihre Texte werden direkt in Ihrem Browser verarbeitet und nie an einen Server gesendet. So erstellen Freelancer, Coaches, kleine Geschäfte und alle, die gerne auf Papier planen, in wenigen Minuten kostenlos professionelle Dokumente.",
+    ],
     faqs: [
       {
         q: 'Was ist LogoLoom?',
@@ -194,6 +210,11 @@ const HOME_HERO_I18N: Record<
       '100% Privado en tu equipo • Sin registro',
     ],
     faqTitle: 'Preguntas Frecuentes',
+    about: [
+      "LogoLoom es un estudio en línea gratuito para crear planificadores y documentos profesionales para imprimir con tu propia imagen. Elige una plantilla, añade tu logo y selecciona un color de marca: todo el documento se actualiza al instante. Cuando estés satisfecho, descarga un PDF vectorial limpio, listo para tu impresora o una imprenta.",
+      "Las plantillas cubren tanto la organización diaria como el papeleo de los pequeños negocios: seguimiento de hábitos, planificadores semanales y mensuales, prioridades del día, menús y presupuestos, además de presupuestos comerciales, facturas, listas de precios y seguimiento de clientes. Cada diseño ahorra tinta, se lee bien impreso y funciona en A4 y US Letter.",
+      "La privacidad viene de serie. Sin cuenta y sin instalar nada: tu logo y tus textos se procesan directamente en tu navegador y nunca se envían a un servidor. Freelancers, coaches, pequeños comercios y amantes de la planificación en papel pueden crear documentos profesionales en un par de minutos, gratis.",
+    ],
     faqs: [
       {
         q: '¿Qué es LogoLoom?',
@@ -219,6 +240,11 @@ const HOME_HERO_I18N: Record<
       '100% Privato nel tuo browser • Senza login',
     ],
     faqTitle: 'Domande Frequenti',
+    about: [
+      "LogoLoom è uno studio online gratuito per creare planner e documenti professionali da stampare con la tua immagine. Scegli un modello, aggiungi il tuo logo e seleziona un colore del marchio: l’intero documento si aggiorna all’istante. Quando sei soddisfatto, scarica un PDF vettoriale pulito, pronto per la tua stampante o per una tipografia.",
+      "I modelli coprono sia l’organizzazione quotidiana sia le pratiche delle piccole attività: tracker delle abitudini, planner settimanali e mensili, priorità del giorno, menù e budget, oltre a preventivi, fatture, listini prezzi e registri clienti. Ogni impaginazione consuma poco inchiostro, resta leggibile una volta stampata e funziona in A4 e US Letter.",
+      "La privacy è integrata. Nessun account da creare e niente da installare: il tuo logo e i tuoi testi vengono elaborati direttamente nel browser e non vengono mai inviati a un server. Freelance, coach, piccoli negozi e chi ama pianificare su carta possono creare documenti professionali in pochi minuti, gratuitamente.",
+    ],
     faqs: [
       {
         q: 'Cos\'è LogoLoom?',
@@ -244,6 +270,11 @@ const HOME_HERO_I18N: Record<
       '100% Privado no navegador • Sem cadastro',
     ],
     faqTitle: 'Perguntas Frequentes',
+    about: [
+      "O LogoLoom é um estúdio online gratuito para criar planeadores e documentos profissionais para imprimir com a sua imagem. Escolha um modelo, adicione o seu logo e selecione uma cor de marca: todo o documento é atualizado de imediato. Quando estiver satisfeito, descarregue um PDF vetorial limpo, pronto para a sua impressora ou para uma gráfica.",
+      "Os modelos cobrem tanto a organização do dia a dia como a papelada dos pequenos negócios: registo de hábitos, planeadores semanais e mensais, prioridades do dia, menus e orçamentos, além de propostas comerciais, faturas, tabelas de preços e registo de clientes. Cada layout poupa tinta, mantém-se legível depois de impresso e funciona em A4 e US Letter.",
+      "A privacidade vem de origem. Sem conta e sem instalar nada: o seu logo e os seus textos são processados diretamente no navegador e nunca são enviados para um servidor. Freelancers, coaches, pequenos comércios e quem gosta de planear em papel podem criar documentos profissionais em poucos minutos, gratuitamente.",
+    ],
     faqs: [
       {
         q: 'O que é o LogoLoom?',
@@ -373,6 +404,13 @@ export default async function LocalePage({ params }: Props) {
               <h2 className="text-xl sm:text-2xl font-extrabold text-slate-900 dark:text-white tracking-tight">
                 {chrome.aboutTitle}
               </h2>
+            </div>
+
+            {/* Real prose paragraphs: useful for visitors and search engines */}
+            <div className="space-y-3 text-sm sm:text-[15px] text-slate-600 dark:text-slate-300 leading-relaxed">
+              {hero.about.map((paragraph, pIdx) => (
+                <p key={pIdx}>{paragraph}</p>
+              ))}
             </div>
 
             <div className="space-y-3.5">
