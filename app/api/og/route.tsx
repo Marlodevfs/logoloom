@@ -33,23 +33,14 @@ export async function GET(req: NextRequest) {
               gap: '16px',
             }}
           >
-            <div
-              style={{
-                width: '54px',
-                height: '54px',
-                borderRadius: '14px',
-                backgroundColor: '#4F46E5',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                color: '#FFFFFF',
-                fontSize: '28px',
-                fontWeight: 'bold',
-                boxShadow: '0 10px 25px rgba(79, 70, 229, 0.4)',
-              }}
-            >
-              L
-            </div>
+            <svg width="54" height="54" viewBox="0 0 48 48">
+              <rect width="48" height="48" rx="11" fill="#334155" />
+              <rect x="10" y="8" width="28" height="32" rx="4" fill="#FFFFFF" />
+              <rect x="15" y="17" width="12" height="2.6" rx="1.3" fill="#CBD5E1" />
+              <rect x="15" y="23" width="18" height="2.6" rx="1.3" fill="#CBD5E1" />
+              <rect x="15" y="29" width="15" height="2.6" rx="1.3" fill="#CBD5E1" />
+              <path d="M29 6h6v15l-3-2.6-3 2.6z" fill="#F43F5E" />
+            </svg>
             <div style={{ display: 'flex', flexDirection: 'column' }}>
               <span
                 style={{
