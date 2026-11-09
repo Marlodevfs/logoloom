@@ -218,12 +218,12 @@ export const MinimalHabitTrackerTemplate: React.FC<MinimalHabitTrackerTemplatePr
                     key={habit.id || idx}
                     className="py-1 px-1.5 text-center font-bold text-slate-800 border-l border-slate-200"
                   >
-                    <div className="flex flex-col items-center">
-                      <span className="text-[10px] font-bold leading-tight text-slate-900 line-clamp-2">
+                    <div className="flex flex-col items-center justify-center">
+                      <span className="text-[10px] font-bold leading-tight text-slate-900 text-center">
                         {habit.title}
                       </span>
                       {habit.subtitle && (
-                        <span className="text-[8.5px] text-slate-500 font-normal leading-snug mt-0.5 line-clamp-2 break-words">
+                        <span className="text-[8.5px] text-slate-500 font-normal leading-snug mt-0.5 text-center break-words max-w-full">
                           {habit.subtitle}
                         </span>
                       )}

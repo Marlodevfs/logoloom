@@ -91,7 +91,7 @@ export default function PricingPage() {
             <div className="space-y-4">
               <div>
                 <h3 className="text-lg font-bold">Free Forever</h3>
-                <p className="text-xs text-slate-500 dark:text-slate-400">For freelancers and coaches getting started.</p>
+                <p className="text-xs text-slate-500 dark:text-slate-400">For individuals, creators and freelancers.</p>
               </div>
 
               <div className="flex items-baseline space-x-1">
@@ -139,7 +139,7 @@ export default function PricingPage() {
             <div className="space-y-4">
               <div>
                 <h3 className="text-lg font-bold">Pro White-Label</h3>
-                <p className="text-xs text-slate-500 dark:text-slate-400">For boutique agencies and elite consultants.</p>
+                <p className="text-xs text-slate-500 dark:text-slate-400">For studios, agencies and businesses.</p>
               </div>
 
               <div className="flex items-baseline space-x-1">

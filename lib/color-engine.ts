@@ -8,15 +8,21 @@ export interface ColorAnalysisResult {
   contrastTextColor: '#FFFFFF' | '#000000'; // For text on top of this color
 }
 
-export const CURATED_PALETTES = [
-  { name: 'Royal Indigo', hex: '#4F46E5' },
-  { name: 'Deep Emerald', hex: '#059669' },
-  { name: 'Warm Terracotta', hex: '#EA580C' },
-  { name: 'Midnight Navy', hex: '#1E293B' },
-  { name: 'Rosewood', hex: '#E11D48' },
-  { name: 'Nordic Teal', hex: '#0D9488' },
-  { name: 'Imperial Violet', hex: '#7C3AED' },
-  { name: 'Raw Umber', hex: '#78350F' },
+export interface PaletteItem {
+  name: string;
+  fullName: string;
+  hex: string;
+}
+
+export const CURATED_PALETTES: PaletteItem[] = [
+  { name: 'Indigo', fullName: 'Royal Indigo', hex: '#4F46E5' },
+  { name: 'Emerald', fullName: 'Deep Emerald', hex: '#059669' },
+  { name: 'Terracotta', fullName: 'Warm Terracotta', hex: '#EA580C' },
+  { name: 'Navy', fullName: 'Midnight Navy', hex: '#1E293B' },
+  { name: 'Crimson', fullName: 'Rosewood Crimson', hex: '#E11D48' },
+  { name: 'Teal', fullName: 'Nordic Teal', hex: '#0D9488' },
+  { name: 'Violet', fullName: 'Imperial Violet', hex: '#7C3AED' },
+  { name: 'Umber', fullName: 'Raw Umber', hex: '#78350F' },
 ];
 
 /**

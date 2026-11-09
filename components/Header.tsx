@@ -66,8 +66,8 @@ export const Header: React.FC<HeaderProps> = ({
   const currentLang = languages.find((l) => l.code === interfaceLang) || languages[0];
 
   return (
-    <header className="w-full border-b border-slate-200/80 dark:border-slate-800 bg-white/90 dark:bg-slate-900/90 backdrop-blur-md sticky top-0 z-40 transition-colors">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 h-15 flex items-center justify-between">
+    <header className="w-full border-b border-slate-200/80 dark:border-slate-800 bg-white/90 dark:bg-slate-900/90 backdrop-blur-md sticky top-0 z-50 transition-colors overflow-visible">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 h-16 py-2 flex items-center justify-between">
         {/* Brand Logo */}
         <Link href={`/${interfaceLang}`} className="flex items-center space-x-3 group">
           <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-indigo-600 to-violet-600 flex items-center justify-center text-white shadow-md shadow-indigo-500/20 group-hover:scale-105 transition-transform duration-200">

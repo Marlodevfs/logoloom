@@ -5,7 +5,7 @@ import { Sliders, Eye } from 'lucide-react';
 import { useBrandKit } from '@/lib/use-brand-kit';
 import { UI_TRANSLATIONS } from '@/lib/i18n/interface';
 import { LOCALES_METADATA } from '@/lib/i18n/meta';
-import { InterfaceLang } from '@/types';
+import { InterfaceLang, TemplateId } from '@/types';
 import { Header } from './Header';
 import { LogoUploader } from './LogoUploader';
 import { ColorPicker } from './ColorPicker';
@@ -19,6 +19,8 @@ import { LandingSections } from './LandingSections';
 
 interface StudioProps {
   initialLang?: InterfaceLang;
+  initialTemplate?: TemplateId;
+  showLandingSections?: boolean;
 }
 
 const STUDIO_I18N: Record<InterfaceLang, {
@@ -65,7 +67,11 @@ const STUDIO_I18N: Record<InterfaceLang, {
   },
 };
 
-export const Studio: React.FC<StudioProps> = ({ initialLang }) => {
+export const Studio: React.FC<StudioProps> = ({
+  initialLang,
+  initialTemplate,
+  showLandingSections = false,
+}) => {
   const {
     brandKit,
     updateBrandKit,
@@ -80,7 +86,7 @@ export const Studio: React.FC<StudioProps> = ({ initialLang }) => {
     resetLogo,
     resetSection,
     restoreProSubscription,
-  } = useBrandKit(initialLang);
+  } = useBrandKit(initialLang, initialTemplate);
 
   const [mobileTab, setMobileTab] = useState<'editor' | 'preview'>('editor');
   const [isProModalOpen, setIsProModalOpen] = useState(false);
@@ -159,15 +165,6 @@ export const Studio: React.FC<StudioProps> = ({ initialLang }) => {
       />
 
       <main className="flex-1 w-full flex flex-col">
-        {/* Semantic SEO Page Heading & Intro Paragraph */}
-        <header className="sr-only">
-          <h1>{LOCALES_METADATA[interfaceLang]?.title || 'LogoLoom — Brand Client Documents in 2 Minutes'}</h1>
-          <p>
-            {LOCALES_METADATA[interfaceLang]?.description ||
-              'Turn generic client documents into branded, print-ready PDFs in 2 minutes. Add your logo, choose colors, and download vector PDFs with zero signup.'}
-          </p>
-        </header>
-
         {/* Hero Section: Live Studio Above the Fold */}
         <div className="max-w-7xl w-full mx-auto p-3 sm:p-5 lg:p-6 flex flex-col lg:flex-row gap-5">
         {/* Mobile View Mode Switcher: [ ✏️ 1. Personnaliser | 👁️ 2. Aperçu direct ] */}
@@ -200,10 +197,11 @@ export const Studio: React.FC<StudioProps> = ({ initialLang }) => {
         </div>
 
         {/* Desktop Left Panel: Calm 5-Step Progressive Disclosure (Fixed 410px) */}
-        <div className="hidden lg:flex flex-col w-[410px] shrink-0 bg-white dark:bg-slate-900 rounded-2xl border border-slate-200/80 dark:border-slate-800 shadow-xs p-5 space-y-4 h-[calc(100vh-6rem)] overflow-y-auto">
-          {renderCustomizer()}
-          <div className="flex-1" />
-          <div className="pt-2 sticky bottom-0 bg-white dark:bg-slate-900 pb-1">
+        <div className="hidden lg:flex flex-col w-[410px] shrink-0 bg-white dark:bg-slate-900 rounded-2xl border border-slate-200/80 dark:border-slate-800 shadow-xs h-[calc(100vh-6rem)] overflow-hidden">
+          <div className="flex-1 overflow-y-auto p-5 space-y-4">
+            {renderCustomizer()}
+          </div>
+          <div className="p-4 bg-white dark:bg-slate-900 border-t border-slate-100 dark:border-slate-800/80 shrink-0">
             <DownloadButton
               brandKit={brandKit}
               activeTemplate={activeTemplate}
@@ -268,12 +266,14 @@ export const Studio: React.FC<StudioProps> = ({ initialLang }) => {
         </div>
       </div>
 
-      {/* Landing Page Content: How it works, templates showcase, privacy, pricing, footer */}
-      <LandingSections
-        interfaceLang={interfaceLang}
-        onSelectTemplate={setActiveTemplate}
-        onOpenProModal={() => setIsProModalOpen(true)}
-      />
+        {/* Optional Landing Page Content (when enabled) */}
+        {showLandingSections && (
+          <LandingSections
+            interfaceLang={interfaceLang}
+            onSelectTemplate={setActiveTemplate}
+            onOpenProModal={() => setIsProModalOpen(true)}
+          />
+        )}
       </main>
 
       {/* Pro Modal */}

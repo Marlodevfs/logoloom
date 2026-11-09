@@ -482,18 +482,19 @@ export const YourDetailsStep: React.FC<YourDetailsStepProps> = ({
             </select>
           </div>
 
-          {/* Paper Size */}
+          {/* Paper Size Selector */}
           <div>
-            <label className="text-[10.5px] font-semibold text-slate-600 dark:text-slate-400 block mb-1">
-              {l.paperFormat}
+            <label className="text-[10.5px] font-semibold text-slate-600 dark:text-slate-400 flex items-center space-x-1 mb-1.5">
+              <FileText className="w-3 h-3 text-slate-400" />
+              <span>{l.paperFormat}</span>
             </label>
             <div className="grid grid-cols-2 gap-2">
               <button
                 type="button"
                 onClick={() => onUpdate({ paperSize: 'a4' })}
-                className={`py-1.5 px-2 rounded-lg border text-center text-[11px] transition-all ${
+                className={`py-2 px-2.5 rounded-lg border text-center text-xs font-semibold transition-all ${
                   brandKit.paperSize === 'a4'
-                    ? 'border-indigo-600 bg-indigo-50/60 dark:bg-indigo-950/40 text-indigo-700 dark:text-indigo-300 font-bold'
+                    ? 'border-indigo-600 bg-indigo-50 dark:bg-indigo-950/50 text-indigo-700 dark:text-indigo-300 shadow-2xs'
                     : 'border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-400 hover:border-slate-300'
                 }`}
               >
@@ -502,9 +503,9 @@ export const YourDetailsStep: React.FC<YourDetailsStepProps> = ({
               <button
                 type="button"
                 onClick={() => onUpdate({ paperSize: 'letter' })}
-                className={`py-1.5 px-2 rounded-lg border text-center text-[11px] transition-all ${
+                className={`py-2 px-2.5 rounded-lg border text-center text-xs font-semibold transition-all ${
                   brandKit.paperSize === 'letter'
-                    ? 'border-indigo-600 bg-indigo-50/60 dark:bg-indigo-950/40 text-indigo-700 dark:text-indigo-300 font-bold'
+                    ? 'border-indigo-600 bg-indigo-50 dark:bg-indigo-950/50 text-indigo-700 dark:text-indigo-300 shadow-2xs'
                     : 'border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-400 hover:border-slate-300'
                 }`}
               >

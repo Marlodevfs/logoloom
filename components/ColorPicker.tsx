@@ -85,7 +85,8 @@ export const ColorPicker: React.FC<ColorPickerProps> = ({
               key={palette.hex}
               type="button"
               onClick={() => onColorSelect(palette.hex)}
-              className={`group flex items-center space-x-2 p-2 sm:p-1.5 rounded-lg border text-left transition-all min-h-[40px] sm:min-h-0 ${
+              title={palette.fullName}
+              className={`group flex items-center space-x-1.5 p-2 sm:p-1.5 rounded-lg border text-left transition-all min-h-[38px] sm:min-h-0 ${
                 isSelected
                   ? 'border-slate-800 dark:border-slate-100 ring-2 ring-slate-800/20 dark:ring-slate-100/20 bg-slate-50 dark:bg-slate-800'
                   : 'border-slate-200 dark:border-slate-700 hover:border-slate-300 dark:hover:border-slate-600'
@@ -97,7 +98,7 @@ export const ColorPicker: React.FC<ColorPickerProps> = ({
               >
                 {isSelected && <Check className="w-2.5 h-2.5" />}
               </span>
-              <span className="text-[11px] sm:text-[10px] font-medium text-slate-700 dark:text-slate-300 truncate">
+              <span className="text-[11px] sm:text-[10px] font-semibold text-slate-700 dark:text-slate-300 whitespace-nowrap">
                 {palette.name}
               </span>
             </button>

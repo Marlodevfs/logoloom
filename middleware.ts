@@ -1,36 +1,30 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 
-const SUPPORTED_LOCALES = ['en', 'fr', 'es', 'de', 'pt', 'it'];
+const CANONICAL_HOST = 'www.logoloom.app';
 const DEFAULT_LOCALE = 'en';
 
 export function middleware(request: NextRequest) {
   const host = request.headers.get('host') || '';
   const { pathname, search } = request.nextUrl;
 
-  // 1. PHASE 3: Canonical Apex Host Enforcement (301 Permanent Redirect)
+  // 1. Canonical Host Enforcement (301 Permanent Redirect to www.logoloom.app)
   if (
-    host === 'www.logoloom.app' ||
+    host === 'logoloom.app' ||
     host === 'logoloom-one.vercel.app'
   ) {
-    const canonicalUrl = new URL(`https://logoloom.app${pathname}${search}`);
+    const canonicalUrl = new URL(`https://${CANONICAL_HOST}${pathname}${search}`);
     return NextResponse.redirect(canonicalUrl, 301);
   }
 
-  // 2. PHASE 4: Root Accept-Language Redirection
+  // 2. Root URL serves default language without auto-redirecting crawlers
   if (pathname === '/') {
-    const acceptLang = request.headers.get('accept-language') || '';
-    let matchedLocale = DEFAULT_LOCALE;
+    return NextResponse.rewrite(new URL(`/${DEFAULT_LOCALE}${search}`, request.url));
+  }
 
-    for (const locale of SUPPORTED_LOCALES) {
-      if (acceptLang.toLowerCase().includes(locale)) {
-        matchedLocale = locale;
-        break;
-      }
-    }
-
-    const targetUrl = new URL(`/${matchedLocale}${search}`, request.url);
-    return NextResponse.redirect(targetUrl, 307);
+  // 3. /pricing rewrite to /en/pricing for localized routing
+  if (pathname === '/pricing') {
+    return NextResponse.rewrite(new URL(`/${DEFAULT_LOCALE}/pricing${search}`, request.url));
   }
 
   return NextResponse.next();
@@ -45,7 +39,8 @@ export const config = {
      * - favicon.ico (favicon file)
      * - fonts/ (font files)
      * - api/ (API routes)
+     * - sitemap.xml, robots.txt
      */
-    '/((?!api|_next/static|_next/image|fonts|favicon.ico).*)',
+    '/((?!api|_next/static|_next/image|fonts|favicon.ico|icon.svg|apple-icon.png|apple-touch-icon.png|sitemap.xml|robots.txt).*)',
   ],
 };

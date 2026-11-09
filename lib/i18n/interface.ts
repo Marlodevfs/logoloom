@@ -103,7 +103,7 @@ export interface UIStrings {
 export const UI_TRANSLATIONS: Record<InterfaceLang, UIStrings> = {
   en: {
     appTitle: 'LogoLoom',
-    appTagline: 'Brand your client documents in 2 minutes',
+    appTagline: 'Free printable planners & business documents',
     privacyBadge: '100% Client-Side & Private',
     privacyTooltip: 'Your logo and documents never leave your browser. Zero server uploads.',
     

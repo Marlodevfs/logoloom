@@ -101,25 +101,24 @@ export const LivePreview: React.FC<LivePreviewProps> = ({
   const containerRef = useRef<HTMLDivElement>(null);
 
   const calculateFitScale = useCallback(() => {
-    if (typeof window === 'undefined') return 0.50;
+    if (typeof window === 'undefined') return 0.70;
     if (containerRef.current) {
-      const availableWidth = containerRef.current.clientWidth - 40;
-      const availableHeight = containerRef.current.clientHeight - 40;
-      if (availableWidth > 100 && availableHeight > 100) {
+      const availableWidth = containerRef.current.clientWidth - 32;
+      if (availableWidth > 100) {
+        // Fit cleanly to panel width so text is immediately sharp and readable
         const scaleX = availableWidth / baseWidth;
-        const scaleY = availableHeight / baseHeight;
-        const fit = Math.min(scaleX, scaleY, 0.95);
-        return Math.max(0.20, Number(fit.toFixed(2)));
+        const fit = Math.min(1.0, Math.max(0.30, Number(scaleX.toFixed(2))));
+        return fit;
       }
     }
     const width = window.innerWidth;
-    if (width < 640) return isLandscape ? 0.28 : 0.38;
-    if (width < 1024) return isLandscape ? 0.38 : 0.48;
-    if (width < 1360) return isLandscape ? 0.46 : 0.58;
-    return isLandscape ? 0.52 : 0.65;
-  }, [baseWidth, baseHeight, isLandscape]);
+    if (width < 640) return isLandscape ? 0.32 : 0.42;
+    if (width < 1024) return isLandscape ? 0.45 : 0.60;
+    if (width < 1360) return isLandscape ? 0.55 : 0.72;
+    return isLandscape ? 0.65 : 0.85;
+  }, [baseWidth, isLandscape]);
 
-  const [zoomScale, setZoomScale] = useState<number>(0.50);
+  const [zoomScale, setZoomScale] = useState<number>(0.70);
 
   useEffect(() => {
     const handleResize = () => {
@@ -245,10 +244,10 @@ export const LivePreview: React.FC<LivePreviewProps> = ({
         </div>
       </div>
 
-      {/* Viewport Canvas: Auto-centers, never clips */}
+      {/* Viewport Canvas: Starts at the top, perfectly centered horizontally, never clipped */}
       <div
         ref={containerRef}
-        className="flex-1 overflow-auto p-3 sm:p-5 flex items-center justify-center min-w-0"
+        className="flex-1 overflow-auto p-3 sm:p-5 flex items-start justify-center min-w-0 pt-2 sm:pt-4 pb-16"
       >
         <div
           className="relative transition-all duration-150 ease-out shadow-2xl rounded-xs shrink-0"

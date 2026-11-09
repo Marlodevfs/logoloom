@@ -163,8 +163,9 @@ const VALID_TEMPLATES: TemplateId[] = [
   'checklist',
 ];
 
-export function useBrandKit(initialLang?: InterfaceLang) {
+export function useBrandKit(initialLang?: InterfaceLang, initialTemplate?: TemplateId) {
   const initialDocLang: DocumentLang = initialLang || 'en';
+  const resolvedTemplate: TemplateId = (initialTemplate && VALID_TEMPLATES.includes(initialTemplate)) ? initialTemplate : 'habit-tracker';
 
   const [brandKit, setBrandKit] = useState<BrandKit>(() => ({
     ...DEFAULT_BRAND_KIT,
@@ -183,7 +184,7 @@ export function useBrandKit(initialLang?: InterfaceLang) {
     checklistContent: getDefaultChecklistContent(initialDocLang),
   }));
 
-  const [activeTemplate, setActiveTemplate] = useState<TemplateId>('habit-tracker');
+  const [activeTemplate, setActiveTemplate] = useState<TemplateId>(resolvedTemplate);
   const [interfaceLang, setInterfaceLangState] = useState<InterfaceLang>(initialLang || 'en');
   const [isLoaded, setIsLoaded] = useState(false);
   const [isExtractingColor, setIsExtractingColor] = useState(false);
@@ -206,9 +207,13 @@ export function useBrandKit(initialLang?: InterfaceLang) {
         }
         setInterfaceLangState(resolvedUiLang);
 
-        const savedTemplate = localStorage.getItem(TEMPLATE_KEY) as TemplateId;
-        if (savedTemplate && VALID_TEMPLATES.includes(savedTemplate)) {
-          setActiveTemplate(savedTemplate);
+        if (initialTemplate && VALID_TEMPLATES.includes(initialTemplate)) {
+          setActiveTemplate(initialTemplate);
+        } else {
+          const savedTemplate = localStorage.getItem(TEMPLATE_KEY) as TemplateId;
+          if (savedTemplate && VALID_TEMPLATES.includes(savedTemplate)) {
+            setActiveTemplate(savedTemplate);
+          }
         }
 
         const savedStyle = localStorage.getItem(STYLE_KEY) as DesignStyle;
@@ -222,6 +227,8 @@ export function useBrandKit(initialLang?: InterfaceLang) {
             ? (initialLang as DocumentLang)
             : (parsed.documentLang || (resolvedUiLang as DocumentLang));
 
+          const langChanged = Boolean(isUrlLocaleSpecified && parsed.documentLang && parsed.documentLang !== initialLang);
+
           setBrandKit((prev) => ({
             ...prev,
             ...parsed,
@@ -229,18 +236,18 @@ export function useBrandKit(initialLang?: InterfaceLang) {
             documentLang: docLang,
             weekStart: parsed.weekStart || 'monday',
             currency: parsed.currency || '€',
-            habitTrackerContent: parsed.habitTrackerContent || getDefaultHabitTrackerContent(docLang, 'wellbeing'),
-            goalPlannerContent: parsed.goalPlannerContent || getDefaultGoalPlannerContent(docLang),
-            weeklyPlannerContent: parsed.weeklyPlannerContent || getDefaultWeeklyPlannerContent(docLang),
-            monthlyCalendarContent: parsed.monthlyCalendarContent || getDefaultMonthlyCalendarContent(docLang),
-            dailyPrioritiesContent: parsed.dailyPrioritiesContent || getDefaultDailyPrioritiesContent(docLang),
-            mealPlannerContent: parsed.mealPlannerContent || getDefaultMealPlannerContent(docLang),
-            budgetTrackerContent: parsed.budgetTrackerContent || getDefaultBudgetTrackerContent(docLang),
-            quoteContent: parsed.quoteContent || getDefaultQuoteContent(docLang),
-            invoiceContent: parsed.invoiceContent || getDefaultInvoiceContent(docLang),
-            priceListContent: parsed.priceListContent || getDefaultPriceListContent(docLang),
-            clientTrackerContent: parsed.clientTrackerContent || getDefaultClientTrackerContent(docLang),
-            checklistContent: parsed.checklistContent || getDefaultChecklistContent(docLang),
+            habitTrackerContent: (langChanged || !parsed.habitTrackerContent) ? getDefaultHabitTrackerContent(docLang, 'wellbeing') : parsed.habitTrackerContent,
+            goalPlannerContent: (langChanged || !parsed.goalPlannerContent) ? getDefaultGoalPlannerContent(docLang) : parsed.goalPlannerContent,
+            weeklyPlannerContent: (langChanged || !parsed.weeklyPlannerContent) ? getDefaultWeeklyPlannerContent(docLang) : parsed.weeklyPlannerContent,
+            monthlyCalendarContent: (langChanged || !parsed.monthlyCalendarContent) ? getDefaultMonthlyCalendarContent(docLang) : parsed.monthlyCalendarContent,
+            dailyPrioritiesContent: (langChanged || !parsed.dailyPrioritiesContent) ? getDefaultDailyPrioritiesContent(docLang) : parsed.dailyPrioritiesContent,
+            mealPlannerContent: (langChanged || !parsed.mealPlannerContent) ? getDefaultMealPlannerContent(docLang) : parsed.mealPlannerContent,
+            budgetTrackerContent: (langChanged || !parsed.budgetTrackerContent) ? getDefaultBudgetTrackerContent(docLang) : parsed.budgetTrackerContent,
+            quoteContent: (langChanged || !parsed.quoteContent) ? getDefaultQuoteContent(docLang) : parsed.quoteContent,
+            invoiceContent: (langChanged || !parsed.invoiceContent) ? getDefaultInvoiceContent(docLang) : parsed.invoiceContent,
+            priceListContent: (langChanged || !parsed.priceListContent) ? getDefaultPriceListContent(docLang) : parsed.priceListContent,
+            clientTrackerContent: (langChanged || !parsed.clientTrackerContent) ? getDefaultClientTrackerContent(docLang) : parsed.clientTrackerContent,
+            checklistContent: (langChanged || !parsed.checklistContent) ? getDefaultChecklistContent(docLang) : parsed.checklistContent,
             isPro: false,
             removeWatermark: false,
           }));

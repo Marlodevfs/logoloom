@@ -11,60 +11,61 @@ export interface LocaleMeta {
 
 export const LOCALES_METADATA: Record<InterfaceLang, LocaleMeta> = {
   en: {
-    title: 'LogoLoom — Brand Client Documents in 2 Minutes',
+    title: 'LogoLoom – Free Printable Planners & Business Templates',
     description:
-      'Turn generic client documents into branded, print-ready PDFs in 2 minutes. Add your logo, pick colors, and download vector PDFs with zero signup.',
+      'Print and customize free PDF planners and business templates in seconds. 100% private in your browser, custom colors, optional logo.',
     ogLocale: 'en_US',
     langName: 'English',
-    flag: '🇺🇸',
+    flag: '🇬🇧',
   },
   fr: {
-    title: 'LogoLoom — Documents clients personnalisés en 2 minutes',
+    title: 'LogoLoom – Planners et Modèles Gratuits à Imprimer PDF',
     description:
-      'Transformez vos modèles en PDF prêts à imprimer avec votre logo et vos couleurs. Export vectoriel haute résolution, 100% privé et sans inscription.',
+      'Personnalisez et imprimez vos plannings et documents professionnels en PDF. 100% gratuit et privé dans le navigateur, logo optionnel.',
     ogLocale: 'fr_FR',
     langName: 'Français',
     flag: '🇫🇷',
   },
   es: {
-    title: 'LogoLoom — Documentos para clientes en 2 minutos',
+    title: 'LogoLoom – Planificadores y Plantillas Gratis Imprimibles',
     description:
-      'Convierte documentos en PDFs profesionales con tu logotipo, color de marca y código QR vectorial en minutos. 100% privado y gratuito.',
+      'Personaliza e imprime planificadores y documentos en PDF al instante. 100% privado en tu navegador, colores a medida y sin registro.',
     ogLocale: 'es_ES',
     langName: 'Español',
     flag: '🇪🇸',
   },
   de: {
-    title: 'LogoLoom — Kundendokumente in 2 Minuten erstellen',
+    title: 'LogoLoom – Kostenlose Druckbare Planer & Vorlagen PDF',
     description:
-      'Erstellen Sie druckfertige Vektor-PDFs mit Ihrem Logo und Ihrer Markenfarbe in 2 Minuten. 100% lokal und privat, ohne Registrierung.',
+      'Erstellen Sie druckfertige Planer und Vorlagen als PDF in Sekunden. 100% privat im Browser, individuelle Farben, ohne Anmeldung.',
     ogLocale: 'de_DE',
     langName: 'Deutsch',
     flag: '🇩🇪',
   },
   pt: {
-    title: 'LogoLoom — Documentos para clientes em 2 minutos',
+    title: 'LogoLoom – Planejadores e Modelos Imprimíveis Gratuitos',
     description:
-      'Gere PDFs vetoriais para impressão com seu logotipo e cores de marca em 2 minutos. Rápido, 100% privado e sem necessidade de cadastro.',
+      'Personalize e imprima planejadores e documentos em PDF em segundos. 100% privado no navegador, cores à escolha e sem cadastro.',
     ogLocale: 'pt_PT',
     langName: 'Português',
     flag: '🇵🇹',
   },
   it: {
-    title: 'LogoLoom — Documenti cliente pronti in 2 minuti',
+    title: 'LogoLoom – Planner e Modelli Stampabili Gratuiti PDF',
     description:
-      'Crea PDF vettoriali per la stampa con il tuo logo e i tuoi colori in meno di 2 minuti. Gratuito, 100% privato e senza registrazione.',
+      'Personalizza e stampa planner e documenti professionali in PDF in pochi secondi. 100% privato nel browser, colori su misura e senza login.',
     ogLocale: 'it_IT',
     langName: 'Italiano',
     flag: '🇮🇹',
   },
 };
 
-export function getHreflangAlternates() {
+export function getHreflangAlternates(pathSuffix = '') {
   const languages: Record<string, string> = {};
   for (const lang of siteConfig.locales) {
-    languages[lang] = `${siteConfig.url}/${lang}`;
+    languages[lang] = `${siteConfig.url}/${lang}${pathSuffix ? `/${pathSuffix}` : ''}`;
   }
-  languages['x-default'] = siteConfig.url;
+  // x-default points to default language page or root
+  languages['x-default'] = pathSuffix ? `${siteConfig.url}/en/${pathSuffix}` : `${siteConfig.url}/en`;
   return languages;
 }

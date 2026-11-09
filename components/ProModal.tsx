@@ -40,7 +40,7 @@ interface ProModalStrings {
 const PRO_MODAL_I18N: Record<InterfaceLang, ProModalStrings> = {
   fr: {
     title: 'Offrez à vos clients une expérience 100% marque blanche',
-    subtitle: 'Documents épurés et prestigieux pour coachs, consultants et agences.',
+    subtitle: 'Documents épurés et impeccables pour indépendants, créatifs et entreprises.',
     priceNotice: 'Résiliable en 1 clic. Aucun engagement de durée.',
     perMonth: ' / mois',
     unlimitedPdfs: 'PDFs illimités',
@@ -76,7 +76,7 @@ const PRO_MODAL_I18N: Record<InterfaceLang, ProModalStrings> = {
   },
   en: {
     title: 'Give your clients a 100% white-label experience',
-    subtitle: 'Clean, unobtrusive branding for professional coaches, consultants and agencies.',
+    subtitle: 'Clean, professional documents for freelancers, creators and businesses.',
     priceNotice: 'Cancel anytime with 1-click. No long-term contract.',
     perMonth: ' / month',
     unlimitedPdfs: 'Unlimited PDFs',
@@ -112,7 +112,7 @@ const PRO_MODAL_I18N: Record<InterfaceLang, ProModalStrings> = {
   },
   de: {
     title: 'Bieten Sie Ihren Kunden ein 100%iges White-Label-Erlebnis',
-    subtitle: 'Elegantes, unaufdringliches Branding für professionelle Berater, Coaches und Agenturen.',
+    subtitle: 'Elegantes Branding für Freiberufler, Kreative und kleine Unternehmen.',
     priceNotice: 'Jederzeit mit 1 Klick kündbar. Keine Mindestlaufzeit.',
     perMonth: ' / Monat',
     unlimitedPdfs: 'Unbegrenzte PDFs',
@@ -148,7 +148,7 @@ const PRO_MODAL_I18N: Record<InterfaceLang, ProModalStrings> = {
   },
   es: {
     title: 'Ofrece a tus clientes una experiencia 100% marca blanca',
-    subtitle: 'Documentos impecables y profesionales para consultores, coaches y agencias.',
+    subtitle: 'Documentos impecables y profesionales para autónomos, creativos y empresas.',
     priceNotice: 'Cancela en 1 clic en cualquier momento. Sin permanencia.',
     perMonth: ' / mes',
     unlimitedPdfs: 'PDFs ilimitados',
@@ -184,7 +184,7 @@ const PRO_MODAL_I18N: Record<InterfaceLang, ProModalStrings> = {
   },
   it: {
     title: 'Offri ai tuoi clienti un’esperienza 100% white-label',
-    subtitle: 'Branding pulito e professionale per consulenti, coach e studi professionali.',
+    subtitle: 'Branding pulito e professionale per freelance, creativi e piccole imprese.',
     priceNotice: 'Disdici in 1 clic in qualsiasi momento. Nessun vincolo.',
     perMonth: ' / mese',
     unlimitedPdfs: 'PDF illimitati',
@@ -220,7 +220,7 @@ const PRO_MODAL_I18N: Record<InterfaceLang, ProModalStrings> = {
   },
   pt: {
     title: 'Ofereça aos seus clientes uma experiência 100% marca branca',
-    subtitle: 'Design limpo e sofisticado para consultores, coaches e agências.',
+    subtitle: 'Design limpo e sofisticado para freelancers, criativos e empresas.',
     priceNotice: 'Cancele a qualquer momento com 1 clique. Sem fidelização.',
     perMonth: ' / mês',
     unlimitedPdfs: 'PDFs ilimitados',
