@@ -18,8 +18,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     title: fr ? 'Politique de confidentialité – LogoLoom' : 'Privacy policy – LogoLoom',
     alternates: { canonical: `${siteConfig.url}/${locale}/privacy` },
     description: fr
-      ? 'Politique de confidentialité de LogoLoom : aucun compte, documents traités dans votre navigateur, statistiques sans cookie.'
-      : 'LogoLoom privacy policy: no account, documents processed in your browser, cookieless analytics.',
+      ? 'Politique de confidentialité de LogoLoom : aucun compte, documents traités dans votre navigateur, cookies Google uniquement avec votre accord.'
+      : 'LogoLoom privacy policy: no account, documents processed in your browser, Google cookies only with your consent.',
     // Useful for visitors, worthless in search results (and EN text is reused for es/de/it/pt)
     robots: { index: false, follow: true },
   };
@@ -51,6 +51,7 @@ export default async function PrivacyPage({ params }: Props) {
           title: 'Mesure d’audience',
           body: [
             'Nous utilisons GoatCounter, un outil de statistiques respectueux de la vie privée, sans cookie et sans suivi entre sites. Il ne mesure que des données agrégées (pages vues, pays, type d’appareil) et quelques actions anonymes (ex. : téléchargement d’un PDF).',
+            'Si vous cliquez sur « Accepter » dans le bandeau cookies, nous chargeons aussi Google Tag Manager et les outils Google associés (comme Google Analytics), qui déposent des cookies pour mesurer l’audience. Ils ne sont jamais chargés sans votre accord. Vous pouvez changer d’avis à tout moment via le lien « Cookies » en bas de page.',
           ],
         },
         {
@@ -89,6 +90,7 @@ export default async function PrivacyPage({ params }: Props) {
           title: 'Analytics',
           body: [
             'We use GoatCounter, a privacy-friendly analytics tool with no cookies and no cross-site tracking. It only records aggregated data (page views, country, device type) and a few anonymous actions (e.g. a PDF download).',
+            'If you click “Accept” in the cookie banner, we also load Google Tag Manager and related Google tools (such as Google Analytics), which set cookies to measure traffic. They are never loaded without your consent. You can change your choice at any time with the “Cookies” link in the footer.',
           ],
         },
         {
