@@ -671,9 +671,9 @@ export const TemplateSelector: React.FC<TemplateSelectorProps> = ({
 
               <div className="flex-1 min-w-0">
                 <div className="flex items-center justify-between">
-                  <h4 className="text-xs font-bold text-slate-800 dark:text-slate-100 truncate">
+                  <span className="block text-xs font-bold text-slate-800 dark:text-slate-100 truncate">
                     {tInfo.title}
-                  </h4>
+                  </span>
                   <span className="text-[9px] font-medium text-slate-400 shrink-0 ml-1">
                     {tInfo.tag}
                   </span>
