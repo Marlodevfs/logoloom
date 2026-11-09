@@ -29,42 +29,56 @@ const STUDIO_I18N: Record<InterfaceLang, {
   tabPreview: string;
   viewPreview: string;
   editOptions: string;
+  previewShort: string;
+  editShort: string;
 }> = {
   fr: {
     tabEditor: '1. Personnaliser',
     tabPreview: '2. Aperçu',
     viewPreview: 'Voir l’aperçu',
     editOptions: 'Modifier les options',
+    previewShort: 'Aperçu',
+    editShort: 'Éditer',
   },
   en: {
     tabEditor: '1. Customize',
     tabPreview: '2. Preview',
     viewPreview: 'View Preview',
     editOptions: 'Edit Options',
+    previewShort: 'Preview',
+    editShort: 'Edit',
   },
   de: {
     tabEditor: '1. Anpassen',
     tabPreview: '2. Vorschau',
     viewPreview: 'Vorschau anzeigen',
     editOptions: 'Optionen bearbeiten',
+    previewShort: 'Vorschau',
+    editShort: 'Bearbeiten',
   },
   es: {
     tabEditor: '1. Personalizar',
     tabPreview: '2. Vista previa',
     viewPreview: 'Ver vista previa',
     editOptions: 'Editar opciones',
+    previewShort: 'Vista',
+    editShort: 'Editar',
   },
   it: {
     tabEditor: '1. Personalizza',
     tabPreview: '2. Anteprima',
     viewPreview: 'Vedi anteprima',
     editOptions: 'Modifica opzioni',
+    previewShort: 'Anteprima',
+    editShort: 'Modifica',
   },
   pt: {
     tabEditor: '1. Personalizar',
-    tabPreview: '2. Pré-visualização',
+    tabPreview: '2. Prévia',
     viewPreview: 'Ver prévia',
     editOptions: 'Editar opções',
+    previewShort: 'Prévia',
+    editShort: 'Editar',
   },
 };
 
@@ -252,9 +266,7 @@ export const Studio: React.FC<StudioProps> = ({
             ) : (
               <Sliders className="w-4 h-4 text-indigo-600 dark:text-indigo-400" />
             )}
-            <span className="hidden min-[400px]:inline">
-              {mobileTab === 'editor' ? sI18n.viewPreview : sI18n.editOptions}
-            </span>
+            <span>{mobileTab === 'editor' ? sI18n.previewShort : sI18n.editShort}</span>
           </button>
 
           <div className="flex-1 min-w-0">
