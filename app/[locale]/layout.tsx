@@ -33,29 +33,27 @@ export function generateStaticParams() {
   return siteConfig.locales.map((locale) => ({ locale }));
 }
 
+// Site-wide identity. The WebApplication schema lives on the home page only
+// (it was duplicated there before).
 const jsonLd = {
   '@context': 'https://schema.org',
   '@graph': [
     {
-      '@type': 'WebApplication',
-      '@id': `${siteConfig.url}/#webapp`,
+      '@type': 'WebSite',
+      '@id': `${siteConfig.url}/#website`,
       name: siteConfig.name,
       url: siteConfig.url,
       description: siteConfig.description,
-      applicationCategory: 'DesignApplication',
-      operatingSystem: 'Any',
-      offers: {
-        '@type': 'Offer',
-        price: '0',
-        priceCurrency: 'USD',
-      },
-      featureList: [
-        'Vector PDF generation with embedded fonts',
-        'Dominant brand color auto-extraction with WCAG AA compliance',
-        'Pure vector SVG QR code generation',
-        'Zero-account & zero-signup privacy-first workflow',
-        '12 print-ready templates: 30-day habit tracker, weekly planner, monthly calendar, goal planner, budget tracker, invoice, quote, checklist',
-      ],
+      inLanguage: ['en', 'fr', 'es', 'de', 'pt', 'it'],
+      publisher: { '@id': `${siteConfig.url}/#organization` },
+    },
+    {
+      '@type': 'Organization',
+      '@id': `${siteConfig.url}/#organization`,
+      name: siteConfig.name,
+      url: siteConfig.url,
+      logo: `${siteConfig.url}/apple-touch-icon.png`,
+      email: siteConfig.contact.email,
     },
   ],
 };

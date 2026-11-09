@@ -895,7 +895,7 @@ export const TEMPLATES_SEO_DATA: Record<InterfaceLang, Record<string, TemplateSE
       slug: 'habit-tracker',
       templateId: 'habit-tracker',
       category: 'personal',
-      title: 'Rastreador de Hábitos PDF para Imprimir – LogoLoom',
+      title: 'Registo de Hábitos em PDF para Imprimir – LogoLoom',
       description: 'Grelha de hábitos de 30 dias gratuita em PDF para imprimir. Formato vertical com marcos, design minimalista de baixo consumo de tinta.',
       h1: 'Rastreador de hábitos de 30 dias imprimível em PDF',
       intro: 'Construa rotinas consistentes. Grelha vertical de 30 dias com dias em linhas e hábitos em colunas, pronta para imprimir em casa ou no escritório.',

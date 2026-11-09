@@ -15,9 +15,26 @@ export async function generateMetadata({
 
   const p = PRO_I18N[lang as InterfaceLang] || PRO_I18N.en;
 
+  const title = `${getSiteChrome(lang).footer.pricing}: ${p.freeName} & ${p.proName} | LogoLoom`;
+  const ogImage = `${siteConfig.url}/api/og?title=${encodeURIComponent(p.pageTitle)}`;
+
   return {
-    title: `${getSiteChrome(lang).footer.pricing} – LogoLoom`,
+    title,
     description: p.pageSubtitle,
+    openGraph: {
+      title,
+      description: p.pageSubtitle,
+      url: `${siteConfig.url}/${lang}/pricing`,
+      siteName: siteConfig.name,
+      type: 'website',
+      images: [{ url: ogImage, width: 1200, height: 630, alt: title }],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title,
+      description: p.pageSubtitle,
+      images: [ogImage],
+    },
     alternates: {
       // Each localized pricing page is its own canonical (consistent with hreflang)
       canonical: `${siteConfig.url}/${lang}/pricing`,
