@@ -153,6 +153,7 @@ export const LogoUploader: React.FC<LogoUploaderProps> = ({
         ref={fileInputRef}
         type="file"
         accept="image/png,image/jpeg,image/svg+xml"
+        aria-label="Logo (PNG, JPG, SVG)"
         className="hidden"
         onChange={handleFileChange}
       />

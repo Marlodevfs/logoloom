@@ -158,7 +158,7 @@ export const MinimalHabitTrackerTemplate: React.FC<MinimalHabitTrackerTemplatePr
           <div className="mt-3.5 flex items-end justify-between">
             <div className="flex-1 pr-4">
               {editingField === 'title' && onUpdate ? (
-                <input
+                <input aria-label="Title"
                   type="text"
                   autoFocus
                   maxLength={45}

@@ -277,7 +277,7 @@ export const ContentEditorStep: React.FC<ContentEditorStepProps> = ({
           </div>
           <div>
             <div className="flex items-center space-x-2">
-              <h3 className="text-xs font-bold text-slate-900 dark:text-white uppercase tracking-wider">
+              <h3 className="text-xs font-bold text-slate-900 dark:text-white">
                 {l.stepTitle}
               </h3>
             </div>

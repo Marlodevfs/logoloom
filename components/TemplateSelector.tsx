@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import {
   Calendar,
   Milestone,
@@ -58,9 +58,9 @@ const SELECTOR_I18N: Record<
     minimalLabel: 'Minimal',
     defaultBadge: 'Défaut',
     completeLabel: 'Complet',
-    familyPersonal: 'Organisation personnelle',
-    familyBusiness: 'Professionnel & Business',
-    allTemplates: 'Tous les modèles',
+    familyPersonal: 'Perso',
+    familyBusiness: 'Pro',
+    allTemplates: 'Tous',
     templates: {
       'habit-tracker': {
         title: 'Suivi d’habitudes 30 jours',
@@ -130,9 +130,9 @@ const SELECTOR_I18N: Record<
     minimalLabel: 'Minimal',
     defaultBadge: 'Default',
     completeLabel: 'Complete',
-    familyPersonal: 'Personal organization',
-    familyBusiness: 'Business & Freelance',
-    allTemplates: 'All templates',
+    familyPersonal: 'Personal',
+    familyBusiness: 'Business',
+    allTemplates: 'All',
     templates: {
       'habit-tracker': {
         title: '30-Day Habit Tracker',
@@ -202,9 +202,9 @@ const SELECTOR_I18N: Record<
     minimalLabel: 'Minimal',
     defaultBadge: 'Standard',
     completeLabel: 'Vollständig',
-    familyPersonal: 'Persönliche Organisation',
-    familyBusiness: 'Geschäft & Freelance',
-    allTemplates: 'Alle Vorlagen',
+    familyPersonal: 'Privat',
+    familyBusiness: 'Business',
+    allTemplates: 'Alle',
     templates: {
       'habit-tracker': {
         title: '30-Tage-Gewohnheitstracker',
@@ -274,9 +274,9 @@ const SELECTOR_I18N: Record<
     minimalLabel: 'Mínimo',
     defaultBadge: 'Por defecto',
     completeLabel: 'Completo',
-    familyPersonal: 'Organización personal',
-    familyBusiness: 'Profesional & Negocios',
-    allTemplates: 'Todas las plantillas',
+    familyPersonal: 'Personal',
+    familyBusiness: 'Negocio',
+    allTemplates: 'Todas',
     templates: {
       'habit-tracker': {
         title: 'Seguimiento de hábitos 30 días',
@@ -346,9 +346,9 @@ const SELECTOR_I18N: Record<
     minimalLabel: 'Minimale',
     defaultBadge: 'Predefinito',
     completeLabel: 'Completo',
-    familyPersonal: 'Organizzazione personale',
-    familyBusiness: 'Attività & Professione',
-    allTemplates: 'Tutti i modelli',
+    familyPersonal: 'Personale',
+    familyBusiness: 'Lavoro',
+    allTemplates: 'Tutti',
     templates: {
       'habit-tracker': {
         title: 'Registro abitudini 30 giorni',
@@ -418,9 +418,9 @@ const SELECTOR_I18N: Record<
     minimalLabel: 'Mínimo',
     defaultBadge: 'Padrão',
     completeLabel: 'Completo',
-    familyPersonal: 'Organização pessoal',
-    familyBusiness: 'Negócios & Freelance',
-    allTemplates: 'Todos os modelos',
+    familyPersonal: 'Pessoal',
+    familyBusiness: 'Negócios',
+    allTemplates: 'Todos',
     templates: {
       'habit-tracker': {
         title: 'Rastreador de hábitos 30 dias',
@@ -499,12 +499,12 @@ const TEMPLATE_DEFINITIONS: Array<{
   { id: 'daily-priorities', family: 'personal', icon: ListTodo },
   { id: 'meal-planner', family: 'personal', icon: Utensils },
   { id: 'budget-tracker', family: 'personal', icon: Wallet },
+  { id: 'checklist', family: 'personal', icon: CheckCircle2 },
   // Business (5)
   { id: 'quote', family: 'business', icon: Receipt },
   { id: 'invoice', family: 'business', icon: FileSpreadsheet },
   { id: 'price-list', family: 'business', icon: Briefcase },
   { id: 'client-tracker', family: 'business', icon: Users },
-  { id: 'checklist', family: 'business', icon: CheckCircle2 },
 ];
 
 export const TemplateSelector: React.FC<TemplateSelectorProps> = ({
@@ -518,6 +518,24 @@ export const TemplateSelector: React.FC<TemplateSelectorProps> = ({
   const i18n = SELECTOR_I18N[interfaceLang] || SELECTOR_I18N.en;
   const [selectedFamily, setSelectedFamily] = useState<'all' | TemplateFamily>('all');
 
+  const listRef = useRef<HTMLDivElement>(null);
+  const personalCount = TEMPLATE_DEFINITIONS.filter((t) => t.family === 'personal').length;
+  const businessCount = TEMPLATE_DEFINITIONS.length - personalCount;
+
+  // Keep the active template visible in the scrollable list (e.g. when landing
+  // on /invoice, the Invoice card is far down). Scrolls only the list, never the page.
+  useEffect(() => {
+    const list = listRef.current;
+    if (!list) return;
+    const item = list.querySelector<HTMLElement>(`[data-template-id="${activeTemplate}"]`);
+    if (!item) return;
+    const itemTop = item.offsetTop; // list is `relative`, so this is relative to the list
+    const itemBottom = itemTop + item.offsetHeight;
+    if (itemTop < list.scrollTop || itemBottom > list.scrollTop + list.clientHeight) {
+      list.scrollTop = Math.max(0, itemTop - 8);
+    }
+  }, [activeTemplate, selectedFamily]);
+
   const filteredTemplates = TEMPLATE_DEFINITIONS.filter((t) => {
     if (selectedFamily === 'all') return true;
     return t.family === selectedFamily;
@@ -527,9 +545,9 @@ export const TemplateSelector: React.FC<TemplateSelectorProps> = ({
     <div className="space-y-2.5">
       {/* Step Header */}
       <div className="flex items-center justify-between">
-        <label className="text-xs font-bold text-slate-800 dark:text-slate-100 uppercase tracking-wider">
+        <h3 className="text-xs font-bold text-slate-800 dark:text-slate-100">
           {i18n.stepTitle}
-        </label>
+        </h3>
         <span className="text-[10px] text-slate-400 font-medium">
           {i18n.countModels}
         </span>
@@ -540,6 +558,7 @@ export const TemplateSelector: React.FC<TemplateSelectorProps> = ({
         <button
           type="button"
           onClick={() => onStyleChange('minimal')}
+          aria-pressed={designStyle === 'minimal'}
           className={`flex-1 py-2 sm:py-1.5 px-3 rounded-lg text-xs font-bold transition-all flex items-center justify-center space-x-1.5 ${
             designStyle === 'minimal'
               ? 'bg-white dark:bg-slate-900 text-slate-900 dark:text-white shadow-xs border border-slate-200/60 dark:border-slate-700'
@@ -556,6 +575,7 @@ export const TemplateSelector: React.FC<TemplateSelectorProps> = ({
         <button
           type="button"
           onClick={() => onStyleChange('complete')}
+          aria-pressed={designStyle === 'complete'}
           className={`flex-1 py-2 sm:py-1.5 px-3 rounded-lg text-xs font-bold transition-all flex items-center justify-center space-x-1.5 ${
             designStyle === 'complete'
               ? 'bg-white dark:bg-slate-900 text-slate-900 dark:text-white shadow-xs border border-slate-200/60 dark:border-slate-700'
@@ -568,21 +588,23 @@ export const TemplateSelector: React.FC<TemplateSelectorProps> = ({
       </div>
 
       {/* Family Pills (All | Personal (7) | Business (5)) */}
-      <div className="flex items-center space-x-1.5 p-0.5 bg-slate-100/70 dark:bg-slate-800/50 rounded-lg text-[10.5px]">
+      <div className="flex items-center space-x-1.5 p-0.5 bg-slate-100/70 dark:bg-slate-800/50 rounded-lg text-[11px] whitespace-nowrap">
         <button
           type="button"
           onClick={() => setSelectedFamily('all')}
+          aria-pressed={selectedFamily === 'all'}
           className={`flex-1 py-1 px-2 rounded-md font-semibold transition-all text-center ${
             selectedFamily === 'all'
               ? 'bg-white dark:bg-slate-900 text-slate-900 dark:text-white shadow-2xs'
               : 'text-slate-500 hover:text-slate-800 dark:hover:text-slate-200'
           }`}
         >
-          {i18n.allTemplates} (12)
+          {i18n.allTemplates} ({TEMPLATE_DEFINITIONS.length})
         </button>
         <button
           type="button"
           onClick={() => setSelectedFamily('personal')}
+          aria-pressed={selectedFamily === 'personal'}
           className={`flex-1 py-1 px-2 rounded-md font-semibold transition-all text-center flex items-center justify-center space-x-1 ${
             selectedFamily === 'personal'
               ? 'bg-white dark:bg-slate-900 text-slate-900 dark:text-white shadow-2xs'
@@ -590,11 +612,12 @@ export const TemplateSelector: React.FC<TemplateSelectorProps> = ({
           }`}
         >
           <User className="w-3 h-3" />
-          <span>{i18n.familyPersonal} (7)</span>
+          <span>{i18n.familyPersonal} ({personalCount})</span>
         </button>
         <button
           type="button"
           onClick={() => setSelectedFamily('business')}
+          aria-pressed={selectedFamily === 'business'}
           className={`flex-1 py-1 px-2 rounded-md font-semibold transition-all text-center flex items-center justify-center space-x-1 ${
             selectedFamily === 'business'
               ? 'bg-white dark:bg-slate-900 text-slate-900 dark:text-white shadow-2xs'
@@ -602,12 +625,12 @@ export const TemplateSelector: React.FC<TemplateSelectorProps> = ({
           }`}
         >
           <Briefcase className="w-3 h-3" />
-          <span>{i18n.familyBusiness} (5)</span>
+          <span>{i18n.familyBusiness} ({businessCount})</span>
         </button>
       </div>
 
       {/* Templates List */}
-      <div className="grid grid-cols-1 gap-2 max-h-[380px] overflow-y-auto pr-1">
+      <div ref={listRef} className="relative grid grid-cols-1 gap-2 max-h-[380px] overflow-y-auto pr-1">
         {filteredTemplates.map((tDef) => {
           const tInfo = i18n.templates[tDef.id] || {
             title: tDef.id,
@@ -621,6 +644,8 @@ export const TemplateSelector: React.FC<TemplateSelectorProps> = ({
             <button
               key={tDef.id}
               type="button"
+              data-template-id={tDef.id}
+              aria-pressed={isSelected}
               onClick={() => onSelect(tDef.id)}
               className={`flex items-start space-x-3 p-2.5 rounded-xl border text-left transition-all ${
                 isSelected

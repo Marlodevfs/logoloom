@@ -5,6 +5,7 @@ import { BrandKit, DocumentLang, QuoteCustomContent } from '@/types';
 import { MinimalDocFrame } from './minimal/MinimalDocFrame';
 import { getDefaultQuoteContent } from '@/lib/use-brand-kit';
 import { formatCurrencyAmount } from '@/lib/i18n/intl-helpers';
+import { getPartyPlaceholders } from '@/lib/i18n/party-placeholders';
 
 interface QuoteTemplateProps {
   brandKit: BrandKit;
@@ -40,7 +41,7 @@ export const QuoteTemplate: React.FC<QuoteTemplateProps> = ({
         <div className="flex flex-col text-right text-[10px] text-slate-600">
           <div className="flex items-center space-x-2 justify-end">
             <span className="font-semibold text-slate-700">N° :</span>
-            <input
+            <input aria-label="Quote number"
               type="text"
               value={content.quoteNumber}
               onChange={(e) => updateContent({ quoteNumber: e.target.value })}
@@ -49,7 +50,7 @@ export const QuoteTemplate: React.FC<QuoteTemplateProps> = ({
           </div>
           <div className="flex items-center space-x-2 justify-end mt-0.5">
             <span className="font-semibold text-slate-700">Date :</span>
-            <input
+            <input aria-label="Date"
               type="text"
               value={content.date}
               onChange={(e) => updateContent({ date: e.target.value })}
@@ -58,7 +59,7 @@ export const QuoteTemplate: React.FC<QuoteTemplateProps> = ({
           </div>
           <div className="flex items-center space-x-2 justify-end mt-0.5">
             <span className="font-semibold text-slate-700">Validité :</span>
-            <input
+            <input aria-label="Valid until"
               type="text"
               value={content.validUntil}
               onChange={(e) => updateContent({ validUntil: e.target.value })}
@@ -76,8 +77,8 @@ export const QuoteTemplate: React.FC<QuoteTemplateProps> = ({
             <span className="font-bold text-slate-400 uppercase tracking-wider text-[8.5px] mb-1">
               Émetteur
             </span>
-            <span className="font-bold text-slate-900">{brandKit.companyName || 'Votre Entreprise'}</span>
-            <textarea
+            <span className="font-bold text-slate-900">{brandKit.companyName || getPartyPlaceholders(brandKit.documentLang).company}</span>
+            <textarea aria-label="Sender address"
               rows={3}
               value={content.senderAddress}
               onChange={(e) => updateContent({ senderAddress: e.target.value })}
@@ -88,8 +89,8 @@ export const QuoteTemplate: React.FC<QuoteTemplateProps> = ({
             <span className="font-bold text-slate-500 uppercase tracking-wider text-[8.5px] mb-1">
               Destinataire / Client
             </span>
-            <span className="font-bold text-slate-900">{brandKit.clientName || 'Client / Société'}</span>
-            <textarea
+            <span className="font-bold text-slate-900">{brandKit.clientName || getPartyPlaceholders(brandKit.documentLang).client}</span>
+            <textarea aria-label="Client address"
               rows={3}
               value={content.clientAddress}
               onChange={(e) => updateContent({ clientAddress: e.target.value })}

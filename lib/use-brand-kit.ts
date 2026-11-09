@@ -23,6 +23,7 @@ import {
 } from '@/types';
 import { extractDominantColorFromImage, ensureAccessibleOnWhite, getOptimalTextColor } from './color-engine';
 import { HABIT_PACKS } from './i18n/habit-packs';
+import { trackEvent } from './analytics';
 import { DOCUMENT_TRANSLATIONS } from './i18n/documents';
 import {
   DEFAULT_GOAL_PLANNER,
@@ -126,6 +127,63 @@ export function getDefaultClientTrackerContent(lang: DocumentLang): ClientTracke
 
 export function getDefaultChecklistContent(lang: DocumentLang): ChecklistCustomContent {
   return DEFAULT_CHECKLIST[lang] || DEFAULT_CHECKLIST.en;
+}
+
+
+type LocalizedContentKey =
+  | 'goalPlannerContent'
+  | 'weeklyPlannerContent'
+  | 'monthlyCalendarContent'
+  | 'dailyPrioritiesContent'
+  | 'mealPlannerContent'
+  | 'budgetTrackerContent'
+  | 'quoteContent'
+  | 'invoiceContent'
+  | 'priceListContent'
+  | 'clientTrackerContent'
+  | 'checklistContent';
+
+const LOCALIZED_DEFAULTS: Record<LocalizedContentKey, (lang: DocumentLang) => unknown> = {
+  goalPlannerContent: getDefaultGoalPlannerContent,
+  weeklyPlannerContent: getDefaultWeeklyPlannerContent,
+  monthlyCalendarContent: getDefaultMonthlyCalendarContent,
+  dailyPrioritiesContent: getDefaultDailyPrioritiesContent,
+  mealPlannerContent: getDefaultMealPlannerContent,
+  budgetTrackerContent: getDefaultBudgetTrackerContent,
+  quoteContent: getDefaultQuoteContent,
+  invoiceContent: getDefaultInvoiceContent,
+  priceListContent: getDefaultPriceListContent,
+  clientTrackerContent: getDefaultClientTrackerContent,
+  checklistContent: getDefaultChecklistContent,
+};
+
+const sameContent = (a: unknown, b: unknown) => JSON.stringify(a) === JSON.stringify(b);
+
+/**
+ * Switches template contents to another language WITHOUT destroying user edits:
+ * a section is replaced by the new language defaults only if it is missing or
+ * still identical to the defaults of the previous language.
+ */
+export function relocalizeContents(
+  kit: Partial<BrandKit>,
+  fromLang: DocumentLang | undefined,
+  toLang: DocumentLang
+): Partial<BrandKit> {
+  const out: Partial<BrandKit> = {};
+
+  const habit = kit.habitTrackerContent;
+  const packId = habit?.packId || 'wellbeing';
+  const habitUntouched =
+    !habit || !fromLang || sameContent(habit, getDefaultHabitTrackerContent(fromLang, packId));
+  out.habitTrackerContent = habitUntouched ? getDefaultHabitTrackerContent(toLang, packId) : habit;
+
+  for (const key of Object.keys(LOCALIZED_DEFAULTS) as LocalizedContentKey[]) {
+    const current = kit[key];
+    const getDefault = LOCALIZED_DEFAULTS[key];
+    const untouched = !current || !fromLang || sameContent(current, getDefault(fromLang));
+    (out as any)[key] = untouched ? getDefault(toLang) : current;
+  }
+  return out;
 }
 
 export const DEFAULT_BRAND_KIT: BrandKit = {
@@ -236,18 +294,9 @@ export function useBrandKit(initialLang?: InterfaceLang, initialTemplate?: Templ
             documentLang: docLang,
             weekStart: parsed.weekStart || 'monday',
             currency: parsed.currency || '€',
-            habitTrackerContent: (langChanged || !parsed.habitTrackerContent) ? getDefaultHabitTrackerContent(docLang, 'wellbeing') : parsed.habitTrackerContent,
-            goalPlannerContent: (langChanged || !parsed.goalPlannerContent) ? getDefaultGoalPlannerContent(docLang) : parsed.goalPlannerContent,
-            weeklyPlannerContent: (langChanged || !parsed.weeklyPlannerContent) ? getDefaultWeeklyPlannerContent(docLang) : parsed.weeklyPlannerContent,
-            monthlyCalendarContent: (langChanged || !parsed.monthlyCalendarContent) ? getDefaultMonthlyCalendarContent(docLang) : parsed.monthlyCalendarContent,
-            dailyPrioritiesContent: (langChanged || !parsed.dailyPrioritiesContent) ? getDefaultDailyPrioritiesContent(docLang) : parsed.dailyPrioritiesContent,
-            mealPlannerContent: (langChanged || !parsed.mealPlannerContent) ? getDefaultMealPlannerContent(docLang) : parsed.mealPlannerContent,
-            budgetTrackerContent: (langChanged || !parsed.budgetTrackerContent) ? getDefaultBudgetTrackerContent(docLang) : parsed.budgetTrackerContent,
-            quoteContent: (langChanged || !parsed.quoteContent) ? getDefaultQuoteContent(docLang) : parsed.quoteContent,
-            invoiceContent: (langChanged || !parsed.invoiceContent) ? getDefaultInvoiceContent(docLang) : parsed.invoiceContent,
-            priceListContent: (langChanged || !parsed.priceListContent) ? getDefaultPriceListContent(docLang) : parsed.priceListContent,
-            clientTrackerContent: (langChanged || !parsed.clientTrackerContent) ? getDefaultClientTrackerContent(docLang) : parsed.clientTrackerContent,
-            checklistContent: (langChanged || !parsed.checklistContent) ? getDefaultChecklistContent(docLang) : parsed.checklistContent,
+            ...(langChanged
+              ? relocalizeContents(parsed, parsed.documentLang, docLang)
+              : relocalizeContents(parsed, docLang, docLang)),
             isPro: false,
             removeWatermark: false,
           }));
@@ -345,18 +394,7 @@ export function useBrandKit(initialLang?: InterfaceLang, initialTemplate?: Templ
       if (updates.documentLang && updates.documentLang !== prev.documentLang) {
         const dLang = updates.documentLang;
         next.documentLang = dLang;
-        next.habitTrackerContent = getDefaultHabitTrackerContent(dLang, prev.habitTrackerContent?.packId || 'wellbeing');
-        next.goalPlannerContent = getDefaultGoalPlannerContent(dLang);
-        next.weeklyPlannerContent = getDefaultWeeklyPlannerContent(dLang);
-        next.monthlyCalendarContent = getDefaultMonthlyCalendarContent(dLang);
-        next.dailyPrioritiesContent = getDefaultDailyPrioritiesContent(dLang);
-        next.mealPlannerContent = getDefaultMealPlannerContent(dLang);
-        next.budgetTrackerContent = getDefaultBudgetTrackerContent(dLang);
-        next.quoteContent = getDefaultQuoteContent(dLang);
-        next.invoiceContent = getDefaultInvoiceContent(dLang);
-        next.priceListContent = getDefaultPriceListContent(dLang);
-        next.clientTrackerContent = getDefaultClientTrackerContent(dLang);
-        next.checklistContent = getDefaultChecklistContent(dLang);
+        Object.assign(next, relocalizeContents(prev, prev.documentLang, dLang));
       }
 
       return next;
@@ -370,18 +408,7 @@ export function useBrandKit(initialLang?: InterfaceLang, initialTemplate?: Templ
       return {
         ...prev,
         documentLang: dLang,
-        habitTrackerContent: getDefaultHabitTrackerContent(dLang, prev.habitTrackerContent?.packId || 'wellbeing'),
-        goalPlannerContent: getDefaultGoalPlannerContent(dLang),
-        weeklyPlannerContent: getDefaultWeeklyPlannerContent(dLang),
-        monthlyCalendarContent: getDefaultMonthlyCalendarContent(dLang),
-        dailyPrioritiesContent: getDefaultDailyPrioritiesContent(dLang),
-        mealPlannerContent: getDefaultMealPlannerContent(dLang),
-        budgetTrackerContent: getDefaultBudgetTrackerContent(dLang),
-        quoteContent: getDefaultQuoteContent(dLang),
-        invoiceContent: getDefaultInvoiceContent(dLang),
-        priceListContent: getDefaultPriceListContent(dLang),
-        clientTrackerContent: getDefaultClientTrackerContent(dLang),
-        checklistContent: getDefaultChecklistContent(dLang),
+        ...relocalizeContents(prev, prev.documentLang, dLang),
       };
     });
   }, []);
@@ -389,6 +416,7 @@ export function useBrandKit(initialLang?: InterfaceLang, initialTemplate?: Templ
   const setUploadedLogo = useCallback(
     async (dataUrl: string) => {
       setIsExtractingColor(true);
+      trackEvent('logo_upload');
       try {
         updateBrandKit({ logoUrl: dataUrl });
 

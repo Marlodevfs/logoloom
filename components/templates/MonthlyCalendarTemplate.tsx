@@ -46,13 +46,13 @@ export const MonthlyCalendarTemplate: React.FC<MonthlyCalendarTemplateProps> = (
       onUpdateTitle={(title) => updateContent({ title })}
       metadataRight={
         <div className="flex items-center space-x-3 text-[11px] text-slate-700 shrink-0">
-          <input
+          <input aria-label="Month name"
             type="text"
             value={content.monthName}
             onChange={(e) => updateContent({ monthName: e.target.value })}
             className="w-28 font-bold border-b border-slate-400 pb-0.5 text-right outline-none bg-transparent"
           />
-          <input
+          <input aria-label="Year"
             type="text"
             value={content.year}
             onChange={(e) => updateContent({ year: e.target.value })}
@@ -118,7 +118,7 @@ export const MonthlyCalendarTemplate: React.FC<MonthlyCalendarTemplateProps> = (
               {content.goals.map((g, idx) => (
                 <div key={idx} className="flex items-start space-x-1.5">
                   <div className="w-3.5 h-3.5 border border-slate-300 rounded-xs mt-0.5 bg-white shrink-0" />
-                  <input
+                  <input aria-label="Goal"
                     type="text"
                     value={g}
                     onChange={(e) => handleUpdateGoal(idx, e.target.value)}
@@ -149,7 +149,7 @@ export const MonthlyCalendarTemplate: React.FC<MonthlyCalendarTemplateProps> = (
             <span className="text-[9.5px] font-bold text-slate-700 uppercase tracking-wider block mb-1">
               {labels.notesTitle}
             </span>
-            <textarea
+            <textarea aria-label="Notes"
               rows={3}
               value={content.notes}
               onChange={(e) => updateContent({ notes: e.target.value })}

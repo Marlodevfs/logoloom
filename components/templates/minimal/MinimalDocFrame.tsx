@@ -149,7 +149,7 @@ export const MinimalDocFrame: React.FC<MinimalDocFrameProps> = ({
           <div className="mt-3.5 flex items-end justify-between">
             <div className="flex-1 pr-4">
               {isEditingTitle && onUpdateTitle ? (
-                <input
+                <input aria-label="Document title"
                   type="text"
                   autoFocus
                   maxLength={55}

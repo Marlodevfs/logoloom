@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Sparkles, Check, ShieldCheck } from 'lucide-react';
 import { CURATED_PALETTES, getContrastRatio } from '@/lib/color-engine';
 import { UI_TRANSLATIONS } from '@/lib/i18n/interface';
@@ -29,6 +29,8 @@ export const ColorPicker: React.FC<ColorPickerProps> = ({
   interfaceLang,
 }) => {
   const t = UI_TRANSLATIONS[interfaceLang] || UI_TRANSLATIONS.en;
+  const [hexDraft, setHexDraft] = useState(currentColor);
+  useEffect(() => setHexDraft(currentColor), [currentColor]);
   const cI18n = COLOR_I18N[interfaceLang] || COLOR_I18N.en;
   const contrastRatio = getContrastRatio(currentColor, '#FFFFFF');
   const isAccessible = contrastRatio >= 4.5;
@@ -108,22 +110,33 @@ export const ColorPicker: React.FC<ColorPickerProps> = ({
 
       {/* Custom HEX input */}
       <div className="flex items-center space-x-2 pt-1">
-        <label className="text-[11px] font-medium text-slate-500 shrink-0">
+        <label htmlFor="field-custom-hex" className="text-[11px] font-medium text-slate-500 shrink-0">
           {t.customHex}:
         </label>
         <div className="flex items-center space-x-1.5 flex-1 bg-slate-50 dark:bg-slate-800/80 rounded-lg px-2.5 py-1.5 sm:py-1 border border-slate-200 dark:border-slate-700">
           <input
             type="color"
-            value={currentColor.startsWith('#') ? currentColor : '#4F46E5'}
+            aria-label={t.customHex}
+            value={/^#[0-9a-f]{6}$/i.test(currentColor) ? currentColor : '#4F46E5'}
             onChange={(e) => onColorSelect(e.target.value)}
             className="w-6 h-6 sm:w-5 sm:h-5 rounded cursor-pointer border-0 p-0 bg-transparent shrink-0"
           />
           <input
+            id="field-custom-hex"
             type="text"
-            value={currentColor}
-            onChange={(e) => onColorSelect(e.target.value)}
+            value={hexDraft}
+            onChange={(e) => {
+              // Only apply complete, valid hex codes (typing "#4F" must not break the brand color)
+              let v = e.target.value.trim();
+              if (v && !v.startsWith('#')) v = `#${v}`;
+              setHexDraft(v);
+              if (/^#[0-9a-f]{6}$/i.test(v)) onColorSelect(v);
+            }}
+            onBlur={() => setHexDraft(currentColor)}
             placeholder="#4F46E5"
             maxLength={7}
+            spellCheck={false}
+            autoComplete="off"
             className="w-full text-base sm:text-xs font-mono font-bold bg-transparent text-slate-800 dark:text-slate-100 focus:outline-none uppercase"
           />
         </div>

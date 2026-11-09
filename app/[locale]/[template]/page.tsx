@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
-import { ChevronRight, FileText, CheckCircle2, HelpCircle, ArrowRight } from 'lucide-react';
+import { ChevronRight, CheckCircle2, HelpCircle, ArrowRight } from 'lucide-react';
 import { siteConfig } from '@/config/site';
 import { InterfaceLang } from '@/types';
 import { LOCALES_METADATA, getHreflangAlternates } from '@/lib/i18n/meta';
@@ -11,6 +11,8 @@ import {
   TEMPLATES_SEO_DATA,
 } from '@/lib/seo/templates-metadata';
 import { Studio } from '@/components/Studio';
+import { SiteFooter } from '@/components/SiteFooter';
+import { getSiteChrome } from '@/lib/i18n/site-chrome';
 
 interface Props {
   params: Promise<{ locale: string; template: string }>;
@@ -128,58 +130,41 @@ export default async function TemplateLandingPage({ params }: Props) {
     })),
   };
 
-  const otherTemplates = CANONICAL_TEMPLATE_SLUGS.filter((t) => t.slug !== slug);
+  const otherTemplates = CANONICAL_TEMPLATE_SLUGS.filter((t) => t.slug !== slug).sort((a, b) => {
+    const ca = TEMPLATES_SEO_DATA.en[a.slug]?.category === 'business' ? 1 : 0;
+    const cb = TEMPLATES_SEO_DATA.en[b.slug]?.category === 'business' ? 1 : 0;
+    return ca - cb;
+  });
+  const chrome = getSiteChrome(lang);
+  const templateName = chrome.templateNames[data.templateId] || slug.replace(/-/g, ' ');
 
-  return (
-    <div className="min-h-screen bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 flex flex-col font-sans">
-      {/* Schema.org FAQPage JSON-LD */}
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
-      />
-
-      {/* Crawlable Header Banner & Breadcrumbs */}
-      <header className="border-b border-slate-200/80 dark:border-slate-800 bg-white/70 dark:bg-slate-900/70 backdrop-blur-sm">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3.5 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 text-xs">
-          {/* Breadcrumb nav */}
-          <nav aria-label="Breadcrumb" className="flex items-center space-x-1.5 text-slate-500 dark:text-slate-400">
+  const intro = (
+    <>
+      {/* Breadcrumb + hero intro, below the app header. Compact on mobile. */}
+      <section className="bg-gradient-to-b from-white to-slate-50 dark:from-slate-900 dark:to-slate-950 border-b border-slate-200/80 dark:border-slate-800 py-4 sm:py-8 px-4 sm:px-6">
+        <div className="max-w-7xl mx-auto space-y-2 sm:space-y-3">
+          <nav aria-label="Breadcrumb" className="flex flex-wrap items-center gap-x-1.5 gap-y-1 text-xs text-slate-500 dark:text-slate-400">
             <Link href={`/${lang}`} className="hover:text-indigo-600 dark:hover:text-indigo-400 font-medium">
               LogoLoom
             </Link>
-            <ChevronRight className="w-3.5 h-3.5 text-slate-400" />
-            <span className="text-slate-700 dark:text-slate-200 font-bold capitalize">
-              {slug.replace(/-/g, ' ')}
+            <ChevronRight className="w-3.5 h-3.5 text-slate-400" aria-hidden="true" />
+            <span className="text-slate-700 dark:text-slate-200 font-bold" aria-current="page">
+              {templateName}
+            </span>
+            <span className="hidden sm:inline-flex ml-2 px-2 py-0.5 rounded-full bg-emerald-50 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-400 font-semibold border border-emerald-200/60 dark:border-emerald-800/40 text-[11px]">
+              {chrome.freeVectorPdf} • {chrome.paperSizes}
             </span>
           </nav>
 
-          {/* Quick badge */}
-          <div className="flex items-center space-x-2 text-[11px] text-slate-500">
-            <span className="px-2 py-0.5 rounded-full bg-emerald-50 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-400 font-semibold border border-emerald-200/60 dark:border-emerald-800/40">
-              Free Vector PDF • 300 DPI
-            </span>
-            <span>A4 & US Letter</span>
-          </div>
-        </div>
-      </header>
-
-      {/* Semantic Top Content for Search Crawlers and First-time Visitors */}
-      <section className="bg-gradient-to-b from-white to-slate-50 dark:from-slate-900 dark:to-slate-950 border-b border-slate-200/80 dark:border-slate-800 py-6 sm:py-8 px-4 sm:px-6">
-        <div className="max-w-5xl mx-auto space-y-3">
-          <div className="inline-flex items-center space-x-1.5 px-2.5 py-1 rounded-full bg-indigo-50 dark:bg-indigo-950/60 border border-indigo-200/70 dark:border-indigo-800/60 text-[11px] text-indigo-700 dark:text-indigo-300 font-bold uppercase tracking-wider">
-            <FileText className="w-3.5 h-3.5" />
-            <span>Printable PDF Template</span>
-          </div>
-
-          <h1 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-slate-900 dark:text-white tracking-tight">
+          <h1 className="text-xl sm:text-3xl lg:text-4xl font-extrabold text-slate-900 dark:text-white tracking-tight max-w-4xl">
             {data.h1}
           </h1>
 
-          <p className="text-sm sm:text-base text-slate-600 dark:text-slate-300 leading-relaxed max-w-3xl">
+          <p className="hidden sm:block text-sm sm:text-base text-slate-600 dark:text-slate-300 leading-relaxed max-w-3xl">
             {data.intro}
           </p>
 
-          {/* Key printable features strip */}
-          <div className="pt-2 flex flex-wrap gap-2 sm:gap-3">
+          <div className="hidden sm:flex pt-2 flex-wrap gap-2 sm:gap-3">
             {data.features.map((feature, idx) => (
               <span
                 key={idx}
@@ -193,19 +178,26 @@ export default async function TemplateLandingPage({ params }: Props) {
         </div>
       </section>
 
-      {/* Noscript Banner */}
       <noscript>
         <div className="max-w-5xl mx-auto px-4 py-3 my-4 rounded-xl bg-amber-50 dark:bg-amber-950/40 border border-amber-200 dark:border-amber-800/50 text-amber-900 dark:text-amber-200 text-xs">
-          <p className="font-bold">JavaScript is disabled in your browser.</p>
-          <p className="mt-1">
-            LogoLoom provides free printable PDF planners and business templates. Enable JavaScript to customize colors, add an optional logo, and download print-ready vector PDFs directly in your browser.
-          </p>
+          <p className="font-bold">{chrome.noscriptTitle}</p>
+          <p className="mt-1">{chrome.noscriptBody}</p>
         </div>
       </noscript>
+    </>
+  );
+
+  return (
+    <div className="min-h-screen bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 flex flex-col font-sans">
+      {/* Schema.org FAQPage JSON-LD */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+      />
 
       {/* Main Interactive Editor Studio (Pre-initialized with this specific template!) */}
       <main className="flex-1 w-full">
-        <Studio initialLang={lang} initialTemplate={data.templateId} />
+        <Studio initialLang={lang} initialTemplate={data.templateId} intro={intro} />
 
         {/* Detailed Crawlable Content: How it works & FAQ */}
         <div className="max-w-5xl mx-auto px-4 sm:px-6 py-12 sm:py-16 space-y-16">
@@ -213,10 +205,10 @@ export default async function TemplateLandingPage({ params }: Props) {
           <section className="space-y-6">
             <div className="space-y-1.5">
               <span className="text-xs font-bold uppercase tracking-widest text-indigo-600 dark:text-indigo-400">
-                Simple 3-Step Guide
+                {chrome.guideEyebrow}
               </span>
               <h2 className="text-xl sm:text-2xl font-extrabold text-slate-900 dark:text-white tracking-tight">
-                How to customize and print your {slug.replace(/-/g, ' ')}
+                {chrome.howToTitle(templateName)}
               </h2>
             </div>
 
@@ -227,7 +219,7 @@ export default async function TemplateLandingPage({ params }: Props) {
                   className="p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 space-y-2 shadow-2xs"
                 >
                   <span className="text-xs font-bold text-indigo-600 dark:text-indigo-400">
-                    Step {sIdx + 1}
+                    {chrome.step(sIdx + 1)}
                   </span>
                   <h3 className="text-sm font-bold text-slate-900 dark:text-white">
                     {step.title}
@@ -245,10 +237,10 @@ export default async function TemplateLandingPage({ params }: Props) {
             <div className="space-y-1.5">
               <span className="text-xs font-bold uppercase tracking-widest text-indigo-600 dark:text-indigo-400 flex items-center space-x-1">
                 <HelpCircle className="w-3.5 h-3.5" />
-                <span>Frequently Asked Questions</span>
+                <span>{chrome.faqEyebrow}</span>
               </span>
               <h2 className="text-xl sm:text-2xl font-extrabold text-slate-900 dark:text-white tracking-tight">
-                Questions about printing and personalizing this template
+                {chrome.templateFaqTitle}
               </h2>
             </div>
 
@@ -274,17 +266,17 @@ export default async function TemplateLandingPage({ params }: Props) {
             <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
               <div>
                 <h2 className="text-lg sm:text-xl font-extrabold text-slate-900 dark:text-white tracking-tight">
-                  Explore other free printable templates
+                  {chrome.exploreTitle}
                 </h2>
                 <p className="text-xs text-slate-500 dark:text-slate-400">
-                  All templates are 100% free, minimalist, and print-ready in A4 and US Letter.
+                  {chrome.exploreSubtitle}
                 </p>
               </div>
               <Link
                 href={`/${lang}`}
                 className="inline-flex items-center space-x-1 text-xs font-bold text-indigo-600 dark:text-indigo-400 hover:underline"
               >
-                <span>View all templates</span>
+                <span>{chrome.viewAll}</span>
                 <ArrowRight className="w-3 h-3" />
               </Link>
             </div>
@@ -300,14 +292,14 @@ export default async function TemplateLandingPage({ params }: Props) {
                   >
                     <div>
                       <span className="text-[10px] font-bold uppercase tracking-wider text-indigo-600 dark:text-indigo-400">
-                        {itemData?.category === 'business' ? 'Business' : 'Planner'}
+                        {itemData?.category === 'business' ? chrome.categoryBusiness : chrome.categoryPersonal}
                       </span>
-                      <h3 className="text-xs font-bold text-slate-900 dark:text-white group-hover:text-indigo-600 dark:group-hover:text-indigo-400 mt-1 capitalize">
-                        {item.slug.replace(/-/g, ' ')}
+                      <h3 className="text-xs font-bold text-slate-900 dark:text-white group-hover:text-indigo-600 dark:group-hover:text-indigo-400 mt-1">
+                        {chrome.templateNames[item.templateId]}
                       </h3>
                     </div>
                     <span className="text-[10px] text-slate-400 dark:text-slate-500 flex items-center space-x-0.5 mt-3">
-                      <span>Customize</span>
+                      <span>{chrome.viewCustomize}</span>
                       <ChevronRight className="w-3 h-3 group-hover:translate-x-0.5 transition-transform" />
                     </span>
                   </Link>
@@ -317,6 +309,8 @@ export default async function TemplateLandingPage({ params }: Props) {
           </section>
         </div>
       </main>
+
+      <SiteFooter lang={lang} withStickyBar />
     </div>
   );
 }

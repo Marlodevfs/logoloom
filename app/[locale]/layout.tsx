@@ -50,7 +50,7 @@ const jsonLd = {
         priceCurrency: 'USD',
       },
       featureList: [
-        'Vector 300 DPI PDF generation with embedded fonts',
+        'Vector PDF generation with embedded fonts',
         'Dominant brand color auto-extraction with WCAG AA compliance',
         'Pure vector SVG QR code generation',
         'Zero-account & zero-signup privacy-first workflow',

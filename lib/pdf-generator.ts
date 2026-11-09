@@ -31,6 +31,8 @@ export async function exportToPDF({
 
     // 2. Format download filename
     const cleanCompanyName = (finalKit.companyName || 'LogoLoom')
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '') // "Société" -> "Societe" instead of "Soci_t_"
       .replace(/[^a-zA-Z0-9_-]/g, '_')
       .slice(0, 30);
     const finalFileName = fileName || `${cleanCompanyName}_${templateId}.pdf`;

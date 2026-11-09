@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState, useRef } from 'react';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { Globe, Moon, Sun, Sparkles, ShieldCheck, ChevronDown } from 'lucide-react';
 import { InterfaceLang } from '@/types';
 import { UI_TRANSLATIONS } from '@/lib/i18n/interface';
@@ -64,6 +65,19 @@ export const Header: React.FC<HeaderProps> = ({
   ];
 
   const currentLang = languages.find((l) => l.code === interfaceLang) || languages[0];
+  const pathname = usePathname() || '/';
+
+  // Keep the visitor on the same page when switching language
+  // (e.g. /fr/invoice -> /de/invoice instead of always going back home).
+  const localizedHref = (code: InterfaceLang) => {
+    const segments = pathname.split('/').filter(Boolean);
+    if (segments.length > 0 && languages.some((l) => l.code === segments[0])) {
+      segments[0] = code;
+    } else {
+      segments.unshift(code);
+    }
+    return '/' + segments.join('/');
+  };
 
   return (
     <header className="w-full border-b border-slate-200/80 dark:border-slate-800 bg-white/90 dark:bg-slate-900/90 backdrop-blur-md sticky top-0 z-50 transition-colors overflow-visible">
@@ -91,9 +105,6 @@ export const Header: React.FC<HeaderProps> = ({
               <span className="font-extrabold text-base tracking-tight text-slate-900 dark:text-white">
                 LogoLoom
               </span>
-              <span className="text-[10px] font-mono px-1.5 py-0.2 rounded bg-indigo-50 dark:bg-indigo-950/60 text-indigo-600 dark:text-indigo-400 font-semibold border border-indigo-200/60 dark:border-indigo-800/40">
-                app
-              </span>
             </div>
             <p className="text-[11px] text-slate-500 dark:text-slate-400 hidden sm:block">
               {t.appTagline}
@@ -105,8 +116,6 @@ export const Header: React.FC<HeaderProps> = ({
         <div className="hidden md:flex items-center space-x-2 bg-slate-50 dark:bg-slate-800/80 px-3 py-1 rounded-full border border-slate-200/80 dark:border-slate-700/80 text-xs text-slate-600 dark:text-slate-300">
           <ShieldCheck className="w-3.5 h-3.5 text-emerald-500" />
           <span className="font-medium text-[11px]">{t.privacyBadge}</span>
-          <span className="text-slate-300 dark:text-slate-600">•</span>
-          <span className="text-[11px] text-slate-400">Zero Signup</span>
         </div>
 
         {/* Actions Right: Language Switcher, Dark Mode, Pro Button */}
@@ -121,7 +130,8 @@ export const Header: React.FC<HeaderProps> = ({
               aria-expanded={isLangOpen}
             >
               <Globe className="w-3.5 h-3.5 text-slate-500 dark:text-slate-400" />
-              <span>{currentLang.flag}</span>
+              <span aria-hidden="true">{currentLang.flag}</span>
+              <span className="sm:hidden uppercase">{currentLang.code}</span>
               <span className="hidden sm:inline">{currentLang.label}</span>
               <ChevronDown className="w-3 h-3 text-slate-400" />
             </button>
@@ -131,7 +141,8 @@ export const Header: React.FC<HeaderProps> = ({
                 {languages.map((l) => (
                   <Link
                     key={l.code}
-                    href={`/${l.code}`}
+                    href={localizedHref(l.code)}
+                    hrefLang={l.code}
                     onClick={(e) => {
                       setIsLangOpen(false);
                       onLanguageChange(l.code);

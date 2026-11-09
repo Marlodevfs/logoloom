@@ -71,7 +71,7 @@ export const WeeklyPlannerTemplate: React.FC<WeeklyPlannerTemplateProps> = ({
                 >
                   {idx + 1}
                 </span>
-                <input
+                <input aria-label="Priority"
                   type="text"
                   value={p}
                   onChange={(e) => handleUpdatePriority(idx, e.target.value)}
@@ -118,7 +118,7 @@ export const WeeklyPlannerTemplate: React.FC<WeeklyPlannerTemplateProps> = ({
         <section className="border border-slate-200 rounded-lg p-2 bg-slate-50/50 flex items-center justify-between gap-4">
           <div className="flex-1 flex items-center space-x-2 text-[9.5px]">
             <span className="font-bold text-slate-700 shrink-0">{labels.reviewNotesLabel}</span>
-            <input
+            <input aria-label="Notes"
               type="text"
               value={content.notes}
               onChange={(e) => updateContent({ notes: e.target.value })}

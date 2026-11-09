@@ -251,7 +251,7 @@ export const YourDetailsStep: React.FC<YourDetailsStepProps> = ({
     <div className="space-y-3">
       {/* Step Header */}
       <div className="flex items-center justify-between">
-        <label className="text-xs font-bold text-slate-800 dark:text-slate-100 uppercase tracking-wider flex items-center space-x-1.5">
+        <label className="text-xs font-bold text-slate-800 dark:text-slate-100 flex items-center space-x-1.5">
           <span>{l.stepTitle}</span>
         </label>
         {onReset && (
@@ -463,13 +463,14 @@ export const YourDetailsStep: React.FC<YourDetailsStepProps> = ({
         <div className="pt-2 border-t border-slate-100 dark:border-slate-800/80 space-y-2">
           {/* Document Content Language */}
           <div>
-            <label className="text-[10.5px] font-semibold text-slate-600 dark:text-slate-400 flex items-center justify-between mb-1">
+            <label htmlFor="field-document-lang" className="text-[10.5px] font-semibold text-slate-600 dark:text-slate-400 flex items-center justify-between mb-1">
               <span className="flex items-center space-x-1">
                 <Globe className="w-3 h-3 text-slate-400" />
                 <span>{l.documentLanguage}</span>
               </span>
             </label>
             <select
+              id="field-document-lang"
               value={brandKit.documentLang}
               onChange={(e) => onUpdate({ documentLang: e.target.value as DocumentLang })}
               className="w-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg px-2.5 py-1.5 text-xs text-slate-800 dark:text-slate-200 focus:outline-none focus:ring-1 focus:ring-indigo-500"

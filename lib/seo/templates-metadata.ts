@@ -58,7 +58,7 @@ export const TEMPLATES_SEO_DATA: Record<InterfaceLang, Record<string, TemplateSE
       steps: [
         { title: '1. Personalize habits', desc: 'Type your daily routines and optional milestones directly in the interactive live preview.' },
         { title: '2. Select style & format', desc: 'Choose your brand accent color, paper size (A4 or US Letter), and add an optional logo or contact QR.' },
-        { title: '3. Instant vector download', desc: 'Download a 300 DPI vector PDF ready for low-ink, sharp printing.' },
+        { title: '3. Instant vector download', desc: 'Download a sharp vector PDF ready for low-ink, sharp printing.' },
       ],
       faqs: [
         { q: 'Is this habit tracker printable on both A4 and US Letter?', a: 'Yes! LogoLoom renders pure vector geometry calibrated for both international A4 (210×297 mm) and US Letter (8.5×11 inches).' },
@@ -78,13 +78,13 @@ export const TEMPLATES_SEO_DATA: Record<InterfaceLang, Record<string, TemplateSE
       steps: [
         { title: '1. Set quarterly priorities', desc: 'Define your core targets and articulate your "Why it matters" motivation.' },
         { title: '2. Break into monthly blocks', desc: 'Map out key deliverables and monthly check-ins with clear checkboxes.' },
-        { title: '3. Print & track progress', desc: 'Export instant 300 DPI vector PDFs for your desk, binder, or clipboard.' },
+        { title: '3. Print & track progress', desc: 'Export instant vector PDFs for your desk, binder, or clipboard.' },
       ],
       faqs: [
         { q: 'How does the 90-day planning methodology work?', a: 'Quarterly planning breaks big dreams into 3 tangible 30-day execution blocks, preventing overwhelm while maintaining urgency.' },
         { q: 'Can I add my name or project title?', a: 'Yes, your project title, horizon dates, and custom notes can be edited right in the preview.' },
       ],
-      features: ['3 Monthly milestone blocks', 'Weekly momentum tracker', 'Ink-saving hairline layout', 'Vector crispness at 300 DPI'],
+      features: ['3 Monthly milestone blocks', 'Weekly momentum tracker', 'Ink-saving hairline layout', 'Sharp vector print quality'],
     },
     'weekly-planner': {
       slug: 'weekly-planner',
@@ -192,7 +192,7 @@ export const TEMPLATES_SEO_DATA: Record<InterfaceLang, Record<string, TemplateSE
       steps: [
         { title: '1. Add your details', desc: 'Enter your business name, client information, quote number and validity date.' },
         { title: '2. Itemize services', desc: 'Add descriptions, quantities, unit prices, and tax rates.' },
-        { title: '3. Download & send', desc: 'Export a professional 300 DPI vector PDF ready for client signature.' },
+        { title: '3. Download & send', desc: 'Export a professional vector PDF ready for client signature.' },
       ],
       faqs: [
         { q: 'Can I add my logo and brand color?', a: 'Yes, drop your logo (SVG, PNG, JPG) and pick your brand accent color for a bespoke look.' },
@@ -289,7 +289,7 @@ export const TEMPLATES_SEO_DATA: Record<InterfaceLang, Record<string, TemplateSE
       steps: [
         { title: '1. Personnalisez vos habitudes', desc: 'Modifiez directement les intitulés et sous-titres dans la prévisualisation.' },
         { title: '2. Ajustez vos préférences', desc: 'Sélectionnez votre couleur d\'accent, votre format papier (A4 ou Letter) et ajoutez votre logo.' },
-        { title: '3. Téléchargez votre PDF', desc: 'Générez un PDF vectoriel 300 DPI net et économe en encre, prêt pour l\'impression.' },
+        { title: '3. Téléchargez votre PDF', desc: 'Générez un PDF vectoriel net et économe en encre, prêt pour l\'impression.' },
       ],
       faqs: [
         { q: 'Le suivi s\'adapte-t-il au format A4 ?', a: 'Oui, le gabarit est spécialement calibré pour le format standard européen A4 (210×297 mm) ainsi que le format US Letter.' },
@@ -313,7 +313,7 @@ export const TEMPLATES_SEO_DATA: Record<InterfaceLang, Record<string, TemplateSE
       faqs: [
         { q: 'Pourquoi planifier sur 90 jours ?', a: 'Le cycle de 90 jours offre l\'horizon idéal : assez long pour accomplir des projets majeurs, assez court pour maintenir l\'urgence.' },
       ],
-      features: ['3 Blocs mensuels de jalons', 'Bande de suivi hebdomadaire', 'Lignes d\'écriture aérées', 'Export vectoriel 300 DPI'],
+      features: ['3 Blocs mensuels de jalons', 'Bande de suivi hebdomadaire', 'Lignes d\'écriture aérées', 'Export vectoriel net'],
     },
     'weekly-planner': {
       slug: 'weekly-planner',
@@ -439,7 +439,7 @@ export const TEMPLATES_SEO_DATA: Record<InterfaceLang, Record<string, TemplateSE
       faqs: [
         { q: 'Le modèle est-il adapté aux auto-entrepreneurs ?', a: 'Oui, vous pouvez facilement indiquer la mention légale de TVA correspondante.' },
       ],
-      features: ['Numéro de facture et échéance', 'Tableau d\'honoraires clair', 'Coordonnées bancaires IBAN/BIC', 'Export vectoriel net à 300 DPI'],
+      features: ['Numéro de facture et échéance', 'Tableau d\'honoraires clair', 'Coordonnées bancaires IBAN/BIC', 'Export vectoriel net'],
     },
     'price-list': {
       slug: 'price-list',
@@ -508,7 +508,7 @@ export const TEMPLATES_SEO_DATA: Record<InterfaceLang, Record<string, TemplateSE
       steps: [
         { title: '1. Gewohnheiten eintragen', desc: 'Tippen Sie Ihre Routinen direkt in der interaktiven Vorschau ein.' },
         { title: '2. Format & Farbe wählen', desc: 'Wählen Sie DIN A4 oder US Letter und Ihre bevorzugte Akzentfarbe.' },
-        { title: '3. Als Vektor-PDF herunterladen', desc: 'Gestochen scharfer 300-DPI-Druck ohne Registrierung.' },
+        { title: '3. Als Vektor-PDF herunterladen', desc: 'Gestochen scharfer Vektordruck ohne Registrierung.' },
       ],
       faqs: [
         { q: 'Ist das Format für DIN A4 optimiert?', a: 'Ja, das Dokument ist millimetergenau für DIN A4 (210×297 mm) und US Letter berechnet.' },
@@ -549,7 +549,7 @@ export const TEMPLATES_SEO_DATA: Record<InterfaceLang, Record<string, TemplateSE
       faqs: [
         { q: 'Kann ich meine IBAN einfügen?', a: 'Ja, ein dedizierter Zahlungsblock enthält Felder für IBAN, BIC und Zahlungsziel.' },
       ],
-      features: ['Rechnungsnummer & Zahlungsziel', 'Übersichtliche Postentabelle', 'IBAN / BIC Zahlungsblock', '300 DPI Vektorschärfe'],
+      features: ['Rechnungsnummer & Zahlungsziel', 'Übersichtliche Postentabelle', 'IBAN / BIC Zahlungsblock', 'Gestochen scharfer Vektordruck'],
     },
     'monthly-calendar': {
       slug: 'monthly-calendar',
@@ -708,7 +708,7 @@ export const TEMPLATES_SEO_DATA: Record<InterfaceLang, Record<string, TemplateSE
       steps: [
         { title: '1. Personaliza tus hábitos', desc: 'Edita los títulos y subtítulos de hábitos en la vista previa en vivo.' },
         { title: '2. Ajusta diseño y formato', desc: 'Selecciona tu color de acento, tamaño de papel (A4 o Carta) y añade un logo opcional.' },
-        { title: '3. Descarga instantánea', desc: 'Obtén un PDF vectorial a 300 DPI listo para imprimir con bajo consumo de tinta.' },
+        { title: '3. Descarga instantánea', desc: 'Obtén un PDF vectorial nítido a cualquier tamaño listo para imprimir con bajo consumo de tinta.' },
       ],
       faqs: [{ q: '¿Es compatible con papel A4 y Carta?', a: 'Sí, adaptado perfectamente tanto para A4 (210×297 mm) como para Carta.' }],
       features: ['Cuadrícula vertical de 30 días', 'Formatos A4 y Carta', 'Bajo consumo de tinta', 'Privacidad 100% en tu navegador'],
@@ -743,7 +743,7 @@ export const TEMPLATES_SEO_DATA: Record<InterfaceLang, Record<string, TemplateSE
         { title: '3. Datos de cobro', desc: 'Incluye tu IBAN y banco para facilitar el pago de tus clientes.' },
       ],
       faqs: [{ q: '¿Puedo añadir mis datos bancarios?', a: 'Sí, un bloque dedicado te permite detallar IBAN, BIC y condiciones.' }],
-      features: ['Número correlativo y vencimiento', 'Tabla desglosada de honorarios', 'Bloque bancario para IBAN/BIC', 'Exportación vectorial 300 DPI'],
+      features: ['Número correlativo y vencimiento', 'Tabla desglosada de honorarios', 'Bloque bancario para IBAN/BIC', 'Exportación vectorial nítida'],
     },
     'goal-planner': {
       slug: 'goal-planner',
@@ -902,7 +902,7 @@ export const TEMPLATES_SEO_DATA: Record<InterfaceLang, Record<string, TemplateSE
       steps: [
         { title: '1. Personalize hábitos', desc: 'Edite os títulos das suas rotinas diretamente na prévia ao vivo.' },
         { title: '2. Escolha cores e formato', desc: 'Defina a cor de destaque, o formato (A4 ou Carta) e adicione um logo.' },
-        { title: '3. Descarregue o PDF', desc: 'Gere um PDF vetorial nítido a 300 DPI sem necessidade de registo.' },
+        { title: '3. Descarregue o PDF', desc: 'Gere um PDF vetorial nítido em qualquer tamanho sem necessidade de registo.' },
       ],
       faqs: [{ q: 'É compatível com papel A4 e Carta?', a: 'Sim, formato ajustado com precisão para A4 e US Letter.' }],
       features: ['Grelha vertical de 30 dias', 'Formatos A4 e Carta', 'Design com pouca tinta', 'Privacidade 100% no navegador'],
@@ -937,7 +937,7 @@ export const TEMPLATES_SEO_DATA: Record<InterfaceLang, Record<string, TemplateSE
         { title: '3. Dados bancários', desc: 'Inclua o seu IBAN e BIC para agilizar o recebimento.' },
       ],
       faqs: [{ q: 'Posso colocar o meu IBAN?', a: 'Sim, existe um bloco específico para IBAN, banco e condições.' }],
-      features: ['Número e data de vencimento', 'Tabela de serviços discriminada', 'Bloco de pagamento com IBAN', 'Vetor nítido a 300 DPI'],
+      features: ['Número e data de vencimento', 'Tabela de serviços discriminada', 'Bloco de pagamento com IBAN', 'Vetor nítido para impressão'],
     },
     'goal-planner': {
       slug: 'goal-planner',
@@ -1096,7 +1096,7 @@ export const TEMPLATES_SEO_DATA: Record<InterfaceLang, Record<string, TemplateSE
       steps: [
         { title: '1. Personalizza abitudini', desc: 'Modifica i titoli e le descrizioni delle routine direttamente nell\'anteprima live.' },
         { title: '2. Scegli formato e colore', desc: 'Seleziona il colore d\'accento, il formato (A4 o Letter) e aggiungi un logo opzionale.' },
-        { title: '3. Scarica il PDF vettoriale', desc: 'Ottieni un PDF a 300 DPI nitido e con basso consumo d\'inchiostro.' },
+        { title: '3. Scarica il PDF vettoriale', desc: 'Ottieni un PDF vettoriale nitido e con basso consumo d\'inchiostro.' },
       ],
       faqs: [{ q: 'È calibrato per fogli A4?', a: 'Sì, precisione millimetrica per fogli A4 (210×297 mm) e US Letter.' }],
       features: ['Griglia 30 giorni verticale', 'Formati A4 e Letter', 'Basso consumo d\'inchiostro', 'Privacy 100% nel browser'],
@@ -1131,7 +1131,7 @@ export const TEMPLATES_SEO_DATA: Record<InterfaceLang, Record<string, TemplateSE
         { title: '3. Inserisci IBAN', desc: 'Aggiungi il tuo conto bancario per facilitare il bonifico.' },
       ],
       faqs: [{ q: 'Posso inserire il mio IBAN?', a: 'Sì, è presente un apposito blocco per IBAN, BIC e termini di pagamento.' }],
-      features: ['Numero fattura e scadenza', 'Tabella prestazioni dettagliata', 'Blocco coordinate IBAN/BIC', 'Vettore nitido a 300 DPI'],
+      features: ['Numero fattura e scadenza', 'Tabella prestazioni dettagliata', 'Blocco coordinate IBAN/BIC', 'Vettoriale nitido per la stampa'],
     },
     'goal-planner': {
       slug: 'goal-planner',
