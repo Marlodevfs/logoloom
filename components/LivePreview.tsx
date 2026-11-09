@@ -6,10 +6,17 @@ import { BrandKit, TemplateId, InterfaceLang } from '@/types';
 import { UI_TRANSLATIONS } from '@/lib/i18n/interface';
 import { HabitTrackerTemplate } from './templates/HabitTrackerTemplate';
 import { MinimalHabitTrackerTemplate } from './templates/MinimalHabitTrackerTemplate';
-import { Roadmap90Template } from './templates/Roadmap90Template';
-import { MinimalRoadmapTemplate } from './templates/MinimalRoadmapTemplate';
-import { WelcomePacketTemplate } from './templates/WelcomePacketTemplate';
-import { MinimalWelcomePacketTemplate } from './templates/MinimalWelcomePacketTemplate';
+import { GoalPlannerTemplate } from './templates/GoalPlannerTemplate';
+import { WeeklyPlannerTemplate } from './templates/WeeklyPlannerTemplate';
+import { MonthlyCalendarTemplate } from './templates/MonthlyCalendarTemplate';
+import { DailyPrioritiesTemplate } from './templates/DailyPrioritiesTemplate';
+import { MealPlannerTemplate } from './templates/MealPlannerTemplate';
+import { BudgetTrackerTemplate } from './templates/BudgetTrackerTemplate';
+import { QuoteTemplate } from './templates/QuoteTemplate';
+import { InvoiceTemplate } from './templates/InvoiceTemplate';
+import { PriceListTemplate } from './templates/PriceListTemplate';
+import { ClientTrackerTemplate } from './templates/ClientTrackerTemplate';
+import { ChecklistTemplate } from './templates/ChecklistTemplate';
 
 interface LivePreviewProps {
   brandKit: BrandKit;
@@ -96,7 +103,7 @@ export const LivePreview: React.FC<LivePreviewProps> = ({
   const calculateFitScale = useCallback(() => {
     if (typeof window === 'undefined') return 0.50;
     if (containerRef.current) {
-      const availableWidth = containerRef.current.clientWidth - 40; // 20px padding on each side
+      const availableWidth = containerRef.current.clientWidth - 40;
       const availableHeight = containerRef.current.clientHeight - 40;
       if (availableWidth > 100 && availableHeight > 100) {
         const scaleX = availableWidth / baseWidth;
@@ -105,7 +112,6 @@ export const LivePreview: React.FC<LivePreviewProps> = ({
         return Math.max(0.20, Number(fit.toFixed(2)));
       }
     }
-    // Fallback based on window innerWidth
     const width = window.innerWidth;
     if (width < 640) return isLandscape ? 0.28 : 0.38;
     if (width < 1024) return isLandscape ? 0.38 : 0.48;
@@ -115,13 +121,11 @@ export const LivePreview: React.FC<LivePreviewProps> = ({
 
   const [zoomScale, setZoomScale] = useState<number>(0.50);
 
-  // Auto-fit on mount, when activeTemplate changes, or on paperSize toggle
   useEffect(() => {
     const handleResize = () => {
       setZoomScale(calculateFitScale());
     };
 
-    // Calculate immediately and also after mount layout pass
     handleResize();
     const timer = setTimeout(handleResize, 60);
 
@@ -140,24 +144,30 @@ export const LivePreview: React.FC<LivePreviewProps> = ({
         ) : (
           <HabitTrackerTemplate brandKit={brandKit} onUpdate={onUpdate} />
         );
-      case 'roadmap-90':
-        return isMinimal ? (
-          <MinimalRoadmapTemplate brandKit={brandKit} onUpdate={onUpdate} />
-        ) : (
-          <Roadmap90Template brandKit={brandKit} />
-        );
-      case 'welcome-packet':
-        return isMinimal ? (
-          <MinimalWelcomePacketTemplate brandKit={brandKit} onUpdate={onUpdate} />
-        ) : (
-          <WelcomePacketTemplate brandKit={brandKit} />
-        );
+      case 'goal-planner-90':
+        return <GoalPlannerTemplate brandKit={brandKit} onUpdate={onUpdate} />;
+      case 'weekly-planner':
+        return <WeeklyPlannerTemplate brandKit={brandKit} onUpdate={onUpdate} />;
+      case 'monthly-calendar':
+        return <MonthlyCalendarTemplate brandKit={brandKit} onUpdate={onUpdate} />;
+      case 'daily-priorities':
+        return <DailyPrioritiesTemplate brandKit={brandKit} onUpdate={onUpdate} />;
+      case 'meal-planner':
+        return <MealPlannerTemplate brandKit={brandKit} onUpdate={onUpdate} />;
+      case 'budget-tracker':
+        return <BudgetTrackerTemplate brandKit={brandKit} onUpdate={onUpdate} />;
+      case 'quote':
+        return <QuoteTemplate brandKit={brandKit} onUpdate={onUpdate} />;
+      case 'invoice':
+        return <InvoiceTemplate brandKit={brandKit} onUpdate={onUpdate} />;
+      case 'price-list':
+        return <PriceListTemplate brandKit={brandKit} onUpdate={onUpdate} />;
+      case 'client-tracker':
+        return <ClientTrackerTemplate brandKit={brandKit} onUpdate={onUpdate} />;
+      case 'checklist':
+        return <ChecklistTemplate brandKit={brandKit} onUpdate={onUpdate} />;
       default:
-        return isMinimal ? (
-          <MinimalHabitTrackerTemplate brandKit={brandKit} onUpdate={onUpdate} />
-        ) : (
-          <HabitTrackerTemplate brandKit={brandKit} onUpdate={onUpdate} />
-        );
+        return <MinimalHabitTrackerTemplate brandKit={brandKit} onUpdate={onUpdate} />;
     }
   };
 
@@ -240,7 +250,6 @@ export const LivePreview: React.FC<LivePreviewProps> = ({
         ref={containerRef}
         className="flex-1 overflow-auto p-3 sm:p-5 flex items-center justify-center min-w-0"
       >
-        {/* Geometry Box: gives exact scaled width & height to the browser layout engine */}
         <div
           className="relative transition-all duration-150 ease-out shadow-2xl rounded-xs shrink-0"
           style={{
@@ -249,7 +258,6 @@ export const LivePreview: React.FC<LivePreviewProps> = ({
             maxWidth: '100%',
           }}
         >
-          {/* Inner Document: Rendered at 1:1 physical resolution, scaled via CSS transform */}
           <div
             style={{
               width: `${baseWidth}px`,

@@ -132,6 +132,7 @@ export const Studio: React.FC<StudioProps> = ({ initialLang }) => {
         brandKit={brandKit}
         onUpdate={updateBrandKit}
         interfaceLang={interfaceLang}
+        activeTemplate={activeTemplate}
         onReset={() => resetSection('details')}
       />
 
@@ -143,7 +144,7 @@ export const Studio: React.FC<StudioProps> = ({ initialLang }) => {
         onUpdate={updateBrandKit}
         activeTemplate={activeTemplate}
         interfaceLang={interfaceLang}
-        onResetSection={() => resetSection(activeTemplate === 'roadmap-90' ? 'roadmap' : activeTemplate === 'welcome-packet' ? 'welcomePacket' : 'habitTracker')}
+        onResetSection={(templateId) => resetSection(templateId)}
       />
     </>
   );

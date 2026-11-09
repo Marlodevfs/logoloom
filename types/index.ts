@@ -1,11 +1,29 @@
 export type PaperSize = 'a4' | 'letter';
 
-export type TemplateId = 'habit-tracker' | 'roadmap-90' | 'welcome-packet';
+export type TemplateFamily = 'personal' | 'business';
+
+export type TemplateId =
+  // Personal organization (7)
+  | 'habit-tracker'
+  | 'goal-planner-90'
+  | 'weekly-planner'
+  | 'monthly-calendar'
+  | 'daily-priorities'
+  | 'meal-planner'
+  | 'budget-tracker'
+  // Business (5)
+  | 'quote'
+  | 'invoice'
+  | 'price-list'
+  | 'client-tracker'
+  | 'checklist';
 
 export type DesignStyle = 'minimal' | 'complete';
 
 export type InterfaceLang = 'en' | 'fr' | 'es' | 'de' | 'pt' | 'it';
 export type DocumentLang = 'en' | 'fr' | 'es' | 'de' | 'pt' | 'it';
+
+export type WeekStartDay = 'monday' | 'sunday';
 
 export type HabitPackId = 'wellbeing' | 'fitness' | 'nutrition' | 'sleep' | 'focus' | 'blank';
 
@@ -29,37 +47,145 @@ export interface HabitTrackerCustomContent {
   showScoreRow?: boolean;
 }
 
-export interface RoadmapPhaseCustom {
+export interface GoalPhaseCustom {
   title: string;
-  daysLabel: string;
-  deliverables: string[];
+  focus: string;
+  milestones: string[];
   kpi: string;
 }
 
-export interface RoadmapCustomContent {
+export interface GoalPlannerCustomContent {
   title: string;
   subtitle: string;
-  mission: string;
-  horizon: string;
-  phases: [RoadmapPhaseCustom, RoadmapPhaseCustom, RoadmapPhaseCustom];
-  showSignatureBlock: boolean;
+  goals: [string, string, string];
+  whyItMatters: string;
+  phases: [GoalPhaseCustom, GoalPhaseCustom, GoalPhaseCustom];
+  notes: string;
 }
 
-export interface WelcomeAgreementCustom {
+export interface WeeklyPlannerCustomContent {
   title: string;
+  subtitle: string;
+  priorities: [string, string, string];
+  notes: string;
+}
+
+export interface MonthlyCalendarCustomContent {
+  title: string;
+  monthName: string;
+  year: string;
+  goals: [string, string, string];
+  notes: string;
+}
+
+export interface DailyPrioritiesCustomContent {
+  title: string;
+  subtitle: string;
+  priorities: [string, string, string];
+  tasks: Array<{ text: string; done: boolean }>;
+  gratitude: string;
+  notes: string;
+}
+
+export interface MealPlannerDayCustom {
+  breakfast: string;
+  lunch: string;
+  dinner: string;
+  snack: string;
+}
+
+export interface MealPlannerCustomContent {
+  title: string;
+  subtitle: string;
+  days: MealPlannerDayCustom[];
+  shoppingItems: string[];
+}
+
+export interface BudgetItemCustom {
   description: string;
+  planned: number;
+  actual: number;
 }
 
-export interface WelcomePacketCustomContent {
+export interface BudgetTrackerCustomContent {
+  title: string;
+  period: string;
+  income: BudgetItemCustom[];
+  fixedExpenses: BudgetItemCustom[];
+  variableExpenses: BudgetItemCustom[];
+  savingsGoal: number;
+  notes: string;
+}
+
+export interface LineItemCustom {
+  description: string;
+  quantity: number;
+  unitPrice: number;
+}
+
+export interface QuoteCustomContent {
+  title: string;
+  quoteNumber: string;
+  date: string;
+  validUntil: string;
+  senderAddress: string;
+  clientAddress: string;
+  items: LineItemCustom[];
+  taxRate: number; // e.g. 20 for 20%
+  notes: string;
+}
+
+export interface InvoiceCustomContent {
+  title: string;
+  invoiceNumber: string;
+  date: string;
+  dueDate: string;
+  senderAddress: string;
+  clientAddress: string;
+  items: LineItemCustom[];
+  taxRate: number;
+  paymentDetails: string;
+  notes: string;
+}
+
+export interface PriceCategoryCustom {
+  category: string;
+  items: Array<{ name: string; description: string; price: number }>;
+}
+
+export interface PriceListCustomContent {
   title: string;
   subtitle: string;
-  welcomeMessage: string;
-  channels: string;
-  turnaroundTime: string;
-  meetingRhythm: string;
-  urgentProcedure: string;
-  workingAgreements: WelcomeAgreementCustom[];
-  checklist72h: string[];
+  categories: PriceCategoryCustom[];
+  notes: string;
+}
+
+export interface ClientSessionItemCustom {
+  date: string;
+  client: string;
+  service: string;
+  duration: string;
+  status: string;
+  notes: string;
+}
+
+export interface ClientTrackerCustomContent {
+  title: string;
+  subtitle: string;
+  sessions: ClientSessionItemCustom[];
+  notes: string;
+}
+
+export interface ChecklistGroupCustom {
+  groupName: string;
+  items: Array<{ text: string; done: boolean }>;
+}
+
+export interface ChecklistCustomContent {
+  title: string;
+  subtitle: string;
+  groups: ChecklistGroupCustom[];
+  notes: string;
 }
 
 export interface BrandKit {
@@ -79,59 +205,27 @@ export interface BrandKit {
   isPro: boolean;
   removeWatermark: boolean;
   selectedTemplate?: TemplateId;
+  weekStart?: WeekStartDay;
+  currency?: string;
+
+  // Template contents
   habitTrackerContent?: HabitTrackerCustomContent;
-  roadmapContent?: RoadmapCustomContent;
-  welcomePacketContent?: WelcomePacketCustomContent;
-}
-
-export interface HabitCategory {
-  id: string;
-  name: string;
-  targetCount?: number;
-}
-
-export interface HabitTrackerData {
-  title: string;
-  subtitle: string;
-  monthName: string;
-  categories: HabitCategory[];
-  weeklyReflections: string[];
-}
-
-export interface RoadmapPhase {
-  phaseNumber: number;
-  daysLabel: string;
-  title: string;
-  description: string;
-  deliverables: string[];
-  kpi: string;
-}
-
-export interface Roadmap90Data {
-  title: string;
-  subtitle: string;
-  clientGoal: string;
-  startDate: string;
-  phases: RoadmapPhase[];
-}
-
-export interface WelcomeAgreement {
-  title: string;
-  description: string;
-}
-
-export interface WelcomePacketData {
-  title: string;
-  subtitle: string;
-  welcomeMessage: string;
-  communicationChannels: string;
-  turnaroundTime: string;
-  workingAgreements: WelcomeAgreement[];
-  nextSteps: string[];
+  goalPlannerContent?: GoalPlannerCustomContent;
+  weeklyPlannerContent?: WeeklyPlannerCustomContent;
+  monthlyCalendarContent?: MonthlyCalendarCustomContent;
+  dailyPrioritiesContent?: DailyPrioritiesCustomContent;
+  mealPlannerContent?: MealPlannerCustomContent;
+  budgetTrackerContent?: BudgetTrackerCustomContent;
+  quoteContent?: QuoteCustomContent;
+  invoiceContent?: InvoiceCustomContent;
+  priceListContent?: PriceListCustomContent;
+  clientTrackerContent?: ClientTrackerCustomContent;
+  checklistContent?: ChecklistCustomContent;
 }
 
 export interface TemplateConfig {
   id: TemplateId;
+  family: TemplateFamily;
   nameKey: string;
   descriptionKey: string;
   badgeKey: string;

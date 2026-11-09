@@ -8,8 +8,8 @@ import { registerPDFFonts } from '../lib/pdf/fonts';
 import { DocumentCompiler } from '../lib/pdf/DocumentCompiler';
 import {
   getDefaultHabitTrackerContent,
-  getDefaultRoadmapContent,
-  getDefaultWelcomePacketContent,
+  getDefaultGoalPlannerContent,
+  getDefaultInvoiceContent,
 } from '../lib/use-brand-kit';
 
 registerPDFFonts();
@@ -25,10 +25,10 @@ interface LanguageTestCase {
     mustContain: string[];
     mustNotContain: string[];
   };
-  expectedRoadmap: {
+  expectedGoalPlanner: {
     mustContain: string[];
   };
-  expectedWelcome: {
+  expectedInvoice: {
     mustContain: string[];
   };
 }
@@ -49,20 +49,18 @@ const TEST_CASES: LanguageTestCase[] = [
       ],
       mustNotContain: ['Jour', 'Nom :', 'Suivi d’habitudes', 'Personal Document'],
     },
-    expectedRoadmap: {
+    expectedGoalPlanner: {
       mustContain: [
-        'Strategische Roadmap',
+        '90-Tage-Zielplaner',
         'Seite 1 von 1',
-        'Projekt / Kunde:',
-        'Zielhorizont:',
-        'Hauptmeilenstein:',
+        'Fundament & Struktur',
       ],
     },
-    expectedWelcome: {
+    expectedInvoice: {
       mustContain: [
-        'Willkommensleitfaden',
+        'RECHNUNG',
+        'RE-2026-042',
         'Seite 1 von 1',
-        'Willkommenspaket',
       ],
     },
   },
@@ -81,18 +79,17 @@ const TEST_CASES: LanguageTestCase[] = [
       ],
       mustNotContain: ['Persönliches Dokument'],
     },
-    expectedRoadmap: {
+    expectedGoalPlanner: {
       mustContain: [
-        'Feuille de route stratégique',
+        'Objectifs 90 jours',
         'Page 1 sur 1',
-        'Projet / Client :',
-        'Horizon cible :',
-        'Jalon clé :',
+        'Cadrage & Fondations',
       ],
     },
-    expectedWelcome: {
+    expectedInvoice: {
       mustContain: [
-        'Guide de bienvenue',
+        'FACTURE',
+        'FAC-2026-042',
         'Page 1 sur 1',
       ],
     },
@@ -108,22 +105,21 @@ const TEST_CASES: LanguageTestCase[] = [
         'Página 1 de 1',
         'Seguimiento de hábitos',
         'Creado con',
-        'Hidratación y vitalidad',
+        'Hidratación y Vitalidad',
       ],
-      mustNotContain: ['Jour', 'Tag'],
+      mustNotContain: ['Persönliches Dokument', 'Document personnel'],
     },
-    expectedRoadmap: {
+    expectedGoalPlanner: {
       mustContain: [
-        'Hoja de ruta estratégica',
+        'Planificador 90 Días',
         'Página 1 de 1',
-        'Proyecto / Cliente:',
-        'Horizonte objetivo:',
-        'Hito clave:',
+        'Bases y Organización',
       ],
     },
-    expectedWelcome: {
+    expectedInvoice: {
       mustContain: [
-        'Guía de bienvenida',
+        'FACTURA',
+        'FAC-2026-042',
         'Página 1 de 1',
       ],
     },
@@ -141,19 +137,19 @@ const TEST_CASES: LanguageTestCase[] = [
         'Creato con',
         'Idratazione e Vitalità',
       ],
-      mustNotContain: ['Jour', 'Tag'],
+      mustNotContain: ['Persönliches Dokument', 'Document personnel'],
     },
-    expectedRoadmap: {
+    expectedGoalPlanner: {
       mustContain: [
-        'Tabella di marcia strategica',
+        'Pianificatore 90 Giorni',
         'Pagina 1 di 1',
-        'Progetto / Cliente:',
-        'Traguardo chiave:',
+        'Fondamenta',
       ],
     },
-    expectedWelcome: {
+    expectedInvoice: {
       mustContain: [
-        'Guida di benvenuto',
+        'FATTURA',
+        'FATT-2026-042',
         'Pagina 1 di 1',
       ],
     },
@@ -171,19 +167,19 @@ const TEST_CASES: LanguageTestCase[] = [
         'Criado com',
         'Hidratação e Vitalidade',
       ],
-      mustNotContain: ['Jour', 'Tag'],
+      mustNotContain: ['Persönliches Dokument', 'Document personnel'],
     },
-    expectedRoadmap: {
+    expectedGoalPlanner: {
       mustContain: [
-        'Roteiro estratégico',
+        'Planejador de 90 Dias',
         'Página 1 de 1',
-        'Projeto / Cliente:',
-        'Marco principal:',
+        'Fundamentos & Estrutura',
       ],
     },
-    expectedWelcome: {
+    expectedInvoice: {
       mustContain: [
-        'Guia de boas-vindas',
+        'FATURA',
+        'FAT-2026-042',
         'Página 1 de 1',
       ],
     },
@@ -203,18 +199,17 @@ const TEST_CASES: LanguageTestCase[] = [
       ],
       mustNotContain: ['Jour', 'Tag'],
     },
-    expectedRoadmap: {
+    expectedGoalPlanner: {
       mustContain: [
-        'Strategic Roadmap',
+        '90-Day Goal Planner',
         'Page 1 of 1',
-        'Project / Client:',
-        'Target Horizon:',
-        'Key Milestone:',
+        'Foundations & Setup',
       ],
     },
-    expectedWelcome: {
+    expectedInvoice: {
       mustContain: [
-        'Welcome Guide',
+        'INVOICE',
+        'INV-2026-042',
         'Page 1 of 1',
       ],
     },
@@ -243,8 +238,8 @@ async function verifyAll6Languages() {
       designStyle: 'minimal',
       selectedTemplate: 'habit-tracker',
       habitTrackerContent: getDefaultHabitTrackerContent(tc.lang, 'wellbeing'),
-      roadmapContent: getDefaultRoadmapContent(tc.lang),
-      welcomePacketContent: getDefaultWelcomePacketContent(tc.lang),
+      goalPlannerContent: getDefaultGoalPlannerContent(tc.lang),
+      invoiceContent: getDefaultInvoiceContent(tc.lang),
       isPro: false,
       removeWatermark: false,
     };
@@ -278,24 +273,24 @@ async function verifyAll6Languages() {
       }
     }
 
-    // 2. Roadmap (Minimal)
-    const brandKitRoadmap: BrandKit = {
+    // 2. 90-Day Goal Planner (Minimal)
+    const brandKitGoal: BrandKit = {
       ...brandKitHabit,
-      selectedTemplate: 'roadmap-90',
+      selectedTemplate: 'goal-planner-90',
     };
-    const roadmapDoc = React.createElement(DocumentCompiler, { brandKit: brandKitRoadmap });
-    const roadmapPdfPath = path.join(OUT_DIR, `roadmap_${tc.lang}.pdf`);
-    await ReactPDF.renderToFile(roadmapDoc as any, roadmapPdfPath);
+    const goalDoc = React.createElement(DocumentCompiler, { brandKit: brandKitGoal });
+    const goalPdfPath = path.join(OUT_DIR, `goal_planner_${tc.lang}.pdf`);
+    await ReactPDF.renderToFile(goalDoc as any, goalPdfPath);
 
-    const roadmapBuffer = fs.readFileSync(roadmapPdfPath);
-    const roadmapParser = new PDFParse({ data: roadmapBuffer });
-    const roadmapTextResult = await roadmapParser.getText();
-    const roadmapText = roadmapTextResult.text;
-    await roadmapParser.destroy();
+    const goalBuffer = fs.readFileSync(goalPdfPath);
+    const goalParser = new PDFParse({ data: goalBuffer });
+    const goalTextResult = await goalParser.getText();
+    const goalText = goalTextResult.text;
+    await goalParser.destroy();
 
-    console.log(`\n🗺️ [Roadmap - Minimal - ${tc.lang.toUpperCase()}] Text checks:`);
-    for (const phrase of tc.expectedRoadmap.mustContain) {
-      if (roadmapText.toLowerCase().includes(phrase.toLowerCase())) {
+    console.log(`\n🗺️ [Goal Planner - Minimal - ${tc.lang.toUpperCase()}] Text checks:`);
+    for (const phrase of tc.expectedGoalPlanner.mustContain) {
+      if (goalText.toLowerCase().includes(phrase.toLowerCase())) {
         console.log(`  ✅ MUST CONTAIN: "${phrase}" -> FOUND`);
       } else {
         console.error(`  ❌ MUST CONTAIN: "${phrase}" -> MISSING!`);
@@ -303,24 +298,24 @@ async function verifyAll6Languages() {
       }
     }
 
-    // 3. Welcome Packet (Minimal)
-    const brandKitWelcome: BrandKit = {
+    // 3. Invoice (Business Minimal)
+    const brandKitInvoice: BrandKit = {
       ...brandKitHabit,
-      selectedTemplate: 'welcome-packet',
+      selectedTemplate: 'invoice',
     };
-    const welcomeDoc = React.createElement(DocumentCompiler, { brandKit: brandKitWelcome });
-    const welcomePdfPath = path.join(OUT_DIR, `welcome_${tc.lang}.pdf`);
-    await ReactPDF.renderToFile(welcomeDoc as any, welcomePdfPath);
+    const invoiceDoc = React.createElement(DocumentCompiler, { brandKit: brandKitInvoice });
+    const invoicePdfPath = path.join(OUT_DIR, `invoice_${tc.lang}.pdf`);
+    await ReactPDF.renderToFile(invoiceDoc as any, invoicePdfPath);
 
-    const welcomeBuffer = fs.readFileSync(welcomePdfPath);
-    const welcomeParser = new PDFParse({ data: welcomeBuffer });
-    const welcomeTextResult = await welcomeParser.getText();
-    const welcomeText = welcomeTextResult.text;
-    await welcomeParser.destroy();
+    const invoiceBuffer = fs.readFileSync(invoicePdfPath);
+    const invoiceParser = new PDFParse({ data: invoiceBuffer });
+    const invoiceTextResult = await invoiceParser.getText();
+    const invoiceText = invoiceTextResult.text;
+    await invoiceParser.destroy();
 
-    console.log(`\n🤝 [Welcome Packet - Minimal - ${tc.lang.toUpperCase()}] Text checks:`);
-    for (const phrase of tc.expectedWelcome.mustContain) {
-      if (welcomeText.toLowerCase().includes(phrase.toLowerCase())) {
+    console.log(`\n💼 [Invoice - Minimal - ${tc.lang.toUpperCase()}] Text checks:`);
+    for (const phrase of tc.expectedInvoice.mustContain) {
+      if (invoiceText.toLowerCase().includes(phrase.toLowerCase())) {
         console.log(`  ✅ MUST CONTAIN: "${phrase}" -> FOUND`);
       } else {
         console.error(`  ❌ MUST CONTAIN: "${phrase}" -> MISSING!`);

@@ -223,7 +223,7 @@ export const MinimalHabitTrackerTemplate: React.FC<MinimalHabitTrackerTemplatePr
                         {habit.title}
                       </span>
                       {habit.subtitle && (
-                        <span className="text-[8.5px] text-slate-500 font-normal leading-tight mt-0.5 line-clamp-1">
+                        <span className="text-[8.5px] text-slate-500 font-normal leading-snug mt-0.5 line-clamp-2 break-words">
                           {habit.subtitle}
                         </span>
                       )}

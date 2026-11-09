@@ -1,8 +1,24 @@
 'use client';
 
-import React from 'react';
-import { Calendar, Milestone, FileText, Feather, Layers } from 'lucide-react';
-import { TemplateId, DesignStyle, InterfaceLang } from '@/types';
+import React, { useState } from 'react';
+import {
+  Calendar,
+  Milestone,
+  CheckSquare,
+  Clock,
+  Utensils,
+  Wallet,
+  Receipt,
+  FileSpreadsheet,
+  Users,
+  CheckCircle2,
+  ListTodo,
+  Layers,
+  Feather,
+  Briefcase,
+  User,
+} from 'lucide-react';
+import { TemplateId, DesignStyle, InterfaceLang, TemplateFamily } from '@/types';
 
 interface TemplateSelectorProps {
   activeTemplate: TemplateId;
@@ -13,198 +29,483 @@ interface TemplateSelectorProps {
   interfaceLang: InterfaceLang;
 }
 
-interface SelectorStrings {
-  stepTitle: string;
-  countModels: string;
-  minimalLabel: string;
-  defaultBadge: string;
-  completeLabel: string;
-  templates: {
-    'habit-tracker': {
-      title: string;
-      descMinimal: string;
-      descComplete: string;
-      tag: string;
-    };
-    'roadmap-90': {
-      title: string;
-      descMinimal: string;
-      descComplete: string;
-      tag: string;
-    };
-    'welcome-packet': {
-      title: string;
-      descMinimal: string;
-      descComplete: string;
-      tag: string;
-    };
-  };
+interface TemplateMetaItem {
+  id: TemplateId;
+  family: TemplateFamily;
+  title: string;
+  desc: string;
+  tag: string;
+  icon: React.ElementType;
 }
 
-const SELECTOR_I18N: Record<InterfaceLang, SelectorStrings> = {
+const SELECTOR_I18N: Record<
+  InterfaceLang,
+  {
+    stepTitle: string;
+    countModels: string;
+    minimalLabel: string;
+    defaultBadge: string;
+    completeLabel: string;
+    familyPersonal: string;
+    familyBusiness: string;
+    allTemplates: string;
+    templates: Record<TemplateId, { title: string; desc: string; tag: string }>;
+  }
+> = {
   fr: {
     stepTitle: '3. Modèle de document',
-    countModels: '3 modèles prêts à imprimer',
+    countModels: '12 modèles prêts à imprimer',
     minimalLabel: 'Minimal',
     defaultBadge: 'Défaut',
     completeLabel: 'Complet',
+    familyPersonal: 'Organisation personnelle',
+    familyBusiness: 'Professionnel & Business',
+    allTemplates: 'Tous les modèles',
     templates: {
       'habit-tracker': {
         title: 'Suivi d’habitudes 30 jours',
-        descMinimal: 'Grille épurée 30 jours, portrait, blanc aéré',
-        descComplete: 'Grille 30 jours paysage, bilans et conseils',
-        tag: 'Santé & Habitudes',
+        desc: 'Grille 30 jours portrait, aérée et sobre',
+        tag: 'Santé & Routine',
       },
-      'roadmap-90': {
-        title: 'Feuille de route 90 jours',
-        descMinimal: '3 phases horizontales aérées avec objectifs et cases à cocher',
-        descComplete: 'Plan d’action stratégique pas à pas pour consultants',
-        tag: 'Stratégie & Jalons',
+      'goal-planner-90': {
+        title: 'Objectifs 90 jours',
+        desc: 'Top 3 priorités, 3 mois avec jalons et bilan hebdo',
+        tag: 'Trimestre',
       },
-      'welcome-packet': {
-        title: 'Pack d’accueil client',
-        descMinimal: 'Guide d’onboarding sobre, canaux et accords de travail',
-        descComplete: 'Guide complet avec règles de collaboration et étapes',
-        tag: 'Accueil client',
+      'weekly-planner': {
+        title: 'Semainier minimal',
+        desc: '7 jours libres, top 3 priorités et notes',
+        tag: 'Semaine',
+      },
+      'monthly-calendar': {
+        title: 'Calendrier mensuel',
+        desc: 'Grille du mois, objectifs et dates clés',
+        tag: 'Mois',
+      },
+      'daily-priorities': {
+        title: 'Priorités du jour',
+        desc: 'Top 3, to-do list, créneaux et gratitude',
+        tag: 'Quotidien',
+      },
+      'meal-planner': {
+        title: 'Menu de la semaine',
+        desc: '7 jours x 4 repas + liste de courses intégrée',
+        tag: 'Nutrition',
+      },
+      'budget-tracker': {
+        title: 'Budget mensuel',
+        desc: 'Revenus, charges fixes, dépenses et épargne',
+        tag: 'Finances',
+      },
+      quote: {
+        title: 'Devis commercial',
+        desc: 'Émetteur, client, lignes d’articles, TVA et total',
+        tag: 'Vente',
+      },
+      invoice: {
+        title: 'Facture simple',
+        desc: 'Facture avec échéance, IBAN et coordonnées de paiement',
+        tag: 'Facturation',
+      },
+      'price-list': {
+        title: 'Grille tarifaire / Menu',
+        desc: 'Prestations catégorisées, descriptions et tarifs',
+        tag: 'Tarifs',
+      },
+      'client-tracker': {
+        title: 'Journal de suivi client',
+        desc: 'Tableau des séances, durées, statuts et notes',
+        tag: 'Gestion client',
+      },
+      checklist: {
+        title: 'Checklist universelle',
+        desc: 'Sections groupées avec cases à cocher et synthèse',
+        tag: 'Méthode',
       },
     },
   },
   en: {
     stepTitle: '3. Document Template',
-    countModels: '3 Print-ready models',
+    countModels: '12 print-ready models',
     minimalLabel: 'Minimal',
     defaultBadge: 'Default',
     completeLabel: 'Complete',
+    familyPersonal: 'Personal organization',
+    familyBusiness: 'Business & Freelance',
+    allTemplates: 'All templates',
     templates: {
       'habit-tracker': {
         title: '30-Day Habit Tracker',
-        descMinimal: 'Clean portrait grid, 30 days, airy whitespace',
-        descComplete: 'Landscape grid with weekly check-ins and coaching note',
+        desc: 'Airy portrait 30-day grid with milestone markers',
         tag: 'Health & Habits',
       },
-      'roadmap-90': {
-        title: '90-Day Strategic Roadmap',
-        descMinimal: '3 airy horizontal phases with milestones and checkboxes',
-        descComplete: 'Step-by-step strategic action plan for consultants',
-        tag: 'Strategy & Milestones',
+      'goal-planner-90': {
+        title: '90-Day Goal Planner',
+        desc: 'Top 3 goals, 3 monthly blocks & weekly check-in strip',
+        tag: 'Quarterly',
       },
-      'welcome-packet': {
-        title: 'Client Welcome Packet',
-        descMinimal: 'Clean onboarding guide, channels and working agreements',
-        descComplete: 'Comprehensive guide with rules of engagement and next steps',
-        tag: 'Client Onboarding',
+      'weekly-planner': {
+        title: 'Weekly Planner',
+        desc: '7 flexible days, weekly top 3 priorities & notes',
+        tag: 'Weekly',
+      },
+      'monthly-calendar': {
+        title: 'Monthly Calendar',
+        desc: 'One-page month grid, monthly goals & key dates',
+        tag: 'Monthly',
+      },
+      'daily-priorities': {
+        title: 'Daily Priorities',
+        desc: 'Top 3 tasks, hourly schedule, to-do list & gratitude',
+        tag: 'Daily',
+      },
+      'meal-planner': {
+        title: 'Weekly Meal Planner',
+        desc: '7 days x 4 meals + integrated grocery shopping column',
+        tag: 'Nutrition',
+      },
+      'budget-tracker': {
+        title: 'Monthly Budget Tracker',
+        desc: 'Income, fixed & variable expenses, savings goal & net cash',
+        tag: 'Finance',
+      },
+      quote: {
+        title: 'Price Quote',
+        desc: 'Sender/client blocks, line items, taxes & total',
+        tag: 'Sales',
+      },
+      invoice: {
+        title: 'Simple Invoice',
+        desc: 'Invoice #, due date, line items & bank payment details',
+        tag: 'Billing',
+      },
+      'price-list': {
+        title: 'Service Menu / Price List',
+        desc: 'Grouped categories, service descriptions & clear rates',
+        tag: 'Services',
+      },
+      'client-tracker': {
+        title: 'Client Session Tracker',
+        desc: 'Log dates, client names, services, hours & status',
+        tag: 'Client CRM',
+      },
+      checklist: {
+        title: 'Master Checklist',
+        desc: 'Multi-purpose grouped checklists with checkboxes & sign-off',
+        tag: 'Project Ops',
       },
     },
   },
   de: {
     stepTitle: '3. Dokumenten-Vorlage',
-    countModels: '3 druckfertige Vorlagen',
+    countModels: '12 druckfertige Vorlagen',
     minimalLabel: 'Minimal',
     defaultBadge: 'Standard',
     completeLabel: 'Vollständig',
+    familyPersonal: 'Persönliche Organisation',
+    familyBusiness: 'Geschäft & Freelance',
+    allTemplates: 'Alle Vorlagen',
     templates: {
       'habit-tracker': {
         title: '30-Tage-Gewohnheitstracker',
-        descMinimal: 'Klare 30-Tage-Matrix im Hochformat mit viel Weißraum',
-        descComplete: 'Querformat mit wöchentlichen Reflexionen und Coach-Notiz',
-        tag: 'Gesundheit & Gewohnheiten',
+        desc: 'Klare 30-Tage-Matrix im Hochformat mit viel Weißraum',
+        tag: 'Gewohnheiten',
       },
-      'roadmap-90': {
-        title: 'Strategische 90-Tage-Roadmap',
-        descMinimal: '3 übersichtliche Phasen mit Meilensteinen und Checkboxen',
-        descComplete: 'Schritt-für-Schritt Aktionsplan für Berater & Coaches',
-        tag: 'Strategie & Meilensteine',
+      'goal-planner-90': {
+        title: '90-Tage-Zielplaner',
+        desc: 'Top-3-Ziele, 3 Monatsblöcke & wöchentliche Check-ins',
+        tag: 'Quartal',
       },
-      'welcome-packet': {
-        title: 'Kunden-Willkommenspaket',
-        descMinimal: 'Klarer Onboarding-Leitfaden mit Kommunikationsregeln',
-        descComplete: 'Umfassender Leitfaden mit Zusammenarbeitsregeln und Schritten',
-        tag: 'Kunden-Onboarding',
+      'weekly-planner': {
+        title: 'Wochenplaner',
+        desc: '7 flexible Tage, 3 Wochenprioritäten & Notizzeilen',
+        tag: 'Woche',
+      },
+      'monthly-calendar': {
+        title: 'Monatskalender',
+        desc: 'Übersichtlicher Monatsraster, Monatsziele & Termine',
+        tag: 'Monat',
+      },
+      'daily-priorities': {
+        title: 'Tagesprioritäten',
+        desc: 'Top 3 Aufgaben, Zeitblöcke, To-Do-Liste & Dankbarkeit',
+        tag: 'Tagesfokus',
+      },
+      'meal-planner': {
+        title: 'Wochen-Speiseplan',
+        desc: '7 Tage x 4 Mahlzeiten + Einkaufsliste',
+        tag: 'Ernährung',
+      },
+      'budget-tracker': {
+        title: 'Monats-Budgetplaner',
+        desc: 'Einnahmen, feste & variable Ausgaben, Sparziel & Saldo',
+        tag: 'Finanzen',
+      },
+      quote: {
+        title: 'Angebot',
+        desc: 'Absender/Kunde, Positionen, USt und Gesamtsumme',
+        tag: 'Vertrieb',
+      },
+      invoice: {
+        title: 'Rechnung',
+        desc: 'Rechnungsnummer, Fälligkeit, Positionen & Bankverbindung',
+        tag: 'Buchhaltung',
+      },
+      'price-list': {
+        title: 'Preis- & Leistungsübersicht',
+        desc: 'Kategorisierte Dienstleistungen, Details & feste Tarife',
+        tag: 'Leistungen',
+      },
+      'client-tracker': {
+        title: 'Klienten-Sitzungsprotokoll',
+        desc: 'Sitzungen, Dauer, Bearbeitungsstatus & Zusammenfassung',
+        tag: 'Klienten',
+      },
+      checklist: {
+        title: 'Projekt-Checkliste',
+        desc: 'Strukturierte Abschnitte mit Kontrollkästchen & Freigabe',
+        tag: 'Organisation',
       },
     },
   },
   es: {
     stepTitle: '3. Plantilla de documento',
-    countModels: '3 modelos listos para imprimir',
+    countModels: '12 modelos listos para imprimir',
     minimalLabel: 'Mínimo',
     defaultBadge: 'Por defecto',
     completeLabel: 'Completo',
+    familyPersonal: 'Organización personal',
+    familyBusiness: 'Profesional & Negocios',
+    allTemplates: 'Todas las plantillas',
     templates: {
       'habit-tracker': {
         title: 'Seguimiento de hábitos 30 días',
-        descMinimal: 'Cuadrícula limpia de 30 días, vertical y espaciosa',
-        descComplete: 'Cuadrícula apaisada con revisiones semanales y nota del coach',
-        tag: 'Salud y Hábitos',
+        desc: 'Cuadrícula vertical limpia con hitos destacados',
+        tag: 'Hábitos',
       },
-      'roadmap-90': {
-        title: 'Hoja de ruta estratégica 90 días',
-        descMinimal: '3 fases horizontales con hitos y casillas de verificación',
-        descComplete: 'Plan de acción paso a paso para consultores y coaches',
-        tag: 'Estrategia e Hitos',
+      'goal-planner-90': {
+        title: 'Planificador 90 Días',
+        desc: 'Top 3 objetivos, 3 meses con hitos y seguimiento',
+        tag: 'Trimestre',
       },
-      'welcome-packet': {
-        title: 'Paquete de bienvenida al cliente',
-        descMinimal: 'Guía clara de onboarding, canales y acuerdos de trabajo',
-        descComplete: 'Guía completa con reglas de colaboración y primeros pasos',
-        tag: 'Onboarding de Clientes',
+      'weekly-planner': {
+        title: 'Planificador Semanal',
+        desc: '7 días libres, top 3 prioridades semanales y notas',
+        tag: 'Semana',
+      },
+      'monthly-calendar': {
+        title: 'Calendario Mensual',
+        desc: 'Cuadrícula mensual, objetivos del mes y fechas clave',
+        tag: 'Mes',
+      },
+      'daily-priorities': {
+        title: 'Prioridades Diarias',
+        desc: 'Top 3 tareas, horarios, lista de tareas y gratitud',
+        tag: 'Día',
+      },
+      'meal-planner': {
+        title: 'Planificador de Comidas',
+        desc: '7 días x 4 comidas + lista de compras integrada',
+        tag: 'Comidas',
+      },
+      'budget-tracker': {
+        title: 'Presupuesto Mensual',
+        desc: 'Ingresos, gastos fijos y variables, ahorro y saldo neto',
+        tag: 'Finanzas',
+      },
+      quote: {
+        title: 'Presupuesto comercial',
+        desc: 'Emisor, cliente, partidas, impuestos y total',
+        tag: 'Ventas',
+      },
+      invoice: {
+        title: 'Factura simple',
+        desc: 'Nº factura, vencimiento, partidas y datos bancarios',
+        tag: 'Facturación',
+      },
+      'price-list': {
+        title: 'Tarifas y Servicios',
+        desc: 'Categorías, descripción detallada y precios claros',
+        tag: 'Tarifas',
+      },
+      'client-tracker': {
+        title: 'Registro de Clientes',
+        desc: 'Historial de sesiones, duración, estados y notas',
+        tag: 'Gestión clientes',
+      },
+      checklist: {
+        title: 'Lista de Control',
+        desc: 'Secciones agrupadas con casillas de verificación y firma',
+        tag: 'Control',
       },
     },
   },
   it: {
     stepTitle: '3. Modello di Documento',
-    countModels: '3 modelli pronti per la stampa',
+    countModels: '12 modelli pronti per la stampa',
     minimalLabel: 'Minimale',
     defaultBadge: 'Predefinito',
     completeLabel: 'Completo',
+    familyPersonal: 'Organizzazione personale',
+    familyBusiness: 'Attività & Professione',
+    allTemplates: 'Tutti i modelli',
     templates: {
       'habit-tracker': {
         title: 'Registro abitudini 30 giorni',
-        descMinimal: 'Griglia essenziale di 30 giorni, verticale e ariosa',
-        descComplete: 'Griglia orizzontale con verifiche settimanali e nota del coach',
-        tag: 'Salute & Abitudini',
+        desc: 'Griglia verticale di 30 giorni, essenziale e ariosa',
+        tag: 'Abitudini',
       },
-      'roadmap-90': {
-        title: 'Tabella di marcia 90 giorni',
-        descMinimal: '3 fasi orizzontali ariose con traguardi e caselle di controllo',
-        descComplete: 'Piano d’azione strategico passo dopo passo per consulenti',
-        tag: 'Strategia & Obiettivi',
+      'goal-planner-90': {
+        title: 'Pianificatore 90 Giorni',
+        desc: 'Top 3 obiettivi, 3 mesi con tappe e verifiche settimanali',
+        tag: 'Trimestre',
       },
-      'welcome-packet': {
-        title: 'Kit di benvenuto per i clienti',
-        descMinimal: 'Guida onboarding chiara, canali e accordi di lavoro',
-        descComplete: 'Guida completa con regole di collaborazione e prossimi passi',
-        tag: 'Onboarding Clienti',
+      'weekly-planner': {
+        title: 'Pianificatore Settimanale',
+        desc: '7 giorni aperti, top 3 priorità della settimana e note',
+        tag: 'Settimana',
+      },
+      'monthly-calendar': {
+        title: 'Calendario Mensile',
+        desc: 'Griglia mensile, obiettivi del mese e date importanti',
+        tag: 'Mese',
+      },
+      'daily-priorities': {
+        title: 'Priorità del Giorno',
+        desc: 'Top 3, blocchi orari, lista attività e gratitudine',
+        tag: 'Giornata',
+      },
+      'meal-planner': {
+        title: 'Menu Settimanale',
+        desc: '7 giorni x 4 pasti + lista della spesa affiancata',
+        tag: 'Nutrizione',
+      },
+      'budget-tracker': {
+        title: 'Budget Mensile',
+        desc: 'Entrate, uscite fisse e variabili, risparmio e saldo',
+        tag: 'Finanze',
+      },
+      quote: {
+        title: 'Preventivo',
+        desc: 'Mittente, cliente, voci di spesa, IVA e totale',
+        tag: 'Vendite',
+      },
+      invoice: {
+        title: 'Fattura semplice',
+        desc: 'Numero fattura, scadenza, voci e coordinate bancarie',
+        tag: 'Fatturazione',
+      },
+      'price-list': {
+        title: 'Listino Prezzi & Servizi',
+        desc: 'Servizi categorizzati, descrizioni e tariffe trasparenti',
+        tag: 'Tariffe',
+      },
+      'client-tracker': {
+        title: 'Registro Sessioni Clienti',
+        desc: 'Riepilogo appuntamenti, durata, stato e annotazioni',
+        tag: 'Clienti',
+      },
+      checklist: {
+        title: 'Checklist di Progetto',
+        desc: 'Sezioni raggruppate con caselle di controllo e convalida',
+        tag: 'Metodo',
       },
     },
   },
   pt: {
     stepTitle: '3. Modelo de Documento',
-    countModels: '3 modelos prontos para impressão',
+    countModels: '12 modelos prontos para impressão',
     minimalLabel: 'Mínimo',
     defaultBadge: 'Padrão',
     completeLabel: 'Completo',
+    familyPersonal: 'Organização pessoal',
+    familyBusiness: 'Negócios & Freelance',
+    allTemplates: 'Todos os modelos',
     templates: {
       'habit-tracker': {
         title: 'Rastreador de hábitos 30 dias',
-        descMinimal: 'Grelha limpa de 30 dias, vertical com bastante espaço',
-        descComplete: 'Grelha paisagem com balanços semanais e nota do mentor',
-        tag: 'Saúde e Hábitos',
+        desc: 'Grelha vertical espaçosa com marcos de consistência',
+        tag: 'Hábitos',
       },
-      'roadmap-90': {
-        title: 'Roteiro estratégico de 90 dias',
-        descMinimal: '3 fases horizontais com marcos e caixas de seleção',
-        descComplete: 'Plano de ação estratégico passo a passo para consultores',
-        tag: 'Estratégia e Metas',
+      'goal-planner-90': {
+        title: 'Planejador de 90 Dias',
+        desc: 'Top 3 metas, 3 meses com marcos e balanço semanal',
+        tag: 'Trimestre',
       },
-      'welcome-packet': {
-        title: 'Kit de boas-vindas ao cliente',
-        descMinimal: 'Guia de onboarding direto, canais e acordos de trabalho',
-        descComplete: 'Guia completo com regras de colaboração e primeiros passos',
-        tag: 'Integração de Clientes',
+      'weekly-planner': {
+        title: 'Planejador Semanal',
+        desc: '7 dias livres, top 3 prioridades da semana e notas',
+        tag: 'Semana',
+      },
+      'monthly-calendar': {
+        title: 'Calendário Mensal',
+        desc: 'Grelha do mês, metas mensais e datas essenciais',
+        tag: 'Mês',
+      },
+      'daily-priorities': {
+        title: 'Prioridades do Dia',
+        desc: 'Top 3 tarefas, horários, checklist de ações e gratidão',
+        tag: 'Dia',
+      },
+      'meal-planner': {
+        title: 'Cardápio Semanal',
+        desc: '7 dias x 4 refeições + lista de compras integrada',
+        tag: 'Alimentação',
+      },
+      'budget-tracker': {
+        title: 'Orçamento Mensal',
+        desc: 'Receitas, despesas fixas e variáveis, meta de poupança e saldo',
+        tag: 'Finanças',
+      },
+      quote: {
+        title: 'Orçamento comercial',
+        desc: 'Emissor, cliente, itens, impostos e valor final',
+        tag: 'Vendas',
+      },
+      invoice: {
+        title: 'Fatura simples',
+        desc: 'Nº da fatura, vencimento, itens e dados bancários',
+        tag: 'Faturamento',
+      },
+      'price-list': {
+        title: 'Tabela de Serviços e Valores',
+        desc: 'Categorias organizadas, descrições e valores claros',
+        tag: 'Serviços',
+      },
+      'client-tracker': {
+        title: 'Registro de Clientes',
+        desc: 'Histórico de atendimentos, duração, status e notas',
+        tag: 'Gestão clientes',
+      },
+      checklist: {
+        title: 'Lista de Verificação',
+        desc: 'Etapas agrupadas com caixas de seleção e validação',
+        tag: 'Processos',
       },
     },
   },
 };
+
+const TEMPLATE_DEFINITIONS: Array<{
+  id: TemplateId;
+  family: TemplateFamily;
+  icon: React.ElementType;
+}> = [
+  // Personal (7)
+  { id: 'habit-tracker', family: 'personal', icon: Calendar },
+  { id: 'goal-planner-90', family: 'personal', icon: Milestone },
+  { id: 'weekly-planner', family: 'personal', icon: Clock },
+  { id: 'monthly-calendar', family: 'personal', icon: CheckSquare },
+  { id: 'daily-priorities', family: 'personal', icon: ListTodo },
+  { id: 'meal-planner', family: 'personal', icon: Utensils },
+  { id: 'budget-tracker', family: 'personal', icon: Wallet },
+  // Business (5)
+  { id: 'quote', family: 'business', icon: Receipt },
+  { id: 'invoice', family: 'business', icon: FileSpreadsheet },
+  { id: 'price-list', family: 'business', icon: Briefcase },
+  { id: 'client-tracker', family: 'business', icon: Users },
+  { id: 'checklist', family: 'business', icon: CheckCircle2 },
+];
 
 export const TemplateSelector: React.FC<TemplateSelectorProps> = ({
   activeTemplate,
@@ -215,36 +516,12 @@ export const TemplateSelector: React.FC<TemplateSelectorProps> = ({
   interfaceLang,
 }) => {
   const i18n = SELECTOR_I18N[interfaceLang] || SELECTOR_I18N.en;
+  const [selectedFamily, setSelectedFamily] = useState<'all' | TemplateFamily>('all');
 
-  const templates = [
-    {
-      id: 'habit-tracker' as TemplateId,
-      title: i18n.templates['habit-tracker'].title,
-      desc: designStyle === 'minimal'
-        ? i18n.templates['habit-tracker'].descMinimal
-        : i18n.templates['habit-tracker'].descComplete,
-      icon: Calendar,
-      tag: i18n.templates['habit-tracker'].tag,
-    },
-    {
-      id: 'roadmap-90' as TemplateId,
-      title: i18n.templates['roadmap-90'].title,
-      desc: designStyle === 'minimal'
-        ? i18n.templates['roadmap-90'].descMinimal
-        : i18n.templates['roadmap-90'].descComplete,
-      icon: Milestone,
-      tag: i18n.templates['roadmap-90'].tag,
-    },
-    {
-      id: 'welcome-packet' as TemplateId,
-      title: i18n.templates['welcome-packet'].title,
-      desc: designStyle === 'minimal'
-        ? i18n.templates['welcome-packet'].descMinimal
-        : i18n.templates['welcome-packet'].descComplete,
-      icon: FileText,
-      tag: i18n.templates['welcome-packet'].tag,
-    },
-  ];
+  const filteredTemplates = TEMPLATE_DEFINITIONS.filter((t) => {
+    if (selectedFamily === 'all') return true;
+    return t.family === selectedFamily;
+  });
 
   return (
     <div className="space-y-2.5">
@@ -290,17 +567,62 @@ export const TemplateSelector: React.FC<TemplateSelectorProps> = ({
         </button>
       </div>
 
+      {/* Family Pills (All | Personal (7) | Business (5)) */}
+      <div className="flex items-center space-x-1.5 p-0.5 bg-slate-100/70 dark:bg-slate-800/50 rounded-lg text-[10.5px]">
+        <button
+          type="button"
+          onClick={() => setSelectedFamily('all')}
+          className={`flex-1 py-1 px-2 rounded-md font-semibold transition-all text-center ${
+            selectedFamily === 'all'
+              ? 'bg-white dark:bg-slate-900 text-slate-900 dark:text-white shadow-2xs'
+              : 'text-slate-500 hover:text-slate-800 dark:hover:text-slate-200'
+          }`}
+        >
+          {i18n.allTemplates} (12)
+        </button>
+        <button
+          type="button"
+          onClick={() => setSelectedFamily('personal')}
+          className={`flex-1 py-1 px-2 rounded-md font-semibold transition-all text-center flex items-center justify-center space-x-1 ${
+            selectedFamily === 'personal'
+              ? 'bg-white dark:bg-slate-900 text-slate-900 dark:text-white shadow-2xs'
+              : 'text-slate-500 hover:text-slate-800 dark:hover:text-slate-200'
+          }`}
+        >
+          <User className="w-3 h-3" />
+          <span>{i18n.familyPersonal} (7)</span>
+        </button>
+        <button
+          type="button"
+          onClick={() => setSelectedFamily('business')}
+          className={`flex-1 py-1 px-2 rounded-md font-semibold transition-all text-center flex items-center justify-center space-x-1 ${
+            selectedFamily === 'business'
+              ? 'bg-white dark:bg-slate-900 text-slate-900 dark:text-white shadow-2xs'
+              : 'text-slate-500 hover:text-slate-800 dark:hover:text-slate-200'
+          }`}
+        >
+          <Briefcase className="w-3 h-3" />
+          <span>{i18n.familyBusiness} (5)</span>
+        </button>
+      </div>
+
       {/* Templates List */}
-      <div className="grid grid-cols-1 gap-2">
-        {templates.map((tmpl) => {
-          const isSelected = activeTemplate === tmpl.id;
-          const Icon = tmpl.icon;
+      <div className="grid grid-cols-1 gap-2 max-h-[380px] overflow-y-auto pr-1">
+        {filteredTemplates.map((tDef) => {
+          const tInfo = i18n.templates[tDef.id] || {
+            title: tDef.id,
+            desc: '',
+            tag: tDef.family,
+          };
+          const isSelected = activeTemplate === tDef.id;
+          const Icon = tDef.icon;
+
           return (
             <button
-              key={tmpl.id}
+              key={tDef.id}
               type="button"
-              onClick={() => onSelect(tmpl.id)}
-              className={`flex items-start space-x-3 p-3 sm:p-2.5 rounded-xl border text-left transition-all ${
+              onClick={() => onSelect(tDef.id)}
+              className={`flex items-start space-x-3 p-2.5 rounded-xl border text-left transition-all ${
                 isSelected
                   ? 'bg-slate-50/90 dark:bg-slate-800/90 shadow-2xs'
                   : 'border-slate-200 dark:border-slate-800 hover:border-slate-300 dark:hover:border-slate-700 bg-white dark:bg-slate-900/40'
@@ -323,14 +645,14 @@ export const TemplateSelector: React.FC<TemplateSelectorProps> = ({
               <div className="flex-1 min-w-0">
                 <div className="flex items-center justify-between">
                   <h4 className="text-xs font-bold text-slate-800 dark:text-slate-100 truncate">
-                    {tmpl.title}
+                    {tInfo.title}
                   </h4>
-                  <span className="text-[9.5px] font-medium text-slate-400 shrink-0 ml-1">
-                    {tmpl.tag}
+                  <span className="text-[9px] font-medium text-slate-400 shrink-0 ml-1">
+                    {tInfo.tag}
                   </span>
                 </div>
-                <p className="text-[10.5px] text-slate-500 dark:text-slate-400 leading-snug mt-0.5">
-                  {tmpl.desc}
+                <p className="text-[10px] text-slate-500 dark:text-slate-400 leading-snug mt-0.5 line-clamp-1">
+                  {tInfo.desc}
                 </p>
               </div>
             </button>

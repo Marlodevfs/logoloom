@@ -7,12 +7,13 @@ import { registerPDFFonts } from '../lib/pdf/fonts';
 import { DocumentCompiler } from '../lib/pdf/DocumentCompiler';
 import {
   getDefaultHabitTrackerContent,
-  getDefaultRoadmapContent,
-  getDefaultWelcomePacketContent,
+  getDefaultGoalPlannerContent,
+  getDefaultInvoiceContent,
+  getDefaultQuoteContent,
+  getDefaultWeeklyPlannerContent,
 } from '../lib/use-brand-kit';
 import { ensureAccessibleOnWhite, getContrastRatio, getOptimalTextColor } from '../lib/color-engine';
 import { HABIT_PACKS } from '../lib/i18n/habit-packs';
-import { DOCUMENT_TRANSLATIONS } from '../lib/i18n/documents';
 
 registerPDFFonts();
 
@@ -47,16 +48,30 @@ async function runEndToEndFeatureTests() {
   const templateFiles = [
     'components/templates/MinimalHabitTrackerTemplate.tsx',
     'components/templates/HabitTrackerTemplate.tsx',
-    'components/templates/MinimalRoadmapTemplate.tsx',
-    'components/templates/Roadmap90Template.tsx',
-    'components/templates/MinimalWelcomePacketTemplate.tsx',
-    'components/templates/WelcomePacketTemplate.tsx',
+    'components/templates/GoalPlannerTemplate.tsx',
+    'components/templates/WeeklyPlannerTemplate.tsx',
+    'components/templates/MonthlyCalendarTemplate.tsx',
+    'components/templates/DailyPrioritiesTemplate.tsx',
+    'components/templates/MealPlannerTemplate.tsx',
+    'components/templates/BudgetTrackerTemplate.tsx',
+    'components/templates/QuoteTemplate.tsx',
+    'components/templates/InvoiceTemplate.tsx',
+    'components/templates/PriceListTemplate.tsx',
+    'components/templates/ClientTrackerTemplate.tsx',
+    'components/templates/ChecklistTemplate.tsx',
     'lib/pdf/VectorMinimalHabitTrackerPDF.tsx',
     'lib/pdf/VectorHabitTrackerPDF.tsx',
-    'lib/pdf/VectorMinimalRoadmapPDF.tsx',
-    'lib/pdf/VectorRoadmap90PDF.tsx',
-    'lib/pdf/VectorMinimalWelcomePacketPDF.tsx',
-    'lib/pdf/VectorWelcomePacketPDF.tsx',
+    'lib/pdf/VectorGoalPlannerPDF.tsx',
+    'lib/pdf/VectorWeeklyPlannerPDF.tsx',
+    'lib/pdf/VectorMonthlyCalendarPDF.tsx',
+    'lib/pdf/VectorDailyPrioritiesPDF.tsx',
+    'lib/pdf/VectorMealPlannerPDF.tsx',
+    'lib/pdf/VectorBudgetTrackerPDF.tsx',
+    'lib/pdf/VectorQuotePDF.tsx',
+    'lib/pdf/VectorInvoicePDF.tsx',
+    'lib/pdf/VectorPriceListPDF.tsx',
+    'lib/pdf/VectorClientTrackerPDF.tsx',
+    'lib/pdf/VectorChecklistPDF.tsx',
   ];
 
   for (const rel of templateFiles) {
@@ -107,22 +122,22 @@ async function runEndToEndFeatureTests() {
     assert(Boolean(habitContent.title && habitContent.habits.length === 5), `Default habit content for [${lang}] loads 5 wellbeing habits`);
     assert(Boolean(habitContent.weeklyQuestions.length === 4), `Default weekly questions for [${lang}] has 4 prompts`);
 
-    const roadmapContent = getDefaultRoadmapContent(lang);
-    assert(Boolean(roadmapContent.title && roadmapContent.phases.length === 3), `Default roadmap for [${lang}] has 3 phases`);
+    const goalContent = getDefaultGoalPlannerContent(lang);
+    assert(Boolean(goalContent.title && goalContent.phases.length === 3), `Default goal planner for [${lang}] has 3 phases`);
 
-    const welcomeContent = getDefaultWelcomePacketContent(lang);
-    assert(Boolean(welcomeContent.title && welcomeContent.welcomeMessage), `Default welcome packet for [${lang}] has title and message`);
+    const invoiceContent = getDefaultInvoiceContent(lang);
+    assert(Boolean(invoiceContent.title && invoiceContent.items.length >= 2), `Default invoice for [${lang}] has items`);
   }
 
-  // 5. VECTOR PDF COMPILATION & FILE SIZE CHECKS (ALL 6 TEMPLATE COMBINATIONS)
-  console.log('\n--- Feature 5: Vector PDF Generation For All 6 Styles & Templates ---');
+  // 5. VECTOR PDF COMPILATION & FILE SIZE CHECKS
+  console.log('\n--- Feature 5: Vector PDF Generation For Diverse Catalog Templates ---');
   const templateCombos: { templateId: TemplateId; style: 'minimal' | 'complete'; paper: 'a4' | 'letter'; isPro: boolean; withQr: boolean }[] = [
     { templateId: 'habit-tracker', style: 'minimal', paper: 'a4', isPro: false, withQr: true },
     { templateId: 'habit-tracker', style: 'complete', paper: 'a4', isPro: true, withQr: false },
-    { templateId: 'roadmap-90', style: 'minimal', paper: 'letter', isPro: false, withQr: false },
-    { templateId: 'roadmap-90', style: 'complete', paper: 'a4', isPro: true, withQr: true },
-    { templateId: 'welcome-packet', style: 'minimal', paper: 'a4', isPro: true, withQr: true },
-    { templateId: 'welcome-packet', style: 'complete', paper: 'letter', isPro: false, withQr: false },
+    { templateId: 'goal-planner-90', style: 'minimal', paper: 'letter', isPro: false, withQr: false },
+    { templateId: 'weekly-planner', style: 'minimal', paper: 'a4', isPro: true, withQr: true },
+    { templateId: 'invoice', style: 'minimal', paper: 'a4', isPro: true, withQr: true },
+    { templateId: 'quote', style: 'minimal', paper: 'letter', isPro: false, withQr: false },
   ];
 
   for (const combo of templateCombos) {
@@ -141,23 +156,24 @@ async function runEndToEndFeatureTests() {
       paperSize: combo.paper,
       documentLang: testDocLang,
       designStyle: combo.style,
+      selectedTemplate: combo.templateId,
       isPro: combo.isPro,
       removeWatermark: combo.isPro,
       habitTrackerContent: getDefaultHabitTrackerContent(testDocLang, 'wellbeing'),
-      roadmapContent: getDefaultRoadmapContent(testDocLang),
-      welcomePacketContent: getDefaultWelcomePacketContent(testDocLang),
+      goalPlannerContent: getDefaultGoalPlannerContent(testDocLang),
+      weeklyPlannerContent: getDefaultWeeklyPlannerContent(testDocLang),
+      invoiceContent: getDefaultInvoiceContent(testDocLang),
+      quoteContent: getDefaultQuoteContent(testDocLang),
     };
 
     const fileName = `${combo.templateId}-${combo.style}-${combo.paper}-${combo.isPro ? 'pro' : 'free'}.pdf`;
     const filePath = path.join(OUT_DIR, fileName);
 
     const doc = React.createElement(DocumentCompiler, {
-      templateId: combo.templateId,
       brandKit: testKit,
-      paperSize: combo.paper,
     });
 
-    await ReactPDF.renderToFile(doc, filePath);
+    await ReactPDF.renderToFile(doc as any, filePath);
     const stats = fs.statSync(filePath);
     const fileSizeKb = Math.round(stats.size / 1024);
 
@@ -185,20 +201,19 @@ async function runEndToEndFeatureTests() {
     paperSize: 'a4',
     documentLang: 'en',
     designStyle: 'minimal',
+    selectedTemplate: 'habit-tracker',
     isPro: true,
     removeWatermark: true,
     habitTrackerContent: getDefaultHabitTrackerContent('en', 'wellbeing'),
-    roadmapContent: getDefaultRoadmapContent('en'),
-    welcomePacketContent: getDefaultWelcomePacketContent('en'),
+    goalPlannerContent: getDefaultGoalPlannerContent('en'),
+    invoiceContent: getDefaultInvoiceContent('en'),
   };
 
   const proPdfPath = path.join(OUT_DIR, 'pro-white-label-test.pdf');
   await ReactPDF.renderToFile(
     React.createElement(DocumentCompiler, {
-      templateId: 'habit-tracker',
       brandKit: proTestKit,
-      paperSize: 'a4',
-    }),
+    }) as any,
     proPdfPath
   );
 

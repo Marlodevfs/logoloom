@@ -7,8 +7,9 @@ import { registerPDFFonts } from '../lib/pdf/fonts';
 import { DocumentCompiler } from '../lib/pdf/DocumentCompiler';
 import {
   getDefaultHabitTrackerContent,
-  getDefaultRoadmapContent,
-  getDefaultWelcomePacketContent,
+  getDefaultGoalPlannerContent,
+  getDefaultInvoiceContent,
+  getDefaultWeeklyPlannerContent,
 } from '../lib/use-brand-kit';
 
 registerPDFFonts();
@@ -33,10 +34,12 @@ async function runAllMinimalGates() {
   const filesToCheck = [
     'components/templates/MinimalHabitTrackerTemplate.tsx',
     'lib/pdf/VectorMinimalHabitTrackerPDF.tsx',
-    'components/templates/MinimalRoadmapTemplate.tsx',
-    'lib/pdf/VectorMinimalRoadmapPDF.tsx',
-    'components/templates/MinimalWelcomePacketTemplate.tsx',
-    'lib/pdf/VectorMinimalWelcomePacketPDF.tsx',
+    'components/templates/GoalPlannerTemplate.tsx',
+    'lib/pdf/VectorGoalPlannerPDF.tsx',
+    'components/templates/WeeklyPlannerTemplate.tsx',
+    'lib/pdf/VectorWeeklyPlannerPDF.tsx',
+    'components/templates/InvoiceTemplate.tsx',
+    'lib/pdf/VectorInvoicePDF.tsx',
   ];
 
   for (const rel of filesToCheck) {
@@ -74,17 +77,17 @@ async function runAllMinimalGates() {
   };
   const habitPdfPath = path.join(OUT_DIR, 'minimal-habit-tracker-a4-fr.pdf');
   await ReactPDF.renderToFile(
-    React.createElement(DocumentCompiler, { brandKit: kitHabit }),
+    React.createElement(DocumentCompiler, { brandKit: kitHabit }) as any,
     habitPdfPath
   );
   console.log(`  PASS: Rendered ${habitPdfPath} (${fs.statSync(habitPdfPath).size} bytes)`);
 
-  // Gate 3: Render Minimal 90-Day Roadmap (A4 FR, Free, User QR)
-  console.log('\nGate 3: Rendering Minimal 90-Day Roadmap A4 FR (Free, with QR)...');
-  const kitRoadmapFr: BrandKit = {
+  // Gate 3: Render Minimal 90-Day Goal Planner (A4 FR, Free, User QR)
+  console.log('\nGate 3: Rendering Minimal 90-Day Goal Planner A4 FR (Free, with QR)...');
+  const kitGoalFr: BrandKit = {
     logoUrl: squareLogoB64,
     companyName: 'Cabinet Stratégie Croissance',
-    tagline: 'Accélération & Excellence Opérationnelle',
+    tagline: 'Accélération & Clarté',
     coachName: 'Marc Vaugirard',
     clientName: 'Groupe Alpha',
     contactEmail: 'contact@strategie-croissance.com',
@@ -95,24 +98,24 @@ async function runAllMinimalGates() {
     paperSize: 'a4',
     documentLang: 'fr',
     designStyle: 'minimal',
-    selectedTemplate: 'roadmap-90',
+    selectedTemplate: 'goal-planner-90',
     isPro: false,
     removeWatermark: false,
-    roadmapContent: getDefaultRoadmapContent('fr'),
+    goalPlannerContent: getDefaultGoalPlannerContent('fr'),
   };
-  const roadmapPdfPath = path.join(OUT_DIR, 'minimal-roadmap-a4-fr.pdf');
+  const goalPdfPath = path.join(OUT_DIR, 'minimal-goal-planner-a4-fr.pdf');
   await ReactPDF.renderToFile(
-    React.createElement(DocumentCompiler, { brandKit: kitRoadmapFr }),
-    roadmapPdfPath
+    React.createElement(DocumentCompiler, { brandKit: kitGoalFr }) as any,
+    goalPdfPath
   );
-  console.log(`  PASS: Rendered ${roadmapPdfPath} (${fs.statSync(roadmapPdfPath).size} bytes)`);
+  console.log(`  PASS: Rendered ${goalPdfPath} (${fs.statSync(goalPdfPath).size} bytes)`);
 
-  // Gate 4: Render Minimal 90-Day Roadmap (US Letter EN, Pro, No QR)
-  console.log('\nGate 4: Rendering Minimal 90-Day Roadmap US Letter EN (Pro, no QR)...');
-  const kitRoadmapEn: BrandKit = {
+  // Gate 4: Render Minimal 90-Day Goal Planner (US Letter EN, Pro, No QR)
+  console.log('\nGate 4: Rendering Minimal 90-Day Goal Planner US Letter EN (Pro, no QR)...');
+  const kitGoalEn: BrandKit = {
     logoUrl: wideLogoB64,
     companyName: 'Vanguard Consulting Partners',
-    tagline: 'Strategic execution & scale',
+    tagline: 'Strategic execution & momentum',
     coachName: 'Sarah Jenkins',
     clientName: 'Acme Global',
     contactEmail: 'partner@vanguard.co',
@@ -122,50 +125,50 @@ async function runAllMinimalGates() {
     paperSize: 'letter',
     documentLang: 'en',
     designStyle: 'minimal',
-    selectedTemplate: 'roadmap-90',
+    selectedTemplate: 'goal-planner-90',
     isPro: true,
     removeWatermark: true,
-    roadmapContent: getDefaultRoadmapContent('en'),
+    goalPlannerContent: getDefaultGoalPlannerContent('en'),
   };
-  const roadmapEnPdfPath = path.join(OUT_DIR, 'minimal-roadmap-letter-en.pdf');
+  const goalEnPdfPath = path.join(OUT_DIR, 'minimal-goal-planner-letter-en.pdf');
   await ReactPDF.renderToFile(
-    React.createElement(DocumentCompiler, { brandKit: kitRoadmapEn }),
-    roadmapEnPdfPath
+    React.createElement(DocumentCompiler, { brandKit: kitGoalEn }) as any,
+    goalEnPdfPath
   );
-  console.log(`  PASS: Rendered ${roadmapEnPdfPath} (${fs.statSync(roadmapEnPdfPath).size} bytes)`);
+  console.log(`  PASS: Rendered ${goalEnPdfPath} (${fs.statSync(goalEnPdfPath).size} bytes)`);
 
-  // Gate 5: Render Minimal Welcome Packet (A4 FR, Free, with QR)
-  console.log('\nGate 5: Rendering Minimal Welcome Packet A4 FR (Free, with QR)...');
-  const kitWelcomeFr: BrandKit = {
+  // Gate 5: Render Minimal Invoice (A4 FR, Free, with QR)
+  console.log('\nGate 5: Rendering Minimal Invoice A4 FR (Free, with QR)...');
+  const kitInvoiceFr: BrandKit = {
     logoUrl: squareLogoB64,
     companyName: 'Agence Digitale Nuance',
-    tagline: 'Partenaire de votre transformation',
+    tagline: 'Services de conseil & création',
     coachName: 'Thomas Laurent',
     clientName: 'Boutique Étoile',
     contactEmail: 'bonjour@agence-nuance.fr',
     brandColor: '#7C3AED',
     contrastText: '#FFFFFF',
-    qrUrl: 'https://agence-nuance.fr/kickoff',
-    qrLabel: 'Planifier votre session',
+    qrUrl: 'https://agence-nuance.fr/payer',
+    qrLabel: 'Paiement en ligne',
     paperSize: 'a4',
     documentLang: 'fr',
     designStyle: 'minimal',
-    selectedTemplate: 'welcome-packet',
+    selectedTemplate: 'invoice',
     isPro: false,
     removeWatermark: false,
-    welcomePacketContent: getDefaultWelcomePacketContent('fr'),
+    invoiceContent: getDefaultInvoiceContent('fr'),
   };
-  const welcomeFrPdfPath = path.join(OUT_DIR, 'minimal-welcome-a4-fr.pdf');
+  const invoiceFrPdfPath = path.join(OUT_DIR, 'minimal-invoice-a4-fr.pdf');
   await ReactPDF.renderToFile(
-    React.createElement(DocumentCompiler, { brandKit: kitWelcomeFr }),
-    welcomeFrPdfPath
+    React.createElement(DocumentCompiler, { brandKit: kitInvoiceFr }) as any,
+    invoiceFrPdfPath
   );
-  console.log(`  PASS: Rendered ${welcomeFrPdfPath} (${fs.statSync(welcomeFrPdfPath).size} bytes)`);
+  console.log(`  PASS: Rendered ${invoiceFrPdfPath} (${fs.statSync(invoiceFrPdfPath).size} bytes)`);
 
-  // Gate 6: Render Minimal Welcome Packet (US Letter DE, Pro, No QR)
-  console.log('\nGate 6: Rendering Minimal Welcome Packet US Letter DE (Pro, no QR)...');
-  const kitWelcomeDe: BrandKit = {
-    logoUrl: null, // Test without logo
+  // Gate 6: Render Minimal Weekly Planner (US Letter DE, Pro, Wordmark typography fallback)
+  console.log('\nGate 6: Rendering Minimal Weekly Planner US Letter DE (Pro, no logo)...');
+  const kitWeeklyDe: BrandKit = {
+    logoUrl: null, // Test clean wordmark fallback
     companyName: 'Klarheit Beratung',
     tagline: 'Strategische Ausrichtung für Macher',
     coachName: 'Lukas Weber',
@@ -177,17 +180,17 @@ async function runAllMinimalGates() {
     paperSize: 'letter',
     documentLang: 'de',
     designStyle: 'minimal',
-    selectedTemplate: 'welcome-packet',
+    selectedTemplate: 'weekly-planner',
     isPro: true,
     removeWatermark: true,
-    welcomePacketContent: getDefaultWelcomePacketContent('de'),
+    weeklyPlannerContent: getDefaultWeeklyPlannerContent('de'),
   };
-  const welcomeDePdfPath = path.join(OUT_DIR, 'minimal-welcome-letter-de.pdf');
+  const weeklyDePdfPath = path.join(OUT_DIR, 'minimal-weekly-letter-de.pdf');
   await ReactPDF.renderToFile(
-    React.createElement(DocumentCompiler, { brandKit: kitWelcomeDe }),
-    welcomeDePdfPath
+    React.createElement(DocumentCompiler, { brandKit: kitWeeklyDe }) as any,
+    weeklyDePdfPath
   );
-  console.log(`  PASS: Rendered ${welcomeDePdfPath} (${fs.statSync(welcomeDePdfPath).size} bytes)`);
+  console.log(`  PASS: Rendered ${weeklyDePdfPath} (${fs.statSync(weeklyDePdfPath).size} bytes)`);
 
   if (failures > 0) {
     console.error(`\nFAILED with ${failures} error(s)!`);

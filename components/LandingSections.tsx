@@ -174,12 +174,12 @@ export const LandingSections: React.FC<LandingSectionsProps> = ({
               </button>
             </div>
 
-            {/* Card 2: Minimal 90-Day Roadmap */}
+            {/* Card 2: Minimal 90-Day Goal Planner */}
             <div className="rounded-2xl border border-slate-200/90 dark:border-slate-800 p-6 flex flex-col justify-between space-y-4 hover:border-indigo-400 dark:hover:border-indigo-500 transition-colors bg-white dark:bg-slate-900 shadow-xs">
               <div className="space-y-3">
                 <div className="flex items-center justify-between">
                   <span className="text-[10px] font-extrabold uppercase px-2 py-0.5 rounded bg-indigo-50 dark:bg-indigo-950 text-indigo-600 dark:text-indigo-400">
-                    Consultants & Advisors
+                    Quarterly Goals
                   </span>
                   <span className="text-[9px] font-mono font-semibold px-1.5 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-slate-500">
                     A4 & Letter • Portrait
@@ -208,8 +208,8 @@ export const LandingSections: React.FC<LandingSectionsProps> = ({
                     ))}
                   </div>
                   <div className="flex justify-between items-center text-[8px] text-slate-400 border-t border-slate-200/60 dark:border-slate-800 pt-1">
-                    <span>3 Horizontal Phases</span>
-                    <span>Signature Block</span>
+                    <span>3 Monthly Blocks</span>
+                    <span>Weekly Check-ins</span>
                   </div>
                 </div>
 
@@ -225,7 +225,7 @@ export const LandingSections: React.FC<LandingSectionsProps> = ({
               <button
                 type="button"
                 onClick={() => {
-                  onSelectTemplate('roadmap-90');
+                  onSelectTemplate('goal-planner-90');
                   scrollToStudio();
                 }}
                 className="w-full py-2 px-3 rounded-lg border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-800 text-xs font-bold text-slate-700 dark:text-slate-200 flex items-center justify-center space-x-1 transition-colors"
@@ -235,12 +235,12 @@ export const LandingSections: React.FC<LandingSectionsProps> = ({
               </button>
             </div>
 
-            {/* Card 3: Minimal Welcome Packet */}
+            {/* Card 3: Minimal Business Invoice */}
             <div className="rounded-2xl border border-slate-200/90 dark:border-slate-800 p-6 flex flex-col justify-between space-y-4 hover:border-indigo-400 dark:hover:border-indigo-500 transition-colors bg-white dark:bg-slate-900 shadow-xs">
               <div className="space-y-3">
                 <div className="flex items-center justify-between">
                   <span className="text-[10px] font-extrabold uppercase px-2 py-0.5 rounded bg-indigo-50 dark:bg-indigo-950 text-indigo-600 dark:text-indigo-400">
-                    Freelancers & Agencies
+                    Business & Freelance
                   </span>
                   <span className="text-[9px] font-mono font-semibold px-1.5 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-slate-500">
                     A4 & Letter • Portrait
@@ -260,30 +260,26 @@ export const LandingSections: React.FC<LandingSectionsProps> = ({
                       <div className="h-4 bg-slate-100 dark:bg-slate-800 border border-slate-200/60 dark:border-slate-700 rounded-xs" />
                       <div className="h-4 bg-slate-100 dark:bg-slate-800 border border-slate-200/60 dark:border-slate-700 rounded-xs" />
                     </div>
-                    <div className="flex items-center space-x-1">
-                      <div className="w-2 h-2 rounded-xs border border-slate-400 dark:border-slate-600" />
-                      <div className="h-1 bg-slate-200 dark:bg-slate-700 rounded flex-1" />
-                    </div>
                   </div>
                   <div className="flex justify-between items-center text-[8px] text-slate-400 border-t border-slate-200/60 dark:border-slate-800 pt-1">
-                    <span>Guidelines & SLAs</span>
-                    <span>72h Kickoff List</span>
+                    <span>Line Items & Tax</span>
+                    <span>Bank Payment Block</span>
                   </div>
                 </div>
 
                 <div>
                   <h3 className="text-base font-bold text-slate-900 dark:text-white">
-                    {t.templateWelcomeTitle}
+                    Facture & Devis simples
                   </h3>
                   <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed mt-1">
-                    {t.templateWelcomeDesc}
+                    Mise en page épurée avec lignes d’articles, calcul de taxes et coordonnées bancaires
                   </p>
                 </div>
               </div>
               <button
                 type="button"
                 onClick={() => {
-                  onSelectTemplate('welcome-packet');
+                  onSelectTemplate('invoice');
                   scrollToStudio();
                 }}
                 className="w-full py-2 px-3 rounded-lg border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-800 text-xs font-bold text-slate-700 dark:text-slate-200 flex items-center justify-center space-x-1 transition-colors"

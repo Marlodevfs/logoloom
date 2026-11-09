@@ -80,21 +80,6 @@ export interface DocumentContent {
     leadSign: string;
     qrPrompt: string;
   };
-  welcomePacket: {
-    title: string;
-    subtitle: string;
-    welcomeHeader: string;
-    welcomeBody: string;
-    commHeader: string;
-    commSub: string;
-    commItems: { label: string; text: string }[];
-    agreementsHeader: string;
-    agreements: { title: string; desc: string }[];
-    firstStepsHeader: string;
-    firstSteps: string[];
-    schedulePrompt: string;
-    qrPrompt: string;
-  };
   footer: {
     madeWith: string;
     confidential: string;
@@ -206,35 +191,6 @@ export const DOCUMENT_TRANSLATIONS: Record<DocumentLang, DocumentContent> = {
       leadSign: 'Lead Coach / Advisor Signature',
       qrPrompt: 'Scan to access project workspace and files',
     },
-    welcomePacket: {
-      title: 'Client Welcome & Onboarding Guide',
-      subtitle: 'Clear rules of engagement, communication standards, and first 72-hour kickoff checklist.',
-      welcomeHeader: 'Welcome to our strategic partnership',
-      welcomeBody: 'We are thrilled to embark on this journey together. Our mission is to produce tangible, high-leverage outcomes through rigorous execution and transparent collaboration. This packet sets out our shared principles for success.',
-      commHeader: 'Communication Protocols & Response Times',
-      commSub: 'How we coordinate effectively to respect focus time and eliminate ambiguity',
-      commItems: [
-        { label: 'Primary Channel', text: 'Asynchronous updates and file sharing via dedicated Slack / portal' },
-        { label: 'Response SLA', text: 'All written inquiries answered within 24 business hours (Mon–Fri)' },
-        { label: 'Weekly Check-in', text: '45-minute focused strategy call at your scheduled weekly recurring slot' },
-        { label: 'Urgent Matters', text: 'Direct SMS / phone escalation for mission-critical production blockers' },
-      ],
-      agreementsHeader: 'Core Working Agreements',
-      agreements: [
-        { title: 'Radical Ownership', desc: 'We take complete responsibility for deliverables and expect client commitment to agreed action items.' },
-        { title: 'No-Surprise Transparency', desc: 'Obstacles and timeline risks are flagged immediately so we can pivot collaboratively without drama.' },
-        { title: 'Protected Deep Work', desc: 'We favor asynchronous clarity over unnecessary meetings to maximize high-value thinking.' },
-      ],
-      firstStepsHeader: 'First 72-Hour Kickoff Checklist',
-      firstSteps: [
-        'Complete the client discovery questionnaire (estimated 15 mins)',
-        'Accept invitations to shared workspace, Google Drive, and dashboard',
-        'Upload your brand assets, historical data, and relevant logins',
-        'Confirm attendance for our official Kickoff Strategy Session',
-      ],
-      schedulePrompt: 'Schedule your Kickoff Strategy Session via the QR code below',
-      qrPrompt: 'Scan to schedule your Kickoff Session',
-    },
     footer: {
       madeWith: 'Document generated with LogoLoom',
       confidential: 'Client document',
@@ -343,35 +299,6 @@ export const DOCUMENT_TRANSLATIONS: Record<DocumentLang, DocumentContent> = {
       clientSign: 'Signature du Représentant Client',
       leadSign: 'Signature du Coach / Consultant Référent',
       qrPrompt: 'Scannez pour accéder à l’espace de travail partagé',
-    },
-    welcomePacket: {
-      title: 'Guide d’Accueil & Protocoles de Partenariat',
-      subtitle: 'Règles du jeu partagées, standards de communication et checklist des 72 premières heures.',
-      welcomeHeader: 'Bienvenue dans notre partenariat stratégique',
-      welcomeBody: 'Nous sommes honorés d’entamer ce travail à vos côtés. Notre engagement consiste à générer des résultats tangibles et mesurables grâce à une exécution rigoureuse et une communication limpide. Ce livret pose les fondations de notre réussite commune.',
-      commHeader: 'Protocoles de Communication & Délais de Réponse',
-      commSub: 'Comment nous collaborons efficacement sans réunions inutiles',
-      commItems: [
-        { label: 'Canal Principal', text: 'Échanges asynchrones et partage de documents via Slack ou portail dédié' },
-        { label: 'Délai Garanti', text: 'Réponse apportée sous 24 heures ouvrées maximum (du lundi au vendredi)' },
-        { label: 'Point Hebdo', text: 'Session de travail stratégique de 45 minutes sur votre créneau récurrent' },
-        { label: 'Urgence Critique', text: 'Escalade directe par SMS ou téléphone en cas de blocage opérationnel' },
-      ],
-      agreementsHeader: 'Nos Accords de Fonctionnement',
-      agreements: [
-        { title: 'Responsabilité Partagée', desc: 'Nous nous engageons sur l’excellence des livrables et comptons sur votre rigueur d’exécution.' },
-        { title: 'Transparence Sans Surprise', desc: 'Les difficultés éventuelles sont partagées immédiatement pour pivoter ensemble sereinement.' },
-        { title: 'Respect du Travail Profond', desc: 'Nous privilégions la clarté écrite aux interruptions incessantes pour maximiser la réflexion.' },
-      ],
-      firstStepsHeader: 'Checklist des 72 Premières Heures',
-      firstSteps: [
-        'Compléter le questionnaire initial de cadrage (durée estimée : 15 min)',
-        'Accepter les invitations vers l’espace collaboratif, Drive et tableau de bord',
-        'Déposer vos éléments graphiques, données clés et accès utiles',
-        'Confirmer la date de notre session Kickoff dans votre agenda',
-      ],
-      schedulePrompt: 'Planifiez votre Session Kickoff de démarrage via le QR code ci-dessous',
-      qrPrompt: 'Scannez pour planifier votre séance de cadrage',
     },
     footer: {
       madeWith: 'Document créé avec LogoLoom',
@@ -482,35 +409,6 @@ export const DOCUMENT_TRANSLATIONS: Record<DocumentLang, DocumentContent> = {
       leadSign: 'Unterschrift Leitender Coach / Berater',
       qrPrompt: 'Scannen für Zugriff auf Projektdateien',
     },
-    welcomePacket: {
-      title: 'Willkommenspaket & Zusammenarbeitsstandards',
-      subtitle: 'Gemeinsame Spielregeln, Kommunikationsstandards und Checkliste für die ersten 72 Stunden.',
-      welcomeHeader: 'Willkommen zu unserer strategischen Zusammenarbeit',
-      welcomeBody: 'Wir freuen uns sehr auf diesen gemeinsamen Weg. Unser Anspruch ist es, durch präzise Umsetzung und transparente Abstimmung messbare Resultate zu erzielen. Dieser Leitfaden bildet das solide Fundament unseres gemeinsamen Erfolgs.',
-      commHeader: 'Kommunikationsregeln & Reaktionszeiten',
-      commSub: 'Wie wir fokussiert und ohne unnötige Meetings zusammenarbeiten',
-      commItems: [
-        { label: 'Hauptkanal', text: 'Asynchroner Austausch und Dateifreigabe über dedizierten Slack-Kanal' },
-        { label: 'Reaktionszeit', text: 'Rückmeldung auf alle schriftlichen Anfragen innerhalb von 24 Werktagsstunden' },
-        { label: 'Wochengespräch', text: '45-minütiges strategisches Fokusgespräch im fest vereinbarten Zeitfenster' },
-        { label: 'Dringendes', text: 'Direkte telefonische Eskalation bei geschäftskritischen Engpässen' },
-      ],
-      agreementsHeader: 'Unsere gemeinsamen Vereinbarungen',
-      agreements: [
-        { title: 'Volle Eigenverantwortung', desc: 'Wir bürgen für exzellente Ergebnisse und bauen auf Ihre konsequente Mitarbeit.' },
-        { title: 'Offene Transparenz', desc: 'Herausforderungen werden sofort geteilt, um gemeinsam lösungsorientiert zu handeln.' },
-        { title: 'Geschützter Fokus', desc: 'Wir schätzen durchdachte schriftliche Klarheit mehr als zeitraubende Ad-hoc-Treffen.' },
-      ],
-      firstStepsHeader: 'Checkliste für die ersten 72 Stunden',
-      firstSteps: [
-        'Erstfragebogen zur Bestandsaufnahme ausfüllen (ca. 15 Minuten)',
-        'Zugang zum geteilten Workspace, Cloud-Speicher und Dashboard bestätigen',
-        'Vorhandene Markendaten, Kennzahlen und Zugänge hochladen',
-        'Termin für das offizielle Kickoff-Strategiegespräch im Kalender sichern',
-      ],
-      schedulePrompt: 'Buchen Sie Ihr Kickoff-Strategiegespräch über den QR-Code unten',
-      qrPrompt: 'Scannen für Terminbuchung der Kickoff-Session',
-    },
     footer: {
       madeWith: 'Erstellt mit LogoLoom',
       confidential: 'Vertraulich & Geschützt',
@@ -619,35 +517,6 @@ export const DOCUMENT_TRANSLATIONS: Record<DocumentLang, DocumentContent> = {
       clientSign: 'Firma del Representante del Cliente',
       leadSign: 'Firma del Coach / Asesor Principal',
       qrPrompt: 'Escanea para acceder al espacio de trabajo compartido',
-    },
-    welcomePacket: {
-      title: 'Guía de Bienvenida & Protocolos de Colaboración',
-      subtitle: 'Estándares de comunicación, acuerdos de trabajo y lista de verificación de las primeras 72 horas.',
-      welcomeHeader: 'Bienvenido a nuestra colaboración estratégica',
-      welcomeBody: 'Es un honor iniciar este proceso juntos. Nuestro objetivo es generar resultados tangibles y medibles a través de una ejecución disciplinada y una comunicación impecable. Esta guía sienta las bases de nuestro éxito mutuo.',
-      commHeader: 'Protocolos de Comunicación & Tiempos de Respuesta',
-      commSub: 'Cómo colaboramos de forma eficiente sin reuniones innecesarias',
-      commItems: [
-        { label: 'Canal Principal', text: 'Mensajería asincrónica y documentos mediante canal dedicado de Slack' },
-        { label: 'Tiempo de Respuesta', text: 'Respuestas a consultas escritas en un máximo de 24 horas laborables' },
-        { label: 'Sesión Semanal', text: 'Reunión de estrategia enfocada de 45 minutos en tu franja asignada' },
-        { label: 'Urgencias', text: 'Contacto telefónico o SMS directo para imprevistos críticos de alta prioridad' },
-      ],
-      agreementsHeader: 'Nuestros Acuerdos de Funcionamiento',
-      agreements: [
-        { title: 'Responsabilidad Plena', desc: 'Nos comprometemos con la excelencia de los resultados y contamos con tu disciplina.' },
-        { title: 'Transparencia Total', desc: 'Cualquier obstáculo se comunica de inmediato para encontrar soluciones juntos.' },
-        { title: 'Respeto al Enfoque', desc: 'Priorizamos la claridad escrita sobre reuniones que interrumpan el trabajo profundo.' },
-      ],
-      firstStepsHeader: 'Lista de Primeros Pasos (Primeras 72 Horas)',
-      firstSteps: [
-        'Completar el cuestionario inicial de diagnóstico (aprox. 15 minutos)',
-        'Aceptar invitaciones al espacio compartido, almacenamiento y panel',
-        'Subir archivos de marca, información histórica y accesos necesarios',
-        'Confirmar la fecha de nuestra Sesión Kickoff de inicio en tu agenda',
-      ],
-      schedulePrompt: 'Agenda tu Sesión Kickoff de inicio escaneando el código QR abajo',
-      qrPrompt: 'Escanea para agendar tu Sesión Kickoff',
     },
     footer: {
       madeWith: 'Documento generado con LogoLoom',
@@ -758,35 +627,6 @@ export const DOCUMENT_TRANSLATIONS: Record<DocumentLang, DocumentContent> = {
       leadSign: 'Assinatura do Coach / Consultor Responsável',
       qrPrompt: 'Escaneie para acessar os arquivos do projeto',
     },
-    welcomePacket: {
-      title: 'Guia de Boas-Vindas & Padrões de Parceria',
-      subtitle: 'Normas de comunicação, acordos de trabalho e lista de verificação das primeiras 72 horas.',
-      welcomeHeader: 'Boas-vindas à nossa parceria estratégica',
-      welcomeBody: 'É uma honra iniciar esta jornada com você. Nosso objetivo é produzir resultados concretos e mensuráveis com rigor técnico e transparência absoluta. Este material estabelece as bases sólidas do nosso sucesso compartilhado.',
-      commHeader: 'Protocolos de Comunicação & Prazos de Resposta',
-      commSub: 'Como trabalhamos de forma ágil sem reuniões desnecessárias',
-      commItems: [
-        { label: 'Canal Principal', text: 'Mensagens assíncronas e envio de documentos pelo Slack dedicado' },
-        { label: 'Tempo de Resposta', text: 'Retorno para todas as dúvidas em até 24 horas úteis (segunda a sexta)' },
-        { label: 'Sessão Semanal', text: 'Reunião estratégica de 45 minutos no horário fixo reservado na agenda' },
-        { label: 'Urgências', text: 'Contato telefônico direto ou SMS para demandas operacionais críticas' },
-      ],
-      agreementsHeader: 'Nossos Compromissos Operacionais',
-      agreements: [
-        { title: 'Responsabilidade Total', desc: 'Entregamos o melhor padrão e contamos com sua dedicação na execução.' },
-        { title: 'Transparência Imediata', desc: 'Dificuldades são comunicadas na hora para buscarmos soluções conjuntas.' },
-        { title: 'Respeito ao Foco', desc: 'Valorizamos a clareza escrita para proteger o tempo de trabalho aprofundado.' },
-      ],
-      firstStepsHeader: 'Lista de Primeiros Passos (Primeiras 72 Horas)',
-      firstSteps: [
-        'Preencher o questionário de alinhamento inicial (cerca de 15 minutos)',
-        'Aceitar convites para o espaço compartilhado, nuvem e painel',
-        'Disponibilizar ativos de marca, relatórios anteriores e acessos',
-        'Confirmar na sua agenda o horário da nossa Sessão Kickoff oficial',
-      ],
-      schedulePrompt: 'Agende sua Sessão Kickoff de início pelo código QR abaixo',
-      qrPrompt: 'Escaneie para agendar sua Sessão Kickoff',
-    },
     footer: {
       madeWith: 'Documento gerado com LogoLoom',
       confidential: 'Documento Confidencial & Exclusivo',
@@ -895,35 +735,6 @@ export const DOCUMENT_TRANSLATIONS: Record<DocumentLang, DocumentContent> = {
       clientSign: 'Firma del Rappresentante del Cliente',
       leadSign: 'Firma del Coach / Consulente Referente',
       qrPrompt: 'Scansiona per accedere ai documenti del progetto',
-    },
-    welcomePacket: {
-      title: 'Guida di Benvenuto & Standard di Collaborazione',
-      subtitle: 'Accordi di lavoro, protocolli di comunicazione e lista di controllo per le prime 72 ore.',
-      welcomeHeader: 'Benvenuto nella nostra collaborazione strategica',
-      welcomeBody: 'Siamo onorati di iniziare questo percorso al tuo fianco. La nostra missione è generare risultati concreti e misurabili attraverso un’esecuzione attenta ed una comunicazione cristallina. Questa guida stabilisce le fondamenta del nostro successo comune.',
-      commHeader: 'Protocolli di Comunicazione & Tempi di Risposta',
-      commSub: 'Come lavoriamo con efficacia senza riunioni superflue',
-      commItems: [
-        { label: 'Canale Principale', text: 'Messaggistica asincrona e scambio file su canale Slack dedicato' },
-        { label: 'Tempo di Risposta', text: 'Risposta a tutte le richieste scritte entro 24 ore lavorative' },
-        { label: 'Sessione Settimanale', text: 'Incontro strategico mirato di 45 minuti nello slot orario ricorrente' },
-        { label: 'Urgenze Critiche', text: 'Chiamata telefonica diretta o SMS per blocchi operativi essenziali' },
-      ],
-      agreementsHeader: 'I Nostri Accordi Operativi',
-      agreements: [
-        { title: 'Responsabilità Condivisa', desc: 'Garantiamo la massima qualità e contiamo sulla tua costanza applicativa.' },
-        { title: 'Trasparenza Immediata', desc: 'Ogni ostacolo viene condiviso subito per trovare soluzioni insieme.' },
-        { title: 'Rispetto della Concentrazione', desc: 'Preferiamo la precisione scritta rispetto alle continue interruzioni.' },
-      ],
-      firstStepsHeader: 'Lista di Controllo per le Prime 72 Ore',
-      firstSteps: [
-        'Completare il questionario iniziale di inquadramento (circa 15 minuti)',
-        'Accettare gli inviti all’area di lavoro condivisa, cloud e cruscotto',
-        'Caricare risorse del brand, dati storici ed accessi operativi',
-        'Confermare in agenda la data della Sessione Kickoff iniziale',
-      ],
-      schedulePrompt: 'Prenota la tua Sessione Kickoff iniziale tramite il codice QR qui sotto',
-      qrPrompt: 'Scansiona per prenotare la tua Sessione Kickoff',
     },
     footer: {
       madeWith: 'Documento creato con LogoLoom',

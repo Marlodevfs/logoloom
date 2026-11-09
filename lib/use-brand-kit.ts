@@ -7,19 +7,41 @@ import {
   DocumentLang,
   HabitPackId,
   HabitTrackerCustomContent,
-  RoadmapCustomContent,
-  WelcomePacketCustomContent,
+  GoalPlannerCustomContent,
+  WeeklyPlannerCustomContent,
+  MonthlyCalendarCustomContent,
+  DailyPrioritiesCustomContent,
+  MealPlannerCustomContent,
+  BudgetTrackerCustomContent,
+  QuoteCustomContent,
+  InvoiceCustomContent,
+  PriceListCustomContent,
+  ClientTrackerCustomContent,
+  ChecklistCustomContent,
   InterfaceLang,
   TemplateId,
 } from '@/types';
 import { extractDominantColorFromImage, ensureAccessibleOnWhite, getOptimalTextColor } from './color-engine';
 import { HABIT_PACKS } from './i18n/habit-packs';
 import { DOCUMENT_TRANSLATIONS } from './i18n/documents';
+import {
+  DEFAULT_GOAL_PLANNER,
+  DEFAULT_WEEKLY_PLANNER,
+  DEFAULT_MONTHLY_CALENDAR,
+  DEFAULT_DAILY_PRIORITIES,
+  DEFAULT_MEAL_PLANNER,
+  DEFAULT_BUDGET_TRACKER,
+  DEFAULT_QUOTE,
+  DEFAULT_INVOICE,
+  DEFAULT_PRICE_LIST,
+  DEFAULT_CLIENT_TRACKER,
+  DEFAULT_CHECKLIST,
+} from './i18n/catalog-data';
 
-const STORAGE_KEY = 'logoloom_brand_kit_v2';
-const TEMPLATE_KEY = 'logoloom_template_id_v2';
-const INTERFACE_LANG_KEY = 'logoloom_ui_lang_v2';
-const STYLE_KEY = 'logoloom_design_style_v1';
+const STORAGE_KEY = 'logoloom_brand_kit_v3';
+const TEMPLATE_KEY = 'logoloom_template_id_v3';
+const INTERFACE_LANG_KEY = 'logoloom_ui_lang_v3';
+const STYLE_KEY = 'logoloom_design_style_v2';
 const PRO_TOKEN_KEY = 'logoloom_pro_token_v1';
 
 // Elegant default sample logo (Vector SVG Data URL base64) so new users immediately see a gorgeous branded preview
@@ -62,67 +84,48 @@ export function getDefaultHabitTrackerContent(
   };
 }
 
-export function getDefaultRoadmapContent(lang: DocumentLang): RoadmapCustomContent {
-  const t = (DOCUMENT_TRANSLATIONS[lang] || DOCUMENT_TRANSLATIONS.en).roadmap90;
-  const missions: Record<DocumentLang, string> = {
-    fr: 'Optimisation opérationnelle & Accélération',
-    en: 'Operational Excellence & Growth',
-    de: 'Operative Exzellenz & Skalierung',
-    es: 'Excelencia Operativa & Crecimiento',
-    it: 'Eccellenza Operativa & Crescita',
-    pt: 'Excelência Operacional & Crescimento',
-  };
-  const horizons: Record<DocumentLang, string> = {
-    fr: '90 jours ouvrés',
-    en: '90 Business Days',
-    de: '90 Arbeitstage',
-    es: '90 días laborables',
-    it: '90 giorni lavorativi',
-    pt: '90 dias úteis',
-  };
-
-  return {
-    title: t.title,
-    subtitle: t.subtitle,
-    mission: missions[lang] || missions.en,
-    horizon: horizons[lang] || horizons.en,
-    phases: [
-      {
-        title: t.phase1.title,
-        daysLabel: t.phase1.range,
-        deliverables: [...t.phase1.deliverables],
-        kpi: t.phase1.kpiValue,
-      },
-      {
-        title: t.phase2.title,
-        daysLabel: t.phase2.range,
-        deliverables: [...t.phase2.deliverables],
-        kpi: t.phase2.kpiValue,
-      },
-      {
-        title: t.phase3.title,
-        daysLabel: t.phase3.range,
-        deliverables: [...t.phase3.deliverables],
-        kpi: t.phase3.kpiValue,
-      },
-    ],
-    showSignatureBlock: true,
-  };
+export function getDefaultGoalPlannerContent(lang: DocumentLang): GoalPlannerCustomContent {
+  return DEFAULT_GOAL_PLANNER[lang] || DEFAULT_GOAL_PLANNER.en;
 }
 
-export function getDefaultWelcomePacketContent(lang: DocumentLang): WelcomePacketCustomContent {
-  const t = (DOCUMENT_TRANSLATIONS[lang] || DOCUMENT_TRANSLATIONS.en).welcomePacket;
-  return {
-    title: t.title,
-    subtitle: t.subtitle,
-    welcomeMessage: t.welcomeBody,
-    channels: t.commItems[0]?.text || '',
-    turnaroundTime: t.commItems[1]?.text || '',
-    meetingRhythm: t.commItems[2]?.text || '',
-    urgentProcedure: t.commItems[3]?.text || '',
-    workingAgreements: t.agreements.map((a) => ({ title: a.title, description: a.desc })),
-    checklist72h: [...t.firstSteps],
-  };
+export function getDefaultWeeklyPlannerContent(lang: DocumentLang): WeeklyPlannerCustomContent {
+  return DEFAULT_WEEKLY_PLANNER[lang] || DEFAULT_WEEKLY_PLANNER.en;
+}
+
+export function getDefaultMonthlyCalendarContent(lang: DocumentLang): MonthlyCalendarCustomContent {
+  return DEFAULT_MONTHLY_CALENDAR[lang] || DEFAULT_MONTHLY_CALENDAR.en;
+}
+
+export function getDefaultDailyPrioritiesContent(lang: DocumentLang): DailyPrioritiesCustomContent {
+  return DEFAULT_DAILY_PRIORITIES[lang] || DEFAULT_DAILY_PRIORITIES.en;
+}
+
+export function getDefaultMealPlannerContent(lang: DocumentLang): MealPlannerCustomContent {
+  return DEFAULT_MEAL_PLANNER[lang] || DEFAULT_MEAL_PLANNER.en;
+}
+
+export function getDefaultBudgetTrackerContent(lang: DocumentLang): BudgetTrackerCustomContent {
+  return DEFAULT_BUDGET_TRACKER[lang] || DEFAULT_BUDGET_TRACKER.en;
+}
+
+export function getDefaultQuoteContent(lang: DocumentLang): QuoteCustomContent {
+  return DEFAULT_QUOTE[lang] || DEFAULT_QUOTE.en;
+}
+
+export function getDefaultInvoiceContent(lang: DocumentLang): InvoiceCustomContent {
+  return DEFAULT_INVOICE[lang] || DEFAULT_INVOICE.en;
+}
+
+export function getDefaultPriceListContent(lang: DocumentLang): PriceListCustomContent {
+  return DEFAULT_PRICE_LIST[lang] || DEFAULT_PRICE_LIST.en;
+}
+
+export function getDefaultClientTrackerContent(lang: DocumentLang): ClientTrackerCustomContent {
+  return DEFAULT_CLIENT_TRACKER[lang] || DEFAULT_CLIENT_TRACKER.en;
+}
+
+export function getDefaultChecklistContent(lang: DocumentLang): ChecklistCustomContent {
+  return DEFAULT_CHECKLIST[lang] || DEFAULT_CHECKLIST.en;
 }
 
 export const DEFAULT_BRAND_KIT: BrandKit = {
@@ -141,7 +144,24 @@ export const DEFAULT_BRAND_KIT: BrandKit = {
   designStyle: 'minimal', // Minimal is the DEFAULT design style
   isPro: false,
   removeWatermark: false,
+  weekStart: 'monday',
+  currency: '€',
 };
+
+const VALID_TEMPLATES: TemplateId[] = [
+  'habit-tracker',
+  'goal-planner-90',
+  'weekly-planner',
+  'monthly-calendar',
+  'daily-priorities',
+  'meal-planner',
+  'budget-tracker',
+  'quote',
+  'invoice',
+  'price-list',
+  'client-tracker',
+  'checklist',
+];
 
 export function useBrandKit(initialLang?: InterfaceLang) {
   const initialDocLang: DocumentLang = initialLang || 'en';
@@ -150,8 +170,17 @@ export function useBrandKit(initialLang?: InterfaceLang) {
     ...DEFAULT_BRAND_KIT,
     documentLang: initialDocLang,
     habitTrackerContent: getDefaultHabitTrackerContent(initialDocLang, 'wellbeing'),
-    roadmapContent: getDefaultRoadmapContent(initialDocLang),
-    welcomePacketContent: getDefaultWelcomePacketContent(initialDocLang),
+    goalPlannerContent: getDefaultGoalPlannerContent(initialDocLang),
+    weeklyPlannerContent: getDefaultWeeklyPlannerContent(initialDocLang),
+    monthlyCalendarContent: getDefaultMonthlyCalendarContent(initialDocLang),
+    dailyPrioritiesContent: getDefaultDailyPrioritiesContent(initialDocLang),
+    mealPlannerContent: getDefaultMealPlannerContent(initialDocLang),
+    budgetTrackerContent: getDefaultBudgetTrackerContent(initialDocLang),
+    quoteContent: getDefaultQuoteContent(initialDocLang),
+    invoiceContent: getDefaultInvoiceContent(initialDocLang),
+    priceListContent: getDefaultPriceListContent(initialDocLang),
+    clientTrackerContent: getDefaultClientTrackerContent(initialDocLang),
+    checklistContent: getDefaultChecklistContent(initialDocLang),
   }));
 
   const [activeTemplate, setActiveTemplate] = useState<TemplateId>('habit-tracker');
@@ -178,7 +207,7 @@ export function useBrandKit(initialLang?: InterfaceLang) {
         setInterfaceLangState(resolvedUiLang);
 
         const savedTemplate = localStorage.getItem(TEMPLATE_KEY) as TemplateId;
-        if (savedTemplate && ['habit-tracker', 'roadmap-90', 'welcome-packet'].includes(savedTemplate)) {
+        if (savedTemplate && VALID_TEMPLATES.includes(savedTemplate)) {
           setActiveTemplate(savedTemplate);
         }
 
@@ -192,33 +221,26 @@ export function useBrandKit(initialLang?: InterfaceLang) {
           const docLang: DocumentLang = isUrlLocaleSpecified
             ? (initialLang as DocumentLang)
             : (parsed.documentLang || (resolvedUiLang as DocumentLang));
-          const shouldRefreshLanguageContent = isUrlLocaleSpecified && parsed.documentLang !== initialLang;
-
-          const isStaleCrossLanguage = (content: any, type: 'habitTracker' | 'roadmap90' | 'welcomePacket') => {
-            if (!content || !content.title) return false;
-            return Object.entries(DOCUMENT_TRANSLATIONS).some(
-              ([lCode, tDoc]) => lCode !== docLang && tDoc[type]?.title === content.title
-            );
-          };
-
-          const staleHabits = isStaleCrossLanguage(parsed.habitTrackerContent, 'habitTracker');
-          const staleRoadmap = isStaleCrossLanguage(parsed.roadmapContent, 'roadmap90');
-          const staleWelcome = isStaleCrossLanguage(parsed.welcomePacketContent, 'welcomePacket');
 
           setBrandKit((prev) => ({
             ...prev,
             ...parsed,
             designStyle: parsed.designStyle || initialStyle,
             documentLang: docLang,
-            habitTrackerContent: shouldRefreshLanguageContent || staleHabits || !parsed.habitTrackerContent
-              ? getDefaultHabitTrackerContent(docLang, parsed.habitTrackerContent?.packId || 'wellbeing')
-              : parsed.habitTrackerContent,
-            roadmapContent: shouldRefreshLanguageContent || staleRoadmap || !parsed.roadmapContent
-              ? getDefaultRoadmapContent(docLang)
-              : parsed.roadmapContent,
-            welcomePacketContent: shouldRefreshLanguageContent || staleWelcome || !parsed.welcomePacketContent
-              ? getDefaultWelcomePacketContent(docLang)
-              : parsed.welcomePacketContent,
+            weekStart: parsed.weekStart || 'monday',
+            currency: parsed.currency || '€',
+            habitTrackerContent: parsed.habitTrackerContent || getDefaultHabitTrackerContent(docLang, 'wellbeing'),
+            goalPlannerContent: parsed.goalPlannerContent || getDefaultGoalPlannerContent(docLang),
+            weeklyPlannerContent: parsed.weeklyPlannerContent || getDefaultWeeklyPlannerContent(docLang),
+            monthlyCalendarContent: parsed.monthlyCalendarContent || getDefaultMonthlyCalendarContent(docLang),
+            dailyPrioritiesContent: parsed.dailyPrioritiesContent || getDefaultDailyPrioritiesContent(docLang),
+            mealPlannerContent: parsed.mealPlannerContent || getDefaultMealPlannerContent(docLang),
+            budgetTrackerContent: parsed.budgetTrackerContent || getDefaultBudgetTrackerContent(docLang),
+            quoteContent: parsed.quoteContent || getDefaultQuoteContent(docLang),
+            invoiceContent: parsed.invoiceContent || getDefaultInvoiceContent(docLang),
+            priceListContent: parsed.priceListContent || getDefaultPriceListContent(docLang),
+            clientTrackerContent: parsed.clientTrackerContent || getDefaultClientTrackerContent(docLang),
+            checklistContent: parsed.checklistContent || getDefaultChecklistContent(docLang),
             isPro: false,
             removeWatermark: false,
           }));
@@ -228,8 +250,17 @@ export function useBrandKit(initialLang?: InterfaceLang) {
             designStyle: initialStyle,
             documentLang: resolvedUiLang as DocumentLang,
             habitTrackerContent: getDefaultHabitTrackerContent(resolvedUiLang as DocumentLang, 'wellbeing'),
-            roadmapContent: getDefaultRoadmapContent(resolvedUiLang as DocumentLang),
-            welcomePacketContent: getDefaultWelcomePacketContent(resolvedUiLang as DocumentLang),
+            goalPlannerContent: getDefaultGoalPlannerContent(resolvedUiLang as DocumentLang),
+            weeklyPlannerContent: getDefaultWeeklyPlannerContent(resolvedUiLang as DocumentLang),
+            monthlyCalendarContent: getDefaultMonthlyCalendarContent(resolvedUiLang as DocumentLang),
+            dailyPrioritiesContent: getDefaultDailyPrioritiesContent(resolvedUiLang as DocumentLang),
+            mealPlannerContent: getDefaultMealPlannerContent(resolvedUiLang as DocumentLang),
+            budgetTrackerContent: getDefaultBudgetTrackerContent(resolvedUiLang as DocumentLang),
+            quoteContent: getDefaultQuoteContent(resolvedUiLang as DocumentLang),
+            invoiceContent: getDefaultInvoiceContent(resolvedUiLang as DocumentLang),
+            priceListContent: getDefaultPriceListContent(resolvedUiLang as DocumentLang),
+            clientTrackerContent: getDefaultClientTrackerContent(resolvedUiLang as DocumentLang),
+            checklistContent: getDefaultChecklistContent(resolvedUiLang as DocumentLang),
           }));
         }
 
@@ -301,13 +332,22 @@ export function useBrandKit(initialLang?: InterfaceLang) {
         next.contrastText = getOptimalTextColor(accessibleColor);
       }
 
-      // When document language changes in Step 4, synchronize content defaults
+      // When document language changes, synchronize content defaults
       if (updates.documentLang && updates.documentLang !== prev.documentLang) {
         const dLang = updates.documentLang;
         next.documentLang = dLang;
         next.habitTrackerContent = getDefaultHabitTrackerContent(dLang, prev.habitTrackerContent?.packId || 'wellbeing');
-        next.roadmapContent = getDefaultRoadmapContent(dLang);
-        next.welcomePacketContent = getDefaultWelcomePacketContent(dLang);
+        next.goalPlannerContent = getDefaultGoalPlannerContent(dLang);
+        next.weeklyPlannerContent = getDefaultWeeklyPlannerContent(dLang);
+        next.monthlyCalendarContent = getDefaultMonthlyCalendarContent(dLang);
+        next.dailyPrioritiesContent = getDefaultDailyPrioritiesContent(dLang);
+        next.mealPlannerContent = getDefaultMealPlannerContent(dLang);
+        next.budgetTrackerContent = getDefaultBudgetTrackerContent(dLang);
+        next.quoteContent = getDefaultQuoteContent(dLang);
+        next.invoiceContent = getDefaultInvoiceContent(dLang);
+        next.priceListContent = getDefaultPriceListContent(dLang);
+        next.clientTrackerContent = getDefaultClientTrackerContent(dLang);
+        next.checklistContent = getDefaultChecklistContent(dLang);
       }
 
       return next;
@@ -322,8 +362,17 @@ export function useBrandKit(initialLang?: InterfaceLang) {
         ...prev,
         documentLang: dLang,
         habitTrackerContent: getDefaultHabitTrackerContent(dLang, prev.habitTrackerContent?.packId || 'wellbeing'),
-        roadmapContent: getDefaultRoadmapContent(dLang),
-        welcomePacketContent: getDefaultWelcomePacketContent(dLang),
+        goalPlannerContent: getDefaultGoalPlannerContent(dLang),
+        weeklyPlannerContent: getDefaultWeeklyPlannerContent(dLang),
+        monthlyCalendarContent: getDefaultMonthlyCalendarContent(dLang),
+        dailyPrioritiesContent: getDefaultDailyPrioritiesContent(dLang),
+        mealPlannerContent: getDefaultMealPlannerContent(dLang),
+        budgetTrackerContent: getDefaultBudgetTrackerContent(dLang),
+        quoteContent: getDefaultQuoteContent(dLang),
+        invoiceContent: getDefaultInvoiceContent(dLang),
+        priceListContent: getDefaultPriceListContent(dLang),
+        clientTrackerContent: getDefaultClientTrackerContent(dLang),
+        checklistContent: getDefaultChecklistContent(dLang),
       };
     });
   }, []);
@@ -358,7 +407,8 @@ export function useBrandKit(initialLang?: InterfaceLang) {
   }, [updateBrandKit]);
 
   const resetSection = useCallback(
-    (section: 'details' | 'habitTracker' | 'roadmap' | 'welcomePacket' | 'all') => {
+    (section: 'details' | TemplateId | 'all') => {
+      const lang = brandKit.documentLang;
       if (section === 'details') {
         updateBrandKit({
           companyName: '',
@@ -369,25 +419,46 @@ export function useBrandKit(initialLang?: InterfaceLang) {
           qrUrl: '',
           qrLabel: '',
         });
-      } else if (section === 'habitTracker') {
-        updateBrandKit({
-          habitTrackerContent: getDefaultHabitTrackerContent(brandKit.documentLang, 'wellbeing'),
-        });
-      } else if (section === 'roadmap') {
-        updateBrandKit({
-          roadmapContent: getDefaultRoadmapContent(brandKit.documentLang),
-        });
-      } else if (section === 'welcomePacket') {
-        updateBrandKit({
-          welcomePacketContent: getDefaultWelcomePacketContent(brandKit.documentLang),
-        });
+      } else if (section === 'habit-tracker') {
+        updateBrandKit({ habitTrackerContent: getDefaultHabitTrackerContent(lang, 'wellbeing') });
+      } else if (section === 'goal-planner-90') {
+        updateBrandKit({ goalPlannerContent: getDefaultGoalPlannerContent(lang) });
+      } else if (section === 'weekly-planner') {
+        updateBrandKit({ weeklyPlannerContent: getDefaultWeeklyPlannerContent(lang) });
+      } else if (section === 'monthly-calendar') {
+        updateBrandKit({ monthlyCalendarContent: getDefaultMonthlyCalendarContent(lang) });
+      } else if (section === 'daily-priorities') {
+        updateBrandKit({ dailyPrioritiesContent: getDefaultDailyPrioritiesContent(lang) });
+      } else if (section === 'meal-planner') {
+        updateBrandKit({ mealPlannerContent: getDefaultMealPlannerContent(lang) });
+      } else if (section === 'budget-tracker') {
+        updateBrandKit({ budgetTrackerContent: getDefaultBudgetTrackerContent(lang) });
+      } else if (section === 'quote') {
+        updateBrandKit({ quoteContent: getDefaultQuoteContent(lang) });
+      } else if (section === 'invoice') {
+        updateBrandKit({ invoiceContent: getDefaultInvoiceContent(lang) });
+      } else if (section === 'price-list') {
+        updateBrandKit({ priceListContent: getDefaultPriceListContent(lang) });
+      } else if (section === 'client-tracker') {
+        updateBrandKit({ clientTrackerContent: getDefaultClientTrackerContent(lang) });
+      } else if (section === 'checklist') {
+        updateBrandKit({ checklistContent: getDefaultChecklistContent(lang) });
       } else if (section === 'all') {
         updateBrandKit({
           ...DEFAULT_BRAND_KIT,
-          documentLang: brandKit.documentLang,
-          habitTrackerContent: getDefaultHabitTrackerContent(brandKit.documentLang, 'wellbeing'),
-          roadmapContent: getDefaultRoadmapContent(brandKit.documentLang),
-          welcomePacketContent: getDefaultWelcomePacketContent(brandKit.documentLang),
+          documentLang: lang,
+          habitTrackerContent: getDefaultHabitTrackerContent(lang, 'wellbeing'),
+          goalPlannerContent: getDefaultGoalPlannerContent(lang),
+          weeklyPlannerContent: getDefaultWeeklyPlannerContent(lang),
+          monthlyCalendarContent: getDefaultMonthlyCalendarContent(lang),
+          dailyPrioritiesContent: getDefaultDailyPrioritiesContent(lang),
+          mealPlannerContent: getDefaultMealPlannerContent(lang),
+          budgetTrackerContent: getDefaultBudgetTrackerContent(lang),
+          quoteContent: getDefaultQuoteContent(lang),
+          invoiceContent: getDefaultInvoiceContent(lang),
+          priceListContent: getDefaultPriceListContent(lang),
+          clientTrackerContent: getDefaultClientTrackerContent(lang),
+          checklistContent: getDefaultChecklistContent(lang),
         });
       }
     },
