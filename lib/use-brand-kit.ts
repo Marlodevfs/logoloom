@@ -282,8 +282,8 @@ export function useBrandKit(initialLang?: InterfaceLang, initialTemplate?: Templ
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ sessionId, token: storedToken }),
           })
-            .then((res) => res.json())
-            .then((data) => {
+            .then(async (res) => ({ status: res.status, data: await res.json().catch(() => ({})) }))
+            .then(({ status, data }) => {
               if (data.verified && data.token) {
                 localStorage.setItem(PRO_TOKEN_KEY, data.token);
                 setBrandKit((prev) => ({
@@ -295,7 +295,9 @@ export function useBrandKit(initialLang?: InterfaceLang, initialTemplate?: Templ
                   const cleanUrl = window.location.pathname;
                   window.history.replaceState({}, '', cleanUrl);
                 }
-              } else {
+              } else if (status === 401) {
+                // Only drop the token when the server explicitly rejects it,
+                // not on a transient 5xx / network error.
                 localStorage.removeItem(PRO_TOKEN_KEY);
                 setBrandKit((prev) => ({
                   ...prev,

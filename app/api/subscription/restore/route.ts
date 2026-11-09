@@ -55,20 +55,23 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    // Check each customer record for an active subscription
+    // Check each customer record for an active (or trialing) subscription
     for (const customer of customers.data) {
       const subscriptions = await stripe.subscriptions.list({
         customer: customer.id,
-        status: 'active',
-        limit: 1,
+        status: 'all',
+        limit: 10,
       });
 
-      if (subscriptions.data.length > 0) {
-        const sub = subscriptions.data[0];
+      const hasActive = subscriptions.data.some(
+        (s) => s.status === 'active' || s.status === 'trialing'
+      );
+
+      if (hasActive) {
         const signedToken = signProToken({
           email: cleanEmail,
           customerId: customer.id,
-          durationDays: 365,
+          durationDays: 35,
         });
 
         return NextResponse.json({
@@ -90,7 +93,7 @@ export async function POST(req: NextRequest) {
   } catch (error: any) {
     console.error('Subscription restore error:', error);
     return NextResponse.json(
-      { success: false, error: error.message || 'Restoration failed' },
+      { success: false, error: 'Restoration failed' },
       { status: 500 }
     );
   }

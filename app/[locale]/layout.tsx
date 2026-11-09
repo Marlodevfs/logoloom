@@ -69,15 +69,10 @@ export default async function LocaleLayout({
 }) {
   const { locale } = await params;
   const lang = siteConfig.locales.includes(locale as any) ? locale : 'en';
-  const dir = lang === 'ar' ? 'rtl' : 'ltr';
 
   return (
-    <html lang={lang} dir={dir} suppressHydrationWarning>
+    <html lang={lang} dir="ltr" suppressHydrationWarning>
       <head>
-        <link rel="icon" href="/favicon.ico" sizes="any" />
-        <link rel="icon" href="/icon.svg" type="image/svg+xml" />
-        <link rel="shortcut icon" href="/favicon.ico" />
-        <link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180" />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
@@ -89,7 +84,7 @@ export default async function LocaleLayout({
         <Script
           data-goatcounter="https://logoloom.goatcounter.com/count"
           async
-          src="//gc.zgo.at/count.js"
+          src="https://gc.zgo.at/count.js"
           strategy="afterInteractive"
         />
       </body>

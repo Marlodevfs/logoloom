@@ -13,12 +13,15 @@ interface LogoUploaderProps {
   interfaceLang: InterfaceLang;
 }
 
+const MAX_LOGO_BYTES = 2 * 1024 * 1024;
+
 const LOGO_I18N: Record<InterfaceLang, {
   logoActive: string;
   ready: string;
   replace: string;
   analyzingColors: string;
   invalidFormatAlert: string;
+  fileTooLargeAlert: string;
 }> = {
   fr: {
     logoActive: 'Logo actif',
@@ -26,6 +29,7 @@ const LOGO_I18N: Record<InterfaceLang, {
     replace: 'Remplacer',
     analyzingColors: 'Analyse des couleurs...',
     invalidFormatAlert: 'Veuillez téléverser une image valide au format PNG, JPG ou SVG.',
+    fileTooLargeAlert: 'Le logo est trop lourd (max 2 Mo). Veuillez utiliser une image plus légère.',
   },
   en: {
     logoActive: 'Logo Active',
@@ -33,6 +37,7 @@ const LOGO_I18N: Record<InterfaceLang, {
     replace: 'Replace',
     analyzingColors: 'Analyzing colors...',
     invalidFormatAlert: 'Please upload a valid PNG, JPG, or SVG image.',
+    fileTooLargeAlert: 'Logo file is too large (max 2 MB). Please use a smaller image.',
   },
   de: {
     logoActive: 'Logo aktiv',
@@ -40,6 +45,7 @@ const LOGO_I18N: Record<InterfaceLang, {
     replace: 'Ersetzen',
     analyzingColors: 'Farben werden analysiert...',
     invalidFormatAlert: 'Bitte laden Sie ein gültiges PNG-, JPG- oder SVG-Bild hoch.',
+    fileTooLargeAlert: 'Die Logo-Datei ist zu groß (max. 2 MB). Bitte verwenden Sie ein kleineres Bild.',
   },
   es: {
     logoActive: 'Logo activo',
@@ -47,6 +53,7 @@ const LOGO_I18N: Record<InterfaceLang, {
     replace: 'Reemplazar',
     analyzingColors: 'Analizando colores...',
     invalidFormatAlert: 'Por favor, suba una imagen válida en formato PNG, JPG o SVG.',
+    fileTooLargeAlert: 'El logo es demasiado pesado (máx. 2 MB). Utilice una imagen más ligera.',
   },
   it: {
     logoActive: 'Logo attivo',
@@ -54,6 +61,7 @@ const LOGO_I18N: Record<InterfaceLang, {
     replace: 'Sostituisci',
     analyzingColors: 'Analisi dei colori...',
     invalidFormatAlert: 'Carica un’immagine valida in formato PNG, JPG o SVG.',
+    fileTooLargeAlert: 'Il file del logo è troppo grande (max 2 MB). Usa un’immagine più leggera.',
   },
   pt: {
     logoActive: 'Logo ativo',
@@ -61,6 +69,7 @@ const LOGO_I18N: Record<InterfaceLang, {
     replace: 'Substituir',
     analyzingColors: 'A analisar cores...',
     invalidFormatAlert: 'Por favor, carregue uma imagem válida em formato PNG, JPG ou SVG.',
+    fileTooLargeAlert: 'O ficheiro do logo é demasiado grande (máx. 2 MB). Use uma imagem mais leve.',
   },
 };
 
@@ -81,6 +90,12 @@ export const LogoUploader: React.FC<LogoUploaderProps> = ({
     const validTypes = ['image/png', 'image/jpeg', 'image/jpg', 'image/svg+xml'];
     if (!validTypes.includes(file.type)) {
       alert(l.invalidFormatAlert);
+      return;
+    }
+    // Logos are kept as base64 in localStorage (~5 MB quota). Oversized files would
+    // silently break saving of the whole brand kit, so cap them.
+    if (file.size > MAX_LOGO_BYTES) {
+      alert(l.fileTooLargeAlert);
       return;
     }
 
@@ -116,6 +131,8 @@ export const LogoUploader: React.FC<LogoUploaderProps> = ({
     if (e.target.files && e.target.files[0]) {
       processFile(e.target.files[0]);
     }
+    // Reset so re-selecting the same file (e.g. after "reset logo") fires onChange again
+    e.target.value = '';
   };
 
   return (

@@ -14,10 +14,10 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Setup Node.js 20 LTS
+      - name: Setup Node.js 22 LTS
         uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 22
           cache: 'npm'
 
       - name: Install dependencies
@@ -31,8 +31,14 @@ jobs:
         env:
           NEXT_PUBLIC_APP_URL: https://logoloom.app
 
-      - name: Run Phase 1 Vector PDF & QR Acceptance Tests
-        run: npx tsx scripts/test-phase1-vector.ts
+      - name: Run Vector PDF & QR Acceptance Tests
+        run: npm run test:pdf
 
       - name: Run Translation Completeness & Quality Tests
-        run: npx tsx scripts/test-translations-complete.ts
+        run: npm run test:i18n
+
+      - name: Run 6-Language PDF Tests
+        run: npm run test:languages
+
+      - name: Run End-to-End Feature Tests
+        run: npm run test:e2e
