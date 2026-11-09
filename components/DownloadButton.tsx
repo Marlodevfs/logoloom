@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import { Download, Loader2, CheckCircle, Sparkles } from 'lucide-react';
 import { BrandKit, TemplateId, InterfaceLang } from '@/types';
 import { trackEvent } from '@/lib/analytics';
+import { BMC_URL, getBmcLabels } from '@/components/BuyMeACoffee';
 import { UI_TRANSLATIONS } from '@/lib/i18n/interface';
 
 interface DownloadButtonProps {
@@ -66,6 +67,8 @@ export const DownloadButton: React.FC<DownloadButtonProps> = ({
   const dI18n = DOWNLOAD_I18N[interfaceLang] || DOWNLOAD_I18N.en;
   const [isExporting, setIsExporting] = useState(false);
   const [hasExported, setHasExported] = useState(false);
+  // After a first successful download, gently suggest a coffee (desktop panel only)
+  const [showSupport, setShowSupport] = useState(false);
 
   const handleDownload = async () => {
     setIsExporting(true);
@@ -81,6 +84,7 @@ export const DownloadButton: React.FC<DownloadButtonProps> = ({
 
       trackEvent('pdf_download', { template: activeTemplate, paper: brandKit.paperSize });
       setHasExported(true);
+      setShowSupport(true);
       setTimeout(() => setHasExported(false), 3000);
     } catch (err) {
       console.error('Failed to export PDF', err);
@@ -126,8 +130,20 @@ export const DownloadButton: React.FC<DownloadButtonProps> = ({
         )}
       </button>
 
-      {/* Trust reassurance pill */}
-      {!compact && (
+      {/* After a download: discreet Buy Me a Coffee link. Otherwise: trust pill */}
+      {!compact && showSupport && (
+        <a
+          href={BMC_URL}
+          target="_blank"
+          rel="noopener noreferrer"
+          onClick={() => trackEvent('bmc_click', { from: 'download' })}
+          className="block text-[11px] text-center text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-white font-medium"
+        >
+          <span aria-hidden="true">☕ </span>
+          {getBmcLabels(interfaceLang).button}
+        </a>
+      )}
+      {!compact && !showSupport && (
       <p className="text-[10px] text-center text-slate-400 dark:text-slate-500 flex items-center justify-center space-x-1 font-medium">
         <span>🔒</span>
         <span>{t.privacyBadge}</span>

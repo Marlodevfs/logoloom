@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { siteConfig } from '@/config/site';
 import { getSiteChrome } from '@/lib/i18n/site-chrome';
 import { CANONICAL_TEMPLATE_SLUGS } from '@/lib/seo/templates-metadata';
+import { BuyMeACoffeeButton } from '@/components/BuyMeACoffee';
 
 /** Site-wide footer: product links, legal pages and contact. Server component. */
 export function SiteFooter({ lang, withStickyBar = false }: { lang: string; withStickyBar?: boolean }) {
@@ -17,6 +18,9 @@ export function SiteFooter({ lang, withStickyBar = false }: { lang: string; with
         <div className="col-span-2 sm:col-span-1 space-y-2">
           <p className="font-extrabold text-sm text-slate-900 dark:text-white">{siteConfig.name}</p>
           <p className="text-slate-500 dark:text-slate-400 leading-relaxed">{c.slogan}</p>
+          <div className="pt-2">
+            <BuyMeACoffeeButton lang={lang} withHint />
+          </div>
         </div>
 
         <nav aria-label={c.footer.templates} className="space-y-2">

@@ -20,7 +20,8 @@ export type AnalyticsEvent =
   | 'qr_added'
   | 'pdf_download'
   | 'pro_modal_open'
-  | 'pro_upgrade_click';
+  | 'pro_upgrade_click'
+  | 'bmc_click';
 
 export function trackEvent(event: AnalyticsEvent, props?: Record<string, any>) {
   if (typeof window !== 'undefined') {
