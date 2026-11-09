@@ -1,11 +1,15 @@
 /**
  * LogoLoom Privacy-Friendly Event Analytics
- * Compatible with Plausible Analytics (cookieless, GDPR-compliant)
+ * The site loads GoatCounter (see app/[locale]/layout.tsx); Plausible is still
+ * supported if its script is added later. Both are cookieless / GDPR-friendly.
  */
 
 declare global {
   interface Window {
     plausible?: (event: string, options?: { props?: Record<string, any> }) => void;
+    goatcounter?: {
+      count?: (vars: { path: string; title?: string; event?: boolean }) => void;
+    };
   }
 }
 
@@ -19,9 +23,13 @@ export type AnalyticsEvent =
   | 'pro_upgrade_click';
 
 export function trackEvent(event: AnalyticsEvent, props?: Record<string, any>) {
-  if (typeof window !== 'undefined' && window.plausible) {
+  if (typeof window !== 'undefined') {
     try {
-      window.plausible(event, { props });
+      if (window.goatcounter?.count) {
+        window.goatcounter.count({ path: event, title: event, event: true });
+      } else if (window.plausible) {
+        window.plausible(event, { props });
+      }
     } catch (e) {
       // safe fallback
     }

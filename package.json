@@ -8,24 +8,18 @@
     "start": "next start -p 3000",
     "lint": "next lint",
     "typecheck": "tsc --noEmit",
-    "test:pdf": "tsx scripts/test-phase1-vector.ts",
+    "test:pdf": "tsx --require ./scripts/react-pdf-cjs-compat.cjs scripts/test-phase1-vector.ts",
     "test:i18n": "tsx scripts/test-translations-complete.ts",
-    "test:quality": "tsx scripts/test-habit-tracker-quality-gates.ts && python scripts/audit-quality-gates.py",
-    "test:languages": "tsx scripts/test-all-6-languages.ts",
-    "test:e2e": "tsx scripts/test-all-features-e2e.ts",
+    "test:quality": "tsx --require ./scripts/react-pdf-cjs-compat.cjs scripts/test-habit-tracker-quality-gates.ts && python3 scripts/audit-quality-gates.py",
+    "test:languages": "tsx --require ./scripts/react-pdf-cjs-compat.cjs scripts/test-all-6-languages.ts",
+    "test:e2e": "tsx --require ./scripts/react-pdf-cjs-compat.cjs scripts/test-all-features-e2e.ts",
     "test": "npm run test:pdf && npm run test:i18n && npm run test:quality && npm run test:languages && npm run test:e2e"
   },
   "dependencies": {
     "@react-pdf/renderer": "^4.9.0",
     "canvas-confetti": "^1.9.4",
-    "html-to-image": "^1.11.13",
-    "isomorphic-git": "^1.44.11",
-    "jspdf": "^2.5.2",
-    "jsqr": "^1.4.0",
     "lucide-react": "^0.475.0",
     "next": "^15.1.7",
-    "pdf-parse": "^2.4.5",
-    "pngjs": "^7.0.0",
     "qrcode": "^1.5.4",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
@@ -40,10 +34,16 @@
     "@types/react": "^19.0.8",
     "@types/react-dom": "^19.0.3",
     "autoprefixer": "^10.4.20",
+    "jsqr": "^1.4.0",
+    "pdf-parse": "^2.4.5",
     "playwright": "^1.65.0",
+    "pngjs": "^7.0.0",
     "postcss": "^8.5.2",
     "tailwindcss": "^3.4.17",
     "tsx": "^4.23.15",
     "typescript": "^5.7.3"
+  },
+  "engines": {
+    "node": ">=20.19"
   }
 }

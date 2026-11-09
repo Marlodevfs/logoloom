@@ -2,17 +2,60 @@ import { NextRequest, NextResponse } from 'next/server';
 import Stripe from 'stripe';
 import { verifyProToken, signProToken } from '@/lib/pro-auth';
 
+// Tokens are short-lived relative to the monthly plan and are re-checked against
+// Stripe on every verification, so a cancelled subscription loses Pro quickly.
+const TOKEN_DURATION_DAYS = 35;
+
+async function hasActiveSubscription(stripe: Stripe, customerId: string): Promise<boolean> {
+  const subs = await stripe.subscriptions.list({
+    customer: customerId,
+    status: 'all',
+    limit: 10,
+  });
+  return subs.data.some((s) => s.status === 'active' || s.status === 'trialing');
+}
+
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json().catch(() => ({}));
     const { token, sessionId } = body;
     const isProduction = process.env.NODE_ENV === 'production';
     const stripeKey = process.env.STRIPE_SECRET_KEY;
+    const stripe = stripeKey ? new Stripe(stripeKey) : null;
 
     // 1. Verify existing signed token if supplied
-    if (token) {
+    if (typeof token === 'string' && token) {
       const payload = verifyProToken(token);
       if (payload) {
+        // Re-check the subscription with Stripe so cancelled/unpaid users lose Pro
+        if (stripe && payload.customerId) {
+          let active = true;
+          try {
+            active = await hasActiveSubscription(stripe, payload.customerId);
+          } catch (err) {
+            // Stripe unreachable: keep the (still valid, signed) token rather than
+            // punishing a paying user for a transient outage.
+            console.warn('Stripe subscription re-check failed, trusting token', err);
+          }
+          if (!active) {
+            return NextResponse.json(
+              { verified: false, error: 'Subscription is no longer active' },
+              { status: 401 }
+            );
+          }
+          // Refresh the token so active subscribers never expire
+          const refreshed = signProToken({
+            email: payload.email,
+            customerId: payload.customerId,
+            durationDays: TOKEN_DURATION_DAYS,
+          });
+          return NextResponse.json({
+            verified: true,
+            email: payload.email,
+            token: refreshed,
+          });
+        }
+
         return NextResponse.json({
           verified: true,
           email: payload.email,
@@ -23,7 +66,7 @@ export async function POST(req: NextRequest) {
     }
 
     // 2. Verify Stripe Checkout Session ID
-    if (sessionId) {
+    if (typeof sessionId === 'string' && sessionId) {
       // In dev environment, accept demo session
       if (!isProduction && sessionId === 'demo_pro_session_success') {
         const devToken = signProToken({
@@ -38,12 +81,14 @@ export async function POST(req: NextRequest) {
         });
       }
 
-      if (stripeKey) {
-        const stripe = new Stripe(stripeKey);
+      if (stripe && sessionId.startsWith('cs_')) {
         const session = await stripe.checkout.sessions.retrieve(sessionId);
 
+        // A completed subscription checkout is either paid, or needs no payment (trial / 100% coupon)
         const isPaid =
-          session.payment_status === 'paid' || session.status === 'complete';
+          session.mode === 'subscription' &&
+          session.status === 'complete' &&
+          (session.payment_status === 'paid' || session.payment_status === 'no_payment_required');
 
         if (isPaid) {
           const userEmail =
@@ -58,7 +103,7 @@ export async function POST(req: NextRequest) {
           const signedToken = signProToken({
             email: userEmail,
             customerId,
-            durationDays: 365,
+            durationDays: TOKEN_DURATION_DAYS,
           });
 
           return NextResponse.json({
@@ -77,7 +122,7 @@ export async function POST(req: NextRequest) {
   } catch (error: any) {
     console.error('Subscription verification error:', error);
     return NextResponse.json(
-      { verified: false, error: error.message || 'Verification failed' },
+      { verified: false, error: 'Verification failed' },
       { status: 500 }
     );
   }

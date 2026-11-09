@@ -18,27 +18,20 @@ export default function sitemap(): MetadataRoute.Sitemap {
     return { languages };
   };
 
-  // 1. Root homepage
-  entries.push({
-    url: siteConfig.url,
-    lastModified: now,
-    changeFrequency: 'daily',
-    priority: 1.0,
-    alternates: buildAlternates(),
-  });
-
-  // 2. Language homepages (6 languages)
+  // 1. Language homepages (6 languages).
+  // The bare root "/" is a rewrite of "/en" whose canonical is "/en", so it is
+  // intentionally NOT listed (sitemaps must only contain canonical URLs).
   for (const locale of locales) {
     entries.push({
       url: `${siteConfig.url}/${locale}`,
       lastModified: now,
       changeFrequency: 'daily',
-      priority: locale === 'en' ? 0.95 : 0.9,
+      priority: locale === 'en' ? 1.0 : 0.9,
       alternates: buildAlternates(),
     });
   }
 
-  // 3. Template pages (12 templates x 6 languages = 72 pages)
+  // 2. Template pages (12 templates x 6 languages = 72 pages)
   for (const { slug } of CANONICAL_TEMPLATE_SLUGS) {
     for (const locale of locales) {
       entries.push({
@@ -51,14 +44,16 @@ export default function sitemap(): MetadataRoute.Sitemap {
     }
   }
 
-  // 4. Pricing page
-  entries.push({
-    url: `${siteConfig.url}/pricing`,
-    lastModified: now,
-    changeFrequency: 'monthly',
-    priority: 0.7,
-    alternates: buildAlternates('pricing'),
-  });
+  // 3. Localized pricing pages (each one is its own canonical)
+  for (const locale of locales) {
+    entries.push({
+      url: `${siteConfig.url}/${locale}/pricing`,
+      lastModified: now,
+      changeFrequency: 'monthly',
+      priority: 0.7,
+      alternates: buildAlternates('pricing'),
+    });
+  }
 
   return entries;
 }

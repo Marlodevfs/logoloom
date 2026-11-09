@@ -8,12 +8,20 @@ interface ProTokenPayload {
   expiresAt: number; // Unix timestamp ms
 }
 
+// Dev-only fallback. It is public (it lives in the repo), so it must NEVER be
+// used to sign tokens in production, otherwise anyone could forge Pro tokens.
+const DEV_ONLY_FALLBACK_SECRET = 'logoloom-dev-only-insecure-secret';
+
 function getSecretKey(): string {
-  return (
-    process.env.PRO_SIGNING_SECRET ||
-    process.env.STRIPE_SECRET_KEY ||
-    'logoloom-pro-cryptographic-salt-key-2026'
-  );
+  const secret = process.env.PRO_SIGNING_SECRET || process.env.STRIPE_SECRET_KEY;
+  if (secret) return secret;
+
+  if (process.env.NODE_ENV === 'production') {
+    throw new Error(
+      'PRO_SIGNING_SECRET (or STRIPE_SECRET_KEY) must be set in production to sign Pro tokens.'
+    );
+  }
+  return DEV_ONLY_FALLBACK_SECRET;
 }
 
 /**
@@ -52,9 +60,9 @@ export function verifyProToken(token: string): ProTokenPayload | null {
   if (parts.length !== 2) return null;
 
   const [payloadBase64, providedSig] = parts;
-  const secret = getSecretKey();
 
   try {
+    const secret = getSecretKey();
     const expectedSig = crypto
       .createHmac('sha256', secret)
       .update(payloadBase64)
