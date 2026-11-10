@@ -12,6 +12,7 @@ import { registerPDFFonts } from '../lib/pdf/fonts';
 import { DocumentCompiler } from '../lib/pdf/DocumentCompiler';
 import { getDefaultCvContent } from '../lib/use-brand-kit';
 import { CV_SECTION_LABELS, cvLines, cvPeriod } from '../lib/i18n/cv-data';
+import { CV_EXAMPLES_FR } from '../lib/cv-examples/fr';
 
 registerPDFFonts();
 const OUT = path.join(__dirname, 'output/cv');
@@ -77,6 +78,20 @@ async function main() {
       assert(text.includes(cv.skills[0]), `${label} skills printed`);
       assert(pages === 1, `${label} sample fits on one page`, `pages=${pages}`);
       assert(!/logoloom/i.test(text) && !/logoloom/i.test(info), `${label} no LogoLoom branding in text or metadata`);
+    }
+  }
+
+  console.log('\n--- Job examples (fr) fit on one page in both layouts ---');
+  const slugs = new Set<string>();
+  for (const ex of CV_EXAMPLES_FR) {
+    assert(!slugs.has(ex.slug), `[example ${ex.slug}] unique slug`);
+    slugs.add(ex.slug);
+    assert(ex.tips.length >= 4 && ex.faq.length >= 2 && ex.summaries.length >= 2, `[example ${ex.slug}] has tips, FAQ and summaries`);
+    for (const layout of ['sidebar', 'classic'] as const) {
+      const cv = { ...ex.cv, layout };
+      const { text, pages } = await render(`example-${ex.slug}-${layout}`, kit('fr', cv, { brandColor: ex.color }));
+      assert(pages === 1, `[example ${ex.slug}/${layout}] fits on one page`, `pages=${pages}`);
+      assert(text.includes(cv.fullName), `[example ${ex.slug}/${layout}] name printed`);
     }
   }
 
