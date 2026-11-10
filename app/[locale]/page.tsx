@@ -96,7 +96,7 @@ const HOME_HERO_I18N: Record<
     badge: 'Free Printable Planners & Business Documents',
     h1: 'Free Printable Planners & Documents to Personalize in Seconds',
     intro:
-      'Customize beautiful, ink-friendly printable PDFs directly in your browser. Habit trackers, weekly planners, monthly calendars, budgets and checklists. 100% free, private on your device, optional logo.',
+      'Customize beautiful, ink-friendly printable PDFs directly in your browser. CVs, habit trackers, weekly planners, monthly calendars, budgets and checklists. 100% free, private on your device, optional logo.',
     features: [
       'Vector PDF, sharp at any size',
       'International A4 & US Letter sizes',
@@ -134,7 +134,7 @@ const HOME_HERO_I18N: Record<
     badge: 'Planners et documents gratuits à imprimer',
     h1: 'Planners et documents professionnels gratuits à personnaliser en 2 minutes',
     intro:
-      'Personnalisez des PDF imprimables élégants et économes en encre directement dans votre navigateur. Suivi d\'habitudes, plannings hebdomadaires, calendriers, budgets et checklists. 100% gratuit, privé sur votre machine, logo optionnel.',
+      'Personnalisez des PDF imprimables élégants et économes en encre directement dans votre navigateur. CV, suivi d\'habitudes, plannings hebdomadaires, calendriers, budgets et checklists. 100% gratuit, privé sur votre machine, logo optionnel.',
     features: [
       'PDF vectoriel net à toute taille',
       'Formats A4 et US Letter',
@@ -172,7 +172,7 @@ const HOME_HERO_I18N: Record<
     badge: 'Kostenlose druckbare Planer & Dokumente',
     h1: 'Kostenlose druckbare Planer & Vorlagen in Sekunden personalisieren',
     intro:
-      'Erstellen Sie elegante, tintensparende druckbare PDFs direkt im Browser. Gewohnheitstracker, Wochenplaner, Monatskalender, Budgets und Checklisten. 100% kostenlos, lokal im Browser, optionales Logo.',
+      'Erstellen Sie elegante, tintensparende druckbare PDFs direkt im Browser. Lebensläufe, Gewohnheitstracker, Wochenplaner, Monatskalender, Budgets und Checklisten. 100% kostenlos, lokal im Browser, optionales Logo.',
     features: [
       'Gestochen scharfe Vektor-PDFs',
       'DIN A4 & US Letter Formate',
@@ -202,7 +202,7 @@ const HOME_HERO_I18N: Record<
     badge: 'Planificadores y documentos imprimibles gratis',
     h1: 'Planificadores y documentos imprimibles gratis listos en segundos',
     intro:
-      'Personaliza hermosos PDFs imprimibles de bajo consumo de tinta directamente en tu navegador. Rastreadores de hábitos, planificadores semanales, calendarios, presupuestos y listas. 100% gratis, privado y sin registro.',
+      'Personaliza hermosos PDFs imprimibles de bajo consumo de tinta directamente en tu navegador. Currículums, rastreadores de hábitos, planificadores semanales, calendarios, presupuestos y listas. 100% gratis, privado y sin registro.',
     features: [
       'PDF vectorial nítido a cualquier tamaño',
       'Tamaños A4 y Carta',
@@ -232,7 +232,7 @@ const HOME_HERO_I18N: Record<
     badge: 'Planner e documenti stampabili gratuiti',
     h1: 'Planner e documenti professionali stampabili gratis in pochi secondi',
     intro:
-      'Personalizza eleganti PDF stampabili a basso consumo d\'inchiostro direttamente nel tuo browser. Tracciatori di abitudini, planner settimanali, calendari, budget e checklist. 100% gratuito, privato e senza registrazione.',
+      'Personalizza eleganti PDF stampabili a basso consumo d\'inchiostro direttamente nel tuo browser. CV, tracciatori di abitudini, planner settimanali, calendari, budget e checklist. 100% gratuito, privato e senza registrazione.',
     features: [
       'PDF vettoriale nitido a ogni formato',
       'Formati A4 e US Letter',
@@ -262,7 +262,7 @@ const HOME_HERO_I18N: Record<
     badge: 'Planejadores e modelos imprimíveis gratuitos',
     h1: 'Planejadores e documentos imprimíveis gratuitos personalizados em segundos',
     intro:
-      'Personalize documentos em PDF para impressão diretamente no seu navegador. Rastreadores de hábitos, planejadores semanais, calendários, orçamentos e listas. 100% gratuito, privado no seu dispositivo e com logo opcional.',
+      'Personalize documentos em PDF para impressão diretamente no seu navegador. Currículos, rastreadores de hábitos, planejadores semanais, calendários, orçamentos e listas. 100% gratuito, privado no seu dispositivo e com logo opcional.',
     features: [
       'PDF vetorial nítido em qualquer tamanho',
       'Formatos A4 e US Letter',

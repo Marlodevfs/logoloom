@@ -125,16 +125,20 @@ export const Studio: React.FC<StudioProps> = ({
 
   const renderCustomizer = () => (
     <>
-      {/* 1. Drag-and-drop logo upload */}
-      <LogoUploader
-        logoUrl={brandKit.logoUrl}
-        onLogoUpload={setUploadedLogo}
-        onLogoReset={resetLogo}
-        isExtractingColor={isExtractingColor}
-        interfaceLang={interfaceLang}
-      />
+      {/* 1. Drag-and-drop logo upload (a CV carries no logo) */}
+      {activeTemplate !== 'cv' && (
+        <>
+          <LogoUploader
+            logoUrl={brandKit.logoUrl}
+            onLogoUpload={setUploadedLogo}
+            onLogoReset={resetLogo}
+            isExtractingColor={isExtractingColor}
+            interfaceLang={interfaceLang}
+          />
 
-      <div className="border-t border-slate-100 dark:border-slate-800/80" />
+          <div className="border-t border-slate-100 dark:border-slate-800/80" />
+        </>
+      )}
 
       {/* 2. Color choice */}
       <ColorPicker
@@ -158,16 +162,20 @@ export const Studio: React.FC<StudioProps> = ({
 
       <div className="border-t border-slate-100 dark:border-slate-800/80" />
 
-      {/* 4. Step 4: Your Details (Always visible, compact) */}
-      <YourDetailsStep
-        brandKit={brandKit}
-        onUpdate={updateBrandKit}
-        interfaceLang={interfaceLang}
-        activeTemplate={activeTemplate}
-        onReset={() => resetSection('details')}
-      />
+      {/* 4. Step 4: Your Details (business identity; the CV has its own form) */}
+      {activeTemplate !== 'cv' && (
+        <>
+          <YourDetailsStep
+            brandKit={brandKit}
+            onUpdate={updateBrandKit}
+            interfaceLang={interfaceLang}
+            activeTemplate={activeTemplate}
+            onReset={() => resetSection('details')}
+          />
 
-      <div className="border-t border-slate-100 dark:border-slate-800/80" />
+          <div className="border-t border-slate-100 dark:border-slate-800/80" />
+        </>
+      )}
 
       {/* 5. Step 5: Customize Content (Accordion, collapsed by default) */}
       <ContentEditorStep

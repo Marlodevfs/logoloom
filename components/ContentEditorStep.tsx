@@ -30,6 +30,7 @@ import {
 } from '@/types';
 import { HABIT_PACKS, HabitPack } from '@/lib/i18n/habit-packs';
 import { getDefaultHabitTrackerContent } from '@/lib/use-brand-kit';
+import { CvEditor } from './CvEditor';
 
 interface ContentEditorStepProps {
   brandKit: BrandKit;
@@ -53,6 +54,8 @@ const LABELS: Record<
   {
     stepTitle: string;
     stepSub: string;
+    cvStepTitle: string;
+    cvStepSub: string;
     habitPacksTitle: string;
     fullyEditable: string;
     docTitle: string;
@@ -73,6 +76,8 @@ const LABELS: Record<
   fr: {
     stepTitle: '5. Personnaliser le contenu',
     stepSub: 'Packs d’habitudes, textes et sections personnalisables',
+    cvStepTitle: '4. Votre CV',
+    cvStepSub: 'Expériences, formation, compétences, langues, photo',
     habitPacksTitle: 'Packs d’habitudes (1 clic)',
     fullyEditable: 'Modifiables après choix',
     docTitle: 'Titre du document',
@@ -92,6 +97,8 @@ const LABELS: Record<
   en: {
     stepTitle: '5. Customize Content',
     stepSub: 'Habit packs, custom text and toggleable sections',
+    cvStepTitle: '4. Your CV',
+    cvStepSub: 'Experience, education, skills, languages, photo',
     habitPacksTitle: 'Habit Packs (1 click)',
     fullyEditable: 'Fully editable',
     docTitle: 'Document Title',
@@ -111,6 +118,8 @@ const LABELS: Record<
   de: {
     stepTitle: '5. Inhalt anpassen',
     stepSub: 'Gewohnheiten-Pakete und Textinhalte',
+    cvStepTitle: '4. Ihr Lebenslauf',
+    cvStepSub: 'Berufserfahrung, Ausbildung, Kenntnisse, Sprachen, Foto',
     habitPacksTitle: 'Gewohnheiten-Pakete (1 Klick)',
     fullyEditable: 'Frei anpassbar',
     docTitle: 'Dokumententitel',
@@ -130,6 +139,8 @@ const LABELS: Record<
   es: {
     stepTitle: '5. Personalizar contenido',
     stepSub: 'Packs de hábitos y textos personalizables',
+    cvStepTitle: '4. Tu currículum',
+    cvStepSub: 'Experiencia, formación, competencias, idiomas, foto',
     habitPacksTitle: 'Packs de hábitos (1 clic)',
     fullyEditable: 'Totalmente editable',
     docTitle: 'Título del documento',
@@ -149,6 +160,8 @@ const LABELS: Record<
   it: {
     stepTitle: '5. Personalizza i Contenuti',
     stepSub: 'Pacchetti abitudini e testi personalizzati',
+    cvStepTitle: '4. Il tuo CV',
+    cvStepSub: 'Esperienze, formazione, competenze, lingue, foto',
     habitPacksTitle: 'Pacchetti abitudini (1 clic)',
     fullyEditable: 'Completamente modificabile',
     docTitle: 'Titolo del documento',
@@ -168,6 +181,8 @@ const LABELS: Record<
   pt: {
     stepTitle: '5. Personalizar Conteúdo',
     stepSub: 'Pacotes de hábitos e textos sob medida',
+    cvStepTitle: '4. O seu CV',
+    cvStepSub: 'Experiência, formação, competências, línguas, foto',
     habitPacksTitle: 'Pacotes de hábitos (1 clique)',
     fullyEditable: 'Totalmente editável',
     docTitle: 'Título do documento',
@@ -193,7 +208,12 @@ export const ContentEditorStep: React.FC<ContentEditorStepProps> = ({
   interfaceLang,
   onResetSection,
 }) => {
-  const [isOpen, setIsOpen] = useState(false);
+  const isCv = activeTemplate === 'cv';
+  // A CV is useless until filled in: open the editor straight away.
+  const [isOpen, setIsOpen] = useState(isCv);
+  React.useEffect(() => {
+    if (isCv) setIsOpen(true);
+  }, [isCv]);
   const docLang: DocumentLang = brandKit.documentLang || 'en';
   const l = LABELS[interfaceLang] || LABELS.en;
 
@@ -278,11 +298,11 @@ export const ContentEditorStep: React.FC<ContentEditorStepProps> = ({
           <div>
             <div className="flex items-center space-x-2">
               <h3 className="text-xs font-bold text-slate-900 dark:text-white">
-                {l.stepTitle}
+                {isCv ? l.cvStepTitle : l.stepTitle}
               </h3>
             </div>
             <p className="text-[10px] text-slate-500 dark:text-slate-400">
-              {l.stepSub}
+              {isCv ? l.cvStepSub : l.stepSub}
             </p>
           </div>
         </div>
@@ -295,11 +315,18 @@ export const ContentEditorStep: React.FC<ContentEditorStepProps> = ({
 
       {isOpen && (
         <div className="p-3 sm:p-4 border-t border-slate-100 dark:border-slate-800/80 space-y-4">
+          {isCv && <CvEditor brandKit={brandKit} onUpdate={onUpdate} interfaceLang={interfaceLang} />}
+
+          {/* Tip: In-preview editing (the CV is edited in the form above) */}
+          {!isCv && (
+            <>
           {/* Tip: In-preview editing */}
           <div className="p-2.5 rounded-lg bg-indigo-50/70 dark:bg-indigo-950/30 border border-indigo-200/60 dark:border-indigo-800/40 text-[10.5px] text-indigo-900 dark:text-indigo-200 flex items-start space-x-2">
             <Sparkles className="w-4 h-4 text-indigo-600 dark:text-indigo-400 shrink-0 mt-0.5" />
             <p className="leading-snug">{l.clickToEditDirectly}</p>
           </div>
+            </>
+          )}
 
           {/* Habit Tracker Custom Controls */}
           {activeTemplate === 'habit-tracker' && (

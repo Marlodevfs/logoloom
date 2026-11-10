@@ -15,6 +15,7 @@ import { BudgetTrackerTemplate } from './templates/BudgetTrackerTemplate';
 import { PriceListTemplate } from './templates/PriceListTemplate';
 import { ClientTrackerTemplate } from './templates/ClientTrackerTemplate';
 import { ChecklistTemplate } from './templates/ChecklistTemplate';
+import { CvTemplate } from './templates/CvTemplate';
 
 interface LivePreviewProps {
   brandKit: BrandKit;
@@ -159,6 +160,8 @@ export const LivePreview: React.FC<LivePreviewProps> = ({
         return <ClientTrackerTemplate brandKit={brandKit} onUpdate={onUpdate} />;
       case 'checklist':
         return <ChecklistTemplate brandKit={brandKit} onUpdate={onUpdate} />;
+      case 'cv':
+        return <CvTemplate brandKit={brandKit} />;
       default:
         return <MinimalHabitTrackerTemplate brandKit={brandKit} onUpdate={onUpdate} />;
     }
@@ -190,9 +193,11 @@ export const LivePreview: React.FC<LivePreviewProps> = ({
           <span className="text-[10px] font-mono px-1.5 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400 font-medium shrink-0">
             {isLandscape ? (isA4 ? `A4 ${pI18n.landscapeSuffix}` : `Letter ${pI18n.landscapeSuffix}`) : (isA4 ? 'A4' : 'US Letter')}
           </span>
-          <span className="hidden xl:inline-block text-[10px] text-slate-400 italic truncate">
-            • {pI18n.clickToEdit}
-          </span>
+          {activeTemplate !== 'cv' && (
+            <span className="hidden xl:inline-block text-[10px] text-slate-400 italic truncate">
+              • {pI18n.clickToEdit}
+            </span>
+          )}
         </div>
 
         {/* Zoom & Viewport Controls */}

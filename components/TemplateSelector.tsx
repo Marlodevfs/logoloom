@@ -2,6 +2,7 @@
 
 import React, { useEffect, useRef, useState } from 'react';
 import {
+  FileText,
   Calendar,
   Milestone,
   CheckSquare,
@@ -52,7 +53,7 @@ const SELECTOR_I18N: Record<
 > = {
   fr: {
     stepTitle: '3. Modèle de document',
-    countModels: '12 modèles prêts à imprimer',
+    countModels: '11 modèles prêts à imprimer',
     minimalLabel: 'Minimal',
     defaultBadge: 'Défaut',
     completeLabel: 'Complet',
@@ -110,11 +111,16 @@ const SELECTOR_I18N: Record<
         desc: 'Sections groupées avec cases à cocher et synthèse',
         tag: 'Méthode',
       },
+      cv: {
+        title: 'CV professionnel',
+        desc: 'Expériences, formation, compétences, langues. PDF lisible par les recruteurs',
+        tag: 'Carrière',
+      },
     },
   },
   en: {
     stepTitle: '3. Document Template',
-    countModels: '12 print-ready models',
+    countModels: '11 print-ready models',
     minimalLabel: 'Minimal',
     defaultBadge: 'Default',
     completeLabel: 'Complete',
@@ -172,11 +178,16 @@ const SELECTOR_I18N: Record<
         desc: 'Multi-purpose grouped checklists with checkboxes & sign-off',
         tag: 'Project Ops',
       },
+      cv: {
+        title: 'Professional CV / Resume',
+        desc: 'Experience, education, skills, languages. Recruiter-friendly PDF',
+        tag: 'Career',
+      },
     },
   },
   de: {
     stepTitle: '3. Dokumenten-Vorlage',
-    countModels: '12 druckfertige Vorlagen',
+    countModels: '11 druckfertige Vorlagen',
     minimalLabel: 'Minimal',
     defaultBadge: 'Standard',
     completeLabel: 'Vollständig',
@@ -234,11 +245,16 @@ const SELECTOR_I18N: Record<
         desc: 'Strukturierte Abschnitte mit Kontrollkästchen & Freigabe',
         tag: 'Organisation',
       },
+      cv: {
+        title: 'Lebenslauf',
+        desc: 'Berufserfahrung, Ausbildung, Kenntnisse, Sprachen. ATS-lesbares PDF',
+        tag: 'Karriere',
+      },
     },
   },
   es: {
     stepTitle: '3. Plantilla de documento',
-    countModels: '12 modelos listos para imprimir',
+    countModels: '11 modelos listos para imprimir',
     minimalLabel: 'Mínimo',
     defaultBadge: 'Por defecto',
     completeLabel: 'Completo',
@@ -296,11 +312,16 @@ const SELECTOR_I18N: Record<
         desc: 'Secciones agrupadas con casillas de verificación y firma',
         tag: 'Control',
       },
+      cv: {
+        title: 'Currículum (CV)',
+        desc: 'Experiencia, formación, competencias, idiomas. PDF legible por reclutadores',
+        tag: 'Carrera',
+      },
     },
   },
   it: {
     stepTitle: '3. Modello di Documento',
-    countModels: '12 modelli pronti per la stampa',
+    countModels: '11 modelli pronti per la stampa',
     minimalLabel: 'Minimale',
     defaultBadge: 'Predefinito',
     completeLabel: 'Completo',
@@ -358,11 +379,16 @@ const SELECTOR_I18N: Record<
         desc: 'Sezioni raggruppate con caselle di controllo e convalida',
         tag: 'Metodo',
       },
+      cv: {
+        title: 'Curriculum (CV)',
+        desc: 'Esperienza, formazione, competenze, lingue. PDF leggibile dai selezionatori',
+        tag: 'Carriera',
+      },
     },
   },
   pt: {
     stepTitle: '3. Modelo de Documento',
-    countModels: '12 modelos prontos para impressão',
+    countModels: '11 modelos prontos para impressão',
     minimalLabel: 'Mínimo',
     defaultBadge: 'Padrão',
     completeLabel: 'Completo',
@@ -420,6 +446,11 @@ const SELECTOR_I18N: Record<
         desc: 'Etapas agrupadas com caixas de seleção e validação',
         tag: 'Processos',
       },
+      cv: {
+        title: 'Currículo (CV)',
+        desc: 'Experiência, formação, competências, línguas. PDF legível por recrutadores',
+        tag: 'Carreira',
+      },
     },
   },
 };
@@ -429,6 +460,8 @@ const TEMPLATE_DEFINITIONS: Array<{
   family: TemplateFamily;
   icon: React.ElementType;
 }> = [
+  // Career: listed first, it is the most searched-for template
+  { id: 'cv', family: 'business', icon: FileText },
   // Personal (7)
   { id: 'habit-tracker', family: 'personal', icon: Calendar },
   { id: 'goal-planner-90', family: 'personal', icon: Milestone },
@@ -438,7 +471,7 @@ const TEMPLATE_DEFINITIONS: Array<{
   { id: 'meal-planner', family: 'personal', icon: Utensils },
   { id: 'budget-tracker', family: 'personal', icon: Wallet },
   { id: 'checklist', family: 'personal', icon: CheckCircle2 },
-  // Business (5)
+  // Business
   { id: 'price-list', family: 'business', icon: Briefcase },
   { id: 'client-tracker', family: 'business', icon: Users },
 ];

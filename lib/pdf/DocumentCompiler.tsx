@@ -13,6 +13,7 @@ import { VectorBudgetTrackerPDF } from './VectorBudgetTrackerPDF';
 import { VectorPriceListPDF } from './VectorPriceListPDF';
 import { VectorClientTrackerPDF } from './VectorClientTrackerPDF';
 import { VectorChecklistPDF } from './VectorChecklistPDF';
+import { VectorCvPDF } from './VectorCvPDF';
 
 interface DocumentCompilerProps {
   brandKit: BrandKit;
@@ -51,10 +52,22 @@ export const DocumentCompiler: React.FC<DocumentCompilerProps> = ({ brandKit }) 
         return <VectorClientTrackerPDF brandKit={brandKit} />;
       case 'checklist':
         return <VectorChecklistPDF brandKit={brandKit} />;
+      case 'cv':
+        return <VectorCvPDF brandKit={brandKit} />;
       default:
         return <VectorMinimalHabitTrackerPDF brandKit={brandKit} />;
     }
   };
+
+  // A CV goes to employers: its metadata names the candidate only, never LogoLoom.
+  if (template === 'cv') {
+    const name = brandKit.cvContent?.fullName?.trim() || 'CV';
+    return (
+      <Document title={`CV - ${name}`} author={name} subject="Curriculum vitae" creator={name} producer={name}>
+        {renderTemplatePage()}
+      </Document>
+    );
+  }
 
   return (
     <Document

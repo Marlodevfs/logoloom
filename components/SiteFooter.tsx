@@ -10,7 +10,7 @@ export function SiteFooter({ lang, withStickyBar = false }: { lang: string; with
   const c = getSiteChrome(lang);
   const year = new Date().getFullYear();
   const popular = CANONICAL_TEMPLATE_SLUGS.filter((t) =>
-    ['habit-tracker', 'weekly-planner', 'monthly-calendar', 'checklist'].includes(t.slug)
+    ['cv', 'habit-tracker', 'weekly-planner', 'monthly-calendar'].includes(t.slug)
   );
 
   return (

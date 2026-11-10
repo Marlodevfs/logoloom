@@ -74,6 +74,7 @@ export const SITE_CHROME: Record<InterfaceLang, SiteChromeStrings> = {
       'price-list': 'Price List',
       'client-tracker': 'Client Tracker',
       checklist: 'Checklist',
+      cv: 'CV / Resume',
     },
   },
   fr: {
@@ -116,6 +117,7 @@ export const SITE_CHROME: Record<InterfaceLang, SiteChromeStrings> = {
       'price-list': 'Grille tarifaire',
       'client-tracker': 'Suivi client',
       checklist: 'Checklist',
+      cv: 'CV',
     },
   },
   de: {
@@ -158,6 +160,7 @@ export const SITE_CHROME: Record<InterfaceLang, SiteChromeStrings> = {
       'price-list': 'Preisliste',
       'client-tracker': 'Kundenübersicht',
       checklist: 'Checkliste',
+      cv: 'Lebenslauf',
     },
   },
   es: {
@@ -200,6 +203,7 @@ export const SITE_CHROME: Record<InterfaceLang, SiteChromeStrings> = {
       'price-list': 'Lista de precios',
       'client-tracker': 'Seguimiento de clientes',
       checklist: 'Checklist',
+      cv: 'Currículum',
     },
   },
   it: {
@@ -242,6 +246,7 @@ export const SITE_CHROME: Record<InterfaceLang, SiteChromeStrings> = {
       'price-list': 'Listino prezzi',
       'client-tracker': 'Registro clienti',
       checklist: 'Checklist',
+      cv: 'Curriculum',
     },
   },
   pt: {
@@ -284,6 +289,7 @@ export const SITE_CHROME: Record<InterfaceLang, SiteChromeStrings> = {
       'price-list': 'Tabela de preços',
       'client-tracker': 'Registo de clientes',
       checklist: 'Checklist',
+      cv: 'Currículo',
     },
   },
 };

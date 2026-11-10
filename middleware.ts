@@ -8,7 +8,7 @@ const DEFAULT_LOCALE = 'en';
 // (typed by hand or shared without the language) is redirected to English.
 const LOCALIZED_ONLY = new Set([
   'habit-tracker', 'goal-planner', 'weekly-planner', 'monthly-calendar', 'daily-priorities',
-  'meal-planner', 'budget-tracker', 'price-list', 'client-tracker', 'checklist',
+  'meal-planner', 'budget-tracker', 'price-list', 'client-tracker', 'checklist', 'cv',
   'legal', 'privacy',
 ]);
 
