@@ -122,7 +122,7 @@ export async function GET(req: NextRequest) {
                 Weekly Planner
               </span>
               <span style={{ backgroundColor: '#1E293B', color: '#E2E8F0', padding: '8px 16px', borderRadius: '8px', fontSize: '15px', fontWeight: 600 }}>
-                Invoice &amp; Quote
+                Monthly Calendar
               </span>
             </div>
 

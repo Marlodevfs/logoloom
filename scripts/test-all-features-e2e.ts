@@ -8,8 +8,6 @@ import { DocumentCompiler } from '../lib/pdf/DocumentCompiler';
 import {
   getDefaultHabitTrackerContent,
   getDefaultGoalPlannerContent,
-  getDefaultInvoiceContent,
-  getDefaultQuoteContent,
   getDefaultWeeklyPlannerContent,
 } from '../lib/use-brand-kit';
 import { ensureAccessibleOnWhite, getContrastRatio, getOptimalTextColor } from '../lib/color-engine';
@@ -54,8 +52,6 @@ async function runEndToEndFeatureTests() {
     'components/templates/DailyPrioritiesTemplate.tsx',
     'components/templates/MealPlannerTemplate.tsx',
     'components/templates/BudgetTrackerTemplate.tsx',
-    'components/templates/QuoteTemplate.tsx',
-    'components/templates/InvoiceTemplate.tsx',
     'components/templates/PriceListTemplate.tsx',
     'components/templates/ClientTrackerTemplate.tsx',
     'components/templates/ChecklistTemplate.tsx',
@@ -67,8 +63,6 @@ async function runEndToEndFeatureTests() {
     'lib/pdf/VectorDailyPrioritiesPDF.tsx',
     'lib/pdf/VectorMealPlannerPDF.tsx',
     'lib/pdf/VectorBudgetTrackerPDF.tsx',
-    'lib/pdf/VectorQuotePDF.tsx',
-    'lib/pdf/VectorInvoicePDF.tsx',
     'lib/pdf/VectorPriceListPDF.tsx',
     'lib/pdf/VectorClientTrackerPDF.tsx',
     'lib/pdf/VectorChecklistPDF.tsx',
@@ -124,9 +118,6 @@ async function runEndToEndFeatureTests() {
 
     const goalContent = getDefaultGoalPlannerContent(lang);
     assert(Boolean(goalContent.title && goalContent.phases.length === 3), `Default goal planner for [${lang}] has 3 phases`);
-
-    const invoiceContent = getDefaultInvoiceContent(lang);
-    assert(Boolean(invoiceContent.title && invoiceContent.items.length >= 2), `Default invoice for [${lang}] has items`);
   }
 
   // 5. VECTOR PDF COMPILATION & FILE SIZE CHECKS
@@ -136,8 +127,8 @@ async function runEndToEndFeatureTests() {
     { templateId: 'habit-tracker', style: 'complete', paper: 'a4', isPro: true, withQr: false },
     { templateId: 'goal-planner-90', style: 'minimal', paper: 'letter', isPro: false, withQr: false },
     { templateId: 'weekly-planner', style: 'minimal', paper: 'a4', isPro: true, withQr: true },
-    { templateId: 'invoice', style: 'minimal', paper: 'a4', isPro: true, withQr: true },
-    { templateId: 'quote', style: 'minimal', paper: 'letter', isPro: false, withQr: false },
+    { templateId: 'price-list', style: 'minimal', paper: 'a4', isPro: true, withQr: true },
+    { templateId: 'checklist', style: 'minimal', paper: 'letter', isPro: false, withQr: false },
   ];
 
   for (const combo of templateCombos) {
@@ -162,8 +153,6 @@ async function runEndToEndFeatureTests() {
       habitTrackerContent: getDefaultHabitTrackerContent(testDocLang, 'wellbeing'),
       goalPlannerContent: getDefaultGoalPlannerContent(testDocLang),
       weeklyPlannerContent: getDefaultWeeklyPlannerContent(testDocLang),
-      invoiceContent: getDefaultInvoiceContent(testDocLang),
-      quoteContent: getDefaultQuoteContent(testDocLang),
     };
 
     const fileName = `${combo.templateId}-${combo.style}-${combo.paper}-${combo.isPro ? 'pro' : 'free'}.pdf`;
@@ -206,7 +195,6 @@ async function runEndToEndFeatureTests() {
     removeWatermark: true,
     habitTrackerContent: getDefaultHabitTrackerContent('en', 'wellbeing'),
     goalPlannerContent: getDefaultGoalPlannerContent('en'),
-    invoiceContent: getDefaultInvoiceContent('en'),
   };
 
   const proPdfPath = path.join(OUT_DIR, 'pro-white-label-test.pdf');

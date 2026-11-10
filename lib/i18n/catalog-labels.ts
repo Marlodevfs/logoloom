@@ -63,42 +63,6 @@ export interface CatalogLabels {
     notesLabel: string;
     footerCategory: string;
   };
-  quote: {
-    quoteNumberLabel: string;
-    dateLabel: string;
-    validUntilLabel: string;
-    fromLabel: string;
-    toLabel: string;
-    colDesc: string;
-    colQty: string;
-    colUnitPrice: string;
-    colTotal: string;
-    subtotalLabel: string;
-    taxLabel: string;
-    totalLabel: string;
-    signatureLabel: string;
-    footerCategory: string;
-    totalDueLabel: string;
-  };
-  invoice: {
-    invoiceNumberLabel: string;
-    dateLabel: string;
-    dueDateLabel: string;
-    fromLabel: string;
-    toLabel: string;
-    colDesc: string;
-    colQty: string;
-    colUnitPrice: string;
-    colTotal: string;
-    subtotalLabel: string;
-    taxLabel: string;
-    totalLabel: string;
-    paymentDetailsTitle: string;
-    footerCategory: string;
-    totalDueLabel: string;
-    clientIdLabel: string;
-    serviceDateLabel: string;
-  };
   priceList: {
     lastUpdatedLabel: string;
     currencyNote: string;
@@ -184,42 +148,6 @@ export const CATALOG_LABELS: Record<DocumentLang, CatalogLabels> = {
       notesLabel: 'Notes de budget :',
       footerCategory: 'Finances • Budget mensuel',
     },
-    quote: {
-      quoteNumberLabel: 'Devis n° :',
-      dateLabel: 'Date :',
-      validUntilLabel: 'Validité :',
-      fromLabel: 'Émetteur :',
-      toLabel: 'Client :',
-      colDesc: 'Description',
-      colQty: 'Qté',
-      colUnitPrice: 'Prix unit.',
-      colTotal: 'Total',
-      subtotalLabel: 'Sous-total HT :',
-      taxLabel: 'TVA :',
-      totalLabel: 'Total TTC :',
-      signatureLabel: 'Bon pour accord, date et signature :',
-      footerCategory: 'Document professionnel • Devis',
-      totalDueLabel: 'Total à payer :',
-    },
-    invoice: {
-      invoiceNumberLabel: 'Facture n° :',
-      dateLabel: 'Date :',
-      dueDateLabel: 'Échéance :',
-      fromLabel: 'Émetteur :',
-      toLabel: 'Client :',
-      colDesc: 'Description',
-      colQty: 'Qté',
-      colUnitPrice: 'Prix unit.',
-      colTotal: 'Total',
-      subtotalLabel: 'Sous-total HT :',
-      taxLabel: 'TVA :',
-      totalLabel: 'Total TTC :',
-      paymentDetailsTitle: 'Coordonnées de paiement :',
-      footerCategory: 'Document professionnel • Facture',
-      totalDueLabel: 'Total à payer :',
-      clientIdLabel: 'SIREN :',
-      serviceDateLabel: 'Date de prestation :',
-    },
     priceList: {
       lastUpdatedLabel: 'Mise à jour :',
       currencyNote: 'Tous les prix en',
@@ -302,42 +230,6 @@ export const CATALOG_LABELS: Record<DocumentLang, CatalogLabels> = {
       netBalanceLabel: 'Net Balance (Savings):',
       notesLabel: 'Budget Notes:',
       footerCategory: 'Finance • Monthly Budget',
-    },
-    quote: {
-      quoteNumberLabel: 'Quote #:',
-      dateLabel: 'Date:',
-      validUntilLabel: 'Valid until:',
-      fromLabel: 'From:',
-      toLabel: 'Client:',
-      colDesc: 'Description',
-      colQty: 'Qty',
-      colUnitPrice: 'Unit Price',
-      colTotal: 'Total',
-      subtotalLabel: 'Subtotal:',
-      taxLabel: 'Tax / VAT:',
-      totalLabel: 'Total Due:',
-      signatureLabel: 'Agreed and accepted, date and signature:',
-      footerCategory: 'Business Document • Quotation',
-      totalDueLabel: 'Total due:',
-    },
-    invoice: {
-      invoiceNumberLabel: 'Invoice #:',
-      dateLabel: 'Date:',
-      dueDateLabel: 'Due Date:',
-      fromLabel: 'From:',
-      toLabel: 'Client:',
-      colDesc: 'Description',
-      colQty: 'Qty',
-      colUnitPrice: 'Unit Price',
-      colTotal: 'Total',
-      subtotalLabel: 'Subtotal:',
-      taxLabel: 'Tax / VAT:',
-      totalLabel: 'Total Due:',
-      paymentDetailsTitle: 'Payment Details:',
-      footerCategory: 'Business Document • Invoice',
-      totalDueLabel: 'Total due:',
-      clientIdLabel: 'Company no.:',
-      serviceDateLabel: 'Service date:',
     },
     priceList: {
       lastUpdatedLabel: 'Effective:',
@@ -422,42 +314,6 @@ export const CATALOG_LABELS: Record<DocumentLang, CatalogLabels> = {
       notesLabel: 'Budget-Notizen:',
       footerCategory: 'Finanzen • Monatsbudget',
     },
-    quote: {
-      quoteNumberLabel: 'Angebots-Nr.:',
-      dateLabel: 'Datum:',
-      validUntilLabel: 'Gültig bis:',
-      fromLabel: 'Von:',
-      toLabel: 'Für:',
-      colDesc: 'Beschreibung',
-      colQty: 'Menge',
-      colUnitPrice: 'Einzelpreis',
-      colTotal: 'Gesamt',
-      subtotalLabel: 'Zwischensumme:',
-      taxLabel: 'MwSt.:',
-      totalLabel: 'Gesamtbetrag:',
-      signatureLabel: 'Einverstanden und angenommen, Datum und Unterschrift:',
-      footerCategory: 'Geschäftsdokument • Kostenvoranschlag',
-      totalDueLabel: 'Gesamtbetrag:',
-    },
-    invoice: {
-      invoiceNumberLabel: 'Rechnungs-Nr.:',
-      dateLabel: 'Datum:',
-      dueDateLabel: 'Fälligkeitsdatum:',
-      fromLabel: 'Von:',
-      toLabel: 'Für:',
-      colDesc: 'Beschreibung',
-      colQty: 'Menge',
-      colUnitPrice: 'Einzelpreis',
-      colTotal: 'Gesamt',
-      subtotalLabel: 'Zwischensumme:',
-      taxLabel: 'MwSt.:',
-      totalLabel: 'Gesamtbetrag:',
-      paymentDetailsTitle: 'Zahlungsdetails:',
-      footerCategory: 'Geschäftsdokument • Rechnung',
-      totalDueLabel: 'Gesamtbetrag:',
-      clientIdLabel: 'Firmen-Nr.:',
-      serviceDateLabel: 'Leistungsdatum:',
-    },
     priceList: {
       lastUpdatedLabel: 'Gültig ab:',
       currencyNote: 'Alle Preise in',
@@ -540,42 +396,6 @@ export const CATALOG_LABELS: Record<DocumentLang, CatalogLabels> = {
       netBalanceLabel: 'Saldo neto (Ahorro):',
       notesLabel: 'Notas de presupuesto:',
       footerCategory: 'Finanzas • Presupuesto mensual',
-    },
-    quote: {
-      quoteNumberLabel: 'Presupuesto n°:',
-      dateLabel: 'Fecha:',
-      validUntilLabel: 'Válido hasta:',
-      fromLabel: 'De:',
-      toLabel: 'Para:',
-      colDesc: 'Descripción',
-      colQty: 'Cant.',
-      colUnitPrice: 'Precio unit.',
-      colTotal: 'Total',
-      subtotalLabel: 'Subtotal:',
-      taxLabel: 'IVA:',
-      totalLabel: 'Total a Pagar:',
-      signatureLabel: 'Conforme y aceptado, fecha y firma:',
-      footerCategory: 'Documento profesional • Presupuesto',
-      totalDueLabel: 'Total a pagar:',
-    },
-    invoice: {
-      invoiceNumberLabel: 'Factura n°:',
-      dateLabel: 'Fecha:',
-      dueDateLabel: 'Vencimiento:',
-      fromLabel: 'De:',
-      toLabel: 'Para:',
-      colDesc: 'Descripción',
-      colQty: 'Cant.',
-      colUnitPrice: 'Precio unit.',
-      colTotal: 'Total',
-      subtotalLabel: 'Subtotal:',
-      taxLabel: 'IVA:',
-      totalLabel: 'Total a Pagar:',
-      paymentDetailsTitle: 'Datos de pago:',
-      footerCategory: 'Documento profesional • Factura',
-      totalDueLabel: 'Total a pagar:',
-      clientIdLabel: 'NIF/CIF:',
-      serviceDateLabel: 'Fecha del servicio:',
     },
     priceList: {
       lastUpdatedLabel: 'Actualizado:',
@@ -660,42 +480,6 @@ export const CATALOG_LABELS: Record<DocumentLang, CatalogLabels> = {
       notesLabel: 'Note di bilancio:',
       footerCategory: 'Finanze • Budget mensile',
     },
-    quote: {
-      quoteNumberLabel: 'Preventivo n.:',
-      dateLabel: 'Data:',
-      validUntilLabel: 'Valido fino al:',
-      fromLabel: 'Da:',
-      toLabel: 'Per:',
-      colDesc: 'Descrizione',
-      colQty: 'Qtà',
-      colUnitPrice: 'Prezzo unit.',
-      colTotal: 'Totale',
-      subtotalLabel: 'Subtotale:',
-      taxLabel: 'IVA:',
-      totalLabel: 'Totale da Saldare:',
-      signatureLabel: 'Per accettazione, data e firma:',
-      footerCategory: 'Documento aziendale • Preventivo',
-      totalDueLabel: 'Totale da pagare:',
-    },
-    invoice: {
-      invoiceNumberLabel: 'Fattura n.:',
-      dateLabel: 'Data:',
-      dueDateLabel: 'Scadenza:',
-      fromLabel: 'Da:',
-      toLabel: 'Per:',
-      colDesc: 'Descrizione',
-      colQty: 'Qtà',
-      colUnitPrice: 'Prezzo unit.',
-      colTotal: 'Totale',
-      subtotalLabel: 'Subtotale:',
-      taxLabel: 'IVA:',
-      totalLabel: 'Totale da Saldare:',
-      paymentDetailsTitle: 'Dettagli di pagamento:',
-      footerCategory: 'Documento aziendale • Fattura',
-      totalDueLabel: 'Totale da pagare:',
-      clientIdLabel: 'P.IVA / C.F.:',
-      serviceDateLabel: 'Data prestazione:',
-    },
     priceList: {
       lastUpdatedLabel: 'Aggiornato:',
       currencyNote: 'Tutti i prezzi in',
@@ -778,42 +562,6 @@ export const CATALOG_LABELS: Record<DocumentLang, CatalogLabels> = {
       netBalanceLabel: 'Saldo líquido (Poupança):',
       notesLabel: 'Notas de orçamento:',
       footerCategory: 'Finanças • Orçamento mensal',
-    },
-    quote: {
-      quoteNumberLabel: 'Orçamento n°:',
-      dateLabel: 'Data:',
-      validUntilLabel: 'Válido até:',
-      fromLabel: 'De:',
-      toLabel: 'Para:',
-      colDesc: 'Descrição',
-      colQty: 'Qtd.',
-      colUnitPrice: 'Preço unit.',
-      colTotal: 'Total',
-      subtotalLabel: 'Subtotal:',
-      taxLabel: 'IVA:',
-      totalLabel: 'Total a Pagar:',
-      signatureLabel: 'De acordo e aceito, data e assinatura:',
-      footerCategory: 'Documento comercial • Orçamento',
-      totalDueLabel: 'Total a pagar:',
-    },
-    invoice: {
-      invoiceNumberLabel: 'Fatura n°:',
-      dateLabel: 'Data:',
-      dueDateLabel: 'Vencimento:',
-      fromLabel: 'De:',
-      toLabel: 'Para:',
-      colDesc: 'Descrição',
-      colQty: 'Qtd.',
-      colUnitPrice: 'Preço unit.',
-      colTotal: 'Total',
-      subtotalLabel: 'Subtotal:',
-      taxLabel: 'IVA:',
-      totalLabel: 'Total a Pagar:',
-      paymentDetailsTitle: 'Dados para pagamento:',
-      footerCategory: 'Documento comercial • Fatura',
-      totalDueLabel: 'Total a pagar:',
-      clientIdLabel: 'NIF:',
-      serviceDateLabel: 'Data do serviço:',
     },
     priceList: {
       lastUpdatedLabel: 'Atualizado:',

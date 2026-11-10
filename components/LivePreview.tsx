@@ -12,8 +12,6 @@ import { MonthlyCalendarTemplate } from './templates/MonthlyCalendarTemplate';
 import { DailyPrioritiesTemplate } from './templates/DailyPrioritiesTemplate';
 import { MealPlannerTemplate } from './templates/MealPlannerTemplate';
 import { BudgetTrackerTemplate } from './templates/BudgetTrackerTemplate';
-import { QuoteTemplate } from './templates/QuoteTemplate';
-import { InvoiceTemplate } from './templates/InvoiceTemplate';
 import { PriceListTemplate } from './templates/PriceListTemplate';
 import { ClientTrackerTemplate } from './templates/ClientTrackerTemplate';
 import { ChecklistTemplate } from './templates/ChecklistTemplate';
@@ -155,10 +153,6 @@ export const LivePreview: React.FC<LivePreviewProps> = ({
         return <MealPlannerTemplate brandKit={brandKit} onUpdate={onUpdate} />;
       case 'budget-tracker':
         return <BudgetTrackerTemplate brandKit={brandKit} onUpdate={onUpdate} />;
-      case 'quote':
-        return <QuoteTemplate brandKit={brandKit} onUpdate={onUpdate} />;
-      case 'invoice':
-        return <InvoiceTemplate brandKit={brandKit} onUpdate={onUpdate} />;
       case 'price-list':
         return <PriceListTemplate brandKit={brandKit} onUpdate={onUpdate} />;
       case 'client-tracker':

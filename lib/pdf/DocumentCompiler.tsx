@@ -10,8 +10,6 @@ import { VectorMonthlyCalendarPDF } from './VectorMonthlyCalendarPDF';
 import { VectorDailyPrioritiesPDF } from './VectorDailyPrioritiesPDF';
 import { VectorMealPlannerPDF } from './VectorMealPlannerPDF';
 import { VectorBudgetTrackerPDF } from './VectorBudgetTrackerPDF';
-import { VectorQuotePDF } from './VectorQuotePDF';
-import { VectorInvoicePDF } from './VectorInvoicePDF';
 import { VectorPriceListPDF } from './VectorPriceListPDF';
 import { VectorClientTrackerPDF } from './VectorClientTrackerPDF';
 import { VectorChecklistPDF } from './VectorChecklistPDF';
@@ -47,10 +45,6 @@ export const DocumentCompiler: React.FC<DocumentCompilerProps> = ({ brandKit }) 
         return <VectorMealPlannerPDF brandKit={brandKit} />;
       case 'budget-tracker':
         return <VectorBudgetTrackerPDF brandKit={brandKit} />;
-      case 'quote':
-        return <VectorQuotePDF brandKit={brandKit} />;
-      case 'invoice':
-        return <VectorInvoicePDF brandKit={brandKit} />;
       case 'price-list':
         return <VectorPriceListPDF brandKit={brandKit} />;
       case 'client-tracker':

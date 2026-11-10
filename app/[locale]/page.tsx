@@ -96,7 +96,7 @@ const HOME_HERO_I18N: Record<
     badge: 'Free Printable Planners & Business Documents',
     h1: 'Free Printable Planners & Documents to Personalize in Seconds',
     intro:
-      'Customize beautiful, ink-friendly printable PDFs directly in your browser. Habit trackers, weekly planners, monthly calendars, invoices, quotes, and checklists. 100% free, private on your device, optional logo.',
+      'Customize beautiful, ink-friendly printable PDFs directly in your browser. Habit trackers, weekly planners, monthly calendars, budgets and checklists. 100% free, private on your device, optional logo.',
     features: [
       'Vector PDF, sharp at any size',
       'International A4 & US Letter sizes',
@@ -106,7 +106,7 @@ const HOME_HERO_I18N: Record<
     faqTitle: 'Frequently Asked Questions',
     about: [
       "LogoLoom is a free online studio for creating printable planners and business documents that look like they were made for you. Choose a template, add your logo, pick a brand color, and the whole document updates instantly. When you are happy with it, download a clean vector PDF ready for your home printer or a print shop.",
-      "The templates cover both everyday organization and small-business paperwork: habit trackers, weekly and monthly planners, daily priorities, meal plans and budgets, as well as quotes, invoices, price lists and client trackers. Every layout is designed to use little ink, stay readable once printed, and work in both A4 and US Letter formats.",
+      "The templates cover both everyday organization and small-business paperwork: habit trackers, weekly and monthly planners, daily priorities, meal plans and budgets, as well as price lists and client trackers. Every layout is designed to use little ink, stay readable once printed, and work in both A4 and US Letter formats.",
       "Privacy is built in. There is no account to create and nothing to install: your logo and your text are processed directly in your browser and never sent to a server. Freelancers, coaches, small shops and anyone who likes paper planning can produce professional documents in a couple of minutes, for free.",
     ],
     faqs: [
@@ -116,7 +116,7 @@ const HOME_HERO_I18N: Record<
       },
       {
         q: 'Is LogoLoom an AI logo generator?',
-        a: 'No. LogoLoom is not an AI logo design app. It is a document personalization studio for printable planners (habit trackers, weekly schedules, calendars) and small business paperwork (invoices, quotes, service menus). You can optionally drop your existing logo onto the documents.',
+        a: 'No. LogoLoom is not an AI logo design app. It is a document personalization studio for printable planners (habit trackers, weekly schedules, calendars) and small business documents (price lists, client trackers). You can optionally drop your existing logo onto the documents.',
       },
       {
         q: 'Are exported PDFs high resolution for printing?',
@@ -134,7 +134,7 @@ const HOME_HERO_I18N: Record<
     badge: 'Planners et documents gratuits à imprimer',
     h1: 'Planners et documents professionnels gratuits à personnaliser en 2 minutes',
     intro:
-      'Personnalisez des PDF imprimables élégants et économes en encre directement dans votre navigateur. Suivi d\'habitudes, plannings hebdomadaires, calendriers, factures, devis et checklists. 100% gratuit, privé sur votre machine, logo optionnel.',
+      'Personnalisez des PDF imprimables élégants et économes en encre directement dans votre navigateur. Suivi d\'habitudes, plannings hebdomadaires, calendriers, budgets et checklists. 100% gratuit, privé sur votre machine, logo optionnel.',
     features: [
       'PDF vectoriel net à toute taille',
       'Formats A4 et US Letter',
@@ -144,7 +144,7 @@ const HOME_HERO_I18N: Record<
     faqTitle: 'Questions fréquentes',
     about: [
       "LogoLoom est un atelier en ligne gratuit pour créer des planners et des documents professionnels à imprimer, à votre image. Choisissez un modèle, ajoutez votre logo, sélectionnez une couleur de marque : tout le document se met à jour instantanément. Une fois satisfait, téléchargez un PDF vectoriel propre, prêt pour votre imprimante ou un imprimeur.",
-      "Les modèles couvrent l’organisation du quotidien comme la paperasse des petites entreprises : suivi d’habitudes, semainier, calendrier mensuel, priorités du jour, menus et budget, mais aussi devis, factures, grilles tarifaires et suivi client. Chaque mise en page consomme peu d’encre, reste lisible une fois imprimée et fonctionne en A4 comme en US Letter.",
+      "Les modèles couvrent l’organisation du quotidien comme la paperasse des petites entreprises : suivi d’habitudes, semainier, calendrier mensuel, priorités du jour, menus et budget, mais aussi grilles tarifaires et suivi client. Chaque mise en page consomme peu d’encre, reste lisible une fois imprimée et fonctionne en A4 comme en US Letter.",
       "La confidentialité est au cœur du projet. Aucun compte à créer, rien à installer : votre logo et vos textes sont traités directement dans votre navigateur et ne sont jamais envoyés sur un serveur. Indépendants, coachs, commerçants ou amoureux du papier peuvent ainsi produire des documents professionnels en deux minutes, gratuitement.",
     ],
     faqs: [
@@ -154,7 +154,7 @@ const HOME_HERO_I18N: Record<
       },
       {
         q: 'LogoLoom est-il un générateur de logos par IA ?',
-        a: 'Non. LogoLoom n\'est pas un créateur de logo par intelligence artificielle. C\'est un atelier de personnalisation de documents imprimables (suivis d\'habitudes, plannings, factures, devis) sur lesquels vous pouvez intégrer votre propre logo.',
+        a: 'Non. LogoLoom n\'est pas un créateur de logo par intelligence artificielle. C\'est un atelier de personnalisation de documents imprimables (suivis d\'habitudes, plannings, calendriers, grilles tarifaires) sur lesquels vous pouvez intégrer votre propre logo.',
       },
       {
         q: 'Les PDF sont-ils adaptés à l\'impression professionnelle ?',
@@ -172,7 +172,7 @@ const HOME_HERO_I18N: Record<
     badge: 'Kostenlose druckbare Planer & Dokumente',
     h1: 'Kostenlose druckbare Planer & Vorlagen in Sekunden personalisieren',
     intro:
-      'Erstellen Sie elegante, tintensparende druckbare PDFs direkt im Browser. Gewohnheitstracker, Wochenplaner, Monatskalender, Rechnungen, Angebote und Checklisten. 100% kostenlos, lokal im Browser, optionales Logo.',
+      'Erstellen Sie elegante, tintensparende druckbare PDFs direkt im Browser. Gewohnheitstracker, Wochenplaner, Monatskalender, Budgets und Checklisten. 100% kostenlos, lokal im Browser, optionales Logo.',
     features: [
       'Gestochen scharfe Vektor-PDFs',
       'DIN A4 & US Letter Formate',
@@ -182,7 +182,7 @@ const HOME_HERO_I18N: Record<
     faqTitle: 'Häufig gestellte Fragen',
     about: [
       "LogoLoom ist ein kostenloses Online-Studio, mit dem Sie druckbare Planer und Geschäftsdokumente im eigenen Look erstellen. Wählen Sie eine Vorlage, fügen Sie Ihr Logo hinzu und bestimmen Sie Ihre Markenfarbe – das gesamte Dokument passt sich sofort an. Anschließend laden Sie ein sauberes Vektor-PDF herunter, bereit für Ihren Drucker oder die Druckerei.",
-      "Die Vorlagen decken sowohl die Alltagsorganisation als auch den Papierkram kleiner Unternehmen ab: Gewohnheitstracker, Wochen- und Monatsplaner, Tagesprioritäten, Essens- und Budgetplaner sowie Angebote, Rechnungen, Preislisten und Kundenübersichten. Jedes Layout spart Tinte, bleibt gedruckt gut lesbar und funktioniert in A4 und US Letter.",
+      "Die Vorlagen decken sowohl die Alltagsorganisation als auch den Papierkram kleiner Unternehmen ab: Gewohnheitstracker, Wochen- und Monatsplaner, Tagesprioritäten, Essens- und Budgetplaner sowie Preislisten und Kundenübersichten. Jedes Layout spart Tinte, bleibt gedruckt gut lesbar und funktioniert in A4 und US Letter.",
       "Datenschutz ist von Anfang an eingebaut. Kein Konto, keine Installation: Ihr Logo und Ihre Texte werden direkt in Ihrem Browser verarbeitet und nie an einen Server gesendet. So erstellen Freelancer, Coaches, kleine Geschäfte und alle, die gerne auf Papier planen, in wenigen Minuten kostenlos professionelle Dokumente.",
     ],
     faqs: [
@@ -192,7 +192,7 @@ const HOME_HERO_I18N: Record<
       },
       {
         q: 'Ist LogoLoom ein KI-Logo-Generator?',
-        a: 'Nein. LogoLoom ist kein KI-Logo-Generator, sondern ein Personalisierungs-Tool für druckbare Dokumente (Gewohnheitstracker, Wochenplaner, Rechnungen, Angebote).',
+        a: 'Nein. LogoLoom ist kein KI-Logo-Generator, sondern ein Personalisierungs-Tool für druckbare Dokumente (Gewohnheitstracker, Wochenplaner, Kalender, Preislisten).',
       },
     ],
     catalogTitle: 'Alle 12 druckfertigen Vorlagen entdecken',
@@ -202,7 +202,7 @@ const HOME_HERO_I18N: Record<
     badge: 'Planificadores y documentos imprimibles gratis',
     h1: 'Planificadores y documentos imprimibles gratis listos en segundos',
     intro:
-      'Personaliza hermosos PDFs imprimibles de bajo consumo de tinta directamente en tu navegador. Rastreadores de hábitos, planificadores semanales, calendarios, facturas, presupuestos y listas. 100% gratis, privado y sin registro.',
+      'Personaliza hermosos PDFs imprimibles de bajo consumo de tinta directamente en tu navegador. Rastreadores de hábitos, planificadores semanales, calendarios, presupuestos y listas. 100% gratis, privado y sin registro.',
     features: [
       'PDF vectorial nítido a cualquier tamaño',
       'Tamaños A4 y Carta',
@@ -212,7 +212,7 @@ const HOME_HERO_I18N: Record<
     faqTitle: 'Preguntas Frecuentes',
     about: [
       "LogoLoom es un estudio en línea gratuito para crear planificadores y documentos profesionales para imprimir con tu propia imagen. Elige una plantilla, añade tu logo y selecciona un color de marca: todo el documento se actualiza al instante. Cuando estés satisfecho, descarga un PDF vectorial limpio, listo para tu impresora o una imprenta.",
-      "Las plantillas cubren tanto la organización diaria como el papeleo de los pequeños negocios: seguimiento de hábitos, planificadores semanales y mensuales, prioridades del día, menús y presupuestos, además de presupuestos comerciales, facturas, listas de precios y seguimiento de clientes. Cada diseño ahorra tinta, se lee bien impreso y funciona en A4 y US Letter.",
+      "Las plantillas cubren tanto la organización diaria como el papeleo de los pequeños negocios: seguimiento de hábitos, planificadores semanales y mensuales, prioridades del día, menús y presupuestos, además de listas de precios y seguimiento de clientes. Cada diseño ahorra tinta, se lee bien impreso y funciona en A4 y US Letter.",
       "La privacidad viene de serie. Sin cuenta y sin instalar nada: tu logo y tus textos se procesan directamente en tu navegador y nunca se envían a un servidor. Freelancers, coaches, pequeños comercios y amantes de la planificación en papel pueden crear documentos profesionales en un par de minutos, gratis.",
     ],
     faqs: [
@@ -232,7 +232,7 @@ const HOME_HERO_I18N: Record<
     badge: 'Planner e documenti stampabili gratuiti',
     h1: 'Planner e documenti professionali stampabili gratis in pochi secondi',
     intro:
-      'Personalizza eleganti PDF stampabili a basso consumo d\'inchiostro direttamente nel tuo browser. Tracciatori di abitudini, planner settimanali, calendari, fatture, preventivi e checklist. 100% gratuito, privato e senza registrazione.',
+      'Personalizza eleganti PDF stampabili a basso consumo d\'inchiostro direttamente nel tuo browser. Tracciatori di abitudini, planner settimanali, calendari, budget e checklist. 100% gratuito, privato e senza registrazione.',
     features: [
       'PDF vettoriale nitido a ogni formato',
       'Formati A4 e US Letter',
@@ -242,7 +242,7 @@ const HOME_HERO_I18N: Record<
     faqTitle: 'Domande Frequenti',
     about: [
       "LogoLoom è uno studio online gratuito per creare planner e documenti professionali da stampare con la tua immagine. Scegli un modello, aggiungi il tuo logo e seleziona un colore del marchio: l’intero documento si aggiorna all’istante. Quando sei soddisfatto, scarica un PDF vettoriale pulito, pronto per la tua stampante o per una tipografia.",
-      "I modelli coprono sia l’organizzazione quotidiana sia le pratiche delle piccole attività: tracker delle abitudini, planner settimanali e mensili, priorità del giorno, menù e budget, oltre a preventivi, fatture, listini prezzi e registri clienti. Ogni impaginazione consuma poco inchiostro, resta leggibile una volta stampata e funziona in A4 e US Letter.",
+      "I modelli coprono sia l’organizzazione quotidiana sia le pratiche delle piccole attività: tracker delle abitudini, planner settimanali e mensili, priorità del giorno, menù e budget, oltre a listini prezzi e registri clienti. Ogni impaginazione consuma poco inchiostro, resta leggibile una volta stampata e funziona in A4 e US Letter.",
       "La privacy è integrata. Nessun account da creare e niente da installare: il tuo logo e i tuoi testi vengono elaborati direttamente nel browser e non vengono mai inviati a un server. Freelance, coach, piccoli negozi e chi ama pianificare su carta possono creare documenti professionali in pochi minuti, gratuitamente.",
     ],
     faqs: [
@@ -262,7 +262,7 @@ const HOME_HERO_I18N: Record<
     badge: 'Planejadores e modelos imprimíveis gratuitos',
     h1: 'Planejadores e documentos imprimíveis gratuitos personalizados em segundos',
     intro:
-      'Personalize documentos em PDF para impressão diretamente no seu navegador. Rastreadores de hábitos, planejadores semanais, calendários, faturas, orçamentos e listas. 100% gratuito, privado no seu dispositivo e com logo opcional.',
+      'Personalize documentos em PDF para impressão diretamente no seu navegador. Rastreadores de hábitos, planejadores semanais, calendários, orçamentos e listas. 100% gratuito, privado no seu dispositivo e com logo opcional.',
     features: [
       'PDF vetorial nítido em qualquer tamanho',
       'Formatos A4 e US Letter',
@@ -272,7 +272,7 @@ const HOME_HERO_I18N: Record<
     faqTitle: 'Perguntas Frequentes',
     about: [
       "O LogoLoom é um estúdio online gratuito para criar planeadores e documentos profissionais para imprimir com a sua imagem. Escolha um modelo, adicione o seu logo e selecione uma cor de marca: todo o documento é atualizado de imediato. Quando estiver satisfeito, descarregue um PDF vetorial limpo, pronto para a sua impressora ou para uma gráfica.",
-      "Os modelos cobrem tanto a organização do dia a dia como a papelada dos pequenos negócios: registo de hábitos, planeadores semanais e mensais, prioridades do dia, menus e orçamentos, além de propostas comerciais, faturas, tabelas de preços e registo de clientes. Cada layout poupa tinta, mantém-se legível depois de impresso e funciona em A4 e US Letter.",
+      "Os modelos cobrem tanto a organização do dia a dia como a papelada dos pequenos negócios: registo de hábitos, planeadores semanais e mensais, prioridades do dia, menus e orçamentos, além de tabelas de preços e registo de clientes. Cada layout poupa tinta, mantém-se legível depois de impresso e funciona em A4 e US Letter.",
       "A privacidade vem de origem. Sem conta e sem instalar nada: o seu logo e os seus textos são processados diretamente no navegador e nunca são enviados para um servidor. Freelancers, coaches, pequenos comércios e quem gosta de planear em papel podem criar documentos profissionais em poucos minutos, gratuitamente.",
     ],
     faqs: [

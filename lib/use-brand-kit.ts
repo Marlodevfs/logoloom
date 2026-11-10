@@ -13,8 +13,6 @@ import {
   DailyPrioritiesCustomContent,
   MealPlannerCustomContent,
   BudgetTrackerCustomContent,
-  QuoteCustomContent,
-  InvoiceCustomContent,
   PriceListCustomContent,
   ClientTrackerCustomContent,
   ChecklistCustomContent,
@@ -32,8 +30,6 @@ import {
   DEFAULT_DAILY_PRIORITIES,
   DEFAULT_MEAL_PLANNER,
   DEFAULT_BUDGET_TRACKER,
-  DEFAULT_QUOTE,
-  DEFAULT_INVOICE,
   DEFAULT_PRICE_LIST,
   DEFAULT_CLIENT_TRACKER,
   DEFAULT_CHECKLIST,
@@ -109,13 +105,7 @@ export function getDefaultBudgetTrackerContent(lang: DocumentLang): BudgetTracke
   return DEFAULT_BUDGET_TRACKER[lang] || DEFAULT_BUDGET_TRACKER.en;
 }
 
-export function getDefaultQuoteContent(lang: DocumentLang): QuoteCustomContent {
-  return DEFAULT_QUOTE[lang] || DEFAULT_QUOTE.en;
-}
 
-export function getDefaultInvoiceContent(lang: DocumentLang): InvoiceCustomContent {
-  return DEFAULT_INVOICE[lang] || DEFAULT_INVOICE.en;
-}
 
 export function getDefaultPriceListContent(lang: DocumentLang): PriceListCustomContent {
   return DEFAULT_PRICE_LIST[lang] || DEFAULT_PRICE_LIST.en;
@@ -137,8 +127,6 @@ type LocalizedContentKey =
   | 'dailyPrioritiesContent'
   | 'mealPlannerContent'
   | 'budgetTrackerContent'
-  | 'quoteContent'
-  | 'invoiceContent'
   | 'priceListContent'
   | 'clientTrackerContent'
   | 'checklistContent';
@@ -150,8 +138,6 @@ const LOCALIZED_DEFAULTS: Record<LocalizedContentKey, (lang: DocumentLang) => un
   dailyPrioritiesContent: getDefaultDailyPrioritiesContent,
   mealPlannerContent: getDefaultMealPlannerContent,
   budgetTrackerContent: getDefaultBudgetTrackerContent,
-  quoteContent: getDefaultQuoteContent,
-  invoiceContent: getDefaultInvoiceContent,
   priceListContent: getDefaultPriceListContent,
   clientTrackerContent: getDefaultClientTrackerContent,
   checklistContent: getDefaultChecklistContent,
@@ -214,8 +200,6 @@ const VALID_TEMPLATES: TemplateId[] = [
   'daily-priorities',
   'meal-planner',
   'budget-tracker',
-  'quote',
-  'invoice',
   'price-list',
   'client-tracker',
   'checklist',
@@ -235,8 +219,6 @@ export function useBrandKit(initialLang?: InterfaceLang, initialTemplate?: Templ
     dailyPrioritiesContent: getDefaultDailyPrioritiesContent(initialDocLang),
     mealPlannerContent: getDefaultMealPlannerContent(initialDocLang),
     budgetTrackerContent: getDefaultBudgetTrackerContent(initialDocLang),
-    quoteContent: getDefaultQuoteContent(initialDocLang),
-    invoiceContent: getDefaultInvoiceContent(initialDocLang),
     priceListContent: getDefaultPriceListContent(initialDocLang),
     clientTrackerContent: getDefaultClientTrackerContent(initialDocLang),
     checklistContent: getDefaultChecklistContent(initialDocLang),
@@ -312,8 +294,6 @@ export function useBrandKit(initialLang?: InterfaceLang, initialTemplate?: Templ
             dailyPrioritiesContent: getDefaultDailyPrioritiesContent(resolvedUiLang as DocumentLang),
             mealPlannerContent: getDefaultMealPlannerContent(resolvedUiLang as DocumentLang),
             budgetTrackerContent: getDefaultBudgetTrackerContent(resolvedUiLang as DocumentLang),
-            quoteContent: getDefaultQuoteContent(resolvedUiLang as DocumentLang),
-            invoiceContent: getDefaultInvoiceContent(resolvedUiLang as DocumentLang),
             priceListContent: getDefaultPriceListContent(resolvedUiLang as DocumentLang),
             clientTrackerContent: getDefaultClientTrackerContent(resolvedUiLang as DocumentLang),
             checklistContent: getDefaultChecklistContent(resolvedUiLang as DocumentLang),
@@ -485,10 +465,6 @@ export function useBrandKit(initialLang?: InterfaceLang, initialTemplate?: Templ
         updateBrandKit({ mealPlannerContent: getDefaultMealPlannerContent(lang) });
       } else if (section === 'budget-tracker') {
         updateBrandKit({ budgetTrackerContent: getDefaultBudgetTrackerContent(lang) });
-      } else if (section === 'quote') {
-        updateBrandKit({ quoteContent: getDefaultQuoteContent(lang) });
-      } else if (section === 'invoice') {
-        updateBrandKit({ invoiceContent: getDefaultInvoiceContent(lang) });
       } else if (section === 'price-list') {
         updateBrandKit({ priceListContent: getDefaultPriceListContent(lang) });
       } else if (section === 'client-tracker') {
@@ -506,8 +482,6 @@ export function useBrandKit(initialLang?: InterfaceLang, initialTemplate?: Templ
           dailyPrioritiesContent: getDefaultDailyPrioritiesContent(lang),
           mealPlannerContent: getDefaultMealPlannerContent(lang),
           budgetTrackerContent: getDefaultBudgetTrackerContent(lang),
-          quoteContent: getDefaultQuoteContent(lang),
-          invoiceContent: getDefaultInvoiceContent(lang),
           priceListContent: getDefaultPriceListContent(lang),
           clientTrackerContent: getDefaultClientTrackerContent(lang),
           checklistContent: getDefaultChecklistContent(lang),

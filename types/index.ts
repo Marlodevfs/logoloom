@@ -12,8 +12,6 @@ export type TemplateId =
   | 'meal-planner'
   | 'budget-tracker'
   // Business (5)
-  | 'quote'
-  | 'invoice'
   | 'price-list'
   | 'client-tracker'
   | 'checklist';
@@ -117,50 +115,7 @@ export interface BudgetTrackerCustomContent {
   notes: string;
 }
 
-export interface LineItemCustom {
-  description: string;
-  quantity: number;
-  unitPrice: number;
-}
 
-export interface QuoteCustomContent {
-  title: string;
-  quoteNumber: string;
-  date: string;
-  validUntil: string;
-  senderAddress: string;
-  clientAddress: string;
-  items: LineItemCustom[];
-  taxRate: number; // e.g. 20 for 20%
-  notes: string;  /** Seller legal identity line, e.g. "Marie Durand EI · SIRET 894 203 118 00017". */
-  legalId?: string;
-  /** Franchise / small-business VAT exemption: no VAT line, shows vatExemptNote instead. */
-  vatExempt?: boolean;
-  vatExemptNote?: string;
-}
-
-export interface InvoiceCustomContent {
-  title: string;
-  invoiceNumber: string;
-  date: string;
-  dueDate: string;
-  senderAddress: string;
-  clientAddress: string;
-  items: LineItemCustom[];
-  taxRate: number;
-  paymentDetails: string;
-  notes: string;  /** Seller legal identity line, e.g. "Marie Durand EI · SIRET 894 203 118 00017". */
-  legalId?: string;
-  /** Franchise / small-business VAT exemption: no VAT line, shows vatExemptNote instead. */
-  vatExempt?: boolean;
-  vatExemptNote?: string;
-  /** Client company number (SIREN in France), for B2B invoices. */
-  clientId?: string;
-  /** Date (or period) of the sale / service, when different from the issue date. */
-  serviceDate?: string;
-  /** Late-payment penalties, recovery fee, discount terms. */
-  latePaymentTerms?: string;
-}
 
 export interface PriceCategoryCustom {
   category: string;
@@ -230,8 +185,6 @@ export interface BrandKit {
   dailyPrioritiesContent?: DailyPrioritiesCustomContent;
   mealPlannerContent?: MealPlannerCustomContent;
   budgetTrackerContent?: BudgetTrackerCustomContent;
-  quoteContent?: QuoteCustomContent;
-  invoiceContent?: InvoiceCustomContent;
   priceListContent?: PriceListCustomContent;
   clientTrackerContent?: ClientTrackerCustomContent;
   checklistContent?: ChecklistCustomContent;
