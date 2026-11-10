@@ -11,7 +11,7 @@ export interface LocaleMeta {
 
 export const LOCALES_METADATA: Record<InterfaceLang, LocaleMeta> = {
   en: {
-    title: 'LogoLoom – Free CV Maker, PDF Download, No Subscription',
+    title: 'Free CV Maker Online, PDF Download, No Subscription – LogoLoom',
     description:
       'Create a clean CV in ten minutes and download it as a PDF that recruiting software can read. Free, no account, no subscription.',
     ogLocale: 'en_US',
@@ -19,7 +19,7 @@ export const LOCALES_METADATA: Record<InterfaceLang, LocaleMeta> = {
     flag: '🇬🇧',
   },
   fr: {
-    title: 'LogoLoom – CV gratuit en PDF, sans abonnement',
+    title: 'Créateur de CV gratuit en ligne, PDF sans abonnement – LogoLoom',
     description:
       'Créez un CV propre en dix minutes et téléchargez-le en PDF lisible par les recruteurs. Gratuit, sans compte, sans abonnement.',
     ogLocale: 'fr_FR',
@@ -27,7 +27,7 @@ export const LOCALES_METADATA: Record<InterfaceLang, LocaleMeta> = {
     flag: '🇫🇷',
   },
   es: {
-    title: 'LogoLoom – Crear CV gratis en PDF, sin suscripción',
+    title: 'Crear CV gratis online en PDF, sin suscripción – LogoLoom',
     description:
       'Crea un CV limpio en diez minutos y descárgalo en PDF legible por reclutadores. Gratis, sin cuenta, sin suscripción.',
     ogLocale: 'es_ES',
@@ -35,7 +35,7 @@ export const LOCALES_METADATA: Record<InterfaceLang, LocaleMeta> = {
     flag: '🇪🇸',
   },
   de: {
-    title: 'LogoLoom – Lebenslauf kostenlos als PDF, ohne Abo',
+    title: 'Lebenslauf online erstellen, kostenlos als PDF, ohne Abo – LogoLoom',
     description:
       'Erstellen Sie in zehn Minuten einen sauberen Lebenslauf als PDF, lesbar für Bewerbungssoftware. Kostenlos, ohne Konto, ohne Abo.',
     ogLocale: 'de_DE',
@@ -43,7 +43,7 @@ export const LOCALES_METADATA: Record<InterfaceLang, LocaleMeta> = {
     flag: '🇩🇪',
   },
   pt: {
-    title: 'LogoLoom – Criar CV grátis em PDF, sem assinatura',
+    title: 'Criar CV grátis online em PDF, sem assinatura – LogoLoom',
     description:
       'Crie um CV limpo em dez minutos e descarregue-o em PDF legível por recrutadores. Grátis, sem conta, sem assinatura.',
     ogLocale: 'pt_PT',
@@ -51,7 +51,7 @@ export const LOCALES_METADATA: Record<InterfaceLang, LocaleMeta> = {
     flag: '🇵🇹',
   },
   it: {
-    title: 'LogoLoom – CV gratis in PDF, senza abbonamento',
+    title: 'Creare un CV gratis online in PDF, senza abbonamento – LogoLoom',
     description:
       'Crea un CV pulito in dieci minuti e scaricalo in PDF leggibile dai selezionatori. Gratis, senza account, senza abbonamento.',
     ogLocale: 'it_IT',
