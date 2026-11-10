@@ -7,6 +7,7 @@ import { getDefaultInvoiceContent } from '@/lib/use-brand-kit';
 import { formatCurrencyAmount } from '@/lib/i18n/intl-helpers';
 import { CATALOG_LABELS } from '@/lib/i18n/catalog-labels';
 import { getPartyPlaceholders } from '@/lib/i18n/party-placeholders';
+import { computeTotals } from '@/lib/billing';
 
 interface InvoiceTemplateProps {
   brandKit: BrandKit;
@@ -30,9 +31,7 @@ export const InvoiceTemplate: React.FC<InvoiceTemplateProps> = ({
     });
   };
 
-  const subtotal = content.items.reduce((acc, item) => acc + (item.quantity * item.unitPrice), 0);
-  const taxAmount = (subtotal * content.taxRate) / 100;
-  const total = subtotal + taxAmount;
+  const { subtotal, taxAmount, total } = computeTotals(content.items, content.taxRate, content.vatExempt);
 
   return (
     <MinimalDocFrame
@@ -68,6 +67,12 @@ export const InvoiceTemplate: React.FC<InvoiceTemplateProps> = ({
               className="w-20 font-mono text-slate-600 border-b border-slate-200 outline-none text-right font-bold text-amber-700"
             />
           </div>
+          {content.serviceDate ? (
+            <div className="flex items-center space-x-2 justify-end mt-0.5">
+              <span className="font-semibold text-slate-700">{labels.serviceDateLabel}</span>
+              <span className="font-mono text-slate-600">{content.serviceDate}</span>
+            </div>
+          ) : null}
         </div>
       }
       footerCategoryText={labels.footerCategory}
@@ -80,6 +85,7 @@ export const InvoiceTemplate: React.FC<InvoiceTemplateProps> = ({
               {labels.fromLabel}
             </span>
             <span className="font-bold text-slate-900">{brandKit.companyName || getPartyPlaceholders(brandKit.documentLang).company}</span>
+            {content.legalId ? <span className="text-slate-700 font-medium">{content.legalId}</span> : null}
             <textarea aria-label="Sender address"
               rows={3}
               value={content.senderAddress}
@@ -92,6 +98,7 @@ export const InvoiceTemplate: React.FC<InvoiceTemplateProps> = ({
               {labels.toLabel}
             </span>
             <span className="font-bold text-slate-900">{brandKit.clientName || getPartyPlaceholders(brandKit.documentLang).client}</span>
+            {content.clientId ? <span className="text-slate-600">{content.clientId}</span> : null}
             <textarea aria-label="Client address"
               rows={3}
               value={content.clientAddress}
@@ -154,25 +161,35 @@ export const InvoiceTemplate: React.FC<InvoiceTemplateProps> = ({
             <p className="text-[8px] text-slate-500 italic mt-1 border-t border-slate-200 pt-1">
               {content.notes}
             </p>
+            {content.latePaymentTerms ? (
+              <p className="text-[7.5px] text-slate-500 mt-1 leading-snug">{content.latePaymentTerms}</p>
+            ) : null}
           </div>
 
           {/* Subtotal, Tax & Total Box */}
           <div className="flex flex-col justify-end space-y-1 text-[10px]">
-            <div className="flex justify-between py-0.5 border-b border-slate-100 text-slate-600">
-              <span>{labels.subtotalLabel}</span>
-              <span className="font-mono font-medium">{formatCurrencyAmount(subtotal, currency, docLang)}</span>
-            </div>
-            <div className="flex justify-between py-0.5 border-b border-slate-100 text-slate-600">
-              <span>{labels.taxLabel} ({content.taxRate}%) :</span>
-              <span className="font-mono font-medium">{formatCurrencyAmount(taxAmount, currency, docLang)}</span>
-            </div>
+            {!content.vatExempt && (
+              <>
+                <div className="flex justify-between py-0.5 border-b border-slate-100 text-slate-600">
+                  <span>{labels.subtotalLabel}</span>
+                  <span className="font-mono font-medium">{formatCurrencyAmount(subtotal, currency, docLang)}</span>
+                </div>
+                <div className="flex justify-between py-0.5 border-b border-slate-100 text-slate-600">
+                  <span>{labels.taxLabel.replace(/\s*:\s*$/, '')} ({content.taxRate}%) :</span>
+                  <span className="font-mono font-medium">{formatCurrencyAmount(taxAmount, currency, docLang)}</span>
+                </div>
+              </>
+            )}
             <div
               className="flex justify-between py-1.5 font-bold text-[12px] border-t-2"
               style={{ borderColor: brandKit.brandColor, color: brandKit.brandColor }}
             >
-              <span>{labels.totalLabel}</span>
+              <span>{content.vatExempt ? labels.totalDueLabel : labels.totalLabel}</span>
               <span className="font-mono">{formatCurrencyAmount(total, currency, docLang)}</span>
             </div>
+            {content.vatExempt && content.vatExemptNote ? (
+              <p className="text-[8.5px] text-slate-600 text-right">{content.vatExemptNote}</p>
+            ) : null}
           </div>
         </div>
       </div>

@@ -132,7 +132,11 @@ export interface QuoteCustomContent {
   clientAddress: string;
   items: LineItemCustom[];
   taxRate: number; // e.g. 20 for 20%
-  notes: string;
+  notes: string;  /** Seller legal identity line, e.g. "Marie Durand EI · SIRET 894 203 118 00017". */
+  legalId?: string;
+  /** Franchise / small-business VAT exemption: no VAT line, shows vatExemptNote instead. */
+  vatExempt?: boolean;
+  vatExemptNote?: string;
 }
 
 export interface InvoiceCustomContent {
@@ -145,7 +149,17 @@ export interface InvoiceCustomContent {
   items: LineItemCustom[];
   taxRate: number;
   paymentDetails: string;
-  notes: string;
+  notes: string;  /** Seller legal identity line, e.g. "Marie Durand EI · SIRET 894 203 118 00017". */
+  legalId?: string;
+  /** Franchise / small-business VAT exemption: no VAT line, shows vatExemptNote instead. */
+  vatExempt?: boolean;
+  vatExemptNote?: string;
+  /** Client company number (SIREN in France), for B2B invoices. */
+  clientId?: string;
+  /** Date (or period) of the sale / service, when different from the issue date. */
+  serviceDate?: string;
+  /** Late-payment penalties, recovery fee, discount terms. */
+  latePaymentTerms?: string;
 }
 
 export interface PriceCategoryCustom {
