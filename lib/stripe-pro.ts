@@ -4,10 +4,10 @@
  */
 
 export const PRO_CONFIG = {
-  priceMonthlyUsd: 9,
-  priceMonthlyEur: 9,
-  priceLabelUsd: '$9',
-  priceLabelEur: '9 €',
+  priceMonthlyUsd: 5,
+  priceMonthlyEur: 5,
+  priceLabelUsd: '$5',
+  priceLabelEur: '5 €',
   interval: 'month' as const,
   stripePriceId: process.env.STRIPE_PRICE_ID_MONTHLY || '',
 };
