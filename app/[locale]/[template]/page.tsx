@@ -2,7 +2,7 @@ import { CATEGORY_COPY, catalogRank, categoryOf } from '@/lib/catalog';
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
-import { ChevronRight, CheckCircle2, HelpCircle, ArrowRight } from 'lucide-react';
+import { ChevronRight, CheckCircle2 } from 'lucide-react';
 import { siteConfig } from '@/config/site';
 import { InterfaceLang } from '@/types';
 import { LOCALES_METADATA, getHreflangAlternates } from '@/lib/i18n/meta';
@@ -12,6 +12,7 @@ import {
   TEMPLATES_SEO_DATA,
 } from '@/lib/seo/templates-metadata';
 import { Studio } from '@/components/Studio';
+import { CvStudio } from '@/components/cv/CvStudio';
 import { SiteFooter } from '@/components/SiteFooter';
 import { getSiteChrome } from '@/lib/i18n/site-chrome';
 
@@ -197,17 +198,18 @@ export default async function TemplateLandingPage({ params }: Props) {
 
       {/* Main Interactive Editor Studio (Pre-initialized with this specific template!) */}
       <main className="flex-1 w-full">
-        <Studio initialLang={lang} initialTemplate={data.templateId} intro={intro} />
+        {data.templateId === 'cv' ? (
+          <CvStudio initialLang={lang} title={data.h1} />
+        ) : (
+          <Studio initialLang={lang} initialTemplate={data.templateId} intro={intro} />
+        )}
 
         {/* Detailed Crawlable Content: How it works & FAQ */}
         <div className="max-w-5xl mx-auto px-4 sm:px-6 py-12 sm:py-16 space-y-16">
           {/* How to use this template */}
           <section className="space-y-6">
-            <div className="space-y-1.5">
-              <span className="text-xs font-bold uppercase tracking-widest text-indigo-600 dark:text-indigo-400">
-                {chrome.guideEyebrow}
-              </span>
-              <h2 className="text-xl sm:text-2xl font-extrabold text-slate-900 dark:text-white tracking-tight">
+            <div>
+              <h2 className="font-display text-2xl sm:text-3xl font-semibold text-slate-900 dark:text-white">
                 {chrome.howToTitle(templateName)}
               </h2>
             </div>
@@ -234,12 +236,8 @@ export default async function TemplateLandingPage({ params }: Props) {
 
           {/* Frequently Asked Questions */}
           <section className="space-y-6">
-            <div className="space-y-1.5">
-              <span className="text-xs font-bold uppercase tracking-widest text-indigo-600 dark:text-indigo-400 flex items-center space-x-1">
-                <HelpCircle className="w-3.5 h-3.5" />
-                <span>{chrome.faqEyebrow}</span>
-              </span>
-              <h2 className="text-xl sm:text-2xl font-extrabold text-slate-900 dark:text-white tracking-tight">
+            <div>
+              <h2 className="font-display text-2xl sm:text-3xl font-semibold text-slate-900 dark:text-white">
                 {chrome.templateFaqTitle}
               </h2>
             </div>
@@ -265,7 +263,7 @@ export default async function TemplateLandingPage({ params }: Props) {
           <section className="space-y-6 border-t border-slate-200/80 dark:border-slate-800 pt-12">
             <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
               <div>
-                <h2 className="text-lg sm:text-xl font-extrabold text-slate-900 dark:text-white tracking-tight">
+                <h2 className="font-display text-xl sm:text-2xl font-semibold text-slate-900 dark:text-white">
                   {chrome.exploreTitle}
                 </h2>
                 <p className="text-xs text-slate-500 dark:text-slate-400">
@@ -277,7 +275,6 @@ export default async function TemplateLandingPage({ params }: Props) {
                 className="inline-flex items-center space-x-1 text-xs font-bold text-indigo-600 dark:text-indigo-400 hover:underline"
               >
                 <span>{chrome.viewAll}</span>
-                <ArrowRight className="w-3 h-3" />
               </Link>
             </div>
 
@@ -291,7 +288,7 @@ export default async function TemplateLandingPage({ params }: Props) {
                     className="p-3.5 rounded-xl border border-slate-200/80 dark:border-slate-800 bg-white dark:bg-slate-900 hover:border-indigo-400 dark:hover:border-indigo-500 transition-all flex flex-col justify-between group shadow-2xs"
                   >
                     <div>
-                      <span className="text-[10px] font-bold uppercase tracking-wider text-indigo-600 dark:text-indigo-400">
+                      <span className="text-[11px] text-slate-500 dark:text-slate-400">
                         {categoryCopy[categoryOf(item.templateId)].name}
                       </span>
                       <h3 className="text-xs font-bold text-slate-900 dark:text-white group-hover:text-indigo-600 dark:group-hover:text-indigo-400 mt-1">

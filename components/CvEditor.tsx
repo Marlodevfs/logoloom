@@ -12,10 +12,16 @@ import {
 } from '@/types';
 import { getDefaultCvContent } from '@/lib/use-brand-kit';
 
+export type CvSection = 'layout' | 'identity' | 'summary' | 'experience' | 'education' | 'skills';
+
 interface CvEditorProps {
   brandKit: BrandKit;
   onUpdate: (updates: Partial<BrandKit>) => void;
   interfaceLang: InterfaceLang;
+  /** Which blocks to render (default: all, in order). */
+  sections?: CvSection[];
+  /** 'roomy' is the full-page CV editor; 'compact' fits the 410px studio panel. */
+  variant?: 'compact' | 'roomy';
 }
 
 type L = {
@@ -313,14 +319,35 @@ const MAX_EXPERIENCES = 6;
 const MAX_EDUCATION = 4;
 const MAX_LANGUAGES = 5;
 
-const input =
-  'w-full px-2 py-1 rounded border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-xs text-slate-900 dark:text-slate-100';
-const label = 'block text-[10px] text-slate-500 dark:text-slate-400';
-const sectionTitle = 'text-[11px] font-bold text-slate-700 dark:text-slate-300';
-const card =
-  'p-2 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50/50 dark:bg-slate-800/40 space-y-1.5';
-const addBtn =
-  'inline-flex items-center space-x-1 text-[10.5px] font-bold text-indigo-600 dark:text-indigo-400 hover:underline';
+const STYLES = {
+  compact: {
+    input:
+      'w-full px-2 py-1 rounded border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-xs text-slate-900 dark:text-slate-100',
+    label: 'block text-[10px] text-slate-500 dark:text-slate-400',
+    sectionTitle: 'text-[11px] font-bold text-slate-700 dark:text-slate-300',
+    card: 'p-2 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50/50 dark:bg-slate-800/40 space-y-1.5',
+    addBtn: 'inline-flex items-center space-x-1 text-[10.5px] font-bold text-indigo-600 dark:text-indigo-400 hover:underline',
+    grid: 'grid grid-cols-2 gap-1.5',
+    stack: 'space-y-1.5',
+    gap: 'space-y-4',
+    icon: 'w-3 h-3',
+    hint: 'text-[10px]',
+  },
+  roomy: {
+    input:
+      'mt-1.5 w-full h-11 px-3 rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 text-[15px] font-normal text-slate-900 dark:text-slate-100 placeholder:text-slate-400 focus:outline-none focus:border-ink-600 focus:ring-2 focus:ring-ink-100 dark:focus:ring-ink-900',
+    label: 'block text-sm font-bold text-slate-700 dark:text-slate-200',
+    sectionTitle: 'font-display text-xl font-semibold text-slate-900 dark:text-white',
+    card: 'p-4 sm:p-5 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 space-y-4',
+    addBtn:
+      'inline-flex items-center gap-1.5 h-10 px-3 rounded-lg border border-dashed border-slate-300 dark:border-slate-700 text-sm font-bold text-ink-700 dark:text-ink-300 hover:border-ink-400 hover:bg-ink-50 dark:hover:bg-ink-950',
+    grid: 'grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-4',
+    stack: 'space-y-4',
+    gap: 'space-y-8',
+    icon: 'w-4 h-4',
+    hint: 'text-sm',
+  },
+} as const;
 
 /** Resizes a picked photo to a small square JPEG so it fits in local storage. */
 function resizePhoto(file: File, size = 320): Promise<string> {
@@ -361,22 +388,48 @@ const ItemTools: React.FC<{
   count: number;
   onMove: (dir: -1 | 1) => void;
   onRemove: () => void;
-}> = ({ l, idx, count, onMove, onRemove }) => (
-  <div className="flex items-center justify-end space-x-0.5">
-    <button type="button" onClick={() => onMove(-1)} disabled={idx === 0} className="p-1 text-slate-400 hover:text-slate-600 disabled:opacity-30" title={l.moveUp} aria-label={l.moveUp}>
-      <ArrowUp className="w-3 h-3" />
-    </button>
-    <button type="button" onClick={() => onMove(1)} disabled={idx === count - 1} className="p-1 text-slate-400 hover:text-slate-600 disabled:opacity-30" title={l.moveDown} aria-label={l.moveDown}>
-      <ArrowDown className="w-3 h-3" />
-    </button>
-    <button type="button" onClick={onRemove} className="p-1 text-rose-500 hover:text-rose-700" title={l.remove} aria-label={l.remove}>
-      <Trash2 className="w-3 h-3" />
-    </button>
-  </div>
-);
+  roomy?: boolean;
+  title?: string;
+}> = ({ l, idx, count, onMove, onRemove, roomy, title }) => {
+  const btn = roomy
+    ? 'w-9 h-9 inline-flex items-center justify-center rounded-lg text-slate-500 hover:bg-slate-100 hover:text-slate-800 dark:hover:bg-slate-800 disabled:opacity-30 disabled:hover:bg-transparent'
+    : 'p-1 text-slate-400 hover:text-slate-600 disabled:opacity-30';
+  const ic = roomy ? 'w-4 h-4' : 'w-3 h-3';
+  return (
+    <div className={`flex items-center ${title ? 'justify-between' : 'justify-end'} gap-0.5`}>
+      {title !== undefined && (
+        <span className="text-sm font-bold text-slate-500 dark:text-slate-400 truncate pr-2">{title}</span>
+      )}
+      <div className="flex items-center gap-0.5 shrink-0">
+        <button type="button" onClick={() => onMove(-1)} disabled={idx === 0} className={btn} title={l.moveUp} aria-label={l.moveUp}>
+          <ArrowUp className={ic} />
+        </button>
+        <button type="button" onClick={() => onMove(1)} disabled={idx === count - 1} className={btn} title={l.moveDown} aria-label={l.moveDown}>
+          <ArrowDown className={ic} />
+        </button>
+        <button type="button" onClick={onRemove} className={roomy ? btn + ' hover:!text-rose-600' : 'p-1 text-rose-500 hover:text-rose-700'} title={l.remove} aria-label={l.remove}>
+          <Trash2 className={ic} />
+        </button>
+      </div>
+    </div>
+  );
+};
 
-export const CvEditor: React.FC<CvEditorProps> = ({ brandKit, onUpdate, interfaceLang }) => {
+const ALL_SECTIONS: CvSection[] = ['layout', 'identity', 'summary', 'experience', 'education', 'skills'];
+
+export const CvEditor: React.FC<CvEditorProps> = ({
+  brandKit,
+  onUpdate,
+  interfaceLang,
+  sections = ALL_SECTIONS,
+  variant = 'compact',
+}) => {
   const l = LABELS[interfaceLang] || LABELS.en;
+  const roomy = variant === 'roomy';
+  const { input, label, sectionTitle, card, addBtn, grid, stack, gap, icon, hint } = STYLES[variant];
+  const show = (sec: CvSection) => sections.includes(sec);
+  // In the roomy editor each step already has its own title.
+  const showTitles = !roomy;
   const cv: CvCustomContent = brandKit.cvContent || getDefaultCvContent(brandKit.documentLang || 'en');
   const fileRef = useRef<HTMLInputElement>(null);
   const [photoError, setPhotoError] = useState(false);
@@ -402,11 +455,12 @@ export const CvEditor: React.FC<CvEditorProps> = ({ brandKit, onUpdate, interfac
     }
   };
 
-  const field = (key: keyof CvCustomContent, text: string, type = 'text') => (
+  const field = (key: keyof CvCustomContent, text: string, type = 'text', autoComplete?: string) => (
     <label className={label}>
       {text}
       <input
         type={type}
+        autoComplete={autoComplete}
         value={(cv[key] as string) || ''}
         onChange={(e) => update({ [key]: e.target.value } as Partial<CvCustomContent>)}
         className={input}
@@ -414,207 +468,237 @@ export const CvEditor: React.FC<CvEditorProps> = ({ brandKit, onUpdate, interfac
     </label>
   );
 
+  const addButton = (text: string, onClick: () => void) => (
+    <button type="button" onClick={onClick} className={addBtn}>
+      <Plus className={icon} />
+      <span>{text}</span>
+    </button>
+  );
+
+  const listHeader = (title: string, add: React.ReactNode) =>
+    showTitles ? (
+      <div className="flex items-center justify-between">
+        <span className={sectionTitle}>{title}</span>
+        {add}
+      </div>
+    ) : null;
+
+  const newExp = { role: '', company: '', location: '', start: '', end: '', details: '' };
+  const newEdu = { degree: '', school: '', start: '', end: '', details: '' };
+
   return (
-    <div className="space-y-4">
-      {/* Layout */}
-      <div>
-        <span className={sectionTitle + ' block mb-1.5'}>{l.layout}</span>
-        <div className="grid grid-cols-2 gap-1.5">
-          {(['sidebar', 'classic'] as const).map((id) => (
-            <button
-              key={id}
-              type="button"
-              onClick={() => update({ layout: id })}
-              aria-pressed={cv.layout === id}
-              className={`py-1.5 rounded-lg border text-[11px] font-semibold transition-colors ${
-                cv.layout === id
-                  ? 'border-indigo-600 bg-indigo-50 text-indigo-700 dark:bg-indigo-950/60 dark:text-indigo-300'
-                  : 'border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 hover:border-slate-300'
-              }`}
-            >
-              {id === 'sidebar' ? l.layoutSidebar : l.layoutClassic}
-            </button>
-          ))}
-        </div>
-      </div>
-
-      {/* Identity */}
-      <div className="space-y-1.5">
-        <span className={sectionTitle + ' block'}>{l.identity}</span>
-        <div className="grid grid-cols-2 gap-1.5">
-          {field('fullName', l.fullName)}
-          {field('jobTitle', l.jobTitle)}
-          {field('email', l.email, 'email')}
-          {field('phone', l.phone, 'tel')}
-          {field('city', l.city)}
-          {field('link', l.link)}
-        </div>
-        <div className="flex items-center gap-2 pt-1">
-          {cv.photoUrl ? (
-            // eslint-disable-next-line @next/next/no-img-element
-            <img src={cv.photoUrl} alt="" className="w-10 h-10 rounded-full object-cover border border-slate-200" />
-          ) : (
-            <div className="w-10 h-10 rounded-full bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-slate-400">
-              <Camera className="w-4 h-4" />
-            </div>
-          )}
-          <div className="flex flex-col">
-            <span className="text-[10px] text-slate-500">{l.photo}</span>
-            <div className="flex items-center gap-2">
-              <button type="button" onClick={() => fileRef.current?.click()} className={addBtn}>
-                {l.addPhoto}
+    <div className={gap}>
+      {show('layout') && (
+        <div>
+          {showTitles && <span className={sectionTitle + ' block mb-1.5'}>{l.layout}</span>}
+          <div className="grid grid-cols-2 gap-1.5">
+            {(['sidebar', 'classic'] as const).map((id) => (
+              <button
+                key={id}
+                type="button"
+                onClick={() => update({ layout: id })}
+                aria-pressed={cv.layout === id}
+                className={`py-1.5 rounded-lg border text-[11px] font-semibold transition-colors ${
+                  cv.layout === id
+                    ? 'border-indigo-600 bg-indigo-50 text-indigo-700 dark:bg-indigo-950/60 dark:text-indigo-300'
+                    : 'border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 hover:border-slate-300'
+                }`}
+              >
+                {id === 'sidebar' ? l.layoutSidebar : l.layoutClassic}
               </button>
-              {cv.photoUrl && (
-                <button type="button" onClick={() => update({ photoUrl: null })} className="text-[10.5px] text-rose-500 hover:underline">
-                  {l.removePhoto}
-                </button>
-              )}
-            </div>
-            {photoError && <span className="text-[10px] text-rose-600">{l.photoError}</span>}
+            ))}
           </div>
-          <input ref={fileRef} type="file" accept="image/*" className="hidden" onChange={onPhoto} />
         </div>
-      </div>
+      )}
 
-      {/* Summary */}
-      <label className={label}>
-        <span className={sectionTitle}>{l.summary}</span>
-        <textarea rows={3} value={cv.summary} onChange={(e) => update({ summary: e.target.value })} className={input + ' resize-none leading-snug mt-1'} />
-      </label>
-
-      {/* Experience */}
-      <div className="space-y-1.5">
-        <div className="flex items-center justify-between">
-          <span className={sectionTitle}>{l.experiences}</span>
-          {cv.experiences.length < MAX_EXPERIENCES && (
-            <button
-              type="button"
-              onClick={() => update({ experiences: [...cv.experiences, { role: '', company: '', location: '', start: '', end: '', details: '' }] })}
-              className={addBtn}
-            >
-              <Plus className="w-3 h-3" />
-              <span>{l.addExperience}</span>
-            </button>
-          )}
-        </div>
-        {cv.experiences.map((exp, idx) => (
-          <div key={idx} className={card}>
-            <ItemTools
-              l={l}
-              idx={idx}
-              count={cv.experiences.length}
-              onMove={(dir) => update({ experiences: move(cv.experiences, idx, dir) })}
-              onRemove={() => update({ experiences: cv.experiences.filter((_, i) => i !== idx) })}
-            />
-            <div className="grid grid-cols-2 gap-1.5">
-              <label className={label}>{l.role}<input value={exp.role} onChange={(e) => setExp(idx, { role: e.target.value })} className={input + ' font-semibold'} /></label>
-              <label className={label}>{l.company}<input value={exp.company} onChange={(e) => setExp(idx, { company: e.target.value })} className={input} /></label>
-              <label className={label}>{l.location}<input value={exp.location} onChange={(e) => setExp(idx, { location: e.target.value })} className={input} /></label>
-              <div className="grid grid-cols-2 gap-1">
-                <label className={label}>{l.start}<input value={exp.start} onChange={(e) => setExp(idx, { start: e.target.value })} className={input} /></label>
-                <label className={label}>{l.end}<input value={exp.end} onChange={(e) => setExp(idx, { end: e.target.value })} className={input} /></label>
+      {show('identity') && (
+        <div className={stack}>
+          {showTitles && <span className={sectionTitle + ' block'}>{l.identity}</span>}
+          <div className={grid}>
+            {field('fullName', l.fullName, 'text', 'name')}
+            {field('jobTitle', l.jobTitle, 'text', 'organization-title')}
+            {field('email', l.email, 'email', 'email')}
+            {field('phone', l.phone, 'tel', 'tel')}
+            {field('city', l.city, 'text', 'address-level2')}
+            {field('link', l.link, 'text', 'url')}
+          </div>
+          <div className={`flex items-center ${roomy ? 'gap-4 pt-2' : 'gap-2 pt-1'}`}>
+            {cv.photoUrl ? (
+              // eslint-disable-next-line @next/next/no-img-element
+              <img src={cv.photoUrl} alt="" className={`${roomy ? 'w-16 h-16' : 'w-10 h-10'} rounded-full object-cover border border-slate-200`} />
+            ) : (
+              <div className={`${roomy ? 'w-16 h-16' : 'w-10 h-10'} rounded-full bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-slate-400`}>
+                <Camera className={roomy ? 'w-5 h-5' : 'w-4 h-4'} />
               </div>
+            )}
+            <div className="flex flex-col gap-1">
+              <span className={roomy ? 'text-sm font-bold text-slate-700 dark:text-slate-200' : 'text-[10px] text-slate-500'}>{l.photo}</span>
+              <div className="flex items-center gap-3">
+                <button
+                  type="button"
+                  onClick={() => fileRef.current?.click()}
+                  className={roomy ? 'text-sm font-bold text-ink-700 dark:text-ink-300 underline underline-offset-4 decoration-ink-200 hover:decoration-ink-600' : addBtn}
+                >
+                  {l.addPhoto}
+                </button>
+                {cv.photoUrl && (
+                  <button type="button" onClick={() => update({ photoUrl: null })} className={`${roomy ? 'text-sm' : 'text-[10.5px]'} text-rose-600 hover:underline`}>
+                    {l.removePhoto}
+                  </button>
+                )}
+              </div>
+              {photoError && <span role="alert" className={`${hint} text-rose-600`}>{l.photoError}</span>}
             </div>
-            <label className={label}>
-              {l.details} <span className="italic">({l.detailsHint})</span>
-              <textarea rows={3} value={exp.details} onChange={(e) => setExp(idx, { details: e.target.value })} className={input + ' resize-none leading-snug'} />
-            </label>
+            <input ref={fileRef} type="file" accept="image/*" className="hidden" onChange={onPhoto} />
           </div>
-        ))}
-      </div>
-
-      {/* Education */}
-      <div className="space-y-1.5">
-        <div className="flex items-center justify-between">
-          <span className={sectionTitle}>{l.education}</span>
-          {cv.education.length < MAX_EDUCATION && (
-            <button
-              type="button"
-              onClick={() => update({ education: [...cv.education, { degree: '', school: '', start: '', end: '', details: '' }] })}
-              className={addBtn}
-            >
-              <Plus className="w-3 h-3" />
-              <span>{l.addEducation}</span>
-            </button>
-          )}
         </div>
-        {cv.education.map((ed, idx) => (
-          <div key={idx} className={card}>
-            <ItemTools
-              l={l}
-              idx={idx}
-              count={cv.education.length}
-              onMove={(dir) => update({ education: move(cv.education, idx, dir) })}
-              onRemove={() => update({ education: cv.education.filter((_, i) => i !== idx) })}
+      )}
+
+      {show('summary') && (
+        <label className={label}>
+          {showTitles ? <span className={sectionTitle}>{l.summary}</span> : l.summary}
+          <textarea
+            rows={roomy ? 6 : 3}
+            value={cv.summary}
+            onChange={(e) => update({ summary: e.target.value })}
+            className={input + (roomy ? ' h-auto py-2.5 leading-relaxed resize-y' : ' resize-none leading-snug mt-1')}
+          />
+        </label>
+      )}
+
+      {show('experience') && (
+        <div className={stack}>
+          {listHeader(
+            l.experiences,
+            cv.experiences.length < MAX_EXPERIENCES && addButton(l.addExperience, () => update({ experiences: [...cv.experiences, newExp] }))
+          )}
+          {cv.experiences.map((exp, idx) => (
+            <div key={idx} className={card}>
+              <ItemTools
+                l={l}
+                idx={idx}
+                count={cv.experiences.length}
+                roomy={roomy}
+                title={roomy ? exp.role || `${l.role} ${idx + 1}` : undefined}
+                onMove={(dir) => update({ experiences: move(cv.experiences, idx, dir) })}
+                onRemove={() => update({ experiences: cv.experiences.filter((_, i) => i !== idx) })}
+              />
+              <div className={grid}>
+                <label className={label}>{l.role}<input value={exp.role} onChange={(e) => setExp(idx, { role: e.target.value })} className={input + (roomy ? '' : ' font-semibold')} /></label>
+                <label className={label}>{l.company}<input value={exp.company} onChange={(e) => setExp(idx, { company: e.target.value })} className={input} /></label>
+                <label className={label}>{l.location}<input value={exp.location} onChange={(e) => setExp(idx, { location: e.target.value })} className={input} /></label>
+                <div className={`grid grid-cols-2 ${roomy ? 'gap-3' : 'gap-1'}`}>
+                  <label className={label}>{l.start}<input value={exp.start} onChange={(e) => setExp(idx, { start: e.target.value })} className={input} /></label>
+                  <label className={label}>{l.end}<input value={exp.end} onChange={(e) => setExp(idx, { end: e.target.value })} className={input} /></label>
+                </div>
+              </div>
+              <label className={label}>
+                {l.details} <span className={roomy ? 'font-normal text-slate-500' : 'italic'}>({l.detailsHint})</span>
+                <textarea
+                  rows={roomy ? 4 : 3}
+                  value={exp.details}
+                  onChange={(e) => setExp(idx, { details: e.target.value })}
+                  className={input + (roomy ? ' h-auto py-2.5 leading-relaxed resize-y' : ' resize-none leading-snug')}
+                />
+              </label>
+            </div>
+          ))}
+          {roomy && cv.experiences.length < MAX_EXPERIENCES && addButton(l.addExperience, () => update({ experiences: [...cv.experiences, newExp] }))}
+        </div>
+      )}
+
+      {show('education') && (
+        <div className={stack}>
+          {listHeader(
+            l.education,
+            cv.education.length < MAX_EDUCATION && addButton(l.addEducation, () => update({ education: [...cv.education, newEdu] }))
+          )}
+          {cv.education.map((ed, idx) => (
+            <div key={idx} className={card}>
+              <ItemTools
+                l={l}
+                idx={idx}
+                count={cv.education.length}
+                roomy={roomy}
+                title={roomy ? ed.degree || `${l.degree} ${idx + 1}` : undefined}
+                onMove={(dir) => update({ education: move(cv.education, idx, dir) })}
+                onRemove={() => update({ education: cv.education.filter((_, i) => i !== idx) })}
+              />
+              <div className={grid}>
+                <label className={label}>{l.degree}<input value={ed.degree} onChange={(e) => setEdu(idx, { degree: e.target.value })} className={input + (roomy ? '' : ' font-semibold')} /></label>
+                <label className={label}>{l.school}<input value={ed.school} onChange={(e) => setEdu(idx, { school: e.target.value })} className={input} /></label>
+                <label className={label}>{l.start}<input value={ed.start} onChange={(e) => setEdu(idx, { start: e.target.value })} className={input} /></label>
+                <label className={label}>{l.end}<input value={ed.end} onChange={(e) => setEdu(idx, { end: e.target.value })} className={input} /></label>
+              </div>
+              <label className={label}>
+                {l.details}
+                <input value={ed.details} onChange={(e) => setEdu(idx, { details: e.target.value })} className={input} />
+              </label>
+            </div>
+          ))}
+          {roomy && cv.education.length < MAX_EDUCATION && addButton(l.addEducation, () => update({ education: [...cv.education, newEdu] }))}
+        </div>
+      )}
+
+      {show('skills') && (
+        <>
+          <label className={label}>
+            {showTitles ? <span className={sectionTitle}>{l.skills}</span> : l.skills}{' '}
+            <span className={roomy ? 'font-normal text-slate-500' : 'italic'}>({l.skillsHint})</span>
+            <input
+              defaultValue={cv.skills.join(', ')}
+              key={cv.skills.join('|')}
+              onBlur={(e) =>
+                update({
+                  skills: e.target.value
+                    .split(',')
+                    .map((s) => s.trim())
+                    .filter(Boolean)
+                    .slice(0, 16),
+                })
+              }
+              className={input + (roomy ? '' : ' mt-1')}
             />
-            <div className="grid grid-cols-2 gap-1.5">
-              <label className={label}>{l.degree}<input value={ed.degree} onChange={(e) => setEdu(idx, { degree: e.target.value })} className={input + ' font-semibold'} /></label>
-              <label className={label}>{l.school}<input value={ed.school} onChange={(e) => setEdu(idx, { school: e.target.value })} className={input} /></label>
-              <label className={label}>{l.start}<input value={ed.start} onChange={(e) => setEdu(idx, { start: e.target.value })} className={input} /></label>
-              <label className={label}>{l.end}<input value={ed.end} onChange={(e) => setEdu(idx, { end: e.target.value })} className={input} /></label>
-            </div>
-            <label className={label}>
-              {l.details}
-              <input value={ed.details} onChange={(e) => setEdu(idx, { details: e.target.value })} className={input} />
-            </label>
+          </label>
+
+          <div className={stack}>
+            {showTitles ? (
+              listHeader(l.languages, cv.languages.length < MAX_LANGUAGES && addButton(l.addLanguage, () => update({ languages: [...cv.languages, { name: '', level: '' }] })))
+            ) : (
+              <span className={label}>{l.languages}</span>
+            )}
+            {cv.languages.map((lg, idx) => (
+              <div key={idx} className={`flex items-end ${roomy ? 'gap-3 -mt-1' : 'gap-1.5'}`}>
+                <label className={label + ' flex-1 min-w-0'}>
+                  <span className={roomy ? 'sr-only' : ''}>{l.language}</span>
+                  <input value={lg.name} placeholder={roomy ? l.language : undefined} onChange={(e) => setLang(idx, { name: e.target.value })} className={input} />
+                </label>
+                <label className={label + ' flex-1 min-w-0'}>
+                  <span className={roomy ? 'sr-only' : ''}>{l.level}</span>
+                  <input value={lg.level} placeholder={roomy ? l.level : undefined} onChange={(e) => setLang(idx, { level: e.target.value })} className={input} />
+                </label>
+                <button
+                  type="button"
+                  onClick={() => update({ languages: cv.languages.filter((_, i) => i !== idx) })}
+                  className={roomy ? 'w-11 h-11 shrink-0 inline-flex items-center justify-center rounded-lg text-slate-500 hover:bg-slate-100 hover:text-rose-600 dark:hover:bg-slate-800' : 'p-1.5 text-rose-500 hover:text-rose-700'}
+                  title={l.remove}
+                  aria-label={l.remove}
+                >
+                  <Trash2 className={icon} />
+                </button>
+              </div>
+            ))}
+            {roomy && cv.languages.length < MAX_LANGUAGES && addButton(l.addLanguage, () => update({ languages: [...cv.languages, { name: '', level: '' }] }))}
           </div>
-        ))}
-      </div>
 
-      {/* Skills */}
-      <label className={label}>
-        <span className={sectionTitle}>{l.skills}</span> <span className="italic">({l.skillsHint})</span>
-        <input
-          defaultValue={cv.skills.join(', ')}
-          key={cv.skills.join('|')}
-          onBlur={(e) =>
-            update({
-              skills: e.target.value
-                .split(',')
-                .map((s) => s.trim())
-                .filter(Boolean)
-                .slice(0, 16),
-            })
-          }
-          className={input + ' mt-1'}
-        />
-      </label>
+          <label className={label}>
+            {showTitles ? <span className={sectionTitle}>{l.interests}</span> : l.interests}
+            <input value={cv.interests} onChange={(e) => update({ interests: e.target.value })} className={input + (roomy ? '' : ' mt-1')} />
+          </label>
+        </>
+      )}
 
-      {/* Languages */}
-      <div className="space-y-1.5">
-        <div className="flex items-center justify-between">
-          <span className={sectionTitle}>{l.languages}</span>
-          {cv.languages.length < MAX_LANGUAGES && (
-            <button type="button" onClick={() => update({ languages: [...cv.languages, { name: '', level: '' }] })} className={addBtn}>
-              <Plus className="w-3 h-3" />
-              <span>{l.addLanguage}</span>
-            </button>
-          )}
-        </div>
-        {cv.languages.map((lg, idx) => (
-          <div key={idx} className="flex items-end gap-1.5">
-            <label className={label + ' flex-1'}>{l.language}<input value={lg.name} onChange={(e) => setLang(idx, { name: e.target.value })} className={input} /></label>
-            <label className={label + ' flex-1'}>{l.level}<input value={lg.level} onChange={(e) => setLang(idx, { level: e.target.value })} className={input} /></label>
-            <button
-              type="button"
-              onClick={() => update({ languages: cv.languages.filter((_, i) => i !== idx) })}
-              className="p-1.5 text-rose-500 hover:text-rose-700"
-              title={l.remove}
-              aria-label={l.remove}
-            >
-              <Trash2 className="w-3 h-3" />
-            </button>
-          </div>
-        ))}
-      </div>
-
-      {/* Interests */}
-      <label className={label}>
-        <span className={sectionTitle}>{l.interests}</span>
-        <input value={cv.interests} onChange={(e) => update({ interests: e.target.value })} className={input + ' mt-1'} />
-      </label>
-
-      <p className="text-[10px] text-slate-500 leading-snug">{l.privacy}</p>
+      {!roomy && <p className="text-[10px] text-slate-500 leading-snug">{l.privacy}</p>}
     </div>
   );
 };

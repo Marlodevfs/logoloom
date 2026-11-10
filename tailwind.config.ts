@@ -10,6 +10,60 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
+        // Identity: school-pen ink blue on desk grey. The whole UI was built with
+        // indigo/violet/slate utilities; remapping them re-themes every page at once.
+        indigo: {
+          50: "#EEF2FB",
+          100: "#DCE3F6",
+          200: "#B9C6EC",
+          300: "#8EA2DE",
+          400: "#5F78CC",
+          500: "#3B57B9",
+          600: "#2340A8",
+          700: "#1C3488",
+          800: "#182B6B",
+          900: "#142353",
+          950: "#0D1736",
+        },
+        violet: {
+          50: "#EEF2FB",
+          100: "#DCE3F6",
+          200: "#B9C6EC",
+          300: "#8EA2DE",
+          400: "#5F78CC",
+          500: "#3B57B9",
+          600: "#2340A8",
+          700: "#1C3488",
+          800: "#182B6B",
+          900: "#142353",
+          950: "#0D1736",
+        },
+        slate: {
+          50: "#F3F4F1",
+          100: "#E9ECE8",
+          200: "#D5D9D3",
+          300: "#B7BCB5",
+          400: "#8A9089",
+          500: "#646A64",
+          600: "#4C524D",
+          700: "#383D39",
+          800: "#25292A",
+          900: "#1B1D21",
+          950: "#121416",
+        },
+        ink: {
+          50: "#EEF2FB",
+          100: "#DCE3F6",
+          200: "#B9C6EC",
+          300: "#8EA2DE",
+          400: "#5F78CC",
+          500: "#3B57B9",
+          600: "#2340A8",
+          700: "#1C3488",
+          800: "#182B6B",
+          900: "#142353",
+          950: "#0D1736",
+        },
         brand: {
           50: "#eef2ff",
           100: "#e0e7ff",
@@ -32,8 +86,8 @@ const config: Config = {
         }
       },
       fontFamily: {
-        sans: ["var(--font-sans)", "Inter", "-apple-system", "BlinkMacSystemFont", "Segoe UI", "Roboto", "sans-serif"],
-        display: ["var(--font-display)", "Playfair Display", "Georgia", "serif"],
+        sans: ["var(--font-sans)", "-apple-system", "BlinkMacSystemFont", "Segoe UI", "sans-serif"],
+        display: ["var(--font-display)", "Georgia", "serif"],
       },
       boxShadow: {
         subtle: "0 1px 3px 0 rgba(0, 0, 0, 0.05), 0 1px 2px -1px rgba(0, 0, 0, 0.05)",

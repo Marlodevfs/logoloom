@@ -1,8 +1,26 @@
 import type { Metadata, Viewport } from 'next';
 import Script from 'next/script';
+import localFont from 'next/font/local';
 import '../globals.css';
 import { siteConfig } from '@/config/site';
 import { CookieConsent } from '@/components/CookieConsent';
+
+const sans = localFont({
+  src: [
+    { path: '../fonts/Atkinson-Regular.woff2', weight: '400', style: 'normal' },
+    { path: '../fonts/Atkinson-Italic.woff2', weight: '400', style: 'italic' },
+    { path: '../fonts/Atkinson-Bold.woff2', weight: '700', style: 'normal' },
+  ],
+  variable: '--font-sans',
+  display: 'swap',
+});
+
+const display = localFont({
+  src: '../fonts/Literata-var.woff2',
+  weight: '200 900',
+  variable: '--font-display',
+  display: 'swap',
+});
 
 export const viewport: Viewport = {
   width: 'device-width',
@@ -11,7 +29,7 @@ export const viewport: Viewport = {
   userScalable: true,
   themeColor: [
     { media: '(prefers-color-scheme: light)', color: '#ffffff' },
-    { media: '(prefers-color-scheme: dark)', color: '#020617' },
+    { media: '(prefers-color-scheme: dark)', color: '#121416' },
   ],
 };
 
@@ -70,14 +88,14 @@ export default async function LocaleLayout({
   const lang = siteConfig.locales.includes(locale as any) ? locale : 'en';
 
   return (
-    <html lang={lang} dir="ltr" suppressHydrationWarning>
+    <html lang={lang} dir="ltr" suppressHydrationWarning className={`${sans.variable} ${display.variable}`}>
       <head>
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
       </head>
-      <body className="antialiased min-h-screen bg-slate-50 dark:bg-slate-950 font-sans selection:bg-indigo-500 selection:text-white">
+      <body className="antialiased min-h-screen bg-slate-50 dark:bg-slate-950 font-sans selection:bg-indigo-200 selection:text-slate-900">
         {children}
         <CookieConsent lang={lang} />
         {/* GoatCounter privacy-friendly analytics */}

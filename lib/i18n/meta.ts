@@ -11,49 +11,49 @@ export interface LocaleMeta {
 
 export const LOCALES_METADATA: Record<InterfaceLang, LocaleMeta> = {
   en: {
-    title: 'LogoLoom – Free CV Maker and Printable Planners',
+    title: 'LogoLoom – Free CV Maker, PDF Download, No Subscription',
     description:
-      'Create a CV, planners, meal plans, a budget or checklists and download a clean PDF. Free, no account, nothing leaves your browser.',
+      'Create a clean CV in ten minutes and download it as a PDF that recruiting software can read. Free, no account, no subscription.',
     ogLocale: 'en_US',
     langName: 'English',
     flag: '🇬🇧',
   },
   fr: {
-    title: 'LogoLoom – CV gratuit et plannings à imprimer',
+    title: 'LogoLoom – CV gratuit en PDF, sans abonnement',
     description:
-      'Créez votre CV, vos plannings, menus, budget ou checklists et téléchargez un PDF propre. Gratuit, sans compte, rien ne quitte votre navigateur.',
+      'Créez un CV propre en dix minutes et téléchargez-le en PDF lisible par les recruteurs. Gratuit, sans compte, sans abonnement.',
     ogLocale: 'fr_FR',
     langName: 'Français',
     flag: '🇫🇷',
   },
   es: {
-    title: 'LogoLoom – CV gratis y planificadores para imprimir',
+    title: 'LogoLoom – Crear CV gratis en PDF, sin suscripción',
     description:
-      'Crea tu CV, planificadores, menús, presupuesto o checklists y descarga un PDF limpio. Gratis, sin cuenta, nada sale de tu navegador.',
+      'Crea un CV limpio en diez minutos y descárgalo en PDF legible por reclutadores. Gratis, sin cuenta, sin suscripción.',
     ogLocale: 'es_ES',
     langName: 'Español',
     flag: '🇪🇸',
   },
   de: {
-    title: 'LogoLoom – Lebenslauf und Planer kostenlos als PDF',
+    title: 'LogoLoom – Lebenslauf kostenlos als PDF, ohne Abo',
     description:
-      'Erstellen Sie Lebenslauf, Planer, Essenspläne, Budget oder Checklisten als sauberes PDF. Kostenlos, ohne Konto, nichts verlässt Ihren Browser.',
+      'Erstellen Sie in zehn Minuten einen sauberen Lebenslauf als PDF, lesbar für Bewerbungssoftware. Kostenlos, ohne Konto, ohne Abo.',
     ogLocale: 'de_DE',
     langName: 'Deutsch',
     flag: '🇩🇪',
   },
   pt: {
-    title: 'LogoLoom – CV grátis e planeadores para imprimir',
+    title: 'LogoLoom – Criar CV grátis em PDF, sem assinatura',
     description:
-      'Crie o seu CV, planeadores, ementas, orçamento ou checklists e descarregue um PDF limpo. Grátis, sem conta, nada sai do seu navegador.',
+      'Crie um CV limpo em dez minutos e descarregue-o em PDF legível por recrutadores. Grátis, sem conta, sem assinatura.',
     ogLocale: 'pt_PT',
     langName: 'Português',
     flag: '🇵🇹',
   },
   it: {
-    title: 'LogoLoom – CV gratis e planner da stampare',
+    title: 'LogoLoom – CV gratis in PDF, senza abbonamento',
     description:
-      'Crea il tuo CV, planner, menù, budget o checklist e scarica un PDF pulito. Gratis, senza account, nulla lascia il browser.',
+      'Crea un CV pulito in dieci minuti e scaricalo in PDF leggibile dai selezionatori. Gratis, senza account, senza abbonamento.',
     ogLocale: 'it_IT',
     langName: 'Italiano',
     flag: '🇮🇹',

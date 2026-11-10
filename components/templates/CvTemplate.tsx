@@ -7,6 +7,8 @@ import { CV_SECTION_LABELS, cvLines, cvPeriod } from '@/lib/i18n/cv-data';
 
 interface CvTemplateProps {
   brandKit: BrandKit;
+  /** Illustration only (homepage): no PDF-target id, no drop shadow. */
+  decorative?: boolean;
 }
 
 const INK = '#0F172A';
@@ -17,7 +19,7 @@ const SOFT = '#64748B';
  * Live preview of the CV. Sizes are in pt so it matches lib/pdf/VectorCvPDF.tsx 1:1.
  * Editing happens in the side form (CvEditor), not inline.
  */
-export const CvTemplate: React.FC<CvTemplateProps> = ({ brandKit }) => {
+export const CvTemplate: React.FC<CvTemplateProps> = ({ brandKit, decorative = false }) => {
   const lang: DocumentLang = brandKit.documentLang || 'en';
   const cv: CvCustomContent = brandKit.cvContent || getDefaultCvContent(lang);
   const t = CV_SECTION_LABELS[lang] || CV_SECTION_LABELS.en;
@@ -130,7 +132,7 @@ export const CvTemplate: React.FC<CvTemplateProps> = ({ brandKit }) => {
 
   if (sidebar) {
     return (
-      <div id="logoloom-pdf-target" className="mx-auto shadow-2xl" style={page}>
+      <div id={decorative ? undefined : 'logoloom-pdf-target'} className={decorative ? undefined : 'mx-auto shadow-2xl'} style={page}>
         <aside
           style={{
             position: 'absolute',
@@ -193,7 +195,7 @@ export const CvTemplate: React.FC<CvTemplateProps> = ({ brandKit }) => {
   }
 
   return (
-    <div id="logoloom-pdf-target" className="mx-auto shadow-2xl" style={page}>
+    <div id={decorative ? undefined : 'logoloom-pdf-target'} className={decorative ? undefined : 'mx-auto shadow-2xl'} style={page}>
       <header
         style={{
           display: 'flex',

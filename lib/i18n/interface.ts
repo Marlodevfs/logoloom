@@ -103,7 +103,7 @@ export interface UIStrings {
 export const UI_TRANSLATIONS: Record<InterfaceLang, UIStrings> = {
   en: {
     appTitle: 'LogoLoom',
-    appTagline: 'Free CVs and planners, no account',
+    appTagline: 'The free CV, no subscription',
     privacyBadge: '100% Client-Side & Private',
     privacyTooltip: 'Your logo and documents never leave your browser. Zero server uploads.',
     
@@ -196,7 +196,7 @@ export const UI_TRANSLATIONS: Record<InterfaceLang, UIStrings> = {
   },
   fr: {
     appTitle: 'LogoLoom',
-    appTagline: 'CV et plannings gratuits, sans compte',
+    appTagline: 'Le CV gratuit, sans abonnement',
     privacyBadge: '100% Local & Privé',
     privacyTooltip: 'Votre logo et vos documents ne quittent jamais votre navigateur.',
     
@@ -289,7 +289,7 @@ export const UI_TRANSLATIONS: Record<InterfaceLang, UIStrings> = {
   },
   es: {
     appTitle: 'LogoLoom',
-    appTagline: 'CV y planificadores gratis, sin cuenta',
+    appTagline: 'El CV gratis, sin suscripción',
     privacyBadge: '100% Local y Privado',
     privacyTooltip: 'Tu logotipo y documentos nunca salen de tu navegador.',
     
@@ -382,7 +382,7 @@ export const UI_TRANSLATIONS: Record<InterfaceLang, UIStrings> = {
   },
   de: {
     appTitle: 'LogoLoom',
-    appTagline: 'Kostenlose Lebensläufe und Planer, ohne Konto',
+    appTagline: 'Der kostenlose Lebenslauf, ohne Abo',
     privacyBadge: '100% Lokal & Sicher',
     privacyTooltip: 'Ihr Logo und Ihre Dokumente verlassen niemals Ihren Browser.',
     
@@ -475,7 +475,7 @@ export const UI_TRANSLATIONS: Record<InterfaceLang, UIStrings> = {
   },
   pt: {
     appTitle: 'LogoLoom',
-    appTagline: 'CV e planeadores grátis, sem conta',
+    appTagline: 'O CV grátis, sem assinatura',
     privacyBadge: '100% Local e Seguro',
     privacyTooltip: 'O seu logotipo e documentos nunca saem do seu navegador.',
     
@@ -568,7 +568,7 @@ export const UI_TRANSLATIONS: Record<InterfaceLang, UIStrings> = {
   },
   it: {
     appTitle: 'LogoLoom',
-    appTagline: 'CV e planner gratis, senza account',
+    appTagline: 'Il CV gratis, senza abbonamento',
     privacyBadge: '100% Locale e Privato',
     privacyTooltip: 'Il tuo logo e i tuoi file non lasciano mai il tuo browser.',
     
