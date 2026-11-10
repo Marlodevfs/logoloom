@@ -1,4 +1,5 @@
 import type { CvCustomContent } from '@/types';
+import { CV_EXAMPLES_FR_MORE } from './fr-more';
 
 /**
  * CV examples per job (French). Every person, company, email and phone number
@@ -27,7 +28,7 @@ export interface CvExample {
 
 const PHONE = '06 00 00 00 00';
 
-export const CV_EXAMPLES_FR: CvExample[] = [
+const BASE: CvExample[] = [
   {
     slug: 'vendeur',
     job: 'Vendeur / vendeuse',
@@ -892,6 +893,14 @@ export const CV_EXAMPLES_FR: CvExample[] = [
       { q: 'Faut-il mettre ses notes ?', a: 'Seulement si elles sont bonnes ou s’il y a une mention. Sinon, le nom du diplôme suffit.' },
     ],
   },
+];
+
+// Situations (frontalier, student) come last, after the jobs.
+const SITUATIONS = ['frontalier-suisse', 'etudiant'];
+export const CV_EXAMPLES_FR: CvExample[] = [
+  ...BASE.filter((e) => !SITUATIONS.includes(e.slug)),
+  ...CV_EXAMPLES_FR_MORE,
+  ...SITUATIONS.map((slug) => BASE.find((e) => e.slug === slug)!),
 ];
 
 export function exampleH1(ex: CvExample): string {
