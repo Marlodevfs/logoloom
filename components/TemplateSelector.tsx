@@ -8,8 +8,6 @@ import {
   Clock,
   Utensils,
   Wallet,
-  Receipt,
-  FileSpreadsheet,
   Users,
   CheckCircle2,
   ListTodo,
@@ -97,16 +95,6 @@ const SELECTOR_I18N: Record<
         desc: 'Revenus, charges fixes, dépenses et épargne',
         tag: 'Finances',
       },
-      quote: {
-        title: 'Devis commercial',
-        desc: 'Émetteur, client, lignes d’articles, TVA et total',
-        tag: 'Vente',
-      },
-      invoice: {
-        title: 'Facture simple',
-        desc: 'Facture avec échéance, IBAN et coordonnées de paiement',
-        tag: 'Facturation',
-      },
       'price-list': {
         title: 'Grille tarifaire / Menu',
         desc: 'Prestations catégorisées, descriptions et tarifs',
@@ -168,16 +156,6 @@ const SELECTOR_I18N: Record<
         title: 'Monthly Budget Tracker',
         desc: 'Income, fixed & variable expenses, savings goal & net cash',
         tag: 'Finance',
-      },
-      quote: {
-        title: 'Price Quote',
-        desc: 'Sender/client blocks, line items, taxes & total',
-        tag: 'Sales',
-      },
-      invoice: {
-        title: 'Simple Invoice',
-        desc: 'Invoice #, due date, line items & bank payment details',
-        tag: 'Billing',
       },
       'price-list': {
         title: 'Service Menu / Price List',
@@ -241,16 +219,6 @@ const SELECTOR_I18N: Record<
         desc: 'Einnahmen, feste & variable Ausgaben, Sparziel & Saldo',
         tag: 'Finanzen',
       },
-      quote: {
-        title: 'Angebot',
-        desc: 'Absender/Kunde, Positionen, USt und Gesamtsumme',
-        tag: 'Vertrieb',
-      },
-      invoice: {
-        title: 'Rechnung',
-        desc: 'Rechnungsnummer, Fälligkeit, Positionen & Bankverbindung',
-        tag: 'Buchhaltung',
-      },
       'price-list': {
         title: 'Preis- & Leistungsübersicht',
         desc: 'Kategorisierte Dienstleistungen, Details & feste Tarife',
@@ -312,16 +280,6 @@ const SELECTOR_I18N: Record<
         title: 'Presupuesto Mensual',
         desc: 'Ingresos, gastos fijos y variables, ahorro y saldo neto',
         tag: 'Finanzas',
-      },
-      quote: {
-        title: 'Presupuesto comercial',
-        desc: 'Emisor, cliente, partidas, impuestos y total',
-        tag: 'Ventas',
-      },
-      invoice: {
-        title: 'Factura simple',
-        desc: 'Nº factura, vencimiento, partidas y datos bancarios',
-        tag: 'Facturación',
       },
       'price-list': {
         title: 'Tarifas y Servicios',
@@ -385,16 +343,6 @@ const SELECTOR_I18N: Record<
         desc: 'Entrate, uscite fisse e variabili, risparmio e saldo',
         tag: 'Finanze',
       },
-      quote: {
-        title: 'Preventivo',
-        desc: 'Mittente, cliente, voci di spesa, IVA e totale',
-        tag: 'Vendite',
-      },
-      invoice: {
-        title: 'Fattura semplice',
-        desc: 'Numero fattura, scadenza, voci e coordinate bancarie',
-        tag: 'Fatturazione',
-      },
       'price-list': {
         title: 'Listino Prezzi & Servizi',
         desc: 'Servizi categorizzati, descrizioni e tariffe trasparenti',
@@ -457,16 +405,6 @@ const SELECTOR_I18N: Record<
         desc: 'Receitas, despesas fixas e variáveis, meta de poupança e saldo',
         tag: 'Finanças',
       },
-      quote: {
-        title: 'Orçamento comercial',
-        desc: 'Emissor, cliente, itens, impostos e valor final',
-        tag: 'Vendas',
-      },
-      invoice: {
-        title: 'Fatura simples',
-        desc: 'Nº da fatura, vencimento, itens e dados bancários',
-        tag: 'Faturamento',
-      },
       'price-list': {
         title: 'Tabela de Serviços e Valores',
         desc: 'Categorias organizadas, descrições e valores claros',
@@ -501,8 +439,6 @@ const TEMPLATE_DEFINITIONS: Array<{
   { id: 'budget-tracker', family: 'personal', icon: Wallet },
   { id: 'checklist', family: 'personal', icon: CheckCircle2 },
   // Business (5)
-  { id: 'quote', family: 'business', icon: Receipt },
-  { id: 'invoice', family: 'business', icon: FileSpreadsheet },
   { id: 'price-list', family: 'business', icon: Briefcase },
   { id: 'client-tracker', family: 'business', icon: Users },
 ];
@@ -523,7 +459,7 @@ export const TemplateSelector: React.FC<TemplateSelectorProps> = ({
   const businessCount = TEMPLATE_DEFINITIONS.length - personalCount;
 
   // Keep the active template visible in the scrollable list (e.g. when landing
-  // on /invoice, the Invoice card is far down). Scrolls only the list, never the page.
+  // on /checklist, the Checklist card is far down). Scrolls only the list, never the page.
   useEffect(() => {
     const list = listRef.current;
     if (!list) return;

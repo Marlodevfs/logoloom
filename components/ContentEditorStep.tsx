@@ -30,7 +30,6 @@ import {
 } from '@/types';
 import { HABIT_PACKS, HabitPack } from '@/lib/i18n/habit-packs';
 import { getDefaultHabitTrackerContent } from '@/lib/use-brand-kit';
-import { BillingEditor } from './BillingEditor';
 
 interface ContentEditorStepProps {
   brandKit: BrandKit;
@@ -194,12 +193,7 @@ export const ContentEditorStep: React.FC<ContentEditorStepProps> = ({
   interfaceLang,
   onResetSection,
 }) => {
-  const isBilling = activeTemplate === 'invoice' || activeTemplate === 'quote';
-  // Quotes and invoices are useless until their lines are filled in: open by default.
-  const [isOpen, setIsOpen] = useState(isBilling);
-  React.useEffect(() => {
-    if (isBilling) setIsOpen(true);
-  }, [isBilling]);
+  const [isOpen, setIsOpen] = useState(false);
   const docLang: DocumentLang = brandKit.documentLang || 'en';
   const l = LABELS[interfaceLang] || LABELS.en;
 
@@ -306,16 +300,6 @@ export const ContentEditorStep: React.FC<ContentEditorStepProps> = ({
             <Sparkles className="w-4 h-4 text-indigo-600 dark:text-indigo-400 shrink-0 mt-0.5" />
             <p className="leading-snug">{l.clickToEditDirectly}</p>
           </div>
-
-          {/* Quote & invoice: line items, VAT and legal details */}
-          {(activeTemplate === 'invoice' || activeTemplate === 'quote') && (
-            <BillingEditor
-              kind={activeTemplate}
-              brandKit={brandKit}
-              onUpdate={onUpdate}
-              interfaceLang={interfaceLang}
-            />
-          )}
 
           {/* Habit Tracker Custom Controls */}
           {activeTemplate === 'habit-tracker' && (

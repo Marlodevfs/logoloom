@@ -170,11 +170,11 @@ async function main() {
     mustNotContain: ['Loading LogoLoom Studio...'],
   });
 
-  checkPage('fr/invoice.html', {
-    name: 'FR Invoice',
+  checkPage('fr/checklist.html', {
+    name: 'FR Checklist',
     expectedLang: 'fr',
-    expectedH1: 'Modèle de facture simple',
-    expectedCanonical: 'https://logoloom.app/fr/invoice',
+    expectedH1: 'Checklist par étapes et cases à cocher',
+    expectedCanonical: 'https://logoloom.app/fr/checklist',
     expectedHreflangs: allLocales,
     mustContain: ['"@type":"FAQPage"'],
     mustNotContain: ['Loading LogoLoom Studio...'],

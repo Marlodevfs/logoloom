@@ -1,7 +1,7 @@
 import { DocumentLang } from '@/types';
 
 /**
- * Fallback names shown on quotes/invoices when the user hasn't filled in
+ * Fallback names shown on business documents when the user hasn't filled in
  * their business or client name yet. Localized per document language.
  */
 export const PARTY_PLACEHOLDERS: Record<DocumentLang, { company: string; client: string }> = {

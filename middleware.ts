@@ -4,11 +4,11 @@ import type { NextRequest } from 'next/server';
 const CANONICAL_HOST = 'logoloom.app';
 const DEFAULT_LOCALE = 'en';
 
-// Pages that only exist under a locale prefix: a bare "/invoice" or "/legal"
+// Pages that only exist under a locale prefix: a bare "/checklist" or "/legal"
 // (typed by hand or shared without the language) is redirected to English.
 const LOCALIZED_ONLY = new Set([
   'habit-tracker', 'goal-planner', 'weekly-planner', 'monthly-calendar', 'daily-priorities',
-  'meal-planner', 'budget-tracker', 'quote', 'invoice', 'price-list', 'client-tracker', 'checklist',
+  'meal-planner', 'budget-tracker', 'price-list', 'client-tracker', 'checklist',
   'legal', 'privacy',
 ]);
 

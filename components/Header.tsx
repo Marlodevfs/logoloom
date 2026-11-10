@@ -69,7 +69,7 @@ export const Header: React.FC<HeaderProps> = ({
   const pathname = usePathname() || '/';
 
   // Keep the visitor on the same page when switching language
-  // (e.g. /fr/invoice -> /de/invoice instead of always going back home).
+  // (e.g. /fr/checklist -> /de/checklist instead of always going back home).
   const localizedHref = (code: InterfaceLang) => {
     const segments = pathname.split('/').filter(Boolean);
     if (segments.length > 0 && languages.some((l) => l.code === segments[0])) {

@@ -9,7 +9,6 @@ import { DocumentCompiler } from '../lib/pdf/DocumentCompiler';
 import {
   getDefaultHabitTrackerContent,
   getDefaultGoalPlannerContent,
-  getDefaultInvoiceContent,
 } from '../lib/use-brand-kit';
 
 registerPDFFonts();
@@ -26,9 +25,6 @@ interface LanguageTestCase {
     mustNotContain: string[];
   };
   expectedGoalPlanner: {
-    mustContain: string[];
-  };
-  expectedInvoice: {
     mustContain: string[];
   };
 }
@@ -56,13 +52,6 @@ const TEST_CASES: LanguageTestCase[] = [
         'Fundament & Struktur',
       ],
     },
-    expectedInvoice: {
-      mustContain: [
-        'RECHNUNG',
-        'RE-2026-042',
-        'Seite 1 von 1',
-      ],
-    },
   },
   {
     lang: 'fr',
@@ -84,13 +73,6 @@ const TEST_CASES: LanguageTestCase[] = [
         'Objectifs 90 jours',
         'Page 1 sur 1',
         'Cadrage & Fondations',
-      ],
-    },
-    expectedInvoice: {
-      mustContain: [
-        'FACTURE',
-        'FAC-2026-042',
-        'Page 1 sur 1',
       ],
     },
   },
@@ -116,13 +98,6 @@ const TEST_CASES: LanguageTestCase[] = [
         'Bases y Organización',
       ],
     },
-    expectedInvoice: {
-      mustContain: [
-        'FACTURA',
-        'FAC-2026-042',
-        'Página 1 de 1',
-      ],
-    },
   },
   {
     lang: 'it',
@@ -144,13 +119,6 @@ const TEST_CASES: LanguageTestCase[] = [
         'Pianificatore 90 Giorni',
         'Pagina 1 di 1',
         'Fondamenta',
-      ],
-    },
-    expectedInvoice: {
-      mustContain: [
-        'FATTURA',
-        'FATT-2026-042',
-        'Pagina 1 di 1',
       ],
     },
   },
@@ -176,13 +144,6 @@ const TEST_CASES: LanguageTestCase[] = [
         'Fundamentos & Estrutura',
       ],
     },
-    expectedInvoice: {
-      mustContain: [
-        'FATURA',
-        'FAT-2026-042',
-        'Página 1 de 1',
-      ],
-    },
   },
   {
     lang: 'en',
@@ -204,13 +165,6 @@ const TEST_CASES: LanguageTestCase[] = [
         '90-Day Goal Planner',
         'Page 1 of 1',
         'Foundations & Setup',
-      ],
-    },
-    expectedInvoice: {
-      mustContain: [
-        'INVOICE',
-        'INV-2026-042',
-        'Page 1 of 1',
       ],
     },
   },
@@ -239,7 +193,6 @@ async function verifyAll6Languages() {
       selectedTemplate: 'habit-tracker',
       habitTrackerContent: getDefaultHabitTrackerContent(tc.lang, 'wellbeing'),
       goalPlannerContent: getDefaultGoalPlannerContent(tc.lang),
-      invoiceContent: getDefaultInvoiceContent(tc.lang),
       isPro: false,
       removeWatermark: false,
     };
@@ -298,30 +251,6 @@ async function verifyAll6Languages() {
       }
     }
 
-    // 3. Invoice (Business Minimal)
-    const brandKitInvoice: BrandKit = {
-      ...brandKitHabit,
-      selectedTemplate: 'invoice',
-    };
-    const invoiceDoc = React.createElement(DocumentCompiler, { brandKit: brandKitInvoice });
-    const invoicePdfPath = path.join(OUT_DIR, `invoice_${tc.lang}.pdf`);
-    await ReactPDF.renderToFile(invoiceDoc as any, invoicePdfPath);
-
-    const invoiceBuffer = fs.readFileSync(invoicePdfPath);
-    const invoiceParser = new PDFParse({ data: invoiceBuffer });
-    const invoiceTextResult = await invoiceParser.getText();
-    const invoiceText = invoiceTextResult.text;
-    await invoiceParser.destroy();
-
-    console.log(`\n💼 [Invoice - Minimal - ${tc.lang.toUpperCase()}] Text checks:`);
-    for (const phrase of tc.expectedInvoice.mustContain) {
-      if (invoiceText.toLowerCase().includes(phrase.toLowerCase())) {
-        console.log(`  ✅ MUST CONTAIN: "${phrase}" -> FOUND`);
-      } else {
-        console.error(`  ❌ MUST CONTAIN: "${phrase}" -> MISSING!`);
-        errors++;
-      }
-    }
   }
 
   console.log(`\n========================================`);

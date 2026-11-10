@@ -14,7 +14,6 @@ import {
   AlertCircle,
   Calendar,
   Coins,
-  ShieldCheck,
 } from 'lucide-react';
 import { BrandKit, DocumentLang, InterfaceLang, PaperSize, TemplateId, WeekStartDay } from '@/types';
 import { UI_TRANSLATIONS } from '@/lib/i18n/interface';
@@ -62,7 +61,6 @@ const LABELS: Record<InterfaceLang, {
   monday: string;
   sunday: string;
   currency: string;
-  legalDisclaimer: string;
 }> = {
   fr: {
     stepTitle: '4. Vos coordonnées & Paramètres',
@@ -88,7 +86,6 @@ const LABELS: Record<InterfaceLang, {
     monday: 'Lundi',
     sunday: 'Dimanche',
     currency: 'Devise / Symbole monétaire',
-    legalDisclaimer: 'Notice : Ces modèles sont des mises en page visuelles indicatives et ne constituent pas un conseil fiscal ou juridique. Vérifiez la conformité avec votre réglementation locale.',
   },
   en: {
     stepTitle: '4. Your Details & Settings',
@@ -114,7 +111,6 @@ const LABELS: Record<InterfaceLang, {
     monday: 'Monday',
     sunday: 'Sunday',
     currency: 'Currency symbol',
-    legalDisclaimer: 'Notice: Quote and invoice templates are design layouts and do not constitute tax or legal advice. Please verify compliance with your local jurisdiction.',
   },
   de: {
     stepTitle: '4. Ihre Angaben & Optionen',
@@ -140,7 +136,6 @@ const LABELS: Record<InterfaceLang, {
     monday: 'Montag',
     sunday: 'Sonntag',
     currency: 'Währungssymbol',
-    legalDisclaimer: 'Rechtlicher Hinweis: Die Vorlagen stellen keine Rechts- oder Steuerberatung dar. Bitte prüfen Sie die gesetzlichen Rechnungsanforderungen Ihres Landes.',
   },
   es: {
     stepTitle: '4. Sus datos y configuración',
@@ -166,7 +161,6 @@ const LABELS: Record<InterfaceLang, {
     monday: 'Lunes',
     sunday: 'Domingo',
     currency: 'Moneda / Símbolo',
-    legalDisclaimer: 'Nota legal: Estas plantillas son diseños visuales estándar y no constituyen asesoramiento fiscal ni legal. Verifique el cumplimiento con su legislación local.',
   },
   it: {
     stepTitle: '4. I tuoi dati e opzioni',
@@ -192,7 +186,6 @@ const LABELS: Record<InterfaceLang, {
     monday: 'Lunedì',
     sunday: 'Domenica',
     currency: 'Valuta / Simbolo',
-    legalDisclaimer: 'Avvertenza: I modelli di preventivo e fattura sono layout grafici generici e non costituiscono consulenza legale o fiscale.',
   },
   pt: {
     stepTitle: '4. Seus dados e configurações',
@@ -218,7 +211,6 @@ const LABELS: Record<InterfaceLang, {
     monday: 'Segunda-feira',
     sunday: 'Domingo',
     currency: 'Moeda / Símbolo',
-    legalDisclaimer: 'Aviso legal: Os modelos de orçamento e fatura são leiautes visuais padrão e não constituem consultoria contábil ou fiscal.',
   },
 };
 
@@ -234,8 +226,7 @@ export const YourDetailsStep: React.FC<YourDetailsStepProps> = ({
   const defaultQrLabel = l.defaultQrLabel;
 
   const isCalendarBased = ['weekly-planner', 'monthly-calendar', 'meal-planner'].includes(activeTemplate);
-  const isFinancial = ['quote', 'invoice', 'budget-tracker', 'price-list'].includes(activeTemplate);
-  const isBusinessLegal = ['quote', 'invoice'].includes(activeTemplate);
+  const isFinancial = ['budget-tracker', 'price-list'].includes(activeTemplate);
 
   const handleUrlBlur = () => {
     if (brandKit.qrUrl && brandKit.qrUrl.trim().length > 0) {
@@ -516,13 +507,6 @@ export const YourDetailsStep: React.FC<YourDetailsStepProps> = ({
           </div>
         </div>
 
-        {/* Legal Disclaimer for Quote & Invoice in UI */}
-        {isBusinessLegal && (
-          <div className="p-2.5 rounded-lg border border-amber-200/80 bg-amber-50/60 dark:border-amber-900/40 dark:bg-amber-950/20 text-[10px] text-amber-800 dark:text-amber-300 flex items-start space-x-2">
-            <ShieldCheck className="w-3.5 h-3.5 text-amber-600 shrink-0 mt-0.5" />
-            <p className="leading-snug">{l.legalDisclaimer}</p>
-          </div>
-        )}
       </div>
     </div>
   );

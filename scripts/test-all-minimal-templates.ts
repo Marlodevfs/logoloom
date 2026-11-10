@@ -8,7 +8,6 @@ import { DocumentCompiler } from '../lib/pdf/DocumentCompiler';
 import {
   getDefaultHabitTrackerContent,
   getDefaultGoalPlannerContent,
-  getDefaultInvoiceContent,
   getDefaultWeeklyPlannerContent,
 } from '../lib/use-brand-kit';
 
@@ -38,8 +37,6 @@ async function runAllMinimalGates() {
     'lib/pdf/VectorGoalPlannerPDF.tsx',
     'components/templates/WeeklyPlannerTemplate.tsx',
     'lib/pdf/VectorWeeklyPlannerPDF.tsx',
-    'components/templates/InvoiceTemplate.tsx',
-    'lib/pdf/VectorInvoicePDF.tsx',
   ];
 
   for (const rel of filesToCheck) {
@@ -136,34 +133,6 @@ async function runAllMinimalGates() {
     goalEnPdfPath
   );
   console.log(`  PASS: Rendered ${goalEnPdfPath} (${fs.statSync(goalEnPdfPath).size} bytes)`);
-
-  // Gate 5: Render Minimal Invoice (A4 FR, Free, with QR)
-  console.log('\nGate 5: Rendering Minimal Invoice A4 FR (Free, with QR)...');
-  const kitInvoiceFr: BrandKit = {
-    logoUrl: squareLogoB64,
-    companyName: 'Agence Digitale Nuance',
-    tagline: 'Services de conseil & création',
-    coachName: 'Thomas Laurent',
-    clientName: 'Boutique Étoile',
-    contactEmail: 'bonjour@agence-nuance.fr',
-    brandColor: '#7C3AED',
-    contrastText: '#FFFFFF',
-    qrUrl: 'https://agence-nuance.fr/payer',
-    qrLabel: 'Paiement en ligne',
-    paperSize: 'a4',
-    documentLang: 'fr',
-    designStyle: 'minimal',
-    selectedTemplate: 'invoice',
-    isPro: false,
-    removeWatermark: false,
-    invoiceContent: getDefaultInvoiceContent('fr'),
-  };
-  const invoiceFrPdfPath = path.join(OUT_DIR, 'minimal-invoice-a4-fr.pdf');
-  await ReactPDF.renderToFile(
-    React.createElement(DocumentCompiler, { brandKit: kitInvoiceFr }) as any,
-    invoiceFrPdfPath
-  );
-  console.log(`  PASS: Rendered ${invoiceFrPdfPath} (${fs.statSync(invoiceFrPdfPath).size} bytes)`);
 
   // Gate 6: Render Minimal Weekly Planner (US Letter DE, Pro, Wordmark typography fallback)
   console.log('\nGate 6: Rendering Minimal Weekly Planner US Letter DE (Pro, no logo)...');

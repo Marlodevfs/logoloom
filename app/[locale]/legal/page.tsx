@@ -57,7 +57,7 @@ export default async function LegalNoticePage({ params }: Props) {
         {
           title: 'Responsabilité',
           body: [
-            'Les modèles de devis et de factures sont des mises en page fournies à titre indicatif. Ils ne constituent pas un conseil juridique ou fiscal : il vous appartient de vérifier que vos documents respectent les obligations légales applicables à votre activité (mentions obligatoires, TVA, etc.).',
+            'Les modèles sont des mises en page fournies à titre indicatif. Ils ne constituent pas un conseil juridique, fiscal ou professionnel : il vous appartient de vérifier que les documents que vous créez conviennent à votre usage.',
           ],
         },
       ]
@@ -85,7 +85,7 @@ export default async function LegalNoticePage({ params }: Props) {
         {
           title: 'Liability',
           body: [
-            'Quote and invoice templates are layouts provided for convenience. They do not constitute legal or tax advice: you are responsible for making sure your documents meet the legal requirements that apply to your business (mandatory mentions, VAT, etc.).',
+            'Templates are layouts provided for convenience. They do not constitute legal, tax or professional advice: you are responsible for making sure the documents you create suit your use.',
           ],
         },
       ];
