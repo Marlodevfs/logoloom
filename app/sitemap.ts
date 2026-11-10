@@ -1,6 +1,7 @@
 import { MetadataRoute } from 'next';
 import { siteConfig } from '@/config/site';
 import { CANONICAL_TEMPLATE_SLUGS } from '@/lib/seo/templates-metadata';
+import { CV_EXAMPLES_FR } from '@/lib/cv-examples/fr';
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const now = new Date();
@@ -52,6 +53,22 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: 'monthly',
       priority: 0.7,
       alternates: buildAlternates('pricing'),
+    });
+  }
+
+  // 4. CV examples by job (French only for now, so no hreflang alternates)
+  entries.push({
+    url: `${siteConfig.url}/fr/cv/exemples`,
+    lastModified: now,
+    changeFrequency: 'weekly',
+    priority: 0.8,
+  });
+  for (const ex of CV_EXAMPLES_FR) {
+    entries.push({
+      url: `${siteConfig.url}/fr/cv/exemples/${ex.slug}`,
+      lastModified: now,
+      changeFrequency: 'monthly',
+      priority: 0.75,
     });
   }
 

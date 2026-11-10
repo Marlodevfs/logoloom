@@ -36,6 +36,13 @@ export function SiteFooter({ lang, withStickyBar = false }: { lang: string; with
                     </Link>
                   </li>
                 ))}
+                {cat === 'career' && lang === 'fr' && (
+                  <li>
+                    <Link href="/fr/cv/exemples" className="text-slate-500 hover:text-indigo-600 dark:text-slate-400 dark:hover:text-indigo-400">
+                      Exemples de CV par métier
+                    </Link>
+                  </li>
+                )}
               </ul>
             </div>
           ))}

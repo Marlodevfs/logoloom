@@ -9,6 +9,8 @@ import { CvSheet } from '@/components/home/LiveCvHero';
 import { DownloadButton } from '@/components/DownloadButton';
 import type { CvCustomContent, CvLayout, InterfaceLang } from '@/types';
 
+const CV_BACKUP_KEY = 'logoloom_cv_backup';
+
 type StepId = 'you' | 'profile' | 'experience' | 'education' | 'skills' | 'design';
 
 const STEP_SECTIONS: Record<StepId, CvSection[]> = {
@@ -256,16 +258,18 @@ export function CvStudio({ initialLang, title }: { initialLang: InterfaceLang; t
   const [confirmClear, setConfirmClear] = useState(false);
   const [justCleared, setJustCleared] = useState(false);
   const [previewOpen, setPreviewOpen] = useState(false);
+  const [loadedExample, setLoadedExample] = useState<string | null>(null);
   const formTop = useRef<HTMLDivElement>(null);
   const stepHeading = useRef<HTMLHeadingElement>(null);
   const prefilled = useRef(false);
 
-  // The homepage hero sends the visitor's name as ?name=…: put it on the CV once.
+  // The homepage hero sends ?name=…, the example pages send ?exemple=…
   useEffect(() => {
     if (!isLoaded || prefilled.current) return;
     prefilled.current = true;
     const params = new URLSearchParams(window.location.search);
     const name = params.get('name')?.trim().slice(0, 60);
+    const exampleSlug = params.get('exemple');
     // The old violet default looks off on a CV: move it to ink.
     const legacyColor = brandKit.brandColor?.toUpperCase() === '#4F46E5';
     if (name || legacyColor) {
@@ -274,8 +278,32 @@ export function CvStudio({ initialLang, title }: { initialLang: InterfaceLang; t
         ...(legacyColor ? { brandColor: SWATCHES[0].hex } : {}),
       });
     }
-    if (name) window.history.replaceState({}, '', window.location.pathname);
+    if (exampleSlug) {
+      import('@/lib/cv-examples/fr').then(({ getCvExample }) => {
+        const ex = getCvExample(exampleSlug);
+        if (!ex) return;
+        // Keep the visitor's own CV aside so loading an example never loses work.
+        try {
+          localStorage.setItem(CV_BACKUP_KEY, JSON.stringify({ cvContent: cv, brandColor: brandKit.brandColor }));
+        } catch {}
+        updateBrandKit({ cvContent: { ...ex.cv }, brandColor: ex.color });
+        setLoadedExample(ex.short);
+      });
+    }
+    if (name || exampleSlug) window.history.replaceState({}, '', window.location.pathname);
   }, [isLoaded]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  const restoreBackup = () => {
+    try {
+      const raw = localStorage.getItem(CV_BACKUP_KEY);
+      if (raw) {
+        const saved = JSON.parse(raw);
+        updateBrandKit({ cvContent: saved.cvContent, brandColor: saved.brandColor });
+      }
+      localStorage.removeItem(CV_BACKUP_KEY);
+    } catch {}
+    setLoadedExample(null);
+  };
 
   // Escape closes the mobile preview.
   useEffect(() => {
@@ -315,6 +343,17 @@ export function CvStudio({ initialLang, title }: { initialLang: InterfaceLang; t
         <div className="bg-white dark:bg-slate-900 lg:border-r border-slate-200 dark:border-slate-800">
           <div ref={formTop} className="max-w-[640px] lg:ml-auto px-5 sm:px-8 lg:px-12 pt-8 sm:pt-10 pb-32 lg:pb-16 scroll-mt-16">
             <h1 className="text-sm font-bold text-slate-500 dark:text-slate-400">{title}</h1>
+
+            {loadedExample && (
+              <div role="status" className="mt-5 rounded-lg border border-ink-200 bg-ink-50 dark:bg-ink-950 dark:border-ink-800 px-4 py-3 text-sm text-slate-800 dark:text-slate-100 flex flex-wrap items-center gap-x-4 gap-y-1">
+                <span>
+                  Exemple « {loadedExample} » chargé. Remplacez les informations par les vôtres.
+                </span>
+                <button type="button" onClick={restoreBackup} className="font-bold text-ink-700 dark:text-ink-300 underline underline-offset-4">
+                  Revenir à mon CV précédent
+                </button>
+              </div>
+            )}
 
             {/* Stepper: the six steps are a real sequence, so they are numbered. */}
             <nav aria-label={c.stepOf(step + 1, STEPS.length)} className="mt-5">
@@ -376,8 +415,17 @@ export function CvStudio({ initialLang, title }: { initialLang: InterfaceLang; t
               )}
             </div>
 
+            {id === 'you' && interfaceLang === 'fr' && !loadedExample && (
+              <p className="mt-8 text-sm text-slate-600 dark:text-slate-300">
+                Besoin d’inspiration ?{' '}
+                <a href="/fr/cv/exemples" className="font-bold text-ink-700 dark:text-ink-300 underline underline-offset-4">
+                  Voir des exemples de CV par métier
+                </a>
+              </p>
+            )}
+
             {id === 'you' && (
-              <div className="mt-8 pt-6 border-t border-slate-200 dark:border-slate-800 text-sm">
+              <div className="mt-6 pt-6 border-t border-slate-200 dark:border-slate-800 text-sm">
                 {justCleared ? (
                   <p role="status" className="text-slate-600 dark:text-slate-300">{c.cleared}</p>
                 ) : confirmClear ? (
