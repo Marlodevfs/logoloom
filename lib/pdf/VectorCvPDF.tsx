@@ -12,6 +12,8 @@ const INK = '#0F172A';
 const MUTED = '#475569';
 const SOFT = '#64748B';
 
+/** Only real addresses become clickable (not free text such as "Permis B"). */
+const looksLikeUrl = (raw: string) => /^\S+\.\S+$/.test(raw.trim());
 const linkHref = (raw: string) => (/^https?:\/\//i.test(raw) ? raw : `https://${raw}`);
 
 /**
@@ -153,7 +155,8 @@ export const VectorCvPDF: React.FC<VectorCvPDFProps> = ({ brandKit }) => {
               {cv.email ? <Text style={s.sideText}>{cv.email}</Text> : null}
               {cv.phone ? <Text style={s.sideText}>{cv.phone}</Text> : null}
               {cv.city ? <Text style={s.sideText}>{cv.city}</Text> : null}
-              {cv.link ? (
+              {cv.link && !looksLikeUrl(cv.link) ? <Text style={s.sideText}>{cv.link}</Text> : null}
+              {cv.link && looksLikeUrl(cv.link) ? (
                 <Link src={linkHref(cv.link)} style={[s.sideText, { textDecoration: 'none' }]}>
                   {cv.link}
                 </Link>

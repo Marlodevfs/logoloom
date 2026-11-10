@@ -573,6 +573,15 @@ export default async function LocalePage({ params }: Props) {
             >
               {t.cta}
             </Link>
+            {lang === 'fr' && (
+              <p className="mt-5 text-slate-600 dark:text-slate-300">
+                Ou partez d’un{' '}
+                <Link href="/fr/cv/exemples" className="font-bold text-ink-700 dark:text-ink-300 underline underline-offset-4">
+                  exemple de CV pour votre métier
+                </Link>
+                .
+              </p>
+            )}
           </div>
           <CvLayoutsShowcase lang={lang as DocumentLang} captions={t.captions} />
         </section>
