@@ -130,7 +130,7 @@ const HOME_I18N: Record<InterfaceLang, HomeCopy> = {
         "classic": "Classique : tout sur une colonne, pour les parcours longs ou très textuels."
     },
     "honestTitle": "Ce que vous ne trouverez pas ici",
-    "honestLead": "Beaucoup de créateurs de CV « gratuits » se rattrapent au moment du téléchargement. Ici, non.",
+    "honestLead": "Beaucoup de créateurs de CV « gratuits » se rattrapent au moment du téléchargement. Ici, le CV gratuit le reste. Des modèles premium arriveront peut-être, en paiement unique, jamais en abonnement.",
     "honest": [
         "Un essai à 1,95 € qui devient un abonnement à 25 € par mois",
         "Un bouton « Télécharger » qui demande une carte bancaire",
@@ -147,7 +147,7 @@ const HOME_I18N: Record<InterfaceLang, HomeCopy> = {
     "faqs": [
         {
             "q": "Est-ce vraiment gratuit ?",
-            "a": "Oui. Vous créez et téléchargez votre CV gratuitement, sans compte, sans filigrane et sans abonnement."
+            "a": "Oui. Vous créez et téléchargez votre CV gratuitement, sans compte, sans filigrane et sans abonnement. Ça ne changera pas : si des modèles premium arrivent un jour, ils seront en option, en paiement unique."
         },
         {
             "q": "Mon CV sera-t-il lu par les logiciels de recrutement ?",
@@ -197,7 +197,7 @@ const HOME_I18N: Record<InterfaceLang, HomeCopy> = {
         "classic": "Classic: a single column, for long or text-heavy careers."
     },
     "honestTitle": "What you won’t find here",
-    "honestLead": "Many “free” CV builders make their money at the download button. Not this one.",
+    "honestLead": "Many “free” CV builders make their money at the download button. Here, the free CV stays free. Premium templates may come later, as a one-time purchase, never a subscription.",
     "honest": [
         "A $1.95 trial that turns into a $25 monthly subscription",
         "A Download button that asks for a credit card",
@@ -214,7 +214,7 @@ const HOME_I18N: Record<InterfaceLang, HomeCopy> = {
     "faqs": [
         {
             "q": "Is it really free?",
-            "a": "Yes. You create and download your CV for free, with no account, no watermark and no subscription."
+            "a": "Yes. You create and download your CV for free, with no account, no watermark and no subscription. That will not change: if premium templates arrive one day, they will be optional, as a one-time purchase."
         },
         {
             "q": "Can recruiting software read my CV?",
@@ -264,7 +264,7 @@ const HOME_I18N: Record<InterfaceLang, HomeCopy> = {
         "classic": "Klassisch: eine Spalte, für lange oder textreiche Werdegänge."
     },
     "honestTitle": "Was Sie hier nicht finden",
-    "honestLead": "Viele „kostenlose“ Lebenslauf-Tools kassieren beim Herunterladen. Hier nicht.",
+    "honestLead": "Viele „kostenlose“ Lebenslauf-Tools kassieren beim Herunterladen. Hier bleibt der kostenlose Lebenslauf kostenlos. Premium-Vorlagen kommen vielleicht später, als Einmalkauf, nie als Abo.",
     "honest": [
         "Ein Test für 1,95 €, der zum Abo für 25 € im Monat wird",
         "Einen Download-Button, der nach der Kreditkarte fragt",
@@ -281,7 +281,7 @@ const HOME_I18N: Record<InterfaceLang, HomeCopy> = {
     "faqs": [
         {
             "q": "Ist das wirklich kostenlos?",
-            "a": "Ja. Erstellen und Herunterladen sind kostenlos, ohne Konto, ohne Wasserzeichen und ohne Abo."
+            "a": "Ja. Erstellen und Herunterladen sind kostenlos, ohne Konto, ohne Wasserzeichen und ohne Abo. Das bleibt so: Falls es einmal Premium-Vorlagen gibt, sind sie optional und ein Einmalkauf."
         },
         {
             "q": "Kann Bewerbungssoftware meinen Lebenslauf lesen?",
@@ -331,7 +331,7 @@ const HOME_I18N: Record<InterfaceLang, HomeCopy> = {
         "classic": "Clásico: una sola columna, para trayectorias largas o con mucho texto."
     },
     "honestTitle": "Lo que no encontrarás aquí",
-    "honestLead": "Muchos creadores de CV «gratis» cobran en el botón de descarga. Aquí no.",
+    "honestLead": "Muchos creadores de CV «gratis» cobran en el botón de descarga. Aquí, el CV gratis sigue siendo gratis. Quizá lleguen plantillas premium, con pago único, nunca con suscripción.",
     "honest": [
         "Una prueba de 1,95 € que se convierte en una suscripción de 25 € al mes",
         "Un botón de descarga que pide la tarjeta",
@@ -348,7 +348,7 @@ const HOME_I18N: Record<InterfaceLang, HomeCopy> = {
     "faqs": [
         {
             "q": "¿Es realmente gratis?",
-            "a": "Sí. Creas y descargas tu CV gratis, sin cuenta, sin marca de agua y sin suscripción."
+            "a": "Sí. Creas y descargas tu CV gratis, sin cuenta, sin marca de agua y sin suscripción. Eso no cambiará: si algún día llegan plantillas premium, serán opcionales y de pago único."
         },
         {
             "q": "¿Lo pueden leer los programas de selección?",
@@ -398,7 +398,7 @@ const HOME_I18N: Record<InterfaceLang, HomeCopy> = {
         "classic": "Classico: una sola colonna, per percorsi lunghi o ricchi di testo."
     },
     "honestTitle": "Cosa non troverai qui",
-    "honestLead": "Molti creatori di CV «gratis» si fanno pagare al momento del download. Qui no.",
+    "honestLead": "Molti creatori di CV «gratis» si fanno pagare al momento del download. Qui il CV gratuito resta gratuito. Forse arriveranno modelli premium, con pagamento unico, mai in abbonamento.",
     "honest": [
         "Una prova da 1,95 € che diventa un abbonamento da 25 € al mese",
         "Un pulsante Scarica che chiede la carta",
@@ -415,7 +415,7 @@ const HOME_I18N: Record<InterfaceLang, HomeCopy> = {
     "faqs": [
         {
             "q": "È davvero gratis?",
-            "a": "Sì. Crei e scarichi il CV gratis, senza account, senza filigrana e senza abbonamento."
+            "a": "Sì. Crei e scarichi il CV gratis, senza account, senza filigrana e senza abbonamento. Non cambierà: se un giorno arriveranno modelli premium, saranno facoltativi e a pagamento unico."
         },
         {
             "q": "I software di selezione possono leggerlo?",
@@ -465,7 +465,7 @@ const HOME_I18N: Record<InterfaceLang, HomeCopy> = {
         "classic": "Clássico: uma só coluna, para percursos longos ou com muito texto."
     },
     "honestTitle": "O que não vai encontrar aqui",
-    "honestLead": "Muitos criadores de CV «grátis» cobram no botão de descarregar. Aqui não.",
+    "honestLead": "Muitos criadores de CV «grátis» cobram no botão de descarregar. Aqui, o CV grátis continua grátis. Talvez cheguem modelos premium, com pagamento único, nunca por assinatura.",
     "honest": [
         "Um teste de 1,95 € que se torna uma assinatura de 25 € por mês",
         "Um botão Descarregar que pede o cartão",
@@ -482,7 +482,7 @@ const HOME_I18N: Record<InterfaceLang, HomeCopy> = {
     "faqs": [
         {
             "q": "É mesmo grátis?",
-            "a": "Sim. Cria e descarrega o seu CV grátis, sem conta, sem marca de água e sem assinatura."
+            "a": "Sim. Cria e descarrega o seu CV grátis, sem conta, sem marca de água e sem assinatura. Isso não vai mudar: se um dia chegarem modelos premium, serão opcionais e de pagamento único."
         },
         {
             "q": "O software de recrutamento consegue ler?",

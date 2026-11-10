@@ -208,7 +208,7 @@ export const TEMPLATES_SEO_DATA: Record<InterfaceLang, Record<string, TemplateSE
         { title: "3. Download your PDF", desc: "A real text PDF that recruiters and applicant tracking systems can read." },
       ],
       faqs: [
-        { q: "Is it really free?", a: "Yes. Creating and downloading your CV is free, with no watermark and no subscription." },
+        { q: "Is it really free?", a: "Yes. Creating and downloading your CV is free, with no watermark and no subscription. That will not change: any premium templates would be optional, as a one-time purchase." },
         { q: "Can recruiting software read my CV?", a: "Yes. The PDF contains real, selectable text, not an image, so applicant tracking systems can read it." },
         { q: "Where is my data stored?", a: "Only in your browser. Nothing is sent to our servers." },
       ],
@@ -375,7 +375,7 @@ export const TEMPLATES_SEO_DATA: Record<InterfaceLang, Record<string, TemplateSE
         { title: "3. Téléchargez votre PDF", desc: "Un vrai PDF texte, lisible par les recruteurs et les logiciels de tri de candidatures." },
       ],
       faqs: [
-        { q: "Est-ce vraiment gratuit ?", a: "Oui. Créer et télécharger votre CV est gratuit, sans filigrane et sans abonnement." },
+        { q: "Est-ce vraiment gratuit ?", a: "Oui. Créer et télécharger votre CV est gratuit, sans filigrane et sans abonnement. Ça ne changera pas : d’éventuels modèles premium seraient en option, en paiement unique." },
         { q: "Mon CV sera-t-il lu par les logiciels de recrutement ?", a: "Oui. Le PDF contient du vrai texte sélectionnable, pas une image : les logiciels de tri (ATS) peuvent le lire." },
         { q: "Où sont stockées mes données ?", a: "Uniquement dans votre navigateur. Rien n’est envoyé sur nos serveurs." },
       ],
@@ -529,7 +529,7 @@ export const TEMPLATES_SEO_DATA: Record<InterfaceLang, Record<string, TemplateSE
         { title: "3. PDF herunterladen", desc: "Ein echtes Text-PDF, das Personaler und Bewerbermanagementsysteme lesen können." },
       ],
       faqs: [
-        { q: "Ist es wirklich kostenlos?", a: "Ja. Erstellen und Herunterladen sind kostenlos, ohne Wasserzeichen und ohne Abo." },
+        { q: "Ist es wirklich kostenlos?", a: "Ja. Erstellen und Herunterladen sind kostenlos, ohne Wasserzeichen und ohne Abo. Das bleibt so: Mögliche Premium-Vorlagen wären optional und ein Einmalkauf." },
         { q: "Können Bewerbungssysteme den Lebenslauf lesen?", a: "Ja. Das PDF enthält echten, markierbaren Text, kein Bild." },
         { q: "Wo werden meine Daten gespeichert?", a: "Nur in Ihrem Browser. Nichts wird an unsere Server gesendet." },
       ],
@@ -679,7 +679,7 @@ export const TEMPLATES_SEO_DATA: Record<InterfaceLang, Record<string, TemplateSE
         { title: "3. Descarga tu PDF", desc: "Un PDF de texto real, legible por reclutadores y software de selección." },
       ],
       faqs: [
-        { q: "¿Es realmente gratis?", a: "Sí. Crear y descargar tu CV es gratis, sin marca de agua ni suscripción." },
+        { q: "¿Es realmente gratis?", a: "Sí. Crear y descargar tu CV es gratis, sin marca de agua ni suscripción. Eso no cambiará: las posibles plantillas premium serían opcionales y de pago único." },
         { q: "¿Lo pueden leer los programas de selección?", a: "Sí. El PDF contiene texto real seleccionable, no una imagen." },
         { q: "¿Dónde se guardan mis datos?", a: "Solo en tu navegador. No se envía nada a nuestros servidores." },
       ],
@@ -829,7 +829,7 @@ export const TEMPLATES_SEO_DATA: Record<InterfaceLang, Record<string, TemplateSE
         { title: "3. Descarregue o PDF", desc: "Um PDF de texto real, legível por recrutadores e software de recrutamento." },
       ],
       faqs: [
-        { q: "É mesmo grátis?", a: "Sim. Criar e descarregar o CV é grátis, sem marca de água e sem assinatura." },
+        { q: "É mesmo grátis?", a: "Sim. Criar e descarregar o CV é grátis, sem marca de água e sem assinatura. Isso não vai mudar: eventuais modelos premium seriam opcionais e de pagamento único." },
         { q: "O software de recrutamento consegue ler?", a: "Sim. O PDF contém texto real selecionável, não uma imagem." },
         { q: "Onde ficam os meus dados?", a: "Apenas no seu navegador. Nada é enviado para os nossos servidores." },
       ],
@@ -979,7 +979,7 @@ export const TEMPLATES_SEO_DATA: Record<InterfaceLang, Record<string, TemplateSE
         { title: "3. Scarica il PDF", desc: "Un vero PDF di testo, leggibile dai selezionatori e dai software ATS." },
       ],
       faqs: [
-        { q: "È davvero gratis?", a: "Sì. Creare e scaricare il CV è gratis, senza filigrana e senza abbonamento." },
+        { q: "È davvero gratis?", a: "Sì. Creare e scaricare il CV è gratis, senza filigrana e senza abbonamento. Non cambierà: eventuali modelli premium sarebbero facoltativi e a pagamento unico." },
         { q: "I software di selezione possono leggerlo?", a: "Sì. Il PDF contiene testo reale selezionabile, non un’immagine." },
         { q: "Dove vengono salvati i miei dati?", a: "Solo nel tuo browser. Nulla viene inviato ai nostri server." },
       ],
