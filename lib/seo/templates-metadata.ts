@@ -26,6 +26,7 @@ export const TEMPLATE_SLUGS: Record<string, TemplateId> = {
   'price-list': 'price-list',
   'client-tracker': 'client-tracker',
   'checklist': 'checklist',
+  'cv': 'cv',
 };
 
 export const CANONICAL_TEMPLATE_SLUGS: { slug: string; templateId: TemplateId }[] = [
@@ -39,6 +40,7 @@ export const CANONICAL_TEMPLATE_SLUGS: { slug: string; templateId: TemplateId }[
   { slug: 'price-list', templateId: 'price-list' },
   { slug: 'client-tracker', templateId: 'client-tracker' },
   { slug: 'checklist', templateId: 'checklist' },
+  { slug: 'cv', templateId: 'cv' },
 ];
 
 export const TEMPLATES_SEO_DATA: Record<InterfaceLang, Record<string, TemplateSEOData>> = {
@@ -234,6 +236,26 @@ export const TEMPLATES_SEO_DATA: Record<InterfaceLang, Record<string, TemplateSE
       ],
       features: ['Grouped section blocks', 'Comfortable 5mm checkboxes', 'Custom category titles', 'Low-ink minimal print'],
     },
+    'cv': {
+      slug: 'cv',
+      templateId: 'cv',
+      category: 'business',
+      title: "Free CV Maker – Download Your Resume as PDF, No Subscription | LogoLoom",
+      description: "Create a professional CV in minutes and download it as a clean PDF. Free, no account, no hidden subscription. Two layouts, optional photo, recruiter-friendly text.",
+      h1: "Free CV maker: your resume as a PDF, no subscription",
+      intro: "Fill in your experience, education and skills, see your CV update live, and download a sharp PDF. No account, no trial that turns into a monthly charge, and your data never leaves your browser.",
+      steps: [
+        { title: "1. Fill in your details", desc: "Experience, education, skills and languages in a simple form. Add a photo if you want one." },
+        { title: "2. Pick a layout and colour", desc: "Sidebar or classic layout, with the accent colour of your choice, in A4 or US Letter." },
+        { title: "3. Download your PDF", desc: "A real text PDF that recruiters and applicant tracking systems can read." },
+      ],
+      faqs: [
+        { q: "Is it really free?", a: "Yes. Creating and downloading your CV is free, with no watermark and no subscription." },
+        { q: "Can recruiting software read my CV?", a: "Yes. The PDF contains real, selectable text, not an image, so applicant tracking systems can read it." },
+        { q: "Where is my data stored?", a: "Only in your browser. Nothing is sent to our servers." },
+      ],
+      features: ["No subscription, no hidden charge", "Recruiter-friendly text PDF", "Optional photo", "A4 and US Letter"],
+    },
   },
   fr: {
     'habit-tracker': {
@@ -417,6 +439,26 @@ export const TEMPLATES_SEO_DATA: Record<InterfaceLang, Record<string, TemplateSE
       ],
       features: ['Sections modulaires', 'Cases à cocher 5 mm', 'Personnalisation intégrale', 'Design minimaliste faible en encre'],
     },
+    'cv': {
+      slug: 'cv',
+      templateId: 'cv',
+      category: 'business',
+      title: "CV gratuit en PDF, sans abonnement – Créer son CV en ligne | LogoLoom",
+      description: "Créez un CV professionnel en quelques minutes et téléchargez-le en PDF. Gratuit, sans compte, sans abonnement caché. 2 mises en page, photo facultative, texte lisible par les recruteurs.",
+      h1: "Créer son CV gratuitement en PDF, sans abonnement",
+      intro: "Remplissez vos expériences, formations et compétences, voyez votre CV se mettre à jour en direct, puis téléchargez un PDF net. Pas de compte, pas d’essai qui se transforme en prélèvement mensuel, et vos données restent dans votre navigateur.",
+      steps: [
+        { title: "1. Remplissez vos informations", desc: "Expériences, formations, compétences et langues dans un formulaire simple. Ajoutez une photo si vous le souhaitez." },
+        { title: "2. Choisissez la mise en page", desc: "Colonne latérale ou classique, avec la couleur de votre choix, en A4 ou US Letter." },
+        { title: "3. Téléchargez votre PDF", desc: "Un vrai PDF texte, lisible par les recruteurs et les logiciels de tri de candidatures." },
+      ],
+      faqs: [
+        { q: "Est-ce vraiment gratuit ?", a: "Oui. Créer et télécharger votre CV est gratuit, sans filigrane et sans abonnement." },
+        { q: "Mon CV sera-t-il lu par les logiciels de recrutement ?", a: "Oui. Le PDF contient du vrai texte sélectionnable, pas une image : les logiciels de tri (ATS) peuvent le lire." },
+        { q: "Où sont stockées mes données ?", a: "Uniquement dans votre navigateur. Rien n’est envoyé sur nos serveurs." },
+      ],
+      features: ["Sans abonnement ni prélèvement caché", "PDF texte lisible par les recruteurs", "Photo facultative", "A4 et US Letter"],
+    },
   },
   de: {
     'habit-tracker': {
@@ -583,6 +625,26 @@ export const TEMPLATES_SEO_DATA: Record<InterfaceLang, Record<string, TemplateSE
       faqs: [{ q: 'Sind die Kästchen groß genug?', a: 'Ja, mindestens 5 mm Durchmesser für Stifte.' }],
       features: ['Modulare Themenblöcke', '5mm Checkboxen', 'Universell einsetzbar', 'Geringer Tintenbedarf'],
     },
+    'cv': {
+      slug: 'cv',
+      templateId: 'cv',
+      category: 'business',
+      title: "Lebenslauf kostenlos erstellen – PDF ohne Abo | LogoLoom",
+      description: "Erstellen Sie in wenigen Minuten einen professionellen Lebenslauf als PDF. Kostenlos, ohne Konto, ohne verstecktes Abo. 2 Layouts, optionales Foto, ATS-lesbar.",
+      h1: "Lebenslauf kostenlos als PDF erstellen, ohne Abo",
+      intro: "Tragen Sie Berufserfahrung, Ausbildung und Kenntnisse ein, sehen Sie die Vorschau live und laden Sie ein sauberes PDF herunter. Kein Konto, kein Probeabo, Ihre Daten bleiben im Browser.",
+      steps: [
+        { title: "1. Angaben ausfüllen", desc: "Berufserfahrung, Ausbildung, Kenntnisse und Sprachen in einem einfachen Formular. Foto optional." },
+        { title: "2. Layout wählen", desc: "Seitenleiste oder klassisch, mit Ihrer Akzentfarbe, in A4 oder US Letter." },
+        { title: "3. PDF herunterladen", desc: "Ein echtes Text-PDF, das Personaler und Bewerbermanagementsysteme lesen können." },
+      ],
+      faqs: [
+        { q: "Ist es wirklich kostenlos?", a: "Ja. Erstellen und Herunterladen sind kostenlos, ohne Wasserzeichen und ohne Abo." },
+        { q: "Können Bewerbungssysteme den Lebenslauf lesen?", a: "Ja. Das PDF enthält echten, markierbaren Text, kein Bild." },
+        { q: "Wo werden meine Daten gespeichert?", a: "Nur in Ihrem Browser. Nichts wird an unsere Server gesendet." },
+      ],
+      features: ["Kein Abo, keine versteckten Kosten", "ATS-lesbares Text-PDF", "Optionales Foto", "A4 und US Letter"],
+    },
   },
   es: {
     'habit-tracker': {
@@ -744,6 +806,26 @@ export const TEMPLATES_SEO_DATA: Record<InterfaceLang, Record<string, TemplateSE
       ],
       faqs: [{ q: '¿Las casillas son cómodas para escribir?', a: 'Sí, miden al menos 5 mm para marcar fácilmente con boli.' }],
       features: ['Bloques por etapas', 'Casillas de 5 mm', 'Totalmente personalizable', 'Ahorro de tinta'],
+    },
+    'cv': {
+      slug: 'cv',
+      templateId: 'cv',
+      category: 'business',
+      title: "Crear currículum gratis en PDF, sin suscripción | LogoLoom",
+      description: "Crea un currículum profesional en minutos y descárgalo en PDF. Gratis, sin cuenta, sin suscripción oculta. 2 diseños, foto opcional, legible por reclutadores.",
+      h1: "Crea tu currículum gratis en PDF, sin suscripción",
+      intro: "Rellena tu experiencia, formación y competencias, mira cómo se actualiza tu CV en directo y descarga un PDF nítido. Sin cuenta, sin pruebas que se convierten en cobros mensuales, y tus datos se quedan en tu navegador.",
+      steps: [
+        { title: "1. Rellena tus datos", desc: "Experiencia, formación, competencias e idiomas en un formulario sencillo. Foto opcional." },
+        { title: "2. Elige el diseño", desc: "Columna lateral o clásico, con tu color, en A4 o Carta." },
+        { title: "3. Descarga tu PDF", desc: "Un PDF de texto real, legible por reclutadores y software de selección." },
+      ],
+      faqs: [
+        { q: "¿Es realmente gratis?", a: "Sí. Crear y descargar tu CV es gratis, sin marca de agua ni suscripción." },
+        { q: "¿Lo pueden leer los programas de selección?", a: "Sí. El PDF contiene texto real seleccionable, no una imagen." },
+        { q: "¿Dónde se guardan mis datos?", a: "Solo en tu navegador. No se envía nada a nuestros servidores." },
+      ],
+      features: ["Sin suscripción ni cobros ocultos", "PDF de texto legible por ATS", "Foto opcional", "A4 y Carta"],
     },
   },
   pt: {
@@ -907,6 +989,26 @@ export const TEMPLATES_SEO_DATA: Record<InterfaceLang, Record<string, TemplateSE
       faqs: [{ q: 'As caixas têm tamanho adequado?', a: 'Sim, medem no mínimo 5 mm para preenchimento confortável.' }],
       features: ['Blocos modulares', 'Caixas de 5 mm', 'Totalmente personalizável', 'Económica na impressão'],
     },
+    'cv': {
+      slug: 'cv',
+      templateId: 'cv',
+      category: 'business',
+      title: "Criar currículo grátis em PDF, sem assinatura | LogoLoom",
+      description: "Crie um currículo profissional em minutos e descarregue-o em PDF. Grátis, sem conta, sem assinatura escondida. 2 layouts, foto opcional, legível por recrutadores.",
+      h1: "Crie o seu currículo grátis em PDF, sem assinatura",
+      intro: "Preencha a sua experiência, formação e competências, veja o CV atualizar em tempo real e descarregue um PDF nítido. Sem conta, sem testes que se tornam cobranças mensais, e os seus dados ficam no seu navegador.",
+      steps: [
+        { title: "1. Preencha os seus dados", desc: "Experiência, formação, competências e línguas num formulário simples. Foto opcional." },
+        { title: "2. Escolha o layout", desc: "Coluna lateral ou clássico, com a cor que preferir, em A4 ou Letter." },
+        { title: "3. Descarregue o PDF", desc: "Um PDF de texto real, legível por recrutadores e software de recrutamento." },
+      ],
+      faqs: [
+        { q: "É mesmo grátis?", a: "Sim. Criar e descarregar o CV é grátis, sem marca de água e sem assinatura." },
+        { q: "O software de recrutamento consegue ler?", a: "Sim. O PDF contém texto real selecionável, não uma imagem." },
+        { q: "Onde ficam os meus dados?", a: "Apenas no seu navegador. Nada é enviado para os nossos servidores." },
+      ],
+      features: ["Sem assinatura nem cobranças escondidas", "PDF de texto legível por ATS", "Foto opcional", "A4 e Letter"],
+    },
   },
   it: {
     'habit-tracker': {
@@ -1068,6 +1170,26 @@ export const TEMPLATES_SEO_DATA: Record<InterfaceLang, Record<string, TemplateSE
       ],
       faqs: [{ q: 'Le caselle sono abbastanza grandi?', a: 'Sì, misurano almeno 5 mm per scrivere agevolmente a penna.' }],
       features: ['Blocchi tematici modulari', 'Caselle da 5 mm', 'Completamente personalizzabile', 'Basso consumo d\'inchiostro'],
+    },
+    'cv': {
+      slug: 'cv',
+      templateId: 'cv',
+      category: 'business',
+      title: "Crea il tuo CV gratis in PDF, senza abbonamento | LogoLoom",
+      description: "Crea un curriculum professionale in pochi minuti e scaricalo in PDF. Gratis, senza account, senza abbonamenti nascosti. 2 layout, foto facoltativa, leggibile dai selezionatori.",
+      h1: "Crea il tuo curriculum gratis in PDF, senza abbonamento",
+      intro: "Inserisci esperienze, formazione e competenze, guarda il CV aggiornarsi in tempo reale e scarica un PDF nitido. Nessun account, nessuna prova che diventa un addebito mensile, e i tuoi dati restano nel browser.",
+      steps: [
+        { title: "1. Inserisci i tuoi dati", desc: "Esperienze, formazione, competenze e lingue in un modulo semplice. Foto facoltativa." },
+        { title: "2. Scegli il layout", desc: "Colonna laterale o classico, con il colore che preferisci, in A4 o Letter." },
+        { title: "3. Scarica il PDF", desc: "Un vero PDF di testo, leggibile dai selezionatori e dai software ATS." },
+      ],
+      faqs: [
+        { q: "È davvero gratis?", a: "Sì. Creare e scaricare il CV è gratis, senza filigrana e senza abbonamento." },
+        { q: "I software di selezione possono leggerlo?", a: "Sì. Il PDF contiene testo reale selezionabile, non un’immagine." },
+        { q: "Dove vengono salvati i miei dati?", a: "Solo nel tuo browser. Nulla viene inviato ai nostri server." },
+      ],
+      features: ["Nessun abbonamento né addebiti nascosti", "PDF di testo leggibile dagli ATS", "Foto facoltativa", "A4 e Letter"],
     },
   },
 };

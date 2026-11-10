@@ -14,7 +14,9 @@ export type TemplateId =
   // Business (5)
   | 'price-list'
   | 'client-tracker'
-  | 'checklist';
+  | 'checklist'
+  // Career (1)
+  | 'cv';
 
 export type DesignStyle = 'minimal' | 'complete';
 
@@ -150,6 +152,50 @@ export interface ChecklistGroupCustom {
   items: Array<{ text: string; done: boolean }>;
 }
 
+export interface CvExperience {
+  role: string;
+  company: string;
+  location: string;
+  start: string;
+  end: string;
+  /** One achievement per line. */
+  details: string;
+}
+
+export interface CvEducation {
+  degree: string;
+  school: string;
+  start: string;
+  end: string;
+  details: string;
+}
+
+export interface CvLanguage {
+  name: string;
+  level: string;
+}
+
+export type CvLayout = 'classic' | 'sidebar';
+
+export interface CvCustomContent {
+  layout: CvLayout;
+  fullName: string;
+  jobTitle: string;
+  email: string;
+  phone: string;
+  city: string;
+  /** LinkedIn, portfolio or website. */
+  link: string;
+  /** Small JPEG data URL (resized in the browser), or null. */
+  photoUrl: string | null;
+  summary: string;
+  experiences: CvExperience[];
+  education: CvEducation[];
+  skills: string[];
+  languages: CvLanguage[];
+  interests: string;
+}
+
 export interface ChecklistCustomContent {
   title: string;
   subtitle: string;
@@ -188,6 +234,7 @@ export interface BrandKit {
   priceListContent?: PriceListCustomContent;
   clientTrackerContent?: ClientTrackerCustomContent;
   checklistContent?: ChecklistCustomContent;
+  cvContent?: CvCustomContent;
 }
 
 export interface TemplateConfig {

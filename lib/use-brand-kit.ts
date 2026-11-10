@@ -16,6 +16,7 @@ import {
   PriceListCustomContent,
   ClientTrackerCustomContent,
   ChecklistCustomContent,
+  CvCustomContent,
   InterfaceLang,
   TemplateId,
 } from '@/types';
@@ -34,6 +35,7 @@ import {
   DEFAULT_CLIENT_TRACKER,
   DEFAULT_CHECKLIST,
 } from './i18n/catalog-data';
+import { DEFAULT_CV } from './i18n/cv-data';
 
 const STORAGE_KEY = 'logoloom_brand_kit_v3';
 const TEMPLATE_KEY = 'logoloom_template_id_v3';
@@ -119,6 +121,10 @@ export function getDefaultChecklistContent(lang: DocumentLang): ChecklistCustomC
   return DEFAULT_CHECKLIST[lang] || DEFAULT_CHECKLIST.en;
 }
 
+export function getDefaultCvContent(lang: DocumentLang): CvCustomContent {
+  return DEFAULT_CV[lang] || DEFAULT_CV.en;
+}
+
 
 type LocalizedContentKey =
   | 'goalPlannerContent'
@@ -129,7 +135,8 @@ type LocalizedContentKey =
   | 'budgetTrackerContent'
   | 'priceListContent'
   | 'clientTrackerContent'
-  | 'checklistContent';
+  | 'checklistContent'
+  | 'cvContent';
 
 const LOCALIZED_DEFAULTS: Record<LocalizedContentKey, (lang: DocumentLang) => unknown> = {
   goalPlannerContent: getDefaultGoalPlannerContent,
@@ -141,6 +148,7 @@ const LOCALIZED_DEFAULTS: Record<LocalizedContentKey, (lang: DocumentLang) => un
   priceListContent: getDefaultPriceListContent,
   clientTrackerContent: getDefaultClientTrackerContent,
   checklistContent: getDefaultChecklistContent,
+  cvContent: getDefaultCvContent,
 };
 
 const sameContent = (a: unknown, b: unknown) => JSON.stringify(a) === JSON.stringify(b);
@@ -203,6 +211,7 @@ const VALID_TEMPLATES: TemplateId[] = [
   'price-list',
   'client-tracker',
   'checklist',
+  'cv',
 ];
 
 export function useBrandKit(initialLang?: InterfaceLang, initialTemplate?: TemplateId) {
@@ -222,6 +231,7 @@ export function useBrandKit(initialLang?: InterfaceLang, initialTemplate?: Templ
     priceListContent: getDefaultPriceListContent(initialDocLang),
     clientTrackerContent: getDefaultClientTrackerContent(initialDocLang),
     checklistContent: getDefaultChecklistContent(initialDocLang),
+    cvContent: getDefaultCvContent(initialDocLang),
   }));
 
   const [activeTemplate, setActiveTemplate] = useState<TemplateId>(resolvedTemplate);
@@ -297,6 +307,7 @@ export function useBrandKit(initialLang?: InterfaceLang, initialTemplate?: Templ
             priceListContent: getDefaultPriceListContent(resolvedUiLang as DocumentLang),
             clientTrackerContent: getDefaultClientTrackerContent(resolvedUiLang as DocumentLang),
             checklistContent: getDefaultChecklistContent(resolvedUiLang as DocumentLang),
+            cvContent: getDefaultCvContent(resolvedUiLang as DocumentLang),
           }));
         }
 
@@ -471,6 +482,8 @@ export function useBrandKit(initialLang?: InterfaceLang, initialTemplate?: Templ
         updateBrandKit({ clientTrackerContent: getDefaultClientTrackerContent(lang) });
       } else if (section === 'checklist') {
         updateBrandKit({ checklistContent: getDefaultChecklistContent(lang) });
+      } else if (section === 'cv') {
+        updateBrandKit({ cvContent: getDefaultCvContent(lang) });
       } else if (section === 'all') {
         updateBrandKit({
           ...DEFAULT_BRAND_KIT,
@@ -485,6 +498,7 @@ export function useBrandKit(initialLang?: InterfaceLang, initialTemplate?: Templ
           priceListContent: getDefaultPriceListContent(lang),
           clientTrackerContent: getDefaultClientTrackerContent(lang),
           checklistContent: getDefaultChecklistContent(lang),
+          cvContent: getDefaultCvContent(lang),
         });
       }
     },
