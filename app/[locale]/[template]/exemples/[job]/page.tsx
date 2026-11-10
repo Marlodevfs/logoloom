@@ -8,6 +8,7 @@ import { SiteFooter } from '@/components/SiteFooter';
 import { CvSheet } from '@/components/home/LiveCvHero';
 import { CV_EXAMPLES_FR, exampleH1, exampleLabel, getCvExample } from '@/lib/cv-examples/fr';
 import { cvKit } from '@/lib/cv-examples/kit';
+import { SwissPackTeaser } from '@/components/cv/SwissPackTeaser';
 
 interface Props {
   params: Promise<{ locale: string; template: string; job: string }>;
@@ -140,6 +141,8 @@ export default async function CvExamplePage({ params }: Props) {
               ))}
             </dl>
           </section>
+
+          {ex.slug === 'frontalier-suisse' && <SwissPackTeaser startHref={startHref} />}
 
           <section>
             <h2 className="font-display text-3xl font-semibold text-slate-900 dark:text-white">Exemples de profil à adapter</h2>

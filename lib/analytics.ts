@@ -21,7 +21,8 @@ export type AnalyticsEvent =
   | 'pdf_download'
   | 'pro_modal_open'
   | 'pro_upgrade_click'
-  | 'bmc_click';
+  | 'bmc_click'
+  | 'swiss_pack_interest';
 
 export function trackEvent(event: AnalyticsEvent, props?: Record<string, any>) {
   if (typeof window !== 'undefined') {
