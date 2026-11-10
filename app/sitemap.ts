@@ -39,7 +39,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
         url: `${siteConfig.url}/${locale}/${slug}`,
         lastModified: now,
         changeFrequency: 'weekly',
-        priority: 0.85,
+        // The CV maker is the core of the site; the printables are secondary.
+        priority: slug === 'cv' ? 0.95 : 0.6,
         alternates: buildAlternates(slug),
       });
     }

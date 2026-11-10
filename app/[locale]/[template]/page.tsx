@@ -13,6 +13,7 @@ import {
 } from '@/lib/seo/templates-metadata';
 import { Studio } from '@/components/Studio';
 import { CvStudio } from '@/components/cv/CvStudio';
+import { CV_EXAMPLES_FR, exampleLabel } from '@/lib/cv-examples/fr';
 import { SiteFooter } from '@/components/SiteFooter';
 import { getSiteChrome } from '@/lib/i18n/site-chrome';
 
@@ -132,6 +133,31 @@ export default async function TemplateLandingPage({ params }: Props) {
     })),
   };
 
+  const isCv = data.templateId === 'cv';
+  // The CV page is the product itself: describe it as an app for search engines.
+  const appSchema = isCv
+    ? {
+        '@context': 'https://schema.org',
+        '@type': 'WebApplication',
+        name: `${siteConfig.name} – ${data.h1}`,
+        url: `${siteConfig.url}/${lang}/${slug}`,
+        description: data.description,
+        applicationCategory: 'BusinessApplication',
+        operatingSystem: 'Any',
+        inLanguage: lang,
+        isAccessibleForFree: true,
+        offers: { '@type': 'Offer', price: '0', priceCurrency: lang === 'en' ? 'USD' : 'EUR' },
+      }
+    : null;
+  const CV_HOWTO: Record<string, string> = {
+    fr: 'Comment faire son CV en trois étapes',
+    en: 'How to make your CV in three steps',
+    de: 'So erstellen Sie Ihren Lebenslauf in drei Schritten',
+    es: 'Cómo hacer tu currículum en tres pasos',
+    it: 'Come fare il tuo CV in tre passaggi',
+    pt: 'Como fazer o seu CV em três passos',
+  };
+
   const otherTemplates = CANONICAL_TEMPLATE_SLUGS.filter((t) => t.slug !== slug).sort(
     (a, b) => catalogRank(a.templateId) - catalogRank(b.templateId)
   );
@@ -195,6 +221,9 @@ export default async function TemplateLandingPage({ params }: Props) {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
       />
+      {appSchema && (
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(appSchema) }} />
+      )}
 
       {/* Main Interactive Editor Studio (Pre-initialized with this specific template!) */}
       <main className="flex-1 w-full">
@@ -210,7 +239,7 @@ export default async function TemplateLandingPage({ params }: Props) {
           <section className="space-y-6">
             <div>
               <h2 className="font-display text-2xl sm:text-3xl font-semibold text-slate-900 dark:text-white">
-                {chrome.howToTitle(templateName)}
+                {isCv ? CV_HOWTO[lang] || CV_HOWTO.en : chrome.howToTitle(templateName)}
               </h2>
             </div>
 
@@ -258,6 +287,29 @@ export default async function TemplateLandingPage({ params }: Props) {
               ))}
             </div>
           </section>
+
+          {isCv && lang === 'fr' && (
+            <section className="space-y-5">
+              <div>
+                <h2 className="font-display text-2xl sm:text-3xl font-semibold text-slate-900 dark:text-white">
+                  Exemples de CV par métier
+                </h2>
+                <p className="mt-2 text-slate-600 dark:text-slate-300">
+                  Partez d’un CV déjà rempli pour votre métier, puis remplacez les informations par les vôtres.
+                </p>
+              </div>
+              <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-8 border-t border-slate-200 dark:border-slate-800">
+                {CV_EXAMPLES_FR.map((e) => (
+                  <li key={e.slug} className="border-b border-slate-200 dark:border-slate-800">
+                    <Link href={`/fr/cv/exemples/${e.slug}`} className="flex items-center justify-between py-3 font-bold text-slate-800 dark:text-slate-100 hover:text-ink-700">
+                      {exampleLabel(e)}
+                      <ChevronRight className="w-4 h-4 text-slate-400" aria-hidden="true" />
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </section>
+          )}
 
           {/* Internal Links to Other Templates */}
           <section className="space-y-6 border-t border-slate-200/80 dark:border-slate-800 pt-12">
