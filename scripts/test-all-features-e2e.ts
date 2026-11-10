@@ -52,8 +52,6 @@ async function runEndToEndFeatureTests() {
     'components/templates/DailyPrioritiesTemplate.tsx',
     'components/templates/MealPlannerTemplate.tsx',
     'components/templates/BudgetTrackerTemplate.tsx',
-    'components/templates/PriceListTemplate.tsx',
-    'components/templates/ClientTrackerTemplate.tsx',
     'components/templates/ChecklistTemplate.tsx',
     'lib/pdf/VectorMinimalHabitTrackerPDF.tsx',
     'lib/pdf/VectorHabitTrackerPDF.tsx',
@@ -63,8 +61,6 @@ async function runEndToEndFeatureTests() {
     'lib/pdf/VectorDailyPrioritiesPDF.tsx',
     'lib/pdf/VectorMealPlannerPDF.tsx',
     'lib/pdf/VectorBudgetTrackerPDF.tsx',
-    'lib/pdf/VectorPriceListPDF.tsx',
-    'lib/pdf/VectorClientTrackerPDF.tsx',
     'lib/pdf/VectorChecklistPDF.tsx',
   ];
 
@@ -127,7 +123,7 @@ async function runEndToEndFeatureTests() {
     { templateId: 'habit-tracker', style: 'complete', paper: 'a4', isPro: true, withQr: false },
     { templateId: 'goal-planner-90', style: 'minimal', paper: 'letter', isPro: false, withQr: false },
     { templateId: 'weekly-planner', style: 'minimal', paper: 'a4', isPro: true, withQr: true },
-    { templateId: 'price-list', style: 'minimal', paper: 'a4', isPro: true, withQr: true },
+    { templateId: 'budget-tracker', style: 'minimal', paper: 'a4', isPro: true, withQr: true },
     { templateId: 'checklist', style: 'minimal', paper: 'letter', isPro: false, withQr: false },
   ];
 

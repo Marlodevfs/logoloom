@@ -1,4 +1,4 @@
-import { InterfaceLang, TemplateId } from '@/types';
+import { InterfaceLang, TemplateFamily, TemplateId } from '@/types';
 import { siteConfig } from '@/config/site';
 
 export interface TemplateSEOData {
@@ -8,7 +8,7 @@ export interface TemplateSEOData {
   description: string;
   h1: string;
   intro: string;
-  category: 'personal' | 'business';
+  category: TemplateFamily;
   steps: { title: string; desc: string }[];
   faqs: { q: string; a: string }[];
   features: string[];
@@ -23,8 +23,6 @@ export const TEMPLATE_SLUGS: Record<string, TemplateId> = {
   'daily-priorities': 'daily-priorities',
   'meal-planner': 'meal-planner',
   'budget-tracker': 'budget-tracker',
-  'price-list': 'price-list',
-  'client-tracker': 'client-tracker',
   'checklist': 'checklist',
   'cv': 'cv',
 };
@@ -37,8 +35,6 @@ export const CANONICAL_TEMPLATE_SLUGS: { slug: string; templateId: TemplateId }[
   { slug: 'daily-priorities', templateId: 'daily-priorities' },
   { slug: 'meal-planner', templateId: 'meal-planner' },
   { slug: 'budget-tracker', templateId: 'budget-tracker' },
-  { slug: 'price-list', templateId: 'price-list' },
-  { slug: 'client-tracker', templateId: 'client-tracker' },
   { slug: 'checklist', templateId: 'checklist' },
   { slug: 'cv', templateId: 'cv' },
 ];
@@ -48,7 +44,7 @@ export const TEMPLATES_SEO_DATA: Record<InterfaceLang, Record<string, TemplateSE
     'habit-tracker': {
       slug: 'habit-tracker',
       templateId: 'habit-tracker',
-      category: 'personal',
+      category: 'organisation',
       title: 'Printable Habit Tracker PDF – LogoLoom',
       description: 'Free 30-day habit tracker PDF to print. Clean portrait grid with milestones, ink-friendly minimal design, instant vector download without signup.',
       h1: 'Free Printable 30-Day Habit Tracker PDF',
@@ -68,7 +64,7 @@ export const TEMPLATES_SEO_DATA: Record<InterfaceLang, Record<string, TemplateSE
     'goal-planner': {
       slug: 'goal-planner',
       templateId: 'goal-planner-90',
-      category: 'personal',
+      category: 'organisation',
       title: 'Printable 90-Day Goal Planner PDF – LogoLoom',
       description: 'Free 90-day goal planner PDF. Set 1–3 quarterly targets, track monthly milestones and weekly momentum. Free vector download, no signup.',
       h1: 'Free Printable 90-Day Goal Planner PDF',
@@ -87,7 +83,7 @@ export const TEMPLATES_SEO_DATA: Record<InterfaceLang, Record<string, TemplateSE
     'weekly-planner': {
       slug: 'weekly-planner',
       templateId: 'weekly-planner',
-      category: 'personal',
+      category: 'organisation',
       title: 'Printable Weekly Planner PDF – LogoLoom',
       description: 'Free printable weekly planner PDF. 7-day layout with top 3 priorities, daily writing blocks and weekly notes. Download in seconds, no signup.',
       h1: 'Free Printable Weekly Planner PDF',
@@ -106,7 +102,7 @@ export const TEMPLATES_SEO_DATA: Record<InterfaceLang, Record<string, TemplateSE
     'monthly-calendar': {
       slug: 'monthly-calendar',
       templateId: 'monthly-calendar',
-      category: 'personal',
+      category: 'organisation',
       title: 'Printable Monthly Calendar PDF – LogoLoom',
       description: 'Free printable monthly calendar PDF on one page. Clean month grid, sidebar for monthly goals and notes. High-resolution vector download.',
       h1: 'Free Printable Monthly Calendar PDF',
@@ -125,7 +121,7 @@ export const TEMPLATES_SEO_DATA: Record<InterfaceLang, Record<string, TemplateSE
     'daily-priorities': {
       slug: 'daily-priorities',
       templateId: 'daily-priorities',
-      category: 'personal',
+      category: 'organisation',
       title: 'Daily Priorities & To-Do Planner PDF – LogoLoom',
       description: 'Free daily priorities planner PDF. Top 3 tasks, hourly schedule (08:00–18:00), to-do checkboxes and daily gratitude. Free vector download.',
       h1: 'Free Printable Daily Priorities & Schedule PDF',
@@ -144,7 +140,7 @@ export const TEMPLATES_SEO_DATA: Record<InterfaceLang, Record<string, TemplateSE
     'meal-planner': {
       slug: 'meal-planner',
       templateId: 'meal-planner',
-      category: 'personal',
+      category: 'home',
       title: 'Printable Weekly Meal Planner & Grocery List PDF – LogoLoom',
       description: 'Free weekly meal planner PDF. 7 days with breakfast, lunch, dinner, snack and a categorized shopping list column. Instant vector PDF download.',
       h1: 'Free Printable Weekly Meal Planner & Grocery List PDF',
@@ -163,7 +159,7 @@ export const TEMPLATES_SEO_DATA: Record<InterfaceLang, Record<string, TemplateSE
     'budget-tracker': {
       slug: 'budget-tracker',
       templateId: 'budget-tracker',
-      category: 'personal',
+      category: 'home',
       title: 'Printable Monthly Budget Tracker PDF – LogoLoom',
       description: 'Free printable monthly budget tracker PDF. Track income, fixed expenses, variable costs and savings goals. Currency picker, instant PDF download.',
       h1: 'Free Printable Monthly Budget Tracker PDF',
@@ -179,48 +175,10 @@ export const TEMPLATES_SEO_DATA: Record<InterfaceLang, Record<string, TemplateSE
       ],
       features: ['Income & expense tables', 'Savings goal progress', 'Multi-currency support', '100% Private in browser'],
     },
-    'price-list': {
-      slug: 'price-list',
-      templateId: 'price-list',
-      category: 'business',
-      title: 'Printable Price List & Service Menu PDF – LogoLoom',
-      description: 'Free printable price list and service menu PDF. Categorized offerings, short descriptions and rates. Custom brand color, instant vector download.',
-      h1: 'Free Printable Price List & Service Menu PDF',
-      intro: 'Showcase your offerings with sophistication. Organize your packages and services into clean categories with concise descriptions and transparent pricing.',
-      steps: [
-        { title: '1. Group by category', desc: 'Organize your services into intuitive sections (e.g. Consultations, Packages, Add-ons).' },
-        { title: '2. Refine prices & descriptions', desc: 'Add short explanatory notes and clear price tags for each service.' },
-        { title: '3. Print or share digitally', desc: 'Export high-resolution PDF for your counter, studio display, or email attachment.' },
-      ],
-      faqs: [
-        { q: 'Can I use this for salon, studio, or freelance services?', a: 'Yes! The flexible categorization suits hair salons, therapy practices, creative studios, and freelance specialists.' },
-        { q: 'Can I include my website QR code?', a: 'Yes, add your booking or portfolio URL to generate a sharp vector QR code at the top.' },
-      ],
-      features: ['Categorized service groups', 'Item descriptions & prices', 'Optional contact QR code', 'Crisp minimalist typography'],
-    },
-    'client-tracker': {
-      slug: 'client-tracker',
-      templateId: 'client-tracker',
-      category: 'business',
-      title: 'Printable Client & Session Tracker PDF – LogoLoom',
-      description: 'Free printable client log and session tracker PDF. Track dates, client names, services, duration, status and key notes. Free vector PDF.',
-      h1: 'Free Printable Client & Session Tracker PDF',
-      intro: 'Keep an accurate physical log of your appointments, client consultations, and billable hours. Features date, client name, service topic, duration, and status.',
-      steps: [
-        { title: '1. Customize column headers', desc: 'Adapt table columns to match your exact client management workflow.' },
-        { title: '2. Add your business identity', desc: 'Include your studio name, contact info, and custom brand accent.' },
-        { title: '3. Print for your binder', desc: 'Keep in your daily desk folder or client binder for instant offline logging.' },
-      ],
-      faqs: [
-        { q: 'Is client information stored on any server?', a: 'No. LogoLoom is 100% client-side. Zero client information ever touches an external server.' },
-        { q: 'How many rows per page?', a: 'The template is optimized for 20+ clearly spaced handwriting rows per page.' },
-      ],
-      features: ['Session logging table', 'Status tracking indicators', 'Generous writing lines', '100% Confidential & private'],
-    },
     'checklist': {
       slug: 'checklist',
       templateId: 'checklist',
-      category: 'personal',
+      category: 'home',
       title: 'Printable Multi-Purpose Checklist PDF – LogoLoom',
       description: 'Free printable checklist PDF with grouped sections and checkboxes. Ideal for onboarding, moving, events, routines, and packing. Instant download.',
       h1: 'Free Printable Grouped Checklist PDF',
@@ -239,7 +197,7 @@ export const TEMPLATES_SEO_DATA: Record<InterfaceLang, Record<string, TemplateSE
     'cv': {
       slug: 'cv',
       templateId: 'cv',
-      category: 'business',
+      category: 'career',
       title: "Free CV Maker – Download Your Resume as PDF, No Subscription | LogoLoom",
       description: "Create a professional CV in minutes and download it as a clean PDF. Free, no account, no hidden subscription. Two layouts, optional photo, recruiter-friendly text.",
       h1: "Free CV maker: your resume as a PDF, no subscription",
@@ -261,7 +219,7 @@ export const TEMPLATES_SEO_DATA: Record<InterfaceLang, Record<string, TemplateSE
     'habit-tracker': {
       slug: 'habit-tracker',
       templateId: 'habit-tracker',
-      category: 'personal',
+      category: 'organisation',
       title: 'Suivi d\'Habitudes PDF à Imprimer – LogoLoom',
       description: 'Grille de suivi d\'habitudes sur 30 jours gratuite à imprimer en PDF. Format portrait, jalons hebdomadaires, design minimaliste faible en encre.',
       h1: 'Suivi d’habitudes sur 30 jours gratuit à imprimer en PDF',
@@ -280,7 +238,7 @@ export const TEMPLATES_SEO_DATA: Record<InterfaceLang, Record<string, TemplateSE
     'goal-planner': {
       slug: 'goal-planner',
       templateId: 'goal-planner-90',
-      category: 'personal',
+      category: 'organisation',
       title: 'Planificateur d\'Objectifs 90 Jours PDF – LogoLoom',
       description: 'Planificateur d\'objectifs trimestriels gratuit à imprimer en PDF. 1 à 3 objectifs majeurs, 3 blocs mensuels de jalons et suivi hebdomadaire.',
       h1: 'Planificateur d’objectifs sur 90 jours à imprimer en PDF',
@@ -298,7 +256,7 @@ export const TEMPLATES_SEO_DATA: Record<InterfaceLang, Record<string, TemplateSE
     'weekly-planner': {
       slug: 'weekly-planner',
       templateId: 'weekly-planner',
-      category: 'personal',
+      category: 'organisation',
       title: 'Planning Hebdomadaire PDF à Imprimer – LogoLoom',
       description: 'Planning hebdomadaire gratuit à imprimer en PDF. 7 jours avec top 3 priorités, écriture libre et bilan. Téléchargement vectoriel sans inscription.',
       h1: 'Planning hebdomadaire gratuit à imprimer en PDF',
@@ -316,7 +274,7 @@ export const TEMPLATES_SEO_DATA: Record<InterfaceLang, Record<string, TemplateSE
     'monthly-calendar': {
       slug: 'monthly-calendar',
       templateId: 'monthly-calendar',
-      category: 'personal',
+      category: 'organisation',
       title: 'Calendrier Mensuel PDF à Imprimer – LogoLoom',
       description: 'Calendrier mensuel sur une page gratuit à imprimer en PDF. Grille épurée, objectifs du mois et dates clés. Téléchargement instantané.',
       h1: 'Calendrier mensuel gratuit à imprimer sur une page',
@@ -334,7 +292,7 @@ export const TEMPLATES_SEO_DATA: Record<InterfaceLang, Record<string, TemplateSE
     'daily-priorities': {
       slug: 'daily-priorities',
       templateId: 'daily-priorities',
-      category: 'personal',
+      category: 'organisation',
       title: 'Planning Quotidien & To-Do List PDF – LogoLoom',
       description: 'Planning quotidien gratuit à imprimer en PDF. Top 3 priorités, planning horaire 08:00–18:00, to-do list et gratitude. Téléchargement instantané.',
       h1: 'Planning quotidien et liste de priorités à imprimer',
@@ -352,7 +310,7 @@ export const TEMPLATES_SEO_DATA: Record<InterfaceLang, Record<string, TemplateSE
     'meal-planner': {
       slug: 'meal-planner',
       templateId: 'meal-planner',
-      category: 'personal',
+      category: 'home',
       title: 'Planning Repas et Liste de Courses PDF – LogoLoom',
       description: 'Planning de repas hebdomadaire gratuit à imprimer en PDF. 7 jours avec 4 repas et colonne liste de courses. Téléchargement vectoriel rapide.',
       h1: 'Planning de repas de la semaine et liste de courses PDF',
@@ -370,7 +328,7 @@ export const TEMPLATES_SEO_DATA: Record<InterfaceLang, Record<string, TemplateSE
     'budget-tracker': {
       slug: 'budget-tracker',
       templateId: 'budget-tracker',
-      category: 'personal',
+      category: 'home',
       title: 'Suivi de Budget Mensuel PDF à Imprimer – LogoLoom',
       description: 'Tableau de budget mensuel gratuit à imprimer en PDF. Suivi des revenus, charges fixes, dépenses variables et épargne. Sélecteur de devise.',
       h1: 'Tableau de budget mensuel gratuit à imprimer en PDF',
@@ -385,46 +343,10 @@ export const TEMPLATES_SEO_DATA: Record<InterfaceLang, Record<string, TemplateSE
       ],
       features: ['Revenus et charges ventilés', 'Objectif d\'épargne dédié', 'Multi-devises (€, $, £, CHF)', '100% Confidentiel sur votre appareil'],
     },
-    'price-list': {
-      slug: 'price-list',
-      templateId: 'price-list',
-      category: 'business',
-      title: 'Grille Tarifaire et Menu de Services PDF – LogoLoom',
-      description: 'Grille de tarifs et carte de prestations gratuite en PDF. Sections par catégorie, descriptions et prix. Téléchargement vectoriel immédiat.',
-      h1: 'Grille tarifaire et carte de services à imprimer en PDF',
-      intro: 'Présentez vos tarifs avec professionnalisme et transparence. Organisez vos prestations par catégories avec descriptions succinctes et tarifs unitaires.',
-      steps: [
-        { title: '1. Catégorisez vos offres', desc: 'Structurez vos services en sections claires (ex. Forfaits, Séances, Options).' },
-        { title: '2. Ajustez vos tarifs', desc: 'Indiquez les prix et descriptions directement dans l\'éditeur.' },
-        { title: '3. Affichez ou envoyez', desc: 'Imprimez pour votre comptoir ou joignez le PDF à vos devis.' },
-      ],
-      faqs: [
-        { q: 'Convient-il aux thérapeutes, salons et freelances ?', a: 'Oui, la mise en page convient à tous les métiers de service.' },
-      ],
-      features: ['Regroupement par catégories', 'Tarifs et descriptifs soignés', 'QR code vers votre site', 'Design épuré et contemporain'],
-    },
-    'client-tracker': {
-      slug: 'client-tracker',
-      templateId: 'client-tracker',
-      category: 'business',
-      title: 'Fiche de Suivi Clients et Rendez-vous PDF – LogoLoom',
-      description: 'Feuille de suivi client et historique de séances gratuite en PDF. Dates, clients, prestations, durée, statut et points clés. Export vectoriel.',
-      h1: 'Feuille de suivi client et historique de séances en PDF',
-      intro: 'Conservez un registre physique clair de vos rendez-vous et sessions clients. Colonnes date, nom client, prestation, durée, statut et points de suivi.',
-      steps: [
-        { title: '1. Adaptez les colonnes', desc: 'Personnalisez les en-têtes selon la nature de vos prestations.' },
-        { title: '2. Ajoutez votre marque', desc: 'Insérez votre nom de cabinet et votre couleur d\'accent.' },
-        { title: '3. Classez dans votre classeur', desc: 'Notez manuellement vos rendez-vous au fil de vos journées.' },
-      ],
-      faqs: [
-        { q: 'Mes informations clients sont-elles privées ?', a: '100% privées : aucune information ne transite par nos serveurs.' },
-      ],
-      features: ['Tableau de suivi complet', 'Indicateurs de statut', 'Lignes d\'écriture confortables', 'Zéro fuite de données'],
-    },
     'checklist': {
       slug: 'checklist',
       templateId: 'checklist',
-      category: 'personal',
+      category: 'home',
       title: 'Checklist Polyvalente à Imprimer PDF – LogoLoom',
       description: 'Checklist modulable gratuite à imprimer en PDF. Sections par étapes, cases à cocher confortables (≥5 mm). Idéale pour projets, routines et départs.',
       h1: 'Checklist par étapes et cases à cocher à imprimer en PDF',
@@ -442,7 +364,7 @@ export const TEMPLATES_SEO_DATA: Record<InterfaceLang, Record<string, TemplateSE
     'cv': {
       slug: 'cv',
       templateId: 'cv',
-      category: 'business',
+      category: 'career',
       title: "CV gratuit en PDF, sans abonnement – Créer son CV en ligne | LogoLoom",
       description: "Créez un CV professionnel en quelques minutes et téléchargez-le en PDF. Gratuit, sans compte, sans abonnement caché. 2 mises en page, photo facultative, texte lisible par les recruteurs.",
       h1: "Créer son CV gratuitement en PDF, sans abonnement",
@@ -464,7 +386,7 @@ export const TEMPLATES_SEO_DATA: Record<InterfaceLang, Record<string, TemplateSE
     'habit-tracker': {
       slug: 'habit-tracker',
       templateId: 'habit-tracker',
-      category: 'personal',
+      category: 'organisation',
       title: '30-Tage Gewohnheitstracker PDF Druckvorlage – LogoLoom',
       description: 'Kostenloser 30-Tage-Gewohnheitstracker als PDF. Klares Hochformat-Raster, Meilensteine, tintensparend und sofort druckfertig.',
       h1: 'Kostenloser 30-Tage-Gewohnheitstracker als PDF-Druckvorlage',
@@ -482,7 +404,7 @@ export const TEMPLATES_SEO_DATA: Record<InterfaceLang, Record<string, TemplateSE
     'weekly-planner': {
       slug: 'weekly-planner',
       templateId: 'weekly-planner',
-      category: 'personal',
+      category: 'organisation',
       title: 'Wochenplaner PDF Druckvorlage – LogoLoom',
       description: 'Kostenloser Wochenplaner zum Ausdrucken als PDF. 7 Tage, Top-3-Prioritäten, offene Schreibblöcke und Notizen. Vektor-Download ohne Anmeldung.',
       h1: 'Kostenloser Wochenplaner zum Ausdrucken als PDF',
@@ -500,7 +422,7 @@ export const TEMPLATES_SEO_DATA: Record<InterfaceLang, Record<string, TemplateSE
     'monthly-calendar': {
       slug: 'monthly-calendar',
       templateId: 'monthly-calendar',
-      category: 'personal',
+      category: 'organisation',
       title: 'Monatskalender PDF Druckvorlage – LogoLoom',
       description: 'Kostenloser 1-Seiten Monatskalender zum Ausdrucken als PDF. Klares Monatsraster, Monatsziele und wichtige Termine. Schneller Download.',
       h1: 'Kostenloser Monatskalender zum Ausdrucken auf einer Seite',
@@ -516,7 +438,7 @@ export const TEMPLATES_SEO_DATA: Record<InterfaceLang, Record<string, TemplateSE
     'goal-planner': {
       slug: 'goal-planner',
       templateId: 'goal-planner-90',
-      category: 'personal',
+      category: 'organisation',
       title: '90-Tage Zielplaner PDF Druckvorlage – LogoLoom',
       description: 'Kostenloser 90-Tage Quartalsplaner als PDF. 1–3 Hauptziele, 3 Monatsblöcke mit Meilensteinen und wöchentlichem Check-in. Sofort herunterladen.',
       h1: 'Kostenloser 90-Tage-Zielplaner als PDF-Druckvorlage',
@@ -532,7 +454,7 @@ export const TEMPLATES_SEO_DATA: Record<InterfaceLang, Record<string, TemplateSE
     'daily-priorities': {
       slug: 'daily-priorities',
       templateId: 'daily-priorities',
-      category: 'personal',
+      category: 'organisation',
       title: 'Tagesplaner & Prioritätenliste PDF – LogoLoom',
       description: 'Kostenloser Tagesplaner zum Ausdrucken als PDF. Top 3 Aufgaben, Stundenplan 08:00–18:00, To-do-Liste und Dankbarkeit. Vektor-Download.',
       h1: 'Kostenloser Tagesplaner und Prioritäten-Vorlage als PDF',
@@ -548,7 +470,7 @@ export const TEMPLATES_SEO_DATA: Record<InterfaceLang, Record<string, TemplateSE
     'meal-planner': {
       slug: 'meal-planner',
       templateId: 'meal-planner',
-      category: 'personal',
+      category: 'home',
       title: 'Wochen-Mahlzeitenplaner & Einkaufsliste PDF – LogoLoom',
       description: 'Kostenloser Mahlzeitenplaner als PDF. 7 Tage mit Frühstück, Mittag, Abendessen, Snack und Einkaufsliste. Druckfertig in Sekunden.',
       h1: 'Kostenloser Wochen-Mahlzeitenplaner mit Einkaufsliste als PDF',
@@ -564,7 +486,7 @@ export const TEMPLATES_SEO_DATA: Record<InterfaceLang, Record<string, TemplateSE
     'budget-tracker': {
       slug: 'budget-tracker',
       templateId: 'budget-tracker',
-      category: 'personal',
+      category: 'home',
       title: 'Monatlicher Budgetplaner PDF Druckvorlage – LogoLoom',
       description: 'Kostenlose monatliche Budget-Vorlage als PDF. Einnahmen, Fixkosten, variable Ausgaben und Sparziel im Überblick. Währungswahl.',
       h1: 'Kostenloser monatlicher Budgetplaner als PDF-Druckvorlage',
@@ -577,42 +499,10 @@ export const TEMPLATES_SEO_DATA: Record<InterfaceLang, Record<string, TemplateSE
       faqs: [{ q: 'Wird CHF unterstützt?', a: 'Ja, CHF, Euro, Dollar und Pfund sind integriert.' }],
       features: ['Einnahmen & Ausgaben getrennt', 'Sparziel-Kästchen', 'Währungsauswahl', '100% Privat'],
     },
-    'price-list': {
-      slug: 'price-list',
-      templateId: 'price-list',
-      category: 'business',
-      title: 'Preisliste & Servicemenü PDF Vorlage – LogoLoom',
-      description: 'Kostenlose Preisliste als PDF zum Ausdrucken. Kategorisierte Leistungen mit Kurzbeschreibungen und Preisen. Minimales Vektor-Design.',
-      h1: 'Kostenlose Preisliste und Dienstleistungsmenü als PDF',
-      intro: 'Präsentieren Sie Ihre Preise transparent und professionell. Strukturierte Kategorien mit kompakten Beschreibungen.',
-      steps: [
-        { title: '1. Kategorien anlegen', desc: 'Dienstleistungen thematisch gliedern.' },
-        { title: '2. Preise eintragen', desc: 'Positionen und Tarife anpassen.' },
-        { title: '3. Auslegen oder versenden', desc: 'Als Aufsteller oder PDF-Beilage nutzen.' },
-      ],
-      faqs: [{ q: 'Ist ein QR-Code möglich?', a: 'Ja, ein Buchungslink kann als QR-Code integriert werden.' }],
-      features: ['Kategorisierte Bereiche', 'Preise & Details', 'Optionaler QR-Code', 'Edle Typografie'],
-    },
-    'client-tracker': {
-      slug: 'client-tracker',
-      templateId: 'client-tracker',
-      category: 'business',
-      title: 'Kunden- & Sitzungsprotokoll PDF Druckvorlage – LogoLoom',
-      description: 'Kostenlose Kundenliste und Beratungsprotokoll als PDF. Datum, Kunde, Thema, Dauer, Status und Notizen. Sicher und vertraulich.',
-      h1: 'Kostenloses Kunden- und Sitzungsprotokoll als PDF',
-      intro: 'Führen Sie handschriftlich Buch über Ihre Kundentermine und Beratungsstunden. Datum, Thema, Dauer und Vereinbarungen.',
-      steps: [
-        { title: '1. Spalten prüfen', desc: 'Kopfzeilen bei Bedarf anpassen.' },
-        { title: '2. Branding setzen', desc: 'Praxisname und Akzentfarbe wählen.' },
-        { title: '3. Im Ordner abheften', desc: 'Termine offline und datenschutzkonform dokumentieren.' },
-      ],
-      faqs: [{ q: 'Sind die Daten geschützt?', a: 'Ja, alles bleibt ausschließlich auf Ihrem Gerät.' }],
-      features: ['Übersichtliche Termintabelle', 'Status-Spalte', 'Ausreichend Schreibzeilen', 'Keine Cloud-Speicherung'],
-    },
     'checklist': {
       slug: 'checklist',
       templateId: 'checklist',
-      category: 'personal',
+      category: 'home',
       title: 'Vielseitige Checkliste mit Kästchen PDF – LogoLoom',
       description: 'Kostenlose Checkliste mit Abschnitten und Kästchen (≥5 mm) als PDF. Für Umzug, Events, Onboarding und Routinen. Schneller Download.',
       h1: 'Kostenlose Checkliste mit Kästchen zum Ausdrucken als PDF',
@@ -628,7 +518,7 @@ export const TEMPLATES_SEO_DATA: Record<InterfaceLang, Record<string, TemplateSE
     'cv': {
       slug: 'cv',
       templateId: 'cv',
-      category: 'business',
+      category: 'career',
       title: "Lebenslauf kostenlos erstellen – PDF ohne Abo | LogoLoom",
       description: "Erstellen Sie in wenigen Minuten einen professionellen Lebenslauf als PDF. Kostenlos, ohne Konto, ohne verstecktes Abo. 2 Layouts, optionales Foto, ATS-lesbar.",
       h1: "Lebenslauf kostenlos als PDF erstellen, ohne Abo",
@@ -650,7 +540,7 @@ export const TEMPLATES_SEO_DATA: Record<InterfaceLang, Record<string, TemplateSE
     'habit-tracker': {
       slug: 'habit-tracker',
       templateId: 'habit-tracker',
-      category: 'personal',
+      category: 'organisation',
       title: 'Rastreador de Hábitos PDF para Imprimir – LogoLoom',
       description: 'Plantilla de seguimiento de hábitos de 30 días en PDF gratis. Cuadrícula limpia vertical con hitos, diseño minimalista de bajo consumo de tinta.',
       h1: 'Rastreador de hábitos de 30 días imprimible en PDF',
@@ -666,7 +556,7 @@ export const TEMPLATES_SEO_DATA: Record<InterfaceLang, Record<string, TemplateSE
     'weekly-planner': {
       slug: 'weekly-planner',
       templateId: 'weekly-planner',
-      category: 'personal',
+      category: 'organisation',
       title: 'Planificador Semanal PDF para Imprimir – LogoLoom',
       description: 'Planificador semanal gratis en PDF para imprimir. 7 días, top 3 prioridades, bloques abiertos para notas. Descarga vectorial sin registro.',
       h1: 'Planificador semanal gratis para imprimir en PDF',
@@ -682,7 +572,7 @@ export const TEMPLATES_SEO_DATA: Record<InterfaceLang, Record<string, TemplateSE
     'goal-planner': {
       slug: 'goal-planner',
       templateId: 'goal-planner-90',
-      category: 'personal',
+      category: 'organisation',
       title: 'Planificador de Metas 90 Días PDF – LogoLoom',
       description: 'Planificador trimestral de objetivos en PDF gratis. 1 a 3 metas principales, 3 bloques mensuales de hitos y balance semanal. Descarga inmediata.',
       h1: 'Planificador de metas a 90 días imprimible en PDF',
@@ -698,7 +588,7 @@ export const TEMPLATES_SEO_DATA: Record<InterfaceLang, Record<string, TemplateSE
     'monthly-calendar': {
       slug: 'monthly-calendar',
       templateId: 'monthly-calendar',
-      category: 'personal',
+      category: 'organisation',
       title: 'Calendario Mensual en 1 Página PDF – LogoLoom',
       description: 'Calendario mensual gratis en una página para imprimir en PDF. Cuadrícula limpia, objetivos del mes y fechas importantes. Descarga rápida.',
       h1: 'Calendario mensual imprimible en una sola página en PDF',
@@ -714,7 +604,7 @@ export const TEMPLATES_SEO_DATA: Record<InterfaceLang, Record<string, TemplateSE
     'daily-priorities': {
       slug: 'daily-priorities',
       templateId: 'daily-priorities',
-      category: 'personal',
+      category: 'organisation',
       title: 'Planificador Diario y Lista de Tareas PDF – LogoLoom',
       description: 'Planificador diario gratis en PDF. Top 3 prioridades, horario de 08:00 a 18:00, lista de pendientes con casillas y gratitud. Descarga vectorial.',
       h1: 'Planificador diario y lista de prioridades en PDF',
@@ -730,7 +620,7 @@ export const TEMPLATES_SEO_DATA: Record<InterfaceLang, Record<string, TemplateSE
     'meal-planner': {
       slug: 'meal-planner',
       templateId: 'meal-planner',
-      category: 'personal',
+      category: 'home',
       title: 'Planificador de Comidas y Lista de la Compra PDF – LogoLoom',
       description: 'Planificador semanal de comidas gratis en PDF. 7 días, 4 comidas y columna de lista del supermercado. Listo para imprimir.',
       h1: 'Planificador semanal de comidas con lista de compras en PDF',
@@ -746,7 +636,7 @@ export const TEMPLATES_SEO_DATA: Record<InterfaceLang, Record<string, TemplateSE
     'budget-tracker': {
       slug: 'budget-tracker',
       templateId: 'budget-tracker',
-      category: 'personal',
+      category: 'home',
       title: 'Plantilla de Presupuesto Mensual PDF – LogoLoom',
       description: 'Control de presupuesto mensual gratis para imprimir en PDF. Ingresos, gastos fijos, gastos variables y meta de ahorro. Con selector de moneda.',
       h1: 'Plantilla de presupuesto mensual imprimible en PDF',
@@ -759,42 +649,10 @@ export const TEMPLATES_SEO_DATA: Record<InterfaceLang, Record<string, TemplateSE
       faqs: [{ q: '¿Se puede usar con euros o dólares?', a: 'Sí, compatible con €, $, £, CHF y ¥.' }],
       features: ['Desglose de ingresos y gastos', 'Meta de ahorro visible', 'Selector de moneda', '100% Privado en tu equipo'],
     },
-    'price-list': {
-      slug: 'price-list',
-      templateId: 'price-list',
-      category: 'business',
-      title: 'Lista de Precios y Carta de Servicios PDF – LogoLoom',
-      description: 'Lista de precios gratis en PDF para imprimir. Servicios organizados por categorías con descripciones cortas y tarifas. Descarga vectorial.',
-      h1: 'Lista de precios y catálogo de servicios imprimible en PDF',
-      intro: 'Comunica tus tarifas con transparencia y estilo. Categorías ordenadas con descripciones breves y precios claros.',
-      steps: [
-        { title: '1. Crea categorías', desc: 'Agrupa tus servicios (ej. Consultas, Packs, Extras).' },
-        { title: '2. Ajusta precios', desc: 'Escribe tarifas y detalles en el editor.' },
-        { title: '3. Imprime o comparte', desc: 'Úsalo en tu mostrador o envíalo por correo.' },
-      ],
-      faqs: [{ q: '¿Admite código QR?', a: 'Sí, añade el enlace a tu web para generar un QR vectorial.' }],
-      features: ['Servicios por categorías', 'Tarifas y notas breves', 'Código QR opcional', 'Estética minimalista'],
-    },
-    'client-tracker': {
-      slug: 'client-tracker',
-      templateId: 'client-tracker',
-      category: 'business',
-      title: 'Ficha de Registro de Clientes y Citas PDF – LogoLoom',
-      description: 'Hoja de control de clientes y sesiones gratis en PDF. Fecha, cliente, servicio, duración, estado y notas. 100% confidencial.',
-      h1: 'Ficha de registro de clientes y citas en PDF',
-      intro: 'Lleva un historial físico y ordenado de tus consultas y reuniones. Fecha, nombre, concepto, tiempo y acuerdos clave.',
-      steps: [
-        { title: '1. Personaliza encabezados', desc: 'Adapta las columnas a tu tipo de servicio.' },
-        { title: '2. Agrega tu marca', desc: 'Introduce tu nombre profesional y color.' },
-        { title: '3. Archiva en tu carpeta', desc: 'Documenta citas de forma offline y privada.' },
-      ],
-      faqs: [{ q: '¿Mis clientes quedan registrados en la web?', a: 'No, tus datos nunca se envían a ningún servidor.' }],
-      features: ['Tabla de citas completa', 'Columna de estado', 'Líneas amplias para escribir', 'Confidencialidad total'],
-    },
     'checklist': {
       slug: 'checklist',
       templateId: 'checklist',
-      category: 'personal',
+      category: 'home',
       title: 'Lista de Comprobación con Casillas PDF – LogoLoom',
       description: 'Checklist multipropósito gratis en PDF para imprimir. Secciones organizadas y casillas cómodas (≥5 mm). Para mudanzas, eventos y rutinas.',
       h1: 'Lista de comprobación con casillas para imprimir en PDF',
@@ -810,7 +668,7 @@ export const TEMPLATES_SEO_DATA: Record<InterfaceLang, Record<string, TemplateSE
     'cv': {
       slug: 'cv',
       templateId: 'cv',
-      category: 'business',
+      category: 'career',
       title: "Crear currículum gratis en PDF, sin suscripción | LogoLoom",
       description: "Crea un currículum profesional en minutos y descárgalo en PDF. Gratis, sin cuenta, sin suscripción oculta. 2 diseños, foto opcional, legible por reclutadores.",
       h1: "Crea tu currículum gratis en PDF, sin suscripción",
@@ -832,7 +690,7 @@ export const TEMPLATES_SEO_DATA: Record<InterfaceLang, Record<string, TemplateSE
     'habit-tracker': {
       slug: 'habit-tracker',
       templateId: 'habit-tracker',
-      category: 'personal',
+      category: 'organisation',
       title: 'Registo de Hábitos em PDF para Imprimir – LogoLoom',
       description: 'Grelha de hábitos de 30 dias gratuita em PDF para imprimir. Formato vertical com marcos, design minimalista de baixo consumo de tinta.',
       h1: 'Rastreador de hábitos de 30 dias imprimível em PDF',
@@ -848,7 +706,7 @@ export const TEMPLATES_SEO_DATA: Record<InterfaceLang, Record<string, TemplateSE
     'weekly-planner': {
       slug: 'weekly-planner',
       templateId: 'weekly-planner',
-      category: 'personal',
+      category: 'organisation',
       title: 'Planejador Semanal PDF para Imprimir – LogoLoom',
       description: 'Planejador semanal gratuito em PDF para imprimir. 7 dias, top 3 prioridades, blocos abertos para notas e balanço. Download sem registo.',
       h1: 'Planejador semanal gratuito para imprimir em PDF',
@@ -864,7 +722,7 @@ export const TEMPLATES_SEO_DATA: Record<InterfaceLang, Record<string, TemplateSE
     'goal-planner': {
       slug: 'goal-planner',
       templateId: 'goal-planner-90',
-      category: 'personal',
+      category: 'organisation',
       title: 'Planejador de Metas 90 Dias PDF – LogoLoom',
       description: 'Planejador trimestral de objetivos em PDF grátis. 1 a 3 metas principais, 3 blocos mensais e revisão semanal. Download imediato.',
       h1: 'Planejador de metas de 90 dias imprimível em PDF',
@@ -880,7 +738,7 @@ export const TEMPLATES_SEO_DATA: Record<InterfaceLang, Record<string, TemplateSE
     'monthly-calendar': {
       slug: 'monthly-calendar',
       templateId: 'monthly-calendar',
-      category: 'personal',
+      category: 'organisation',
       title: 'Calendário Mensal em 1 Página PDF – LogoLoom',
       description: 'Calendário mensal gratuito em uma folha para imprimir em PDF. Grelha limpa, metas do mês e datas importantes. Download rápido.',
       h1: 'Calendário mensal imprimível em uma folha em PDF',
@@ -896,7 +754,7 @@ export const TEMPLATES_SEO_DATA: Record<InterfaceLang, Record<string, TemplateSE
     'daily-priorities': {
       slug: 'daily-priorities',
       templateId: 'daily-priorities',
-      category: 'personal',
+      category: 'organisation',
       title: 'Planejador Diário e Lista de Tarefas PDF – LogoLoom',
       description: 'Planejador diário gratuito em PDF. Top 3 prioridades, cronograma de 08:00 a 18:00, tarefas com caixas e gratidão. Download vetorial.',
       h1: 'Planejador diário e lista de prioridades em PDF',
@@ -912,7 +770,7 @@ export const TEMPLATES_SEO_DATA: Record<InterfaceLang, Record<string, TemplateSE
     'meal-planner': {
       slug: 'meal-planner',
       templateId: 'meal-planner',
-      category: 'personal',
+      category: 'home',
       title: 'Planejador de Refeições e Lista de Compras PDF – LogoLoom',
       description: 'Planejador semanal de refeições em PDF gratuito. 7 dias, 4 refeições diárias e lista de compras incluída. Pronto a imprimir.',
       h1: 'Planejador semanal de refeições com lista de compras em PDF',
@@ -928,7 +786,7 @@ export const TEMPLATES_SEO_DATA: Record<InterfaceLang, Record<string, TemplateSE
     'budget-tracker': {
       slug: 'budget-tracker',
       templateId: 'budget-tracker',
-      category: 'personal',
+      category: 'home',
       title: 'Controle de Orçamento Mensal PDF – LogoLoom',
       description: 'Tabela de orçamento mensal gratuita para imprimir em PDF. Receitas, custos fixos, variáveis e meta de poupança. Escolha a sua moeda.',
       h1: 'Tabela de orçamento mensal imprimível em PDF',
@@ -941,42 +799,10 @@ export const TEMPLATES_SEO_DATA: Record<InterfaceLang, Record<string, TemplateSE
       faqs: [{ q: 'Suporta euros e reais?', a: 'Sim, suporta €, $, £, CHF e ¥.' }],
       features: ['Divisão de receitas e despesas', 'Meta de poupança visível', 'Seletor de moeda', '100% Privado no computador'],
     },
-    'price-list': {
-      slug: 'price-list',
-      templateId: 'price-list',
-      category: 'business',
-      title: 'Tabela de Preços e Serviços PDF – LogoLoom',
-      description: 'Tabela de preços profissional gratuita em PDF para imprimir. Categorias com descrições curtas e preços claros. Download vetorial imediato.',
-      h1: 'Tabela de preços e catálogo de serviços em PDF',
-      intro: 'Divulgue os seus preços com clareza e credibilidade. Secções organizadas com descrições sucintas e valores bem visíveis.',
-      steps: [
-        { title: '1. Crie categorias', desc: 'Agrupe os seus serviços de forma lógica.' },
-        { title: '2. Ajuste tarifas', desc: 'Edite valores e descrições na página.' },
-        { title: '3. Disponibilize', desc: 'Exponha no seu espaço ou envie por e-mail.' },
-      ],
-      faqs: [{ q: 'Permite código QR?', a: 'Sim, pode adicionar um QR code para o seu site.' }],
-      features: ['Serviços por grupos', 'Preços e notas claras', 'QR code de contacto', 'Estética minimalista'],
-    },
-    'client-tracker': {
-      slug: 'client-tracker',
-      templateId: 'client-tracker',
-      category: 'business',
-      title: 'Ficha de Registo de Clientes e Sessões PDF – LogoLoom',
-      description: 'Folha de acompanhamento de clientes e histórico de consultas em PDF. Data, cliente, serviço, tempo, estado e notas. Totalmente privada.',
-      h1: 'Ficha de registo de clientes e sessões em PDF',
-      intro: 'Mantenha um registo físico rigoroso dos seus atendimentos e consultorias. Data, nome, serviço, duração e próximos passos.',
-      steps: [
-        { title: '1. Ajuste as colunas', desc: 'Adapte os cabeçalhos à sua profissão.' },
-        { title: '2. Insira a sua marca', desc: 'Adicione o seu nome e cor de destaque.' },
-        { title: '3. Guarde na pasta', desc: 'Registe notas de forma segura e offline.' },
-      ],
-      faqs: [{ q: 'Os dados dos clientes vão para a internet?', a: 'Não, tudo permanece 100% no seu dispositivo.' }],
-      features: ['Tabela de sessões completa', 'Coluna de estado', 'Linhas confortáveis para escrita', 'Sigilo absoluto'],
-    },
     'checklist': {
       slug: 'checklist',
       templateId: 'checklist',
-      category: 'personal',
+      category: 'home',
       title: 'Lista de Verificação com Caixas PDF – LogoLoom',
       description: 'Checklist modular gratuita em PDF para imprimir. Secções por etapas e caixas confortáveis (≥5 mm). Para rotinas, mudanças e eventos.',
       h1: 'Lista de verificação com caixas para imprimir em PDF',
@@ -992,7 +818,7 @@ export const TEMPLATES_SEO_DATA: Record<InterfaceLang, Record<string, TemplateSE
     'cv': {
       slug: 'cv',
       templateId: 'cv',
-      category: 'business',
+      category: 'career',
       title: "Criar currículo grátis em PDF, sem assinatura | LogoLoom",
       description: "Crie um currículo profissional em minutos e descarregue-o em PDF. Grátis, sem conta, sem assinatura escondida. 2 layouts, foto opcional, legível por recrutadores.",
       h1: "Crie o seu currículo grátis em PDF, sem assinatura",
@@ -1014,7 +840,7 @@ export const TEMPLATES_SEO_DATA: Record<InterfaceLang, Record<string, TemplateSE
     'habit-tracker': {
       slug: 'habit-tracker',
       templateId: 'habit-tracker',
-      category: 'personal',
+      category: 'organisation',
       title: 'Tracciatore di Abitudini PDF Stampabile – LogoLoom',
       description: 'Griglia di abitudini per 30 giorni gratuita da stampare in PDF. Layout verticale con tappe chiave, design minimale a basso consumo d\'inchiostro.',
       h1: 'Tracciatore di abitudini per 30 giorni stampabile in PDF',
@@ -1030,7 +856,7 @@ export const TEMPLATES_SEO_DATA: Record<InterfaceLang, Record<string, TemplateSE
     'weekly-planner': {
       slug: 'weekly-planner',
       templateId: 'weekly-planner',
-      category: 'personal',
+      category: 'organisation',
       title: 'Planner Settimanale PDF da Stampare – LogoLoom',
       description: 'Planner settimanale gratuito da stampare in PDF. 7 giorni, top 3 priorità, blocchi aperti per note e revisione. Download vettoriale rapido.',
       h1: 'Planner settimanale gratuito da stampare in PDF',
@@ -1046,7 +872,7 @@ export const TEMPLATES_SEO_DATA: Record<InterfaceLang, Record<string, TemplateSE
     'goal-planner': {
       slug: 'goal-planner',
       templateId: 'goal-planner-90',
-      category: 'personal',
+      category: 'organisation',
       title: 'Pianificatore Obiettivi 90 Giorni PDF – LogoLoom',
       description: 'Pianificatore trimestrale di obiettivi in PDF gratuito. Da 1 a 3 mete principali, 3 blocchi mensili di tappe e revisione settimanale. Download.',
       h1: 'Pianificatore di obiettivi a 90 giorni stampabile in PDF',
@@ -1062,7 +888,7 @@ export const TEMPLATES_SEO_DATA: Record<InterfaceLang, Record<string, TemplateSE
     'monthly-calendar': {
       slug: 'monthly-calendar',
       templateId: 'monthly-calendar',
-      category: 'personal',
+      category: 'organisation',
       title: 'Calendario Mensile su 1 Pagina PDF – LogoLoom',
       description: 'Calendario mensile gratuito su un unico foglio da stampare in PDF. Griglia elegante, obiettivi del mese e date importanti. Download rapido.',
       h1: 'Calendario mensile stampabile su una sola pagina in PDF',
@@ -1078,7 +904,7 @@ export const TEMPLATES_SEO_DATA: Record<InterfaceLang, Record<string, TemplateSE
     'daily-priorities': {
       slug: 'daily-priorities',
       templateId: 'daily-priorities',
-      category: 'personal',
+      category: 'organisation',
       title: 'Planner Giornaliero e To-Do List PDF – LogoLoom',
       description: 'Planner giornaliero gratuito da stampare in PDF. Top 3 priorità, orari dalle 08:00 alle 18:00, to-do list e gratitudine serale. Download vettoriale.',
       h1: 'Planner giornaliero e lista priorità in PDF',
@@ -1094,7 +920,7 @@ export const TEMPLATES_SEO_DATA: Record<InterfaceLang, Record<string, TemplateSE
     'meal-planner': {
       slug: 'meal-planner',
       templateId: 'meal-planner',
-      category: 'personal',
+      category: 'home',
       title: 'Menu Settimanale e Lista della Spesa PDF – LogoLoom',
       description: 'Menu settimanale e lista della spesa gratuito da stampare in PDF. 7 giorni con 4 pasti e colonna per la spesa. Pronto per la stampa.',
       h1: 'Menu settimanale e lista della spesa stampabile in PDF',
@@ -1110,7 +936,7 @@ export const TEMPLATES_SEO_DATA: Record<InterfaceLang, Record<string, TemplateSE
     'budget-tracker': {
       slug: 'budget-tracker',
       templateId: 'budget-tracker',
-      category: 'personal',
+      category: 'home',
       title: 'Tabella Budget Mensile PDF da Stampare – LogoLoom',
       description: 'Tabella budget mensile gratuita da stampare in PDF. Entrate, spese fisse, variabili e obiettivo risparmio. Scelta valuta integrata.',
       h1: 'Tabella di budget mensile stampabile in PDF',
@@ -1123,42 +949,10 @@ export const TEMPLATES_SEO_DATA: Record<InterfaceLang, Record<string, TemplateSE
       faqs: [{ q: 'Supporta l\'Euro (€)?', a: 'Sì, l\'Euro è supportato nativamente.' }],
       features: ['Entrate e uscite suddivise', 'Obiettivo risparmio in evidenza', 'Selettore di valuta', '100% Riservato sul tuo dispositivo'],
     },
-    'price-list': {
-      slug: 'price-list',
-      templateId: 'price-list',
-      category: 'business',
-      title: 'Listino Prezzi e Menu Servizi PDF – LogoLoom',
-      description: 'Listino prezzi professionale gratuito in PDF da stampare. Servizi categorizzati con descrizioni brevi e tariffe chiare. Download vettoriale.',
-      h1: 'Listino prezzi e catalogo servizi stampabile in PDF',
-      intro: 'Comunica le tue tariffe con trasparenza e stile. Categorie ordinate con brevi spiegazioni e prezzi ben visibili.',
-      steps: [
-        { title: '1. Crea categorie', desc: 'Raggruppa le tue offerte in sezioni intuitive.' },
-        { title: '2. Imposta i prezzi', desc: 'Modifica tariffe e dettagli direttamente.' },
-        { title: '3. Stampa o invia', desc: 'Esponi nel tuo studio o allega ai tuoi preventivi.' },
-      ],
-      faqs: [{ q: 'Posso includere un codice QR?', a: 'Sì, inserisci il link per generare un QR code nitido.' }],
-      features: ['Servizi divisi per categorie', 'Tariffe e note sintetiche', 'Codice QR opzionale', 'Tipografia elegante'],
-    },
-    'client-tracker': {
-      slug: 'client-tracker',
-      templateId: 'client-tracker',
-      category: 'business',
-      title: 'Registro Clienti e Storico Sessioni PDF – LogoLoom',
-      description: 'Scheda di registro clienti e appuntamenti gratuita in PDF. Data, cliente, servizio, durata, stato e note. 100% confidenziale.',
-      h1: 'Scheda di registro clienti e storico appuntamenti in PDF',
-      intro: 'Tieni un registro cartaceo ordinato dei tuoi colloqui e consulenze. Data, nome cliente, prestazione, durata e accordi presi.',
-      steps: [
-        { title: '1. Modifica intestazioni', desc: 'Adatta le colonne alla tua professione.' },
-        { title: '2. Inserisci il brand', desc: 'Aggiungi il tuo nome e colore d\'accento.' },
-        { title: '3. Archivia nel faldone', desc: 'Documenta gli appuntamenti in modo riservato.' },
-      ],
-      faqs: [{ q: 'I dati dei clienti restano privati?', a: 'Sì, nessun dato viene inviato a server esterni.' }],
-      features: ['Tabella sessioni completa', 'Colonna stato appuntamento', 'Righe ampie per la scrittura', 'Massima riservatezza'],
-    },
     'checklist': {
       slug: 'checklist',
       templateId: 'checklist',
-      category: 'personal',
+      category: 'home',
       title: 'Checklist con Caselle da Spuntare PDF – LogoLoom',
       description: 'Checklist versatile gratuita in PDF da stampare. Sezioni suddivise per fasi e caselle comode (≥5 mm). Per traslochi, eventi e progetti.',
       h1: 'Checklist con caselle da spuntare stampabile in PDF',
@@ -1174,7 +968,7 @@ export const TEMPLATES_SEO_DATA: Record<InterfaceLang, Record<string, TemplateSE
     'cv': {
       slug: 'cv',
       templateId: 'cv',
-      category: 'business',
+      category: 'career',
       title: "Crea il tuo CV gratis in PDF, senza abbonamento | LogoLoom",
       description: "Crea un curriculum professionale in pochi minuti e scaricalo in PDF. Gratis, senza account, senza abbonamenti nascosti. 2 layout, foto facoltativa, leggibile dai selezionatori.",
       h1: "Crea il tuo curriculum gratis in PDF, senza abbonamento",

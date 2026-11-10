@@ -9,15 +9,13 @@ import {
   Clock,
   Utensils,
   Wallet,
-  Users,
   CheckCircle2,
   ListTodo,
   Layers,
   Feather,
-  Briefcase,
-  User,
 } from 'lucide-react';
 import { TemplateId, DesignStyle, InterfaceLang, TemplateFamily } from '@/types';
+import { CATEGORY_COPY, CATEGORY_ORDER } from '@/lib/catalog';
 
 interface TemplateSelectorProps {
   activeTemplate: TemplateId;
@@ -45,20 +43,16 @@ const SELECTOR_I18N: Record<
     minimalLabel: string;
     defaultBadge: string;
     completeLabel: string;
-    familyPersonal: string;
-    familyBusiness: string;
     allTemplates: string;
     templates: Record<TemplateId, { title: string; desc: string; tag: string }>;
   }
 > = {
   fr: {
     stepTitle: '3. Modèle de document',
-    countModels: '11 modèles prêts à imprimer',
+    countModels: '9 modèles prêts à imprimer',
     minimalLabel: 'Minimal',
     defaultBadge: 'Défaut',
     completeLabel: 'Complet',
-    familyPersonal: 'Perso',
-    familyBusiness: 'Pro',
     allTemplates: 'Tous',
     templates: {
       'habit-tracker': {
@@ -96,16 +90,6 @@ const SELECTOR_I18N: Record<
         desc: 'Revenus, charges fixes, dépenses et épargne',
         tag: 'Finances',
       },
-      'price-list': {
-        title: 'Grille tarifaire / Menu',
-        desc: 'Prestations catégorisées, descriptions et tarifs',
-        tag: 'Tarifs',
-      },
-      'client-tracker': {
-        title: 'Journal de suivi client',
-        desc: 'Tableau des séances, durées, statuts et notes',
-        tag: 'Gestion client',
-      },
       checklist: {
         title: 'Checklist universelle',
         desc: 'Sections groupées avec cases à cocher et synthèse',
@@ -120,12 +104,10 @@ const SELECTOR_I18N: Record<
   },
   en: {
     stepTitle: '3. Document Template',
-    countModels: '11 print-ready models',
+    countModels: '9 print-ready models',
     minimalLabel: 'Minimal',
     defaultBadge: 'Default',
     completeLabel: 'Complete',
-    familyPersonal: 'Personal',
-    familyBusiness: 'Business',
     allTemplates: 'All',
     templates: {
       'habit-tracker': {
@@ -163,16 +145,6 @@ const SELECTOR_I18N: Record<
         desc: 'Income, fixed & variable expenses, savings goal & net cash',
         tag: 'Finance',
       },
-      'price-list': {
-        title: 'Service Menu / Price List',
-        desc: 'Grouped categories, service descriptions & clear rates',
-        tag: 'Services',
-      },
-      'client-tracker': {
-        title: 'Client Session Tracker',
-        desc: 'Log dates, client names, services, hours & status',
-        tag: 'Client CRM',
-      },
       checklist: {
         title: 'Master Checklist',
         desc: 'Multi-purpose grouped checklists with checkboxes & sign-off',
@@ -187,12 +159,10 @@ const SELECTOR_I18N: Record<
   },
   de: {
     stepTitle: '3. Dokumenten-Vorlage',
-    countModels: '11 druckfertige Vorlagen',
+    countModels: '9 druckfertige Vorlagen',
     minimalLabel: 'Minimal',
     defaultBadge: 'Standard',
     completeLabel: 'Vollständig',
-    familyPersonal: 'Privat',
-    familyBusiness: 'Business',
     allTemplates: 'Alle',
     templates: {
       'habit-tracker': {
@@ -230,16 +200,6 @@ const SELECTOR_I18N: Record<
         desc: 'Einnahmen, feste & variable Ausgaben, Sparziel & Saldo',
         tag: 'Finanzen',
       },
-      'price-list': {
-        title: 'Preis- & Leistungsübersicht',
-        desc: 'Kategorisierte Dienstleistungen, Details & feste Tarife',
-        tag: 'Leistungen',
-      },
-      'client-tracker': {
-        title: 'Klienten-Sitzungsprotokoll',
-        desc: 'Sitzungen, Dauer, Bearbeitungsstatus & Zusammenfassung',
-        tag: 'Klienten',
-      },
       checklist: {
         title: 'Projekt-Checkliste',
         desc: 'Strukturierte Abschnitte mit Kontrollkästchen & Freigabe',
@@ -254,12 +214,10 @@ const SELECTOR_I18N: Record<
   },
   es: {
     stepTitle: '3. Plantilla de documento',
-    countModels: '11 modelos listos para imprimir',
+    countModels: '9 modelos listos para imprimir',
     minimalLabel: 'Mínimo',
     defaultBadge: 'Por defecto',
     completeLabel: 'Completo',
-    familyPersonal: 'Personal',
-    familyBusiness: 'Negocio',
     allTemplates: 'Todas',
     templates: {
       'habit-tracker': {
@@ -297,16 +255,6 @@ const SELECTOR_I18N: Record<
         desc: 'Ingresos, gastos fijos y variables, ahorro y saldo neto',
         tag: 'Finanzas',
       },
-      'price-list': {
-        title: 'Tarifas y Servicios',
-        desc: 'Categorías, descripción detallada y precios claros',
-        tag: 'Tarifas',
-      },
-      'client-tracker': {
-        title: 'Registro de Clientes',
-        desc: 'Historial de sesiones, duración, estados y notas',
-        tag: 'Gestión clientes',
-      },
       checklist: {
         title: 'Lista de Control',
         desc: 'Secciones agrupadas con casillas de verificación y firma',
@@ -321,12 +269,10 @@ const SELECTOR_I18N: Record<
   },
   it: {
     stepTitle: '3. Modello di Documento',
-    countModels: '11 modelli pronti per la stampa',
+    countModels: '9 modelli pronti per la stampa',
     minimalLabel: 'Minimale',
     defaultBadge: 'Predefinito',
     completeLabel: 'Completo',
-    familyPersonal: 'Personale',
-    familyBusiness: 'Lavoro',
     allTemplates: 'Tutti',
     templates: {
       'habit-tracker': {
@@ -364,16 +310,6 @@ const SELECTOR_I18N: Record<
         desc: 'Entrate, uscite fisse e variabili, risparmio e saldo',
         tag: 'Finanze',
       },
-      'price-list': {
-        title: 'Listino Prezzi & Servizi',
-        desc: 'Servizi categorizzati, descrizioni e tariffe trasparenti',
-        tag: 'Tariffe',
-      },
-      'client-tracker': {
-        title: 'Registro Sessioni Clienti',
-        desc: 'Riepilogo appuntamenti, durata, stato e annotazioni',
-        tag: 'Clienti',
-      },
       checklist: {
         title: 'Checklist di Progetto',
         desc: 'Sezioni raggruppate con caselle di controllo e convalida',
@@ -388,12 +324,10 @@ const SELECTOR_I18N: Record<
   },
   pt: {
     stepTitle: '3. Modelo de Documento',
-    countModels: '11 modelos prontos para impressão',
+    countModels: '9 modelos prontos para impressão',
     minimalLabel: 'Mínimo',
     defaultBadge: 'Padrão',
     completeLabel: 'Completo',
-    familyPersonal: 'Pessoal',
-    familyBusiness: 'Negócios',
     allTemplates: 'Todos',
     templates: {
       'habit-tracker': {
@@ -431,16 +365,6 @@ const SELECTOR_I18N: Record<
         desc: 'Receitas, despesas fixas e variáveis, meta de poupança e saldo',
         tag: 'Finanças',
       },
-      'price-list': {
-        title: 'Tabela de Serviços e Valores',
-        desc: 'Categorias organizadas, descrições e valores claros',
-        tag: 'Serviços',
-      },
-      'client-tracker': {
-        title: 'Registro de Clientes',
-        desc: 'Histórico de atendimentos, duração, status e notas',
-        tag: 'Gestão clientes',
-      },
       checklist: {
         title: 'Lista de Verificação',
         desc: 'Etapas agrupadas com caixas de seleção e validação',
@@ -461,19 +385,17 @@ const TEMPLATE_DEFINITIONS: Array<{
   icon: React.ElementType;
 }> = [
   // Career: listed first, it is the most searched-for template
-  { id: 'cv', family: 'business', icon: FileText },
+  { id: 'cv', family: 'career', icon: FileText },
   // Personal (7)
-  { id: 'habit-tracker', family: 'personal', icon: Calendar },
-  { id: 'goal-planner-90', family: 'personal', icon: Milestone },
-  { id: 'weekly-planner', family: 'personal', icon: Clock },
-  { id: 'monthly-calendar', family: 'personal', icon: CheckSquare },
-  { id: 'daily-priorities', family: 'personal', icon: ListTodo },
-  { id: 'meal-planner', family: 'personal', icon: Utensils },
-  { id: 'budget-tracker', family: 'personal', icon: Wallet },
-  { id: 'checklist', family: 'personal', icon: CheckCircle2 },
+  { id: 'habit-tracker', family: 'organisation', icon: Calendar },
+  { id: 'goal-planner-90', family: 'organisation', icon: Milestone },
+  { id: 'weekly-planner', family: 'organisation', icon: Clock },
+  { id: 'monthly-calendar', family: 'organisation', icon: CheckSquare },
+  { id: 'daily-priorities', family: 'organisation', icon: ListTodo },
+  { id: 'meal-planner', family: 'home', icon: Utensils },
+  { id: 'budget-tracker', family: 'home', icon: Wallet },
+  { id: 'checklist', family: 'home', icon: CheckCircle2 },
   // Business
-  { id: 'price-list', family: 'business', icon: Briefcase },
-  { id: 'client-tracker', family: 'business', icon: Users },
 ];
 
 export const TemplateSelector: React.FC<TemplateSelectorProps> = ({
@@ -488,8 +410,8 @@ export const TemplateSelector: React.FC<TemplateSelectorProps> = ({
   const [selectedFamily, setSelectedFamily] = useState<'all' | TemplateFamily>('all');
 
   const listRef = useRef<HTMLDivElement>(null);
-  const personalCount = TEMPLATE_DEFINITIONS.filter((t) => t.family === 'personal').length;
-  const businessCount = TEMPLATE_DEFINITIONS.length - personalCount;
+  const categoryCopy = CATEGORY_COPY[interfaceLang] || CATEGORY_COPY.en;
+  const countFor = (f: TemplateFamily) => TEMPLATE_DEFINITIONS.filter((t) => t.family === f).length;
 
   // Keep the active template visible in the scrollable list (e.g. when landing
   // on /checklist, the Checklist card is far down). Scrolls only the list, never the page.
@@ -559,46 +481,25 @@ export const TemplateSelector: React.FC<TemplateSelectorProps> = ({
       </div>
       )}
 
-      {/* Family Pills (All | Personal (7) | Business (5)) */}
-      <div className="flex items-center space-x-1.5 p-0.5 bg-slate-100/70 dark:bg-slate-800/50 rounded-lg text-[11px] whitespace-nowrap">
-        <button
-          type="button"
-          onClick={() => setSelectedFamily('all')}
-          aria-pressed={selectedFamily === 'all'}
-          className={`flex-1 py-1 px-2 rounded-md font-semibold transition-all text-center ${
-            selectedFamily === 'all'
-              ? 'bg-white dark:bg-slate-900 text-slate-900 dark:text-white shadow-2xs'
-              : 'text-slate-500 hover:text-slate-800 dark:hover:text-slate-200'
-          }`}
-        >
-          {i18n.allTemplates} ({TEMPLATE_DEFINITIONS.length})
-        </button>
-        <button
-          type="button"
-          onClick={() => setSelectedFamily('personal')}
-          aria-pressed={selectedFamily === 'personal'}
-          className={`flex-1 py-1 px-2 rounded-md font-semibold transition-all text-center flex items-center justify-center space-x-1 ${
-            selectedFamily === 'personal'
-              ? 'bg-white dark:bg-slate-900 text-slate-900 dark:text-white shadow-2xs'
-              : 'text-slate-500 hover:text-slate-800 dark:hover:text-slate-200'
-          }`}
-        >
-          <User className="w-3 h-3" />
-          <span>{i18n.familyPersonal} ({personalCount})</span>
-        </button>
-        <button
-          type="button"
-          onClick={() => setSelectedFamily('business')}
-          aria-pressed={selectedFamily === 'business'}
-          className={`flex-1 py-1 px-2 rounded-md font-semibold transition-all text-center flex items-center justify-center space-x-1 ${
-            selectedFamily === 'business'
-              ? 'bg-white dark:bg-slate-900 text-slate-900 dark:text-white shadow-2xs'
-              : 'text-slate-500 hover:text-slate-800 dark:hover:text-slate-200'
-          }`}
-        >
-          <Briefcase className="w-3 h-3" />
-          <span>{i18n.familyBusiness} ({businessCount})</span>
-        </button>
+      {/* Category pills: All | Career | Planning | Home */}
+      <div className="grid grid-cols-4 gap-1 p-0.5 bg-slate-100/70 dark:bg-slate-800/50 rounded-lg text-[11px]">
+        {(['all', ...CATEGORY_ORDER] as const).map((f) => (
+          <button
+            key={f}
+            type="button"
+            onClick={() => setSelectedFamily(f)}
+            aria-pressed={selectedFamily === f}
+            className={`py-1 px-1 rounded-md font-semibold transition-all text-center truncate ${
+              selectedFamily === f
+                ? 'bg-white dark:bg-slate-900 text-slate-900 dark:text-white shadow-2xs'
+                : 'text-slate-500 hover:text-slate-800 dark:hover:text-slate-200'
+            }`}
+          >
+            {f === 'all'
+              ? `${i18n.allTemplates} (${TEMPLATE_DEFINITIONS.length})`
+              : `${categoryCopy[f].short} (${countFor(f)})`}
+          </button>
+        ))}
       </div>
 
       {/* Templates List */}

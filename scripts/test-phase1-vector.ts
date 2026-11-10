@@ -15,8 +15,6 @@ import {
   getDefaultDailyPrioritiesContent,
   getDefaultMealPlannerContent,
   getDefaultBudgetTrackerContent,
-  getDefaultPriceListContent,
-  getDefaultClientTrackerContent,
   getDefaultChecklistContent,
 } from '../lib/use-brand-kit';
 
@@ -59,8 +57,6 @@ async function runVectorPdfCatalogTests() {
     'daily-priorities',
     'meal-planner',
     'budget-tracker',
-    'price-list',
-    'client-tracker',
     'checklist',
   ];
 
@@ -101,8 +97,6 @@ async function runVectorPdfCatalogTests() {
       dailyPrioritiesContent: getDefaultDailyPrioritiesContent('fr'),
       mealPlannerContent: getDefaultMealPlannerContent('fr'),
       budgetTrackerContent: getDefaultBudgetTrackerContent('fr'),
-      priceListContent: getDefaultPriceListContent('fr'),
-      clientTrackerContent: getDefaultClientTrackerContent('fr'),
       checklistContent: getDefaultChecklistContent('fr'),
     };
 

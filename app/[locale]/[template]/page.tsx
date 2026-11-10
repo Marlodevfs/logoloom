@@ -1,3 +1,4 @@
+import { CATEGORY_COPY, catalogRank, categoryOf } from '@/lib/catalog';
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
@@ -130,11 +131,10 @@ export default async function TemplateLandingPage({ params }: Props) {
     })),
   };
 
-  const otherTemplates = CANONICAL_TEMPLATE_SLUGS.filter((t) => t.slug !== slug).sort((a, b) => {
-    const ca = TEMPLATES_SEO_DATA.en[a.slug]?.category === 'business' ? 1 : 0;
-    const cb = TEMPLATES_SEO_DATA.en[b.slug]?.category === 'business' ? 1 : 0;
-    return ca - cb;
-  });
+  const otherTemplates = CANONICAL_TEMPLATE_SLUGS.filter((t) => t.slug !== slug).sort(
+    (a, b) => catalogRank(a.templateId) - catalogRank(b.templateId)
+  );
+  const categoryCopy = CATEGORY_COPY[lang as InterfaceLang] || CATEGORY_COPY.en;
   const chrome = getSiteChrome(lang);
   const templateName = chrome.templateNames[data.templateId] || slug.replace(/-/g, ' ');
 
@@ -292,7 +292,7 @@ export default async function TemplateLandingPage({ params }: Props) {
                   >
                     <div>
                       <span className="text-[10px] font-bold uppercase tracking-wider text-indigo-600 dark:text-indigo-400">
-                        {itemData?.category === 'business' ? chrome.categoryBusiness : chrome.categoryPersonal}
+                        {categoryCopy[categoryOf(item.templateId)].name}
                       </span>
                       <h3 className="text-xs font-bold text-slate-900 dark:text-white group-hover:text-indigo-600 dark:group-hover:text-indigo-400 mt-1">
                         {chrome.templateNames[item.templateId]}

@@ -3,10 +3,11 @@
 import React, { useEffect, useState, useRef } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Globe, Moon, Sun, Sparkles, ShieldCheck, ChevronDown } from 'lucide-react';
+import { Globe, Moon, Sun, Sparkles, ChevronDown } from 'lucide-react';
 import { InterfaceLang } from '@/types';
 import { UI_TRANSLATIONS } from '@/lib/i18n/interface';
 import { LogoMark } from '@/components/LogoMark';
+import { CATEGORY_COPY } from '@/lib/catalog';
 
 interface HeaderProps {
   interfaceLang: InterfaceLang;
@@ -99,11 +100,24 @@ export const Header: React.FC<HeaderProps> = ({
           </div>
         </Link>
 
-        {/* Center: Zero Friction & Privacy Badge */}
-        <div className="hidden md:flex items-center space-x-2 bg-slate-50 dark:bg-slate-800/80 px-3 py-1 rounded-full border border-slate-200/80 dark:border-slate-700/80 text-xs text-slate-600 dark:text-slate-300">
-          <ShieldCheck className="w-3.5 h-3.5 text-emerald-500" />
-          <span className="font-medium text-[11px]">{t.privacyBadge}</span>
-        </div>
+        {/* Center: the 3 sections of the site */}
+        <nav aria-label="Sections" className="hidden md:flex items-center gap-1 text-sm font-semibold">
+          {(
+            [
+              ['career', `/${interfaceLang}/cv`],
+              ['organisation', `/${interfaceLang}#organisation`],
+              ['home', `/${interfaceLang}#home`],
+            ] as const
+          ).map(([cat, href]) => (
+            <Link
+              key={cat}
+              href={href}
+              className="px-3 py-1.5 rounded-lg text-slate-600 hover:text-slate-900 hover:bg-slate-100 dark:text-slate-300 dark:hover:text-white dark:hover:bg-slate-800 transition-colors"
+            >
+              {(CATEGORY_COPY[interfaceLang] || CATEGORY_COPY.en)[cat].short}
+            </Link>
+          ))}
+        </nav>
 
         {/* Actions Right: Language Switcher, Dark Mode, Pro Button */}
         <div className="flex items-center space-x-2.5">

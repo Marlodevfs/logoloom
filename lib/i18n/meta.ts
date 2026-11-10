@@ -11,49 +11,49 @@ export interface LocaleMeta {
 
 export const LOCALES_METADATA: Record<InterfaceLang, LocaleMeta> = {
   en: {
-    title: 'LogoLoom – Free Printable Planners & Business Templates',
+    title: 'LogoLoom – Free CV Maker and Printable Planners',
     description:
-      'Print and customize free PDF planners and business templates in seconds. 100% private in your browser, custom colors, optional logo.',
+      'Create a CV, planners, meal plans, a budget or checklists and download a clean PDF. Free, no account, nothing leaves your browser.',
     ogLocale: 'en_US',
     langName: 'English',
     flag: '🇬🇧',
   },
   fr: {
-    title: 'LogoLoom – Planners et Modèles Gratuits à Imprimer PDF',
+    title: 'LogoLoom – CV gratuit et plannings à imprimer',
     description:
-      'Personnalisez et imprimez vos plannings et documents professionnels en PDF. 100% gratuit et privé dans le navigateur, logo optionnel.',
+      'Créez votre CV, vos plannings, menus, budget ou checklists et téléchargez un PDF propre. Gratuit, sans compte, rien ne quitte votre navigateur.',
     ogLocale: 'fr_FR',
     langName: 'Français',
     flag: '🇫🇷',
   },
   es: {
-    title: 'LogoLoom – Planificadores y Plantillas Gratis Imprimibles',
+    title: 'LogoLoom – CV gratis y planificadores para imprimir',
     description:
-      'Personaliza e imprime planificadores y documentos en PDF al instante. 100% privado en tu navegador, colores a medida y sin registro.',
+      'Crea tu CV, planificadores, menús, presupuesto o checklists y descarga un PDF limpio. Gratis, sin cuenta, nada sale de tu navegador.',
     ogLocale: 'es_ES',
     langName: 'Español',
     flag: '🇪🇸',
   },
   de: {
-    title: 'LogoLoom – Kostenlose Druckbare Planer & Vorlagen PDF',
+    title: 'LogoLoom – Lebenslauf und Planer kostenlos als PDF',
     description:
-      'Erstellen Sie druckfertige Planer und Vorlagen als PDF in Sekunden. 100% privat im Browser, individuelle Farben, ohne Anmeldung.',
+      'Erstellen Sie Lebenslauf, Planer, Essenspläne, Budget oder Checklisten als sauberes PDF. Kostenlos, ohne Konto, nichts verlässt Ihren Browser.',
     ogLocale: 'de_DE',
     langName: 'Deutsch',
     flag: '🇩🇪',
   },
   pt: {
-    title: 'LogoLoom – Planejadores e Modelos Imprimíveis Gratuitos',
+    title: 'LogoLoom – CV grátis e planeadores para imprimir',
     description:
-      'Personalize e imprima planejadores e documentos em PDF em segundos. 100% privado no navegador, cores à escolha e sem cadastro.',
+      'Crie o seu CV, planeadores, ementas, orçamento ou checklists e descarregue um PDF limpo. Grátis, sem conta, nada sai do seu navegador.',
     ogLocale: 'pt_PT',
     langName: 'Português',
     flag: '🇵🇹',
   },
   it: {
-    title: 'LogoLoom – Planner e Modelli Stampabili Gratuiti PDF',
+    title: 'LogoLoom – CV gratis e planner da stampare',
     description:
-      'Personalizza e stampa planner e documenti professionali in PDF in pochi secondi. 100% privato nel browser, colori su misura e senza login.',
+      'Crea il tuo CV, planner, menù, budget o checklist e scarica un PDF pulito. Gratis, senza account, nulla lascia il browser.',
     ogLocale: 'it_IT',
     langName: 'Italiano',
     flag: '🇮🇹',

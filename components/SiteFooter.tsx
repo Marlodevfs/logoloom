@@ -1,7 +1,8 @@
 import Link from 'next/link';
 import { siteConfig } from '@/config/site';
 import { getSiteChrome } from '@/lib/i18n/site-chrome';
-import { CANONICAL_TEMPLATE_SLUGS } from '@/lib/seo/templates-metadata';
+import { CATALOG, CATEGORY_COPY, CATEGORY_ORDER } from '@/lib/catalog';
+import type { InterfaceLang } from '@/types';
 import { BuyMeACoffeeButton } from '@/components/BuyMeACoffee';
 import { CookieSettingsLink } from '@/components/CookieConsent';
 
@@ -9,9 +10,7 @@ import { CookieSettingsLink } from '@/components/CookieConsent';
 export function SiteFooter({ lang, withStickyBar = false }: { lang: string; withStickyBar?: boolean }) {
   const c = getSiteChrome(lang);
   const year = new Date().getFullYear();
-  const popular = CANONICAL_TEMPLATE_SLUGS.filter((t) =>
-    ['cv', 'habit-tracker', 'weekly-planner', 'monthly-calendar'].includes(t.slug)
-  );
+  const cats = CATEGORY_COPY[lang as InterfaceLang] || CATEGORY_COPY.en;
 
   return (
     <footer className={`border-t border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 ${withStickyBar ? 'pb-24 lg:pb-0' : ''}`}>
@@ -26,15 +25,20 @@ export function SiteFooter({ lang, withStickyBar = false }: { lang: string; with
 
         <nav aria-label={c.footer.templates} className="space-y-2">
           <p className="font-bold text-slate-800 dark:text-slate-200">{c.footer.templates}</p>
-          <ul className="space-y-1.5">
-            {popular.map((t) => (
-              <li key={t.slug}>
-                <Link href={`/${lang}/${t.slug}`} className="text-slate-500 hover:text-indigo-600 dark:text-slate-400 dark:hover:text-indigo-400">
-                  {c.templateNames[t.templateId]}
-                </Link>
-              </li>
-            ))}
-          </ul>
+          {CATEGORY_ORDER.map((cat) => (
+            <div key={cat} className="space-y-1">
+              <p className="text-[11px] font-semibold text-slate-400 dark:text-slate-500 pt-1">{cats[cat].name}</p>
+              <ul className="space-y-1">
+                {CATALOG.filter((t) => t.category === cat).map((t) => (
+                  <li key={t.slug}>
+                    <Link href={`/${lang}/${t.slug}`} className="text-slate-500 hover:text-indigo-600 dark:text-slate-400 dark:hover:text-indigo-400">
+                      {c.templateNames[t.id]}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
         </nav>
 
         <nav aria-label={c.footer.product} className="space-y-2">
