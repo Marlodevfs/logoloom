@@ -78,6 +78,7 @@ export interface CatalogLabels {
     totalLabel: string;
     signatureLabel: string;
     footerCategory: string;
+    totalDueLabel: string;
   };
   invoice: {
     invoiceNumberLabel: string;
@@ -94,6 +95,9 @@ export interface CatalogLabels {
     totalLabel: string;
     paymentDetailsTitle: string;
     footerCategory: string;
+    totalDueLabel: string;
+    clientIdLabel: string;
+    serviceDateLabel: string;
   };
   priceList: {
     lastUpdatedLabel: string;
@@ -195,6 +199,7 @@ export const CATALOG_LABELS: Record<DocumentLang, CatalogLabels> = {
       totalLabel: 'Total TTC :',
       signatureLabel: 'Bon pour accord, date et signature :',
       footerCategory: 'Document professionnel • Devis',
+      totalDueLabel: 'Total à payer :',
     },
     invoice: {
       invoiceNumberLabel: 'Facture n° :',
@@ -211,6 +216,9 @@ export const CATALOG_LABELS: Record<DocumentLang, CatalogLabels> = {
       totalLabel: 'Total TTC :',
       paymentDetailsTitle: 'Coordonnées de paiement :',
       footerCategory: 'Document professionnel • Facture',
+      totalDueLabel: 'Total à payer :',
+      clientIdLabel: 'SIREN :',
+      serviceDateLabel: 'Date de prestation :',
     },
     priceList: {
       lastUpdatedLabel: 'Mise à jour :',
@@ -310,6 +318,7 @@ export const CATALOG_LABELS: Record<DocumentLang, CatalogLabels> = {
       totalLabel: 'Total Due:',
       signatureLabel: 'Agreed and accepted, date and signature:',
       footerCategory: 'Business Document • Quotation',
+      totalDueLabel: 'Total due:',
     },
     invoice: {
       invoiceNumberLabel: 'Invoice #:',
@@ -326,6 +335,9 @@ export const CATALOG_LABELS: Record<DocumentLang, CatalogLabels> = {
       totalLabel: 'Total Due:',
       paymentDetailsTitle: 'Payment Details:',
       footerCategory: 'Business Document • Invoice',
+      totalDueLabel: 'Total due:',
+      clientIdLabel: 'Company no.:',
+      serviceDateLabel: 'Service date:',
     },
     priceList: {
       lastUpdatedLabel: 'Effective:',
@@ -425,6 +437,7 @@ export const CATALOG_LABELS: Record<DocumentLang, CatalogLabels> = {
       totalLabel: 'Gesamtbetrag:',
       signatureLabel: 'Einverstanden und angenommen, Datum und Unterschrift:',
       footerCategory: 'Geschäftsdokument • Kostenvoranschlag',
+      totalDueLabel: 'Gesamtbetrag:',
     },
     invoice: {
       invoiceNumberLabel: 'Rechnungs-Nr.:',
@@ -441,6 +454,9 @@ export const CATALOG_LABELS: Record<DocumentLang, CatalogLabels> = {
       totalLabel: 'Gesamtbetrag:',
       paymentDetailsTitle: 'Zahlungsdetails:',
       footerCategory: 'Geschäftsdokument • Rechnung',
+      totalDueLabel: 'Gesamtbetrag:',
+      clientIdLabel: 'Firmen-Nr.:',
+      serviceDateLabel: 'Leistungsdatum:',
     },
     priceList: {
       lastUpdatedLabel: 'Gültig ab:',
@@ -540,6 +556,7 @@ export const CATALOG_LABELS: Record<DocumentLang, CatalogLabels> = {
       totalLabel: 'Total a Pagar:',
       signatureLabel: 'Conforme y aceptado, fecha y firma:',
       footerCategory: 'Documento profesional • Presupuesto',
+      totalDueLabel: 'Total a pagar:',
     },
     invoice: {
       invoiceNumberLabel: 'Factura n°:',
@@ -556,6 +573,9 @@ export const CATALOG_LABELS: Record<DocumentLang, CatalogLabels> = {
       totalLabel: 'Total a Pagar:',
       paymentDetailsTitle: 'Datos de pago:',
       footerCategory: 'Documento profesional • Factura',
+      totalDueLabel: 'Total a pagar:',
+      clientIdLabel: 'NIF/CIF:',
+      serviceDateLabel: 'Fecha del servicio:',
     },
     priceList: {
       lastUpdatedLabel: 'Actualizado:',
@@ -655,6 +675,7 @@ export const CATALOG_LABELS: Record<DocumentLang, CatalogLabels> = {
       totalLabel: 'Totale da Saldare:',
       signatureLabel: 'Per accettazione, data e firma:',
       footerCategory: 'Documento aziendale • Preventivo',
+      totalDueLabel: 'Totale da pagare:',
     },
     invoice: {
       invoiceNumberLabel: 'Fattura n.:',
@@ -671,6 +692,9 @@ export const CATALOG_LABELS: Record<DocumentLang, CatalogLabels> = {
       totalLabel: 'Totale da Saldare:',
       paymentDetailsTitle: 'Dettagli di pagamento:',
       footerCategory: 'Documento aziendale • Fattura',
+      totalDueLabel: 'Totale da pagare:',
+      clientIdLabel: 'P.IVA / C.F.:',
+      serviceDateLabel: 'Data prestazione:',
     },
     priceList: {
       lastUpdatedLabel: 'Aggiornato:',
@@ -770,6 +794,7 @@ export const CATALOG_LABELS: Record<DocumentLang, CatalogLabels> = {
       totalLabel: 'Total a Pagar:',
       signatureLabel: 'De acordo e aceito, data e assinatura:',
       footerCategory: 'Documento comercial • Orçamento',
+      totalDueLabel: 'Total a pagar:',
     },
     invoice: {
       invoiceNumberLabel: 'Fatura n°:',
@@ -786,6 +811,9 @@ export const CATALOG_LABELS: Record<DocumentLang, CatalogLabels> = {
       totalLabel: 'Total a Pagar:',
       paymentDetailsTitle: 'Dados para pagamento:',
       footerCategory: 'Documento comercial • Fatura',
+      totalDueLabel: 'Total a pagar:',
+      clientIdLabel: 'NIF:',
+      serviceDateLabel: 'Data do serviço:',
     },
     priceList: {
       lastUpdatedLabel: 'Atualizado:',

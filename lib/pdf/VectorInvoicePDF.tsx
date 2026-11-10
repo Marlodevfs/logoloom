@@ -6,6 +6,7 @@ import { getDefaultInvoiceContent } from '@/lib/use-brand-kit';
 import { formatCurrencyAmount } from '@/lib/i18n/intl-helpers';
 import { CATALOG_LABELS } from '@/lib/i18n/catalog-labels';
 import { getPartyPlaceholders } from '@/lib/i18n/party-placeholders';
+import { computeTotals } from '@/lib/billing';
 
 interface VectorInvoicePDFProps {
   brandKit: BrandKit;
@@ -18,9 +19,7 @@ export const VectorInvoicePDF: React.FC<VectorInvoicePDFProps> = ({ brandKit }) 
   const content: InvoiceCustomContent =
     brandKit.invoiceContent || getDefaultInvoiceContent(docLang);
 
-  const subtotal = content.items.reduce((acc, item) => acc + (item.quantity * item.unitPrice), 0);
-  const taxAmount = (subtotal * content.taxRate) / 100;
-  const total = subtotal + taxAmount;
+  const { subtotal, taxAmount, total } = computeTotals(content.items, content.taxRate, content.vatExempt);
 
   const styles = StyleSheet.create({
     container: {
@@ -253,6 +252,33 @@ export const VectorInvoicePDF: React.FC<VectorInvoicePDFProps> = ({ brandKit }) 
       fontWeight: 'bold',
       color: brandKit.brandColor,
     },
+    legalLine: {
+      fontFamily: 'Roboto',
+      fontSize: 7.5,
+      fontWeight: 'bold',
+      color: '#334155',
+      marginBottom: 1,
+    },
+    clientIdLine: {
+      fontFamily: 'Roboto',
+      fontSize: 7.5,
+      color: '#475569',
+      marginBottom: 1,
+    },
+    termsSmall: {
+      fontFamily: 'Roboto',
+      fontSize: 6.3,
+      color: '#64748B',
+      marginTop: 3,
+      lineHeight: 1.3,
+    },
+    exemptNote: {
+      fontFamily: 'Roboto',
+      fontSize: 7,
+      color: '#475569',
+      textAlign: 'right',
+      marginTop: 2,
+    },
     grandTotalVal: {
       fontFamily: 'Roboto',
       fontSize: 9,
@@ -280,6 +306,12 @@ export const VectorInvoicePDF: React.FC<VectorInvoicePDFProps> = ({ brandKit }) 
             <Text style={styles.metaLabel}>{labels.dueDateLabel}</Text>
             <Text style={styles.metaValue}>{content.dueDate}</Text>
           </View>
+          {content.serviceDate ? (
+            <View style={styles.metaRow}>
+              <Text style={styles.metaLabel}>{labels.serviceDateLabel}</Text>
+              <Text style={styles.metaValue}>{content.serviceDate}</Text>
+            </View>
+          ) : null}
         </View>
       }
     >
@@ -289,11 +321,13 @@ export const VectorInvoicePDF: React.FC<VectorInvoicePDFProps> = ({ brandKit }) 
           <View style={styles.addressCol}>
             <Text style={styles.addressTag}>{labels.fromLabel}</Text>
             <Text style={styles.addressName}>{brandKit.companyName || getPartyPlaceholders(brandKit.documentLang).company}</Text>
+            {content.legalId ? <Text style={styles.legalLine}>{content.legalId}</Text> : null}
             <Text style={styles.addressText}>{content.senderAddress}</Text>
           </View>
           <View style={styles.clientCard}>
             <Text style={styles.addressTag}>{labels.toLabel}</Text>
             <Text style={styles.addressName}>{brandKit.clientName || getPartyPlaceholders(brandKit.documentLang).client}</Text>
+            {content.clientId ? <Text style={styles.clientIdLine}>{content.clientId}</Text> : null}
             <Text style={styles.addressText}>{content.clientAddress}</Text>
           </View>
         </View>
@@ -325,22 +359,32 @@ export const VectorInvoicePDF: React.FC<VectorInvoicePDFProps> = ({ brandKit }) 
               <Text style={styles.bankTitle}>{labels.paymentDetailsTitle}</Text>
               <Text style={styles.bankText}>{content.paymentDetails}</Text>
             </View>
-            <Text style={styles.notesText}>{content.notes}</Text>
+            <View>
+              <Text style={styles.notesText}>{content.notes}</Text>
+              {content.latePaymentTerms ? <Text style={styles.termsSmall}>{content.latePaymentTerms}</Text> : null}
+            </View>
           </View>
 
           <View style={styles.totalsCol}>
-            <View style={styles.calcRow}>
-              <Text style={styles.calcLabel}>{labels.subtotalLabel}</Text>
-              <Text style={styles.calcVal}>{formatCurrencyAmount(subtotal, currency, docLang)}</Text>
-            </View>
-            <View style={styles.calcRow}>
-              <Text style={styles.calcLabel}>{labels.taxLabel} ({content.taxRate}%) :</Text>
-              <Text style={styles.calcVal}>{formatCurrencyAmount(taxAmount, currency, docLang)}</Text>
-            </View>
+            {!content.vatExempt ? (
+              <View style={styles.calcRow}>
+                <Text style={styles.calcLabel}>{labels.subtotalLabel}</Text>
+                <Text style={styles.calcVal}>{formatCurrencyAmount(subtotal, currency, docLang)}</Text>
+              </View>
+            ) : null}
+            {!content.vatExempt ? (
+              <View style={styles.calcRow}>
+                <Text style={styles.calcLabel}>{labels.taxLabel.replace(/\s*:\s*$/, '')} ({content.taxRate}%) :</Text>
+                <Text style={styles.calcVal}>{formatCurrencyAmount(taxAmount, currency, docLang)}</Text>
+              </View>
+            ) : null}
             <View style={styles.grandTotalRow}>
-              <Text style={styles.grandTotalLabel}>{labels.totalLabel}</Text>
+              <Text style={styles.grandTotalLabel}>{content.vatExempt ? labels.totalDueLabel : labels.totalLabel}</Text>
               <Text style={styles.grandTotalVal}>{formatCurrencyAmount(total, currency, docLang)}</Text>
             </View>
+            {content.vatExempt && content.vatExemptNote ? (
+              <Text style={styles.exemptNote}>{content.vatExemptNote}</Text>
+            ) : null}
           </View>
         </View>
       </View>

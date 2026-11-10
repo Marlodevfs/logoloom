@@ -13,7 +13,8 @@
     "test:quality": "tsx --require ./scripts/react-pdf-cjs-compat.cjs scripts/test-habit-tracker-quality-gates.ts && python3 scripts/audit-quality-gates.py",
     "test:languages": "tsx --require ./scripts/react-pdf-cjs-compat.cjs scripts/test-all-6-languages.ts",
     "test:e2e": "tsx --require ./scripts/react-pdf-cjs-compat.cjs scripts/test-all-features-e2e.ts",
-    "test": "npm run test:pdf && npm run test:i18n && npm run test:quality && npm run test:languages && npm run test:e2e"
+    "test:billing": "tsx --require ./scripts/react-pdf-cjs-compat.cjs scripts/test-billing.ts",
+    "test": "npm run test:pdf && npm run test:i18n && npm run test:quality && npm run test:languages && npm run test:e2e && npm run test:billing"
   },
   "dependencies": {
     "@react-pdf/renderer": "^4.9.0",

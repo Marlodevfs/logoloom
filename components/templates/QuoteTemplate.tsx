@@ -6,6 +6,8 @@ import { MinimalDocFrame } from './minimal/MinimalDocFrame';
 import { getDefaultQuoteContent } from '@/lib/use-brand-kit';
 import { formatCurrencyAmount } from '@/lib/i18n/intl-helpers';
 import { getPartyPlaceholders } from '@/lib/i18n/party-placeholders';
+import { CATALOG_LABELS } from '@/lib/i18n/catalog-labels';
+import { computeTotals } from '@/lib/billing';
 
 interface QuoteTemplateProps {
   brandKit: BrandKit;
@@ -17,6 +19,7 @@ export const QuoteTemplate: React.FC<QuoteTemplateProps> = ({
   onUpdate,
 }) => {
   const docLang: DocumentLang = brandKit.documentLang || 'en';
+  const labels = (CATALOG_LABELS[docLang] || CATALOG_LABELS.en).quote;
   const currency = brandKit.currency || '€';
   const content: QuoteCustomContent =
     brandKit.quoteContent || getDefaultQuoteContent(docLang);
@@ -28,9 +31,7 @@ export const QuoteTemplate: React.FC<QuoteTemplateProps> = ({
     });
   };
 
-  const subtotal = content.items.reduce((acc, item) => acc + (item.quantity * item.unitPrice), 0);
-  const taxAmount = (subtotal * content.taxRate) / 100;
-  const total = subtotal + taxAmount;
+  const { subtotal, taxAmount, total } = computeTotals(content.items, content.taxRate, content.vatExempt);
 
   return (
     <MinimalDocFrame
@@ -40,7 +41,7 @@ export const QuoteTemplate: React.FC<QuoteTemplateProps> = ({
       metadataRight={
         <div className="flex flex-col text-right text-[10px] text-slate-600">
           <div className="flex items-center space-x-2 justify-end">
-            <span className="font-semibold text-slate-700">N° :</span>
+            <span className="font-semibold text-slate-700">{labels.quoteNumberLabel}</span>
             <input aria-label="Quote number"
               type="text"
               value={content.quoteNumber}
@@ -49,7 +50,7 @@ export const QuoteTemplate: React.FC<QuoteTemplateProps> = ({
             />
           </div>
           <div className="flex items-center space-x-2 justify-end mt-0.5">
-            <span className="font-semibold text-slate-700">Date :</span>
+            <span className="font-semibold text-slate-700">{labels.dateLabel}</span>
             <input aria-label="Date"
               type="text"
               value={content.date}
@@ -58,7 +59,7 @@ export const QuoteTemplate: React.FC<QuoteTemplateProps> = ({
             />
           </div>
           <div className="flex items-center space-x-2 justify-end mt-0.5">
-            <span className="font-semibold text-slate-700">Validité :</span>
+            <span className="font-semibold text-slate-700">{labels.validUntilLabel}</span>
             <input aria-label="Valid until"
               type="text"
               value={content.validUntil}
@@ -68,16 +69,17 @@ export const QuoteTemplate: React.FC<QuoteTemplateProps> = ({
           </div>
         </div>
       }
-      footerCategoryText="Document commercial • Proposition de devis"
+      footerCategoryText={labels.footerCategory}
     >
       <div className="flex flex-col h-full justify-between gap-3 py-1">
         {/* Sender & Client Addresses Grid */}
         <section className="grid grid-cols-2 gap-4 border-b border-slate-200 pb-3">
           <div className="flex flex-col text-[10px]">
             <span className="font-bold text-slate-400 uppercase tracking-wider text-[8.5px] mb-1">
-              Émetteur
+              {labels.fromLabel}
             </span>
             <span className="font-bold text-slate-900">{brandKit.companyName || getPartyPlaceholders(brandKit.documentLang).company}</span>
+            {content.legalId ? <span className="text-slate-700 font-medium">{content.legalId}</span> : null}
             <textarea aria-label="Sender address"
               rows={3}
               value={content.senderAddress}
@@ -87,7 +89,7 @@ export const QuoteTemplate: React.FC<QuoteTemplateProps> = ({
           </div>
           <div className="flex flex-col text-[10px] bg-slate-50/70 p-2 rounded border border-slate-200">
             <span className="font-bold text-slate-500 uppercase tracking-wider text-[8.5px] mb-1">
-              Destinataire / Client
+              {labels.toLabel}
             </span>
             <span className="font-bold text-slate-900">{brandKit.clientName || getPartyPlaceholders(brandKit.documentLang).client}</span>
             <textarea aria-label="Client address"
@@ -104,10 +106,10 @@ export const QuoteTemplate: React.FC<QuoteTemplateProps> = ({
           <table className="w-full border-collapse">
             <thead>
               <tr className="border-b border-slate-300 text-[9px] font-bold text-slate-600 uppercase tracking-wider bg-slate-50/50">
-                <th className="py-1.5 px-2 text-left">Description de la prestation</th>
-                <th className="py-1.5 px-2 text-center w-14">Qté</th>
-                <th className="py-1.5 px-2 text-right w-24">Prix unitaire</th>
-                <th className="py-1.5 px-2 text-right w-24">Total</th>
+                <th className="py-1.5 px-2 text-left">{labels.colDesc}</th>
+                <th className="py-1.5 px-2 text-center w-14">{labels.colQty}</th>
+                <th className="py-1.5 px-2 text-right w-24">{labels.colUnitPrice}</th>
+                <th className="py-1.5 px-2 text-right w-24">{labels.colTotal}</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-slate-100 text-[9.5px]">
@@ -139,12 +141,11 @@ export const QuoteTemplate: React.FC<QuoteTemplateProps> = ({
           {/* Notes & Acceptance */}
           <div className="flex flex-col justify-between text-[9px]">
             <div>
-              <span className="font-bold text-slate-700 block mb-0.5">Modalités & Conditions :</span>
               <p className="text-slate-500 italic leading-tight">{content.notes}</p>
             </div>
             <div className="mt-3 pt-2 border-t border-slate-200">
               <span className="text-[8.5px] font-semibold text-slate-500 block">
-                Bon pour accord (Date et Signature) :
+                {labels.signatureLabel}
               </span>
               <div className="border-b border-slate-300 mt-5 w-48" />
             </div>
@@ -152,21 +153,28 @@ export const QuoteTemplate: React.FC<QuoteTemplateProps> = ({
 
           {/* Subtotal, Tax & Total Box */}
           <div className="flex flex-col justify-end space-y-1 text-[10px]">
-            <div className="flex justify-between py-0.5 border-b border-slate-100 text-slate-600">
-              <span>Sous-total HT :</span>
-              <span className="font-mono font-medium">{formatCurrencyAmount(subtotal, currency, docLang)}</span>
-            </div>
-            <div className="flex justify-between py-0.5 border-b border-slate-100 text-slate-600">
-              <span>TVA ({content.taxRate}%) :</span>
-              <span className="font-mono font-medium">{formatCurrencyAmount(taxAmount, currency, docLang)}</span>
-            </div>
+            {!content.vatExempt && (
+              <>
+                <div className="flex justify-between py-0.5 border-b border-slate-100 text-slate-600">
+                  <span>{labels.subtotalLabel}</span>
+                  <span className="font-mono font-medium">{formatCurrencyAmount(subtotal, currency, docLang)}</span>
+                </div>
+                <div className="flex justify-between py-0.5 border-b border-slate-100 text-slate-600">
+                  <span>{labels.taxLabel.replace(/\s*:\s*$/, '')} ({content.taxRate}%) :</span>
+                  <span className="font-mono font-medium">{formatCurrencyAmount(taxAmount, currency, docLang)}</span>
+                </div>
+              </>
+            )}
             <div
               className="flex justify-between py-1.5 font-bold text-[12px] border-t-2"
               style={{ borderColor: brandKit.brandColor, color: brandKit.brandColor }}
             >
-              <span>TOTAL TTC :</span>
+              <span>{content.vatExempt ? labels.totalDueLabel : labels.totalLabel}</span>
               <span className="font-mono">{formatCurrencyAmount(total, currency, docLang)}</span>
             </div>
+            {content.vatExempt && content.vatExemptNote ? (
+              <p className="text-[8.5px] text-slate-600 text-right">{content.vatExemptNote}</p>
+            ) : null}
           </div>
         </div>
       </div>
