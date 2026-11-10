@@ -292,5 +292,10 @@ export const cvLines = (text: string): string[] =>
     .filter(Boolean);
 
 /** "2020 – 2022", or a single date when one side is empty. */
-export const cvPeriod = (start: string, end: string): string =>
-  [start?.trim(), end?.trim()].filter(Boolean).join(' – ');
+export const cvPeriod = (start: string, end: string): string => {
+  const a = start?.trim();
+  const b = end?.trim();
+  // "2024 – 2024" reads like a typo: a one-off period shows a single date.
+  if (a && b && a === b) return a;
+  return [a, b].filter(Boolean).join(' – ');
+};

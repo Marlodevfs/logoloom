@@ -10,6 +10,10 @@ export interface CvExample {
   job: string;
   /** Short label for lists and links. */
   short: string;
+  /** Overrides "Exemple de CV <job>" when lowercasing the job would be wrong. */
+  h1?: string;
+  /** Overrides "CV <short>" in lists. */
+  label?: string;
   metaTitle: string;
   metaDescription: string;
   intro: string;
@@ -749,9 +753,82 @@ export const CV_EXAMPLES_FR: CvExample[] = [
     ],
   },
   {
+    slug: 'frontalier-suisse',
+    job: 'Frontalier en Suisse',
+    short: 'Frontalier Suisse',
+    h1: 'Exemple de CV pour travailler en Suisse (frontalier)',
+    label: 'CV frontalier Suisse',
+    metaTitle: 'Exemple de CV frontalier pour la Suisse, gratuit (PDF) – LogoLoom',
+    metaDescription:
+      'Exemple de CV pour postuler en Suisse depuis la France : permis G, langues, certificats de travail, photo. Modifiez-le gratuitement et téléchargez le PDF, sans compte.',
+    intro:
+      'Un employeur suisse lit un CV un peu différemment d’un recruteur français. Il veut savoir tout de suite où vous habitez, si vous avez déjà le permis frontalier, quelles langues vous parlez vraiment, et il s’attend souvent à une photo.',
+    color: '#7A2335',
+    cv: {
+      layout: 'sidebar',
+      fullName: 'Julien Masson',
+      jobTitle: 'Technicien de maintenance, frontalier permis G',
+      email: 'julien.masson@exemple.fr',
+      phone: '+33 6 00 00 00 00',
+      city: 'Saint-Julien-en-Genevois (F), 15 min de Genève',
+      link: 'linkedin.com/in/julien-masson',
+      photoUrl: null,
+      summary:
+        'Technicien de maintenance avec 9 ans d’expérience en industrie, dont 3 ans en Suisse romande. Diagnostic électrique et mécanique, maintenance préventive, amélioration continue. Disponible rapidement, préavis d’un mois.',
+      experiences: [
+        {
+          role: 'Technicien de maintenance',
+          company: 'Précitech SA',
+          location: 'Plan-les-Ouates (GE)',
+          start: '2023',
+          end: 'Aujourd’hui',
+          details:
+            'Maintenance préventive et curative de 12 lignes d’assemblage\nTaux de disponibilité des machines porté de 91 % à 96 %\nRédaction des procédures et formation des opérateurs\nSuivi des pièces de rechange dans la GMAO',
+        },
+        {
+          role: 'Technicien de maintenance',
+          company: 'Alpes Plasturgie',
+          location: 'Annecy (F)',
+          start: '2017',
+          end: '2023',
+          details: 'Dépannage électrique et pneumatique en 3x8\nParticipation à l’installation de 2 nouvelles presses',
+        },
+      ],
+      education: [
+        { degree: 'BTS Maintenance des systèmes', school: 'Lycée Germain-Sommeiller, Annecy', start: '2015', end: '2017', details: '' },
+        { degree: 'Habilitation électrique B2V-BR', school: 'APAVE', start: '2024', end: '2024', details: '' },
+      ],
+      skills: ['Permis G valable', 'Permis B (voiture)', 'Électrotechnique', 'Automates Siemens', 'Pneumatique', 'GMAO', 'Lecture de plans'],
+      languages: [
+        { name: 'Français', level: 'Langue maternelle' },
+        { name: 'Anglais', level: 'Professionnel (B2)' },
+        { name: 'Allemand', level: 'Notions (A2)' },
+      ],
+      interests: 'Ski de randonnée, VTT',
+    },
+    tips: [
+      { title: 'Votre statut en une ligne', body: 'Permis G déjà obtenu ou à demander, ville de résidence en France, temps de trajet : écrivez-le en haut, l’employeur se pose la question tout de suite.' },
+      { title: 'Les langues avec un niveau', body: 'En Suisse, les langues pèsent lourd. Indiquez un niveau européen (A1 à C2) plutôt que « bon niveau ».' },
+      { title: 'Expliquez vos diplômes', body: 'Un recruteur suisse ne connaît pas forcément le BTS ou le bac pro. Ajoutez l’équivalent suisse quand vous le connaissez (CFC, ES, HES).' },
+      { title: 'Préparez vos certificats de travail', body: 'En Suisse, on joint souvent au CV les certificats de travail et les diplômes. Gardez-les prêts en PDF, avec une lettre de motivation.' },
+      { title: 'La photo est courante', body: 'Elle reste habituelle sur un CV suisse. Choisissez une photo sobre et professionnelle, ajoutée à l’étape « Vous ».' },
+    ],
+    keywords: ['Permis G', 'Frontalier', 'Disponibilité', 'Préavis', 'Langues (niveau CECR)', 'Certificats de travail', 'CFC / ES / HES', 'Fiabilité', 'Précision', 'Mobilité'],
+    summaries: [
+      'Technicien de maintenance, 9 ans en industrie dont 3 en Suisse romande. Frontalier avec permis G, disponible avec un mois de préavis.',
+      'Assistante de direction installée à Annemasse, bilingue français-anglais, cherche un premier poste à Genève. Permis G à demander dès la signature du contrat.',
+    ],
+    faq: [
+      { q: 'Faut-il déjà avoir le permis G pour postuler ?', a: 'Non. Le permis G se demande en général une fois le contrat signé, souvent avec l’aide de l’employeur. Écrivez simplement « permis G à demander » pour être clair.' },
+      { q: 'Doit-on indiquer sa date de naissance et sa nationalité ?', a: 'C’est encore fréquent sur les CV suisses, mais ce n’est pas obligatoire. Si vous les ajoutez, mettez-les dans le titre ou le profil, en une ligne.' },
+      { q: 'Faut-il écrire son salaire souhaité sur le CV ?', a: 'Non, gardez-le pour la lettre de motivation si l’annonce le demande, ou pour l’entretien.' },
+    ],
+  },
+  {
     slug: 'etudiant',
     job: 'Étudiant (sans expérience)',
     short: 'Étudiant sans expérience',
+    h1: 'Exemple de CV étudiant sans expérience',
     metaTitle: 'Exemple de CV étudiant sans expérience gratuit (PDF) – LogoLoom',
     metaDescription:
       'Exemple de CV étudiant pour un job, un stage ou une alternance, même sans expérience. Modifiez-le gratuitement et téléchargez le PDF, sans compte.',
@@ -816,6 +893,14 @@ export const CV_EXAMPLES_FR: CvExample[] = [
     ],
   },
 ];
+
+export function exampleH1(ex: CvExample): string {
+  return ex.h1 ?? `Exemple de CV ${ex.job.toLowerCase()}`;
+}
+
+export function exampleLabel(ex: CvExample): string {
+  return ex.label ?? `CV ${ex.short.toLowerCase()}`;
+}
 
 export function getCvExample(slug: string): CvExample | undefined {
   return CV_EXAMPLES_FR.find((e) => e.slug === slug);

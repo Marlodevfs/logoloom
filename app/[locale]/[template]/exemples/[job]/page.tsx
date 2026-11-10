@@ -6,7 +6,7 @@ import { siteConfig } from '@/config/site';
 import { HomeHeader } from '@/components/HomeHeader';
 import { SiteFooter } from '@/components/SiteFooter';
 import { CvSheet } from '@/components/home/LiveCvHero';
-import { CV_EXAMPLES_FR, getCvExample } from '@/lib/cv-examples/fr';
+import { CV_EXAMPLES_FR, exampleH1, exampleLabel, getCvExample } from '@/lib/cv-examples/fr';
 import { cvKit } from '@/lib/cv-examples/kit';
 
 interface Props {
@@ -29,7 +29,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const ex = resolve(locale, template, job);
   if (!ex) return {};
   const url = `${siteConfig.url}/fr/cv/exemples/${ex.slug}`;
-  const og = `${siteConfig.url}/api/og?title=${encodeURIComponent(`Exemple de CV ${ex.short.toLowerCase()}`)}`;
+  const og = `${siteConfig.url}/api/og?title=${encodeURIComponent(exampleH1(ex))}`;
   return {
     title: ex.metaTitle,
     description: ex.metaDescription,
@@ -94,7 +94,7 @@ export default async function CvExamplePage({ params }: Props) {
             <div className="mt-8 grid grid-cols-1 lg:grid-cols-[1fr_0.9fr] gap-10 lg:gap-16 items-start">
               <div className="lg:pt-6">
                 <h1 className="font-display text-4xl sm:text-5xl leading-[1.08] font-semibold text-slate-900 dark:text-white [text-wrap:balance] [hyphens:manual]">
-                  Exemple de CV {ex.job.toLowerCase().startsWith('étudiant') ? 'étudiant sans expérience' : ex.job.toLowerCase()}
+                  {exampleH1(ex)}
                 </h1>
                 <p className="mt-5 text-lg text-slate-600 dark:text-slate-300 leading-relaxed max-w-[52ch]">{ex.intro}</p>
                 <div className="mt-8 flex flex-col sm:flex-row gap-3">
@@ -201,7 +201,7 @@ export default async function CvExamplePage({ params }: Props) {
               {others.map((o) => (
                 <li key={o.slug} className="border-b border-slate-200 dark:border-slate-800">
                   <Link href={`/fr/cv/exemples/${o.slug}`} className="flex items-center justify-between py-3.5 font-bold text-slate-800 dark:text-slate-100 hover:text-ink-700 dark:hover:text-ink-300">
-                    CV {o.short.toLowerCase()}
+                    {exampleLabel(o)}
                     <ChevronRight className="w-4 h-4 text-slate-400" aria-hidden="true" />
                   </Link>
                 </li>

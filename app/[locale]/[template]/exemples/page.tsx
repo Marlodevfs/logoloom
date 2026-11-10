@@ -6,7 +6,7 @@ import { siteConfig } from '@/config/site';
 import { HomeHeader } from '@/components/HomeHeader';
 import { SiteFooter } from '@/components/SiteFooter';
 import { CvSheet } from '@/components/home/LiveCvHero';
-import { CV_EXAMPLES_FR } from '@/lib/cv-examples/fr';
+import { CV_EXAMPLES_FR, exampleH1, exampleLabel } from '@/lib/cv-examples/fr';
 import { cvKit } from '@/lib/cv-examples/kit';
 
 interface Props {
@@ -21,7 +21,7 @@ export function generateStaticParams() {
 
 const TITLE = 'Exemples de CV par métier, gratuits en PDF – LogoLoom';
 const DESCRIPTION =
-  'Exemples de CV pour 12 métiers : vendeur, caissier, aide-soignant, serveur, comptable, étudiant… Choisissez-en un, modifiez-le et téléchargez le PDF gratuitement, sans compte.';
+  'Exemples de CV pour 13 métiers et situations : vendeur, caissier, aide-soignant, serveur, comptable, frontalier en Suisse, étudiant… Choisissez-en un, modifiez-le et téléchargez le PDF gratuitement, sans compte.';
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale, template } = await params;
@@ -46,7 +46,7 @@ export default async function CvExamplesHub({ params }: Props) {
     itemListElement: CV_EXAMPLES_FR.map((e, i) => ({
       '@type': 'ListItem',
       position: i + 1,
-      name: `Exemple de CV ${e.short.toLowerCase()}`,
+      name: exampleH1(e),
       url: `${siteConfig.url}/fr/cv/exemples/${e.slug}`,
     })),
   };
@@ -78,7 +78,7 @@ export default async function CvExamplesHub({ params }: Props) {
                   <CvSheet kit={cvKit(e.cv, e.color)} />
                 </span>
                 <span className="mt-3 block font-bold text-slate-900 dark:text-white group-hover:text-ink-700 dark:group-hover:text-ink-300">
-                  CV {e.short.toLowerCase()}
+                  {exampleLabel(e)}
                 </span>
               </Link>
             </li>
