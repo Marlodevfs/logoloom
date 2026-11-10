@@ -13,8 +13,6 @@ import {
   DailyPrioritiesCustomContent,
   MealPlannerCustomContent,
   BudgetTrackerCustomContent,
-  PriceListCustomContent,
-  ClientTrackerCustomContent,
   ChecklistCustomContent,
   CvCustomContent,
   InterfaceLang,
@@ -31,8 +29,6 @@ import {
   DEFAULT_DAILY_PRIORITIES,
   DEFAULT_MEAL_PLANNER,
   DEFAULT_BUDGET_TRACKER,
-  DEFAULT_PRICE_LIST,
-  DEFAULT_CLIENT_TRACKER,
   DEFAULT_CHECKLIST,
 } from './i18n/catalog-data';
 import { DEFAULT_CV } from './i18n/cv-data';
@@ -109,13 +105,7 @@ export function getDefaultBudgetTrackerContent(lang: DocumentLang): BudgetTracke
 
 
 
-export function getDefaultPriceListContent(lang: DocumentLang): PriceListCustomContent {
-  return DEFAULT_PRICE_LIST[lang] || DEFAULT_PRICE_LIST.en;
-}
 
-export function getDefaultClientTrackerContent(lang: DocumentLang): ClientTrackerCustomContent {
-  return DEFAULT_CLIENT_TRACKER[lang] || DEFAULT_CLIENT_TRACKER.en;
-}
 
 export function getDefaultChecklistContent(lang: DocumentLang): ChecklistCustomContent {
   return DEFAULT_CHECKLIST[lang] || DEFAULT_CHECKLIST.en;
@@ -133,8 +123,6 @@ type LocalizedContentKey =
   | 'dailyPrioritiesContent'
   | 'mealPlannerContent'
   | 'budgetTrackerContent'
-  | 'priceListContent'
-  | 'clientTrackerContent'
   | 'checklistContent'
   | 'cvContent';
 
@@ -145,8 +133,6 @@ const LOCALIZED_DEFAULTS: Record<LocalizedContentKey, (lang: DocumentLang) => un
   dailyPrioritiesContent: getDefaultDailyPrioritiesContent,
   mealPlannerContent: getDefaultMealPlannerContent,
   budgetTrackerContent: getDefaultBudgetTrackerContent,
-  priceListContent: getDefaultPriceListContent,
-  clientTrackerContent: getDefaultClientTrackerContent,
   checklistContent: getDefaultChecklistContent,
   cvContent: getDefaultCvContent,
 };
@@ -208,8 +194,6 @@ const VALID_TEMPLATES: TemplateId[] = [
   'daily-priorities',
   'meal-planner',
   'budget-tracker',
-  'price-list',
-  'client-tracker',
   'checklist',
   'cv',
 ];
@@ -228,8 +212,6 @@ export function useBrandKit(initialLang?: InterfaceLang, initialTemplate?: Templ
     dailyPrioritiesContent: getDefaultDailyPrioritiesContent(initialDocLang),
     mealPlannerContent: getDefaultMealPlannerContent(initialDocLang),
     budgetTrackerContent: getDefaultBudgetTrackerContent(initialDocLang),
-    priceListContent: getDefaultPriceListContent(initialDocLang),
-    clientTrackerContent: getDefaultClientTrackerContent(initialDocLang),
     checklistContent: getDefaultChecklistContent(initialDocLang),
     cvContent: getDefaultCvContent(initialDocLang),
   }));
@@ -304,8 +286,6 @@ export function useBrandKit(initialLang?: InterfaceLang, initialTemplate?: Templ
             dailyPrioritiesContent: getDefaultDailyPrioritiesContent(resolvedUiLang as DocumentLang),
             mealPlannerContent: getDefaultMealPlannerContent(resolvedUiLang as DocumentLang),
             budgetTrackerContent: getDefaultBudgetTrackerContent(resolvedUiLang as DocumentLang),
-            priceListContent: getDefaultPriceListContent(resolvedUiLang as DocumentLang),
-            clientTrackerContent: getDefaultClientTrackerContent(resolvedUiLang as DocumentLang),
             checklistContent: getDefaultChecklistContent(resolvedUiLang as DocumentLang),
             cvContent: getDefaultCvContent(resolvedUiLang as DocumentLang),
           }));
@@ -476,10 +456,6 @@ export function useBrandKit(initialLang?: InterfaceLang, initialTemplate?: Templ
         updateBrandKit({ mealPlannerContent: getDefaultMealPlannerContent(lang) });
       } else if (section === 'budget-tracker') {
         updateBrandKit({ budgetTrackerContent: getDefaultBudgetTrackerContent(lang) });
-      } else if (section === 'price-list') {
-        updateBrandKit({ priceListContent: getDefaultPriceListContent(lang) });
-      } else if (section === 'client-tracker') {
-        updateBrandKit({ clientTrackerContent: getDefaultClientTrackerContent(lang) });
       } else if (section === 'checklist') {
         updateBrandKit({ checklistContent: getDefaultChecklistContent(lang) });
       } else if (section === 'cv') {
@@ -495,8 +471,6 @@ export function useBrandKit(initialLang?: InterfaceLang, initialTemplate?: Templ
           dailyPrioritiesContent: getDefaultDailyPrioritiesContent(lang),
           mealPlannerContent: getDefaultMealPlannerContent(lang),
           budgetTrackerContent: getDefaultBudgetTrackerContent(lang),
-          priceListContent: getDefaultPriceListContent(lang),
-          clientTrackerContent: getDefaultClientTrackerContent(lang),
           checklistContent: getDefaultChecklistContent(lang),
           cvContent: getDefaultCvContent(lang),
         });

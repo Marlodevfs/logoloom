@@ -132,7 +132,7 @@ async function main() {
   checkPage('en.html', {
     name: 'EN Homepage',
     expectedLang: 'en',
-    expectedH1: 'Free Printable Planners',
+    expectedH1: 'Your everyday documents',
     expectedCanonical: 'https://logoloom.app/en',
     expectedHreflangs: allLocales,
     mustContain: ['JavaScript is disabled in your browser', '"@type":"WebApplication"', '"@type":"FAQPage"'],
@@ -142,20 +142,20 @@ async function main() {
   checkPage('fr.html', {
     name: 'FR Homepage',
     expectedLang: 'fr',
-    expectedH1: 'Planners et documents professionnels',
+    expectedH1: 'Vos documents du quotidien',
     expectedCanonical: 'https://logoloom.app/fr',
     expectedHreflangs: allLocales,
-    mustContain: ['Questions fréquentes', '"@type":"WebApplication"', '"@type":"FAQPage"'],
+    mustContain: ['À propos de LogoLoom', 'href="/fr/cv"', '"@type":"WebApplication"', '"@type":"FAQPage"'],
     mustNotContain: ['Loading LogoLoom Studio...', 'welcome-packet'],
   });
 
   checkPage('de.html', {
     name: 'DE Homepage',
     expectedLang: 'de',
-    expectedH1: 'Kostenlose druckbare Planer',
+    expectedH1: 'Ihre Alltagsdokumente',
     expectedCanonical: 'https://logoloom.app/de',
     expectedHreflangs: allLocales,
-    mustContain: ['Häufig gestellte Fragen', '"@type":"WebApplication"', '"@type":"FAQPage"'],
+    mustContain: ['Über LogoLoom', 'href="/de/cv"', '"@type":"WebApplication"', '"@type":"FAQPage"'],
     mustNotContain: ['Loading LogoLoom Studio...'],
   });
 

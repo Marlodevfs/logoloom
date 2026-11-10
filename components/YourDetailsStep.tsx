@@ -226,7 +226,7 @@ export const YourDetailsStep: React.FC<YourDetailsStepProps> = ({
   const defaultQrLabel = l.defaultQrLabel;
 
   const isCalendarBased = ['weekly-planner', 'monthly-calendar', 'meal-planner'].includes(activeTemplate);
-  const isFinancial = ['budget-tracker', 'price-list'].includes(activeTemplate);
+  const isFinancial = ['budget-tracker'].includes(activeTemplate);
 
   const handleUrlBlur = () => {
     if (brandKit.qrUrl && brandKit.qrUrl.trim().length > 0) {

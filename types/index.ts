@@ -1,6 +1,6 @@
 export type PaperSize = 'a4' | 'letter';
 
-export type TemplateFamily = 'personal' | 'business';
+export type TemplateFamily = 'career' | 'organisation' | 'home';
 
 export type TemplateId =
   // Personal organization (7)
@@ -12,8 +12,6 @@ export type TemplateId =
   | 'meal-planner'
   | 'budget-tracker'
   // Business (5)
-  | 'price-list'
-  | 'client-tracker'
   | 'checklist'
   // Career (1)
   | 'cv';
@@ -119,33 +117,9 @@ export interface BudgetTrackerCustomContent {
 
 
 
-export interface PriceCategoryCustom {
-  category: string;
-  items: Array<{ name: string; description: string; price: number }>;
-}
 
-export interface PriceListCustomContent {
-  title: string;
-  subtitle: string;
-  categories: PriceCategoryCustom[];
-  notes: string;
-}
 
-export interface ClientSessionItemCustom {
-  date: string;
-  client: string;
-  service: string;
-  duration: string;
-  status: string;
-  notes: string;
-}
 
-export interface ClientTrackerCustomContent {
-  title: string;
-  subtitle: string;
-  sessions: ClientSessionItemCustom[];
-  notes: string;
-}
 
 export interface ChecklistGroupCustom {
   groupName: string;
@@ -231,8 +205,6 @@ export interface BrandKit {
   dailyPrioritiesContent?: DailyPrioritiesCustomContent;
   mealPlannerContent?: MealPlannerCustomContent;
   budgetTrackerContent?: BudgetTrackerCustomContent;
-  priceListContent?: PriceListCustomContent;
-  clientTrackerContent?: ClientTrackerCustomContent;
   checklistContent?: ChecklistCustomContent;
   cvContent?: CvCustomContent;
 }

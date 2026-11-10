@@ -63,20 +63,6 @@ export interface CatalogLabels {
     notesLabel: string;
     footerCategory: string;
   };
-  priceList: {
-    lastUpdatedLabel: string;
-    currencyNote: string;
-    footerCategory: string;
-  };
-  clientTracker: {
-    colDate: string;
-    colClient: string;
-    colService: string;
-    colDuration: string;
-    colStatus: string;
-    colNotes: string;
-    footerCategory: string;
-  };
   checklist: {
     targetDateLabel: string;
     projectLabel: string;
@@ -148,20 +134,6 @@ export const CATALOG_LABELS: Record<DocumentLang, CatalogLabels> = {
       notesLabel: 'Notes de budget :',
       footerCategory: 'Finances • Budget mensuel',
     },
-    priceList: {
-      lastUpdatedLabel: 'Mise à jour :',
-      currencyNote: 'Tous les prix en',
-      footerCategory: 'Document professionnel • Grille tarifaire',
-    },
-    clientTracker: {
-      colDate: 'Date',
-      colClient: 'Client / Structure',
-      colService: 'Prestation / Sujet',
-      colDuration: 'Durée',
-      colStatus: 'Statut',
-      colNotes: 'Points clés / Suite',
-      footerCategory: 'Document professionnel • Suivi clients',
-    },
     checklist: {
       targetDateLabel: 'Date cible :',
       projectLabel: 'Projet / Cadre :',
@@ -230,20 +202,6 @@ export const CATALOG_LABELS: Record<DocumentLang, CatalogLabels> = {
       netBalanceLabel: 'Net Balance (Savings):',
       notesLabel: 'Budget Notes:',
       footerCategory: 'Finance • Monthly Budget',
-    },
-    priceList: {
-      lastUpdatedLabel: 'Effective:',
-      currencyNote: 'All prices in',
-      footerCategory: 'Business Document • Price List',
-    },
-    clientTracker: {
-      colDate: 'Date',
-      colClient: 'Client / Account',
-      colService: 'Service / Topic',
-      colDuration: 'Duration',
-      colStatus: 'Status',
-      colNotes: 'Key Takeaways / Next Steps',
-      footerCategory: 'Business Document • Client Sessions',
     },
     checklist: {
       targetDateLabel: 'Target Date:',
@@ -314,20 +272,6 @@ export const CATALOG_LABELS: Record<DocumentLang, CatalogLabels> = {
       notesLabel: 'Budget-Notizen:',
       footerCategory: 'Finanzen • Monatsbudget',
     },
-    priceList: {
-      lastUpdatedLabel: 'Gültig ab:',
-      currencyNote: 'Alle Preise in',
-      footerCategory: 'Geschäftsdokument • Preisliste',
-    },
-    clientTracker: {
-      colDate: 'Datum',
-      colClient: 'Kunde / Organisation',
-      colService: 'Leistung / Thema',
-      colDuration: 'Dauer',
-      colStatus: 'Status',
-      colNotes: 'Wichtige Punkte / Nächste Schritte',
-      footerCategory: 'Geschäftsdokument • Kundensitzungen',
-    },
     checklist: {
       targetDateLabel: 'Zieldatum:',
       projectLabel: 'Projekt / Kontext:',
@@ -396,20 +340,6 @@ export const CATALOG_LABELS: Record<DocumentLang, CatalogLabels> = {
       netBalanceLabel: 'Saldo neto (Ahorro):',
       notesLabel: 'Notas de presupuesto:',
       footerCategory: 'Finanzas • Presupuesto mensual',
-    },
-    priceList: {
-      lastUpdatedLabel: 'Actualizado:',
-      currencyNote: 'Todos los precios en',
-      footerCategory: 'Documento profesional • Lista de precios',
-    },
-    clientTracker: {
-      colDate: 'Fecha',
-      colClient: 'Cliente / Empresa',
-      colService: 'Servicio / Tema',
-      colDuration: 'Duración',
-      colStatus: 'Estado',
-      colNotes: 'Puntos clave / Próximos pasos',
-      footerCategory: 'Documento profesional • Sesiones clientes',
     },
     checklist: {
       targetDateLabel: 'Fecha objetivo:',
@@ -480,20 +410,6 @@ export const CATALOG_LABELS: Record<DocumentLang, CatalogLabels> = {
       notesLabel: 'Note di bilancio:',
       footerCategory: 'Finanze • Budget mensile',
     },
-    priceList: {
-      lastUpdatedLabel: 'Aggiornato:',
-      currencyNote: 'Tutti i prezzi in',
-      footerCategory: 'Documento aziendale • Listino prezzi',
-    },
-    clientTracker: {
-      colDate: 'Data',
-      colClient: 'Cliente / Organizzazione',
-      colService: 'Servizio / Argomento',
-      colDuration: 'Durata',
-      colStatus: 'Stato',
-      colNotes: 'Punti chiave / Prossimi passi',
-      footerCategory: 'Documento aziendale • Registro clienti',
-    },
     checklist: {
       targetDateLabel: 'Data obiettivo:',
       projectLabel: 'Progetto / Ambito:',
@@ -562,20 +478,6 @@ export const CATALOG_LABELS: Record<DocumentLang, CatalogLabels> = {
       netBalanceLabel: 'Saldo líquido (Poupança):',
       notesLabel: 'Notas de orçamento:',
       footerCategory: 'Finanças • Orçamento mensal',
-    },
-    priceList: {
-      lastUpdatedLabel: 'Atualizado:',
-      currencyNote: 'Todos os preços em',
-      footerCategory: 'Documento comercial • Tabela de preços',
-    },
-    clientTracker: {
-      colDate: 'Data',
-      colClient: 'Cliente / Empresa',
-      colService: 'Serviço / Tema',
-      colDuration: 'Duração',
-      colStatus: 'Status',
-      colNotes: 'Pontos-chave / Próximos passos',
-      footerCategory: 'Documento comercial • Atendimentos',
     },
     checklist: {
       targetDateLabel: 'Data-alvo:',

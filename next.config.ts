@@ -19,15 +19,15 @@ const nextConfig: NextConfig = {
   },
   async redirects() {
     return [
-      // Invoice & quote templates were removed (Nov 2026): send old links and
+      // Invoice, quote, price list and client tracker templates were removed (Nov 2026): send old links and
       // indexed pages to the locale home instead of a 404.
       {
-        source: '/:locale(en|fr|de|es|it|pt)/:tpl(invoice|quote)',
+        source: '/:locale(en|fr|de|es|it|pt)/:tpl(invoice|quote|price-list|client-tracker)',
         destination: '/:locale',
         permanent: true,
       },
       {
-        source: '/:tpl(invoice|quote)',
+        source: '/:tpl(invoice|quote|price-list|client-tracker)',
         destination: '/',
         permanent: true,
       },
