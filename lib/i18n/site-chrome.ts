@@ -35,7 +35,7 @@ export interface SiteChromeStrings {
 
 export const SITE_CHROME: Record<InterfaceLang, SiteChromeStrings> = {
   en: {
-    slogan: 'Your everyday documents, ready to print or send. Free, no account, nothing leaves your browser.',
+    slogan: 'The free CV maker with no subscription and no account. Your CV never leaves your browser.',
     aboutTitle: 'About LogoLoom and our printable documents',
     categoryPersonal: 'Planner',
     categoryBusiness: 'Business',
@@ -76,7 +76,7 @@ export const SITE_CHROME: Record<InterfaceLang, SiteChromeStrings> = {
     },
   },
   fr: {
-    slogan: 'Vos documents du quotidien, prêts à imprimer ou à envoyer. Gratuit, sans compte, rien ne quitte votre navigateur.',
+    slogan: 'Le créateur de CV gratuit, sans abonnement et sans compte. Votre CV ne quitte jamais votre navigateur.',
     aboutTitle: 'À propos de LogoLoom et de nos documents à imprimer',
     categoryPersonal: 'Organisation',
     categoryBusiness: 'Pro',
@@ -117,7 +117,7 @@ export const SITE_CHROME: Record<InterfaceLang, SiteChromeStrings> = {
     },
   },
   de: {
-    slogan: 'Ihre Alltagsdokumente, bereit zum Drucken oder Versenden. Kostenlos, ohne Konto, nichts verlässt Ihren Browser.',
+    slogan: 'Der kostenlose Lebenslauf-Generator, ohne Abo und ohne Konto. Ihr Lebenslauf verlässt nie Ihren Browser.',
     aboutTitle: 'Über LogoLoom und unsere druckbaren Dokumente',
     categoryPersonal: 'Planer',
     categoryBusiness: 'Business',
@@ -158,7 +158,7 @@ export const SITE_CHROME: Record<InterfaceLang, SiteChromeStrings> = {
     },
   },
   es: {
-    slogan: 'Tus documentos del día a día, listos para imprimir o enviar. Gratis, sin cuenta, nada sale de tu navegador.',
+    slogan: 'El creador de CV gratuito, sin suscripción y sin cuenta. Tu CV nunca sale de tu navegador.',
     aboutTitle: 'Sobre LogoLoom y nuestros documentos imprimibles',
     categoryPersonal: 'Organización',
     categoryBusiness: 'Negocio',
@@ -199,7 +199,7 @@ export const SITE_CHROME: Record<InterfaceLang, SiteChromeStrings> = {
     },
   },
   it: {
-    slogan: 'I tuoi documenti di tutti i giorni, pronti da stampare o inviare. Gratis, senza account, nulla lascia il browser.',
+    slogan: 'Il creatore di CV gratuito, senza abbonamento e senza account. Il tuo CV non lascia mai il browser.',
     aboutTitle: 'LogoLoom e i nostri documenti stampabili',
     categoryPersonal: 'Planner',
     categoryBusiness: 'Lavoro',
@@ -240,7 +240,7 @@ export const SITE_CHROME: Record<InterfaceLang, SiteChromeStrings> = {
     },
   },
   pt: {
-    slogan: 'Os seus documentos do dia a dia, prontos a imprimir ou enviar. Grátis, sem conta, nada sai do seu navegador.',
+    slogan: 'O criador de CV gratuito, sem assinatura e sem conta. O seu CV nunca sai do seu navegador.',
     aboutTitle: 'Sobre a LogoLoom e os nossos documentos para imprimir',
     categoryPersonal: 'Organização',
     categoryBusiness: 'Negócios',

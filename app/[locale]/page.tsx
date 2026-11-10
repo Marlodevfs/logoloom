@@ -3,12 +3,13 @@ import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import { siteConfig } from '@/config/site';
 import { LOCALES_METADATA, getHreflangAlternates } from '@/lib/i18n/meta';
-import { InterfaceLang, TemplateFamily, TemplateId } from '@/types';
+import { DocumentLang, InterfaceLang } from '@/types';
 import { HomeHeader } from '@/components/HomeHeader';
 import { SiteFooter } from '@/components/SiteFooter';
 import { getSiteChrome } from '@/lib/i18n/site-chrome';
 import { CATALOG, CATEGORY_COPY } from '@/lib/catalog';
-import { CheckCircle2, FileText, HelpCircle, ArrowRight, CalendarDays, House } from 'lucide-react';
+import { ChevronRight, Plus } from 'lucide-react';
+import { LiveCvHero, CvLayoutsShowcase, type LiveCvHeroCopy } from '@/components/home/LiveCvHero';
 
 interface Props {
   params: Promise<{ locale: string }>;
@@ -78,123 +79,426 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
-const HOME_I18N: Record<
-  InterfaceLang,
-  {
-    h1: string;
-    intro: string;
-    trust: [string, string, string];
-    otherTools: string;
-    aboutTitle: string;
-    about: string[];
-    faqs: { q: string; a: string }[];
-  }
-> = {
-  fr: {
-    h1: 'Vos documents du quotidien, prêts à imprimer ou à envoyer',
-    intro: 'CV, plannings, menus, budget : remplissez, choisissez votre couleur, téléchargez un PDF propre. Gratuit et sans compte.',
-    trust: ['Gratuit, sans abonnement', 'Sans compte', 'Rien ne quitte votre navigateur'],
-    otherTools: 'Aussi dans cette rubrique',
-    aboutTitle: 'À propos de LogoLoom',
-    about: [
-      'LogoLoom rassemble les documents que l’on remplit dans la vie de tous les jours : un CV pour chercher un emploi, des plannings pour s’organiser, des menus, un budget et des checklists pour la maison. Chaque outil affiche un aperçu en direct et produit un PDF net, en A4 ou en US Letter.',
-      'Tout se passe dans votre navigateur : vos textes, votre photo et vos choix ne sont jamais envoyés sur nos serveurs, et il n’y a pas de compte à créer. Les outils sont gratuits, sans essai qui se transforme en abonnement.',
-    ],
-    faqs: [
-      { q: 'LogoLoom est-il vraiment gratuit ?', a: 'Oui. Vous pouvez créer et télécharger vos documents gratuitement, sans compte et sans abonnement.' },
-      { q: 'Où sont stockées mes données ?', a: 'Uniquement dans votre navigateur. Rien n’est envoyé sur nos serveurs.' },
-      { q: 'Mon CV sera-t-il lu par les logiciels de recrutement ?', a: 'Oui. Le PDF contient du vrai texte, pas une image, donc les logiciels de tri des candidatures peuvent le lire.' },
-      { q: 'Dans quels formats sont les PDF ?', a: 'A4 ou US Letter, en vectoriel : ils restent nets à l’impression comme à l’écran.' },
-    ],
-  },
-  en: {
-    h1: 'Your everyday documents, ready to print or send',
-    intro: 'CVs, planners, meal plans, budgets: fill them in, pick your colour, download a clean PDF. Free, no account.',
-    trust: ['Free, no subscription', 'No account', 'Nothing leaves your browser'],
-    otherTools: 'Also in this section',
-    aboutTitle: 'About LogoLoom',
-    about: [
-      'LogoLoom brings together the documents people fill in every day: a CV to find a job, planners to get organised, meal plans, a budget and checklists for the home. Every tool shows a live preview and produces a sharp PDF, in A4 or US Letter.',
-      'Everything happens in your browser: your text, your photo and your choices are never sent to our servers, and there is no account to create. The tools are free, with no trial that turns into a subscription.',
-    ],
-    faqs: [
-      { q: 'Is LogoLoom really free?', a: 'Yes. You can create and download your documents for free, with no account and no subscription.' },
-      { q: 'Where is my data stored?', a: 'Only in your browser. Nothing is sent to our servers.' },
-      { q: 'Can recruiting software read my CV?', a: 'Yes. The PDF contains real text, not an image, so applicant tracking systems can read it.' },
-      { q: 'What formats are the PDFs?', a: 'A4 or US Letter, in vector format: sharp on paper and on screen.' },
-    ],
-  },
-  de: {
-    h1: 'Ihre Alltagsdokumente, bereit zum Drucken oder Versenden',
-    intro: 'Lebenslauf, Planer, Essenspläne, Budget: ausfüllen, Farbe wählen, sauberes PDF herunterladen. Kostenlos, ohne Konto.',
-    trust: ['Kostenlos, ohne Abo', 'Ohne Konto', 'Nichts verlässt Ihren Browser'],
-    otherTools: 'Ebenfalls in diesem Bereich',
-    aboutTitle: 'Über LogoLoom',
-    about: [
-      'LogoLoom vereint die Dokumente, die man im Alltag ausfüllt: einen Lebenslauf für die Jobsuche, Planer zur Organisation, Essenspläne, ein Budget und Checklisten für den Haushalt. Jedes Tool zeigt eine Live-Vorschau und erzeugt ein scharfes PDF in A4 oder US Letter.',
-      'Alles passiert in Ihrem Browser: Texte, Foto und Einstellungen werden nie an unsere Server gesendet, und es gibt kein Konto. Die Tools sind kostenlos, ohne Probeabo, das zum Abo wird.',
-    ],
-    faqs: [
-      { q: 'Ist LogoLoom wirklich kostenlos?', a: 'Ja. Sie können Ihre Dokumente kostenlos erstellen und herunterladen, ohne Konto und ohne Abo.' },
-      { q: 'Wo werden meine Daten gespeichert?', a: 'Nur in Ihrem Browser. Nichts wird an unsere Server gesendet.' },
-      { q: 'Können Bewerbungssysteme meinen Lebenslauf lesen?', a: 'Ja. Das PDF enthält echten Text, kein Bild.' },
-      { q: 'In welchen Formaten sind die PDFs?', a: 'A4 oder US Letter, als Vektor: scharf auf Papier und Bildschirm.' },
-    ],
-  },
-  es: {
-    h1: 'Tus documentos del día a día, listos para imprimir o enviar',
-    intro: 'CV, planificadores, menús, presupuesto: rellena, elige tu color y descarga un PDF limpio. Gratis y sin cuenta.',
-    trust: ['Gratis, sin suscripción', 'Sin cuenta', 'Nada sale de tu navegador'],
-    otherTools: 'También en esta sección',
-    aboutTitle: 'Sobre LogoLoom',
-    about: [
-      'LogoLoom reúne los documentos que se rellenan en el día a día: un CV para buscar empleo, planificadores para organizarse, menús, un presupuesto y checklists para casa. Cada herramienta muestra una vista previa en directo y genera un PDF nítido, en A4 o Carta.',
-      'Todo ocurre en tu navegador: tus textos, tu foto y tus elecciones nunca se envían a nuestros servidores, y no hay que crear cuenta. Las herramientas son gratuitas, sin pruebas que se convierten en suscripción.',
-    ],
-    faqs: [
-      { q: '¿LogoLoom es realmente gratis?', a: 'Sí. Puedes crear y descargar tus documentos gratis, sin cuenta y sin suscripción.' },
-      { q: '¿Dónde se guardan mis datos?', a: 'Solo en tu navegador. No se envía nada a nuestros servidores.' },
-      { q: '¿Los programas de selección pueden leer mi CV?', a: 'Sí. El PDF contiene texto real, no una imagen.' },
-      { q: '¿En qué formatos están los PDF?', a: 'A4 o Carta, en vectorial: nítidos en papel y en pantalla.' },
-    ],
-  },
-  it: {
-    h1: 'I tuoi documenti di tutti i giorni, pronti da stampare o inviare',
-    intro: 'CV, planner, menù, budget: compila, scegli il colore e scarica un PDF pulito. Gratis e senza account.',
-    trust: ['Gratis, senza abbonamento', 'Senza account', 'Nulla lascia il browser'],
-    otherTools: 'Anche in questa sezione',
-    aboutTitle: 'Informazioni su LogoLoom',
-    about: [
-      'LogoLoom riunisce i documenti che si compilano ogni giorno: un CV per cercare lavoro, planner per organizzarsi, menù, un budget e checklist per la casa. Ogni strumento mostra un’anteprima in tempo reale e genera un PDF nitido, in A4 o Letter.',
-      'Tutto avviene nel tuo browser: testi, foto e scelte non vengono mai inviati ai nostri server, e non serve un account. Gli strumenti sono gratuiti, senza prove che diventano abbonamenti.',
-    ],
-    faqs: [
-      { q: 'LogoLoom è davvero gratis?', a: 'Sì. Puoi creare e scaricare i tuoi documenti gratis, senza account e senza abbonamento.' },
-      { q: 'Dove vengono salvati i miei dati?', a: 'Solo nel tuo browser. Nulla viene inviato ai nostri server.' },
-      { q: 'I software di selezione possono leggere il mio CV?', a: 'Sì. Il PDF contiene testo reale, non un’immagine.' },
-      { q: 'In che formati sono i PDF?', a: 'A4 o Letter, vettoriali: nitidi su carta e su schermo.' },
-    ],
-  },
-  pt: {
-    h1: 'Os seus documentos do dia a dia, prontos a imprimir ou enviar',
-    intro: 'CV, planeadores, ementas, orçamento: preencha, escolha a cor e descarregue um PDF limpo. Grátis e sem conta.',
-    trust: ['Grátis, sem assinatura', 'Sem conta', 'Nada sai do seu navegador'],
-    otherTools: 'Também nesta secção',
-    aboutTitle: 'Sobre o LogoLoom',
-    about: [
-      'O LogoLoom reúne os documentos que se preenchem no dia a dia: um CV para procurar emprego, planeadores para se organizar, ementas, um orçamento e checklists para a casa. Cada ferramenta mostra uma pré-visualização em direto e gera um PDF nítido, em A4 ou Letter.',
-      'Tudo acontece no seu navegador: textos, foto e escolhas nunca são enviados para os nossos servidores, e não é preciso criar conta. As ferramentas são gratuitas, sem testes que se transformam em assinatura.',
-    ],
-    faqs: [
-      { q: 'O LogoLoom é mesmo grátis?', a: 'Sim. Pode criar e descarregar os seus documentos grátis, sem conta e sem assinatura.' },
-      { q: 'Onde ficam os meus dados?', a: 'Apenas no seu navegador. Nada é enviado para os nossos servidores.' },
-      { q: 'O software de recrutamento consegue ler o meu CV?', a: 'Sim. O PDF contém texto real, não uma imagem.' },
-      { q: 'Em que formatos estão os PDF?', a: 'A4 ou Letter, em vetorial: nítidos em papel e no ecrã.' },
-    ],
-  },
+type HomeCopy = LiveCvHeroCopy & {
+  stepsTitle: string;
+  steps: { title: string; desc: string }[];
+  layoutsTitle: string;
+  layoutsLead: string;
+  captions: { sidebar: string; classic: string };
+  honestTitle: string;
+  honestLead: string;
+  honest: string[];
+  toolsTitle: string;
+  toolsLead: string;
+  aboutTitle: string;
+  about: string[];
+  faqs: { q: string; a: string }[];
 };
 
-const CATEGORY_ICONS = { career: FileText, organisation: CalendarDays, home: House } as const;
+const HOME_I18N: Record<InterfaceLang, HomeCopy> = {
+  fr: {
+    "h1": "Un CV propre en dix minutes.",
+    "lead": "Remplissez, choisissez une mise en page, téléchargez le PDF. Gratuit, sans compte, sans abonnement.",
+    "nameLabel": "Commencez par votre nom",
+    "namePlaceholder": "Camille Martin",
+    "cta": "Créer mon CV",
+    "facts": [
+        "Le PDF contient du vrai texte, lisible par les logiciels des recruteurs",
+        "Votre CV reste dans votre navigateur, rien n’est envoyé",
+        "Aucune carte bancaire demandée, à aucun moment"
+    ],
+    "sheetCaption": "Aperçu réel : le CV se met à jour pendant que vous tapez votre nom.",
+    "stepsTitle": "Comment ça se passe",
+    "steps": [
+        {
+            "title": "Remplissez vos informations",
+            "desc": "Expériences, formation, compétences et langues, dans un formulaire en six étapes. La photo est facultative."
+        },
+        {
+            "title": "Choisissez la mise en page",
+            "desc": "Colonne latérale ou classique, et la couleur qui vous ressemble. L’aperçu suit chaque modification."
+        },
+        {
+            "title": "Téléchargez le PDF",
+            "desc": "Un fichier A4 nommé à votre nom, prêt à joindre à une candidature."
+        }
+    ],
+    "layoutsTitle": "Deux mises en page, faites pour être lues",
+    "layoutsLead": "Des CV sobres, sur une page, avec une hiérarchie claire : le recruteur trouve ce qu’il cherche en quelques secondes.",
+    "captions": {
+        "sidebar": "Colonne latérale : contact, compétences et langues à gauche, parcours à droite.",
+        "classic": "Classique : tout sur une colonne, pour les parcours longs ou très textuels."
+    },
+    "honestTitle": "Ce que vous ne trouverez pas ici",
+    "honestLead": "Beaucoup de créateurs de CV « gratuits » se rattrapent au moment du téléchargement. Ici, non.",
+    "honest": [
+        "Un essai à 1,95 € qui devient un abonnement à 25 € par mois",
+        "Un bouton « Télécharger » qui demande une carte bancaire",
+        "Un filigrane ou un logo sur votre CV",
+        "Un compte à créer avant de voir le résultat"
+    ],
+    "toolsTitle": "Autres outils gratuits",
+    "toolsLead": "Des documents à imprimer, avec la même règle : gratuit et sans compte.",
+    "aboutTitle": "À propos de LogoLoom",
+    "about": [
+        "LogoLoom est un créateur de CV gratuit. Vous remplissez un formulaire, vous voyez votre CV prendre forme en direct, et vous téléchargez un PDF propre, en A4 ou en US Letter.",
+        "Tout se passe dans votre navigateur : vos informations et votre photo ne sont jamais envoyées sur nos serveurs. Le site propose aussi quelques outils d’organisation à imprimer, gratuits eux aussi."
+    ],
+    "faqs": [
+        {
+            "q": "Est-ce vraiment gratuit ?",
+            "a": "Oui. Vous créez et téléchargez votre CV gratuitement, sans compte, sans filigrane et sans abonnement."
+        },
+        {
+            "q": "Mon CV sera-t-il lu par les logiciels de recrutement ?",
+            "a": "Oui. Le PDF contient du vrai texte sélectionnable, pas une image : les logiciels de tri des candidatures peuvent le lire."
+        },
+        {
+            "q": "Où sont stockées mes informations ?",
+            "a": "Uniquement dans votre navigateur, sur votre appareil. Rien n’est envoyé sur nos serveurs."
+        },
+        {
+            "q": "Faut-il mettre une photo ?",
+            "a": "Ce n’est pas obligatoire en France. Vous pouvez en ajouter une ou non, le CV s’adapte."
+        }
+    ]
+},
+  en: {
+    "h1": "A clean CV in ten minutes.",
+    "lead": "Fill it in, pick a layout, download the PDF. Free, no account, no subscription.",
+    "nameLabel": "Start with your name",
+    "namePlaceholder": "Alex Morgan",
+    "cta": "Create my CV",
+    "facts": [
+        "The PDF holds real text that recruiting software can read",
+        "Your CV stays in your browser, nothing is uploaded",
+        "No credit card, at any point"
+    ],
+    "sheetCaption": "Real preview: the CV updates as you type your name.",
+    "stepsTitle": "How it works",
+    "steps": [
+        {
+            "title": "Fill in your details",
+            "desc": "Experience, education, skills and languages, in a six-step form. A photo is optional."
+        },
+        {
+            "title": "Pick a layout",
+            "desc": "Sidebar or classic, in the colour that suits you. The preview follows every change."
+        },
+        {
+            "title": "Download the PDF",
+            "desc": "An A4 file named after you, ready to attach to an application."
+        }
+    ],
+    "layoutsTitle": "Two layouts, made to be read",
+    "layoutsLead": "Plain one-page CVs with a clear hierarchy, so a recruiter finds what they need in seconds.",
+    "captions": {
+        "sidebar": "Sidebar: contact, skills and languages on the left, your path on the right.",
+        "classic": "Classic: a single column, for long or text-heavy careers."
+    },
+    "honestTitle": "What you won’t find here",
+    "honestLead": "Many “free” CV builders make their money at the download button. Not this one.",
+    "honest": [
+        "A $1.95 trial that turns into a $25 monthly subscription",
+        "A Download button that asks for a credit card",
+        "A watermark or logo on your CV",
+        "An account to create before you see the result"
+    ],
+    "toolsTitle": "Other free tools",
+    "toolsLead": "Printable documents, same rule: free and no account.",
+    "aboutTitle": "About LogoLoom",
+    "about": [
+        "LogoLoom is a free CV maker. You fill in a form, watch your CV take shape live, and download a clean PDF in A4 or US Letter.",
+        "Everything happens in your browser: your details and photo are never sent to our servers. The site also offers a few printable planning tools, free as well."
+    ],
+    "faqs": [
+        {
+            "q": "Is it really free?",
+            "a": "Yes. You create and download your CV for free, with no account, no watermark and no subscription."
+        },
+        {
+            "q": "Can recruiting software read my CV?",
+            "a": "Yes. The PDF holds real, selectable text, not an image, so applicant tracking systems can read it."
+        },
+        {
+            "q": "Where is my information stored?",
+            "a": "Only in your browser, on your device. Nothing is sent to our servers."
+        },
+        {
+            "q": "Should I add a photo?",
+            "a": "It depends on the country. You can add one or leave it out; the CV adapts."
+        }
+    ]
+},
+  de: {
+    "h1": "Ein sauberer Lebenslauf in zehn Minuten.",
+    "lead": "Ausfüllen, Layout wählen, PDF herunterladen. Kostenlos, ohne Konto, ohne Abo.",
+    "nameLabel": "Beginnen Sie mit Ihrem Namen",
+    "namePlaceholder": "Lena Schneider",
+    "cta": "Lebenslauf erstellen",
+    "facts": [
+        "Das PDF enthält echten Text, lesbar für Bewerbungssoftware",
+        "Ihr Lebenslauf bleibt in Ihrem Browser, nichts wird hochgeladen",
+        "Keine Kreditkarte, zu keinem Zeitpunkt"
+    ],
+    "sheetCaption": "Echte Vorschau: Der Lebenslauf ändert sich, während Sie Ihren Namen tippen.",
+    "stepsTitle": "So funktioniert es",
+    "steps": [
+        {
+            "title": "Angaben ausfüllen",
+            "desc": "Berufserfahrung, Ausbildung, Kenntnisse und Sprachen in sechs Schritten. Foto optional."
+        },
+        {
+            "title": "Layout wählen",
+            "desc": "Seitenleiste oder klassisch, in Ihrer Farbe. Die Vorschau folgt jeder Änderung."
+        },
+        {
+            "title": "PDF herunterladen",
+            "desc": "Eine A4-Datei mit Ihrem Namen, bereit für die Bewerbung."
+        }
+    ],
+    "layoutsTitle": "Zwei Layouts, gemacht zum Lesen",
+    "layoutsLead": "Schlichte einseitige Lebensläufe mit klarer Gliederung: Personaler finden in Sekunden, was sie suchen.",
+    "captions": {
+        "sidebar": "Seitenleiste: Kontakt, Kenntnisse und Sprachen links, Werdegang rechts.",
+        "classic": "Klassisch: eine Spalte, für lange oder textreiche Werdegänge."
+    },
+    "honestTitle": "Was Sie hier nicht finden",
+    "honestLead": "Viele „kostenlose“ Lebenslauf-Tools kassieren beim Herunterladen. Hier nicht.",
+    "honest": [
+        "Ein Test für 1,95 €, der zum Abo für 25 € im Monat wird",
+        "Einen Download-Button, der nach der Kreditkarte fragt",
+        "Ein Wasserzeichen oder Logo auf Ihrem Lebenslauf",
+        "Ein Konto, bevor Sie das Ergebnis sehen"
+    ],
+    "toolsTitle": "Weitere kostenlose Tools",
+    "toolsLead": "Dokumente zum Ausdrucken, gleiche Regel: kostenlos und ohne Konto.",
+    "aboutTitle": "Über LogoLoom",
+    "about": [
+        "LogoLoom ist ein kostenloser Lebenslauf-Generator. Sie füllen ein Formular aus, sehen Ihren Lebenslauf live entstehen und laden ein sauberes PDF in A4 oder US Letter herunter.",
+        "Alles passiert in Ihrem Browser: Angaben und Foto werden nie an unsere Server gesendet. Dazu gibt es einige kostenlose Planungs-Tools zum Ausdrucken."
+    ],
+    "faqs": [
+        {
+            "q": "Ist das wirklich kostenlos?",
+            "a": "Ja. Erstellen und Herunterladen sind kostenlos, ohne Konto, ohne Wasserzeichen und ohne Abo."
+        },
+        {
+            "q": "Kann Bewerbungssoftware meinen Lebenslauf lesen?",
+            "a": "Ja. Das PDF enthält echten, markierbaren Text, kein Bild."
+        },
+        {
+            "q": "Wo werden meine Angaben gespeichert?",
+            "a": "Nur in Ihrem Browser, auf Ihrem Gerät. Nichts wird an unsere Server gesendet."
+        },
+        {
+            "q": "Sollte ich ein Foto hinzufügen?",
+            "a": "Das ist optional. Der Lebenslauf passt sich an, mit oder ohne Foto."
+        }
+    ]
+},
+  es: {
+    "h1": "Un CV limpio en diez minutos.",
+    "lead": "Rellénalo, elige un diseño, descarga el PDF. Gratis, sin cuenta, sin suscripción.",
+    "nameLabel": "Empieza por tu nombre",
+    "namePlaceholder": "Lucía García",
+    "cta": "Crear mi CV",
+    "facts": [
+        "El PDF contiene texto real, legible por los programas de selección",
+        "Tu CV se queda en tu navegador, no se envía nada",
+        "Ninguna tarjeta bancaria, en ningún momento"
+    ],
+    "sheetCaption": "Vista previa real: el CV cambia mientras escribes tu nombre.",
+    "stepsTitle": "Cómo funciona",
+    "steps": [
+        {
+            "title": "Rellena tus datos",
+            "desc": "Experiencia, formación, competencias e idiomas, en un formulario de seis pasos. Foto opcional."
+        },
+        {
+            "title": "Elige el diseño",
+            "desc": "Columna lateral o clásico, con tu color. La vista previa sigue cada cambio."
+        },
+        {
+            "title": "Descarga el PDF",
+            "desc": "Un archivo A4 con tu nombre, listo para adjuntar a una candidatura."
+        }
+    ],
+    "layoutsTitle": "Dos diseños, pensados para leerse",
+    "layoutsLead": "CV sobrios de una página con una jerarquía clara: el reclutador encuentra lo que busca en segundos.",
+    "captions": {
+        "sidebar": "Columna lateral: contacto, competencias e idiomas a la izquierda, trayectoria a la derecha.",
+        "classic": "Clásico: una sola columna, para trayectorias largas o con mucho texto."
+    },
+    "honestTitle": "Lo que no encontrarás aquí",
+    "honestLead": "Muchos creadores de CV «gratis» cobran en el botón de descarga. Aquí no.",
+    "honest": [
+        "Una prueba de 1,95 € que se convierte en una suscripción de 25 € al mes",
+        "Un botón de descarga que pide la tarjeta",
+        "Una marca de agua o un logo en tu CV",
+        "Una cuenta obligatoria antes de ver el resultado"
+    ],
+    "toolsTitle": "Otras herramientas gratis",
+    "toolsLead": "Documentos para imprimir, misma regla: gratis y sin cuenta.",
+    "aboutTitle": "Sobre LogoLoom",
+    "about": [
+        "LogoLoom es un creador de CV gratuito. Rellenas un formulario, ves tu CV tomar forma en directo y descargas un PDF limpio en A4 o Carta.",
+        "Todo ocurre en tu navegador: tus datos y tu foto nunca se envían a nuestros servidores. También hay algunas herramientas de organización para imprimir, gratis."
+    ],
+    "faqs": [
+        {
+            "q": "¿Es realmente gratis?",
+            "a": "Sí. Creas y descargas tu CV gratis, sin cuenta, sin marca de agua y sin suscripción."
+        },
+        {
+            "q": "¿Lo pueden leer los programas de selección?",
+            "a": "Sí. El PDF contiene texto real seleccionable, no una imagen."
+        },
+        {
+            "q": "¿Dónde se guardan mis datos?",
+            "a": "Solo en tu navegador, en tu dispositivo. No se envía nada a nuestros servidores."
+        },
+        {
+            "q": "¿Hay que poner foto?",
+            "a": "Es opcional. El CV se adapta con o sin foto."
+        }
+    ]
+},
+  it: {
+    "h1": "Un CV pulito in dieci minuti.",
+    "lead": "Compila, scegli un layout, scarica il PDF. Gratis, senza account, senza abbonamento.",
+    "nameLabel": "Inizia dal tuo nome",
+    "namePlaceholder": "Giulia Rossi",
+    "cta": "Crea il mio CV",
+    "facts": [
+        "Il PDF contiene testo reale, leggibile dai software di selezione",
+        "Il tuo CV resta nel browser, non viene inviato nulla",
+        "Nessuna carta di credito, in nessun momento"
+    ],
+    "sheetCaption": "Anteprima reale: il CV cambia mentre scrivi il tuo nome.",
+    "stepsTitle": "Come funziona",
+    "steps": [
+        {
+            "title": "Inserisci i tuoi dati",
+            "desc": "Esperienze, formazione, competenze e lingue, in un modulo in sei passi. Foto facoltativa."
+        },
+        {
+            "title": "Scegli il layout",
+            "desc": "Colonna laterale o classico, nel colore che preferisci. L’anteprima segue ogni modifica."
+        },
+        {
+            "title": "Scarica il PDF",
+            "desc": "Un file A4 con il tuo nome, pronto da allegare a una candidatura."
+        }
+    ],
+    "layoutsTitle": "Due layout, fatti per essere letti",
+    "layoutsLead": "CV sobri di una pagina con una gerarchia chiara: il selezionatore trova ciò che cerca in pochi secondi.",
+    "captions": {
+        "sidebar": "Colonna laterale: contatti, competenze e lingue a sinistra, percorso a destra.",
+        "classic": "Classico: una sola colonna, per percorsi lunghi o ricchi di testo."
+    },
+    "honestTitle": "Cosa non troverai qui",
+    "honestLead": "Molti creatori di CV «gratis» si fanno pagare al momento del download. Qui no.",
+    "honest": [
+        "Una prova da 1,95 € che diventa un abbonamento da 25 € al mese",
+        "Un pulsante Scarica che chiede la carta",
+        "Una filigrana o un logo sul tuo CV",
+        "Un account obbligatorio prima di vedere il risultato"
+    ],
+    "toolsTitle": "Altri strumenti gratis",
+    "toolsLead": "Documenti da stampare, stessa regola: gratis e senza account.",
+    "aboutTitle": "Informazioni su LogoLoom",
+    "about": [
+        "LogoLoom è un creatore di CV gratuito. Compili un modulo, vedi il CV prendere forma in tempo reale e scarichi un PDF pulito in A4 o Letter.",
+        "Tutto avviene nel tuo browser: dati e foto non vengono mai inviati ai nostri server. Ci sono anche alcuni strumenti di organizzazione da stampare, gratis."
+    ],
+    "faqs": [
+        {
+            "q": "È davvero gratis?",
+            "a": "Sì. Crei e scarichi il CV gratis, senza account, senza filigrana e senza abbonamento."
+        },
+        {
+            "q": "I software di selezione possono leggerlo?",
+            "a": "Sì. Il PDF contiene testo reale selezionabile, non un’immagine."
+        },
+        {
+            "q": "Dove vengono salvati i miei dati?",
+            "a": "Solo nel tuo browser, sul tuo dispositivo. Nulla viene inviato ai nostri server."
+        },
+        {
+            "q": "Devo mettere la foto?",
+            "a": "È facoltativa. Il CV si adatta con o senza foto."
+        }
+    ]
+},
+  pt: {
+    "h1": "Um CV limpo em dez minutos.",
+    "lead": "Preencha, escolha um layout, descarregue o PDF. Grátis, sem conta, sem assinatura.",
+    "nameLabel": "Comece pelo seu nome",
+    "namePlaceholder": "Inês Costa",
+    "cta": "Criar o meu CV",
+    "facts": [
+        "O PDF contém texto real, legível pelo software de recrutamento",
+        "O seu CV fica no seu navegador, nada é enviado",
+        "Nenhum cartão bancário, em momento algum"
+    ],
+    "sheetCaption": "Pré-visualização real: o CV muda enquanto escreve o seu nome.",
+    "stepsTitle": "Como funciona",
+    "steps": [
+        {
+            "title": "Preencha os seus dados",
+            "desc": "Experiência, formação, competências e línguas, num formulário em seis passos. Foto opcional."
+        },
+        {
+            "title": "Escolha o layout",
+            "desc": "Coluna lateral ou clássico, na cor que preferir. A pré-visualização acompanha cada alteração."
+        },
+        {
+            "title": "Descarregue o PDF",
+            "desc": "Um ficheiro A4 com o seu nome, pronto a anexar a uma candidatura."
+        }
+    ],
+    "layoutsTitle": "Dois layouts, feitos para serem lidos",
+    "layoutsLead": "CV sóbrios de uma página com uma hierarquia clara: o recrutador encontra o que procura em segundos.",
+    "captions": {
+        "sidebar": "Coluna lateral: contactos, competências e línguas à esquerda, percurso à direita.",
+        "classic": "Clássico: uma só coluna, para percursos longos ou com muito texto."
+    },
+    "honestTitle": "O que não vai encontrar aqui",
+    "honestLead": "Muitos criadores de CV «grátis» cobram no botão de descarregar. Aqui não.",
+    "honest": [
+        "Um teste de 1,95 € que se torna uma assinatura de 25 € por mês",
+        "Um botão Descarregar que pede o cartão",
+        "Uma marca de água ou um logótipo no seu CV",
+        "Uma conta obrigatória antes de ver o resultado"
+    ],
+    "toolsTitle": "Outras ferramentas grátis",
+    "toolsLead": "Documentos para imprimir, mesma regra: grátis e sem conta.",
+    "aboutTitle": "Sobre o LogoLoom",
+    "about": [
+        "O LogoLoom é um criador de CV gratuito. Preenche um formulário, vê o CV ganhar forma em direto e descarrega um PDF limpo em A4 ou Letter.",
+        "Tudo acontece no seu navegador: os seus dados e a sua foto nunca são enviados para os nossos servidores. Há também algumas ferramentas de organização para imprimir, grátis."
+    ],
+    "faqs": [
+        {
+            "q": "É mesmo grátis?",
+            "a": "Sim. Cria e descarrega o seu CV grátis, sem conta, sem marca de água e sem assinatura."
+        },
+        {
+            "q": "O software de recrutamento consegue ler?",
+            "a": "Sim. O PDF contém texto real selecionável, não uma imagem."
+        },
+        {
+            "q": "Onde ficam os meus dados?",
+            "a": "Apenas no seu navegador, no seu dispositivo. Nada é enviado para os nossos servidores."
+        },
+        {
+            "q": "Devo pôr foto?",
+            "a": "É opcional. O CV adapta-se com ou sem foto."
+        }
+    ]
+},
+};
 
 export default async function LocalePage({ params }: Props) {
   const { locale } = await params;
@@ -207,7 +511,7 @@ export default async function LocalePage({ params }: Props) {
   const t = HOME_I18N[lang] || HOME_I18N.en;
   const chrome = getSiteChrome(lang);
   const cats = CATEGORY_COPY[lang] || CATEGORY_COPY.en;
-  const toolsOf = (cat: TemplateFamily) => CATALOG.filter((x) => x.category === cat);
+  const otherTools = CATALOG.filter((x) => x.id !== 'cv');
 
   const homeSchema = {
     '@context': 'https://schema.org',
@@ -217,8 +521,8 @@ export default async function LocalePage({ params }: Props) {
         '@id': `${siteConfig.url}/${lang}#webapp`,
         name: siteConfig.name,
         url: `${siteConfig.url}/${lang}`,
-        description: t.intro,
-        applicationCategory: 'UtilitiesApplication',
+        description: t.lead,
+        applicationCategory: 'BusinessApplication',
         operatingSystem: 'Any',
         offers: { '@type': 'Offer', price: '0', priceCurrency: lang === 'en' ? 'USD' : 'EUR' },
       },
@@ -234,108 +538,116 @@ export default async function LocalePage({ params }: Props) {
     ],
   };
 
-  const toolLink = (slug: string, id: TemplateId) => (
-    <Link
-      key={slug}
-      href={`/${lang}/${slug}`}
-      className="group flex items-center justify-between gap-2 px-3.5 py-3 rounded-xl border border-slate-200/80 dark:border-slate-800 bg-white dark:bg-slate-900 hover:border-indigo-400 dark:hover:border-indigo-500 transition-colors"
-    >
-      <span className="text-sm font-semibold text-slate-800 dark:text-slate-100">{chrome.templateNames[id]}</span>
-      <ArrowRight className="w-4 h-4 text-slate-400 group-hover:text-indigo-600 group-hover:translate-x-0.5 transition-all shrink-0" />
-    </Link>
-  );
-
   return (
-    <div className="min-h-screen bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 flex flex-col font-sans">
+    <div className="min-h-screen bg-slate-100 dark:bg-slate-950 text-slate-900 dark:text-slate-100 flex flex-col">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(homeSchema) }} />
       <HomeHeader lang={lang} />
 
       <main className="flex-1 w-full">
-        {/* Hero: one promise */}
-        <section className="px-4 sm:px-6 pt-10 sm:pt-16 pb-8 text-center">
-          <h1 className="max-w-3xl mx-auto text-3xl sm:text-5xl font-extrabold tracking-tight text-slate-900 dark:text-white leading-tight">
-            {t.h1}
-          </h1>
-          <p className="max-w-2xl mx-auto mt-4 text-base sm:text-lg text-slate-600 dark:text-slate-300 leading-relaxed">
-            {t.intro}
-          </p>
-          <ul className="mt-5 flex flex-wrap justify-center gap-x-5 gap-y-2 text-sm text-slate-600 dark:text-slate-300">
-            {t.trust.map((item) => (
-              <li key={item} className="inline-flex items-center gap-1.5">
-                <CheckCircle2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
-                {item}
-              </li>
-            ))}
-          </ul>
+        <LiveCvHero lang={lang as DocumentLang} copy={t} />
+
+        {/* How it works: a real three-step sequence */}
+        <section className="bg-white dark:bg-slate-900 border-y border-slate-200 dark:border-slate-800">
+          <div className="max-w-6xl mx-auto px-5 sm:px-8 py-14 sm:py-20">
+            <h2 className="font-display text-3xl sm:text-4xl font-semibold">{t.stepsTitle}</h2>
+            <ol className="mt-10 grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-12">
+              {t.steps.map((step, i) => (
+                <li key={step.title}>
+                  <span className="font-display text-5xl text-ink-600 dark:text-ink-300 leading-none">{i + 1}</span>
+                  <h3 className="mt-4 text-lg font-bold">{step.title}</h3>
+                  <p className="mt-2 text-[15px] leading-relaxed text-slate-600 dark:text-slate-300 max-w-[38ch]">{step.desc}</p>
+                </li>
+              ))}
+            </ol>
+          </div>
         </section>
 
-        {/* The 3 sections of the site */}
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 pb-16 space-y-6">
-          {/* Career: the CV, highlighted */}
-          <section id="career" className="scroll-mt-24 rounded-2xl border-2 border-indigo-500/70 bg-white dark:bg-slate-900 p-5 sm:p-7 flex flex-col sm:flex-row sm:items-center gap-5">
-            <div className="w-12 h-12 rounded-xl bg-indigo-50 dark:bg-indigo-950/60 text-indigo-600 dark:text-indigo-300 flex items-center justify-center shrink-0">
-              <FileText className="w-6 h-6" />
-            </div>
-            <div className="flex-1">
-              <p className="text-xs font-bold uppercase tracking-wider text-indigo-600 dark:text-indigo-400">{cats.career.name}</p>
-              <h2 className="text-xl sm:text-2xl font-extrabold text-slate-900 dark:text-white mt-1">{chrome.templateNames.cv}</h2>
-              <p className="text-sm text-slate-600 dark:text-slate-300 mt-1">{cats.career.pitch}</p>
-            </div>
+        {/* The two layouts, as real sheets */}
+        <section className="max-w-6xl mx-auto px-5 sm:px-8 py-14 sm:py-20 grid grid-cols-1 lg:grid-cols-[0.8fr_1.2fr] gap-10 lg:gap-16 items-start">
+          <div className="lg:sticky lg:top-28">
+            <h2 className="font-display text-3xl sm:text-4xl font-semibold">{t.layoutsTitle}</h2>
+            <p className="mt-4 text-lg leading-relaxed text-slate-600 dark:text-slate-300 max-w-[40ch]">{t.layoutsLead}</p>
             <Link
               href={`/${lang}/cv`}
-              className="inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-sm font-bold transition-colors shrink-0"
+              className="mt-8 h-12 px-6 inline-flex items-center justify-center rounded-lg bg-ink-600 hover:bg-ink-700 text-white font-bold transition-colors"
             >
-              {cats.career.cta}
-              <ArrowRight className="w-4 h-4" />
+              {t.cta}
             </Link>
-          </section>
-
-          {/* Organisation and home */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {(['organisation', 'home'] as const).map((cat) => {
-              const Icon = CATEGORY_ICONS[cat];
-              return (
-                <section key={cat} id={cat} className="scroll-mt-24 rounded-2xl border border-slate-200/80 dark:border-slate-800 bg-slate-100/60 dark:bg-slate-900/50 p-5 sm:p-6">
-                  <div className="flex items-center gap-3 mb-1">
-                    <div className="w-10 h-10 rounded-xl bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-200 flex items-center justify-center border border-slate-200/80 dark:border-slate-700">
-                      <Icon className="w-5 h-5" />
-                    </div>
-                    <h2 className="text-lg font-extrabold text-slate-900 dark:text-white">{cats[cat].name}</h2>
-                  </div>
-                  <p className="text-sm text-slate-600 dark:text-slate-300 mb-4">{cats[cat].pitch}</p>
-                  <div className="grid grid-cols-1 gap-2">{toolsOf(cat).map((x) => toolLink(x.slug, x.id))}</div>
-                </section>
-              );
-            })}
           </div>
-        </div>
+          <CvLayoutsShowcase lang={lang as DocumentLang} captions={t.captions} />
+        </section>
+
+        {/* The honest difference */}
+        <section className="bg-slate-900 text-slate-100">
+          <div className="max-w-6xl mx-auto px-5 sm:px-8 py-14 sm:py-20 grid grid-cols-1 lg:grid-cols-2 gap-10">
+            <div>
+              <h2 className="font-display text-3xl sm:text-4xl font-semibold text-white">{t.honestTitle}</h2>
+              <p className="mt-4 text-lg leading-relaxed text-slate-300 max-w-[40ch]">{t.honestLead}</p>
+            </div>
+            <ul className="divide-y divide-slate-700 border-y border-slate-700">
+              {t.honest.map((item) => (
+                <li key={item} className="py-4 text-lg text-slate-200 line-through decoration-slate-500 decoration-1">
+                  {item}
+                </li>
+              ))}
+            </ul>
+          </div>
+        </section>
+
+        {/* Other free tools: secondary */}
+        <section id="tools" className="scroll-mt-20 max-w-6xl mx-auto px-5 sm:px-8 py-14 sm:py-20">
+          <h2 className="font-display text-2xl sm:text-3xl font-semibold">{t.toolsTitle}</h2>
+          <p className="mt-2 text-[15px] text-slate-600 dark:text-slate-300">{t.toolsLead}</p>
+          <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 gap-x-12 gap-y-8">
+            {(['organisation', 'home'] as const).map((cat) => (
+              <div key={cat}>
+                <h3 className="text-sm font-bold text-slate-500 dark:text-slate-400">{cats[cat].name}</h3>
+                <ul className="mt-2 border-t border-slate-300/70 dark:border-slate-700">
+                  {otherTools
+                    .filter((x) => x.category === cat)
+                    .map((x) => (
+                      <li key={x.slug} className="border-b border-slate-300/70 dark:border-slate-700">
+                        <Link
+                          href={`/${lang}/${x.slug}`}
+                          className="flex items-center justify-between py-3 text-[15px] font-bold text-slate-800 hover:text-ink-700 dark:text-slate-100 dark:hover:text-ink-300"
+                        >
+                          {chrome.templateNames[x.id]}
+                          <ChevronRight aria-hidden="true" className="w-4 h-4 text-slate-400" />
+                        </Link>
+                      </li>
+                    ))}
+                </ul>
+              </div>
+            ))}
+          </div>
+        </section>
 
         <noscript>
-          <div className="max-w-5xl mx-auto px-4 py-3 mb-8 rounded-xl bg-amber-50 dark:bg-amber-950/40 border border-amber-200 dark:border-amber-800/50 text-amber-900 dark:text-amber-200 text-xs">
+          <div className="max-w-5xl mx-auto px-4 py-3 mb-8 rounded-lg bg-amber-50 border border-amber-200 text-amber-900 text-sm">
             <p className="font-bold">{chrome.noscriptTitle}</p>
             <p className="mt-1">{chrome.noscriptBody}</p>
           </div>
         </noscript>
 
-        {/* About + FAQ: real text for visitors and search engines */}
-        <section className="border-t border-slate-200/80 dark:border-slate-800 bg-white dark:bg-slate-900/40">
-          <div className="max-w-3xl mx-auto px-4 sm:px-6 py-12 sm:py-16 space-y-8">
-            <div className="space-y-3">
-              <h2 className="text-xl sm:text-2xl font-extrabold text-slate-900 dark:text-white tracking-tight">{t.aboutTitle}</h2>
+        {/* About + FAQ */}
+        <section className="bg-white dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800">
+          <div className="max-w-3xl mx-auto px-5 sm:px-8 py-14 sm:py-20">
+            <h2 className="font-display text-2xl sm:text-3xl font-semibold">{t.aboutTitle}</h2>
+            <div className="mt-4 space-y-4">
               {t.about.map((paragraph) => (
-                <p key={paragraph} className="text-sm sm:text-[15px] text-slate-600 dark:text-slate-300 leading-relaxed">
+                <p key={paragraph} className="text-[16px] leading-relaxed text-slate-700 dark:text-slate-300">
                   {paragraph}
                 </p>
               ))}
             </div>
-            <div className="space-y-3">
+            <div className="mt-10 border-t border-slate-200 dark:border-slate-800">
               {t.faqs.map((faq) => (
-                <details key={faq.q} className="group rounded-xl border border-slate-200/80 dark:border-slate-800 bg-slate-50 dark:bg-slate-900 px-4 py-3">
-                  <summary className="cursor-pointer list-none flex items-center justify-between gap-3 text-sm font-bold text-slate-900 dark:text-white">
+                <details key={faq.q} className="group border-b border-slate-200 dark:border-slate-800">
+                  <summary className="cursor-pointer list-none flex items-center justify-between gap-4 py-4 text-[16px] font-bold text-slate-900 dark:text-white">
                     {faq.q}
-                    <HelpCircle className="w-4 h-4 text-slate-400 shrink-0" />
+                    <Plus aria-hidden="true" className="w-4 h-4 text-slate-500 shrink-0 transition-transform group-open:rotate-45" />
                   </summary>
-                  <p className="mt-2 text-sm text-slate-600 dark:text-slate-400 leading-relaxed">{faq.a}</p>
+                  <p className="pb-5 -mt-1 text-[15px] leading-relaxed text-slate-600 dark:text-slate-400 max-w-[65ch]">{faq.a}</p>
                 </details>
               ))}
             </div>

@@ -168,7 +168,7 @@ export function relocalizeContents(
 
 export const DEFAULT_BRAND_KIT: BrandKit = {
   logoUrl: DEFAULT_SAMPLE_LOGO,
-  brandColor: '#4F46E5', // Royal Indigo
+  brandColor: '#2340A8', // Ink
   contrastText: '#FFFFFF',
   companyName: '', // Empty: preview shows placeholder suggestion; export omits cleanly
   tagline: '',
@@ -423,7 +423,7 @@ export function useBrandKit(initialLang?: InterfaceLang, initialTemplate?: Templ
   const resetLogo = useCallback(() => {
     updateBrandKit({
       logoUrl: null,
-      brandColor: '#4F46E5',
+      brandColor: '#2340A8',
       contrastText: '#FFFFFF',
     });
     setExtractedColorSuggestion(null);

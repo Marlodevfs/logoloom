@@ -7,13 +7,21 @@ import { Globe, Moon, Sun, Sparkles, ChevronDown } from 'lucide-react';
 import { InterfaceLang } from '@/types';
 import { UI_TRANSLATIONS } from '@/lib/i18n/interface';
 import { LogoMark } from '@/components/LogoMark';
-import { CATEGORY_COPY } from '@/lib/catalog';
 
 interface HeaderProps {
   interfaceLang: InterfaceLang;
   onLanguageChange: (lang: InterfaceLang) => void;
   onOpenProModal?: () => void;
 }
+
+const NAV: Record<InterfaceLang, { cv: string; tools: string }> = {
+  fr: { cv: 'Créer un CV', tools: 'Autres outils' },
+  en: { cv: 'Create a CV', tools: 'Other tools' },
+  de: { cv: 'Lebenslauf erstellen', tools: 'Weitere Tools' },
+  es: { cv: 'Crear un CV', tools: 'Otras herramientas' },
+  it: { cv: 'Crea un CV', tools: 'Altri strumenti' },
+  pt: { cv: 'Criar um CV', tools: 'Outras ferramentas' },
+};
 
 export const Header: React.FC<HeaderProps> = ({
   interfaceLang,
@@ -82,7 +90,7 @@ export const Header: React.FC<HeaderProps> = ({
   };
 
   return (
-    <header className="w-full border-b border-slate-200/80 dark:border-slate-800 bg-white/90 dark:bg-slate-900/90 backdrop-blur-md sticky top-0 z-50 transition-colors overflow-visible">
+    <header className="w-full border-b border-slate-200/80 dark:border-slate-800 bg-white dark:bg-slate-900 sticky top-0 z-50 transition-colors overflow-visible">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 h-16 py-2 flex items-center justify-between">
         {/* Brand Logo */}
         <Link href={`/${interfaceLang}`} className="flex items-center space-x-3 group">
@@ -90,7 +98,7 @@ export const Header: React.FC<HeaderProps> = ({
 
           <div>
             <div className="flex items-center space-x-2">
-              <span className="font-extrabold text-base tracking-tight text-slate-900 dark:text-white">
+              <span className="font-display font-semibold text-lg text-slate-900 dark:text-white">
                 LogoLoom
               </span>
             </div>
@@ -100,23 +108,20 @@ export const Header: React.FC<HeaderProps> = ({
           </div>
         </Link>
 
-        {/* Center: the 3 sections of the site */}
-        <nav aria-label="Sections" className="hidden md:flex items-center gap-1 text-sm font-semibold">
-          {(
-            [
-              ['career', `/${interfaceLang}/cv`],
-              ['organisation', `/${interfaceLang}#organisation`],
-              ['home', `/${interfaceLang}#home`],
-            ] as const
-          ).map(([cat, href]) => (
-            <Link
-              key={cat}
-              href={href}
-              className="px-3 py-1.5 rounded-lg text-slate-600 hover:text-slate-900 hover:bg-slate-100 dark:text-slate-300 dark:hover:text-white dark:hover:bg-slate-800 transition-colors"
-            >
-              {(CATEGORY_COPY[interfaceLang] || CATEGORY_COPY.en)[cat].short}
-            </Link>
-          ))}
+        {/* Center: the product first, the rest second */}
+        <nav aria-label="Sections" className="hidden md:flex items-center gap-1 text-[15px]">
+          <Link
+            href={`/${interfaceLang}/cv`}
+            className="px-3 py-1.5 rounded-md font-bold text-slate-900 hover:bg-slate-100 dark:text-white dark:hover:bg-slate-800 transition-colors"
+          >
+            {NAV[interfaceLang]?.cv || NAV.en.cv}
+          </Link>
+          <Link
+            href={`/${interfaceLang}#tools`}
+            className="px-3 py-1.5 rounded-md text-slate-600 hover:text-slate-900 hover:bg-slate-100 dark:text-slate-300 dark:hover:text-white dark:hover:bg-slate-800 transition-colors"
+          >
+            {NAV[interfaceLang]?.tools || NAV.en.tools}
+          </Link>
         </nav>
 
         {/* Actions Right: Language Switcher, Dark Mode, Pro Button */}
@@ -174,7 +179,7 @@ export const Header: React.FC<HeaderProps> = ({
           </button>
 
           {/* Pro Button */}
-          {onOpenProModal && (
+          {onOpenProModal && process.env.NEXT_PUBLIC_PRO_ENABLED === '1' && (
             <button
               type="button"
               onClick={onOpenProModal}

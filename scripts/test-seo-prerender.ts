@@ -132,7 +132,7 @@ async function main() {
   checkPage('en.html', {
     name: 'EN Homepage',
     expectedLang: 'en',
-    expectedH1: 'Your everyday documents',
+    expectedH1: 'A clean CV in ten minutes',
     expectedCanonical: 'https://logoloom.app/en',
     expectedHreflangs: allLocales,
     mustContain: ['JavaScript is disabled in your browser', '"@type":"WebApplication"', '"@type":"FAQPage"'],
@@ -142,7 +142,7 @@ async function main() {
   checkPage('fr.html', {
     name: 'FR Homepage',
     expectedLang: 'fr',
-    expectedH1: 'Vos documents du quotidien',
+    expectedH1: 'Un CV propre en dix minutes',
     expectedCanonical: 'https://logoloom.app/fr',
     expectedHreflangs: allLocales,
     mustContain: ['À propos de LogoLoom', 'href="/fr/cv"', '"@type":"WebApplication"', '"@type":"FAQPage"'],
@@ -152,7 +152,7 @@ async function main() {
   checkPage('de.html', {
     name: 'DE Homepage',
     expectedLang: 'de',
-    expectedH1: 'Ihre Alltagsdokumente',
+    expectedH1: 'Ein sauberer Lebenslauf',
     expectedCanonical: 'https://logoloom.app/de',
     expectedHreflangs: allLocales,
     mustContain: ['Über LogoLoom', 'href="/de/cv"', '"@type":"WebApplication"', '"@type":"FAQPage"'],

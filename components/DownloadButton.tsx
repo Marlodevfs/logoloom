@@ -104,14 +104,11 @@ export const DownloadButton: React.FC<DownloadButtonProps> = ({
         onTouchStart={() => { loadPdfEngine().catch(() => {}); }}
         disabled={isExporting}
         aria-busy={isExporting}
-        className="w-full relative group overflow-hidden h-12 px-4 rounded-xl font-bold text-sm whitespace-nowrap text-white shadow-lg shadow-indigo-500/25 transition-all transform active:scale-[0.98] disabled:opacity-80 disabled:cursor-not-allowed flex items-center justify-center space-x-2"
+        className="w-full h-12 px-4 rounded-lg font-bold text-sm whitespace-nowrap text-white transition-[filter] hover:brightness-110 active:brightness-95 disabled:opacity-80 disabled:cursor-not-allowed flex items-center justify-center space-x-2"
         style={{
           backgroundColor: brandKit.brandColor,
         }}
       >
-        {/* Subtle shine hover effect */}
-        <div className="absolute inset-0 w-1/2 h-full bg-white/20 skew-x-12 -translate-x-full group-hover:translate-x-[300%] transition-transform duration-700 pointer-events-none" />
-
         {isExporting ? (
           <>
             <Loader2 className="w-4 h-4 animate-spin" />
