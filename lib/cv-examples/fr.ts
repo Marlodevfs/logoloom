@@ -1,5 +1,6 @@
 import type { CvCustomContent } from '@/types';
 import { CV_EXAMPLES_FR_MORE } from './fr-more';
+import { CV_EXAMPLES_FR_BATCH3_JOBS, CV_EXAMPLES_FR_BATCH3_SITUATIONS } from './fr-batch3';
 
 /**
  * CV examples per job (French). Every person, company, email and phone number
@@ -900,7 +901,9 @@ const SITUATIONS = ['frontalier-suisse', 'etudiant'];
 export const CV_EXAMPLES_FR: CvExample[] = [
   ...BASE.filter((e) => !SITUATIONS.includes(e.slug)),
   ...CV_EXAMPLES_FR_MORE,
+  ...CV_EXAMPLES_FR_BATCH3_JOBS,
   ...SITUATIONS.map((slug) => BASE.find((e) => e.slug === slug)!),
+  ...CV_EXAMPLES_FR_BATCH3_SITUATIONS,
 ];
 
 export function exampleH1(ex: CvExample): string {
