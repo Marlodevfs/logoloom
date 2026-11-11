@@ -9,6 +9,7 @@ import { CvSheet } from '@/components/home/LiveCvHero';
 import { CV_EXAMPLES_FR, exampleH1, exampleLabel, getCvExample } from '@/lib/cv-examples/fr';
 import { cvKit } from '@/lib/cv-examples/kit';
 import { SwissPackTeaser } from '@/components/cv/SwissPackTeaser';
+import { CV_GUIDES_FR } from '@/lib/cv-guides/fr';
 
 interface Props {
   params: Promise<{ locale: string; template: string; job: string }>;
@@ -205,6 +206,20 @@ export default async function CvExamplePage({ params }: Props) {
                 <li key={o.slug} className="border-b border-slate-200 dark:border-slate-800">
                   <Link href={`/fr/cv/exemples/${o.slug}`} className="flex items-center justify-between py-3.5 font-bold text-slate-800 dark:text-slate-100 hover:text-ink-700 dark:hover:text-ink-300">
                     {exampleLabel(o)}
+                    <ChevronRight className="w-4 h-4 text-slate-400" aria-hidden="true" />
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </section>
+
+          <section>
+            <h2 className="font-display text-2xl font-semibold text-slate-900 dark:text-white">Conseils pour votre CV</h2>
+            <ul className="mt-5 grid grid-cols-1 sm:grid-cols-2 gap-x-8 border-t border-slate-200 dark:border-slate-800">
+              {CV_GUIDES_FR.map((g) => (
+                <li key={g.slug} className="border-b border-slate-200 dark:border-slate-800">
+                  <Link href={`/fr/cv/conseils/${g.slug}`} className="flex items-center justify-between py-3.5 font-bold text-slate-800 dark:text-slate-100 hover:text-ink-700 dark:hover:text-ink-300">
+                    {g.label}
                     <ChevronRight className="w-4 h-4 text-slate-400" aria-hidden="true" />
                   </Link>
                 </li>

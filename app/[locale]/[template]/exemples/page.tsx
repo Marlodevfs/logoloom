@@ -21,7 +21,7 @@ export function generateStaticParams() {
 
 const TITLE = 'Exemples de CV par métier, gratuits en PDF – LogoLoom';
 const DESCRIPTION =
-  'Exemples de CV pour 23 métiers et situations : vendeur, aide-soignant, infirmier, cuisinier, chauffeur livreur, frontalier en Suisse, étudiant… Choisissez-en un, modifiez-le et téléchargez le PDF gratuitement, sans compte.';
+  `Exemples de CV pour ${CV_EXAMPLES_FR.length} métiers et situations : vendeur, aide-soignant, infirmier, cuisinier, chauffeur livreur, frontalier en Suisse, étudiant… Choisissez-en un, modifiez-le et téléchargez le PDF gratuitement, sans compte.`;
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale, template } = await params;
