@@ -1,51 +1,38 @@
 import { NextRequest, NextResponse } from 'next/server';
-import Stripe from 'stripe';
+import { verifyPaddleSignature } from '@/lib/paddle';
 
+/**
+ * Paddle notification destination: https://logoloom.app/api/webhook
+ * Pro access is checked live against the Paddle API, so events are only logged.
+ */
 export async function POST(req: NextRequest) {
-  const stripeKey = process.env.STRIPE_SECRET_KEY;
-  const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET;
-
-  if (!stripeKey || !webhookSecret) {
-    return NextResponse.json(
-      { error: 'Webhook environment variables missing' },
-      { status: 500 }
-    );
+  const secret = process.env.PADDLE_WEBHOOK_SECRET;
+  if (!secret) {
+    return NextResponse.json({ error: 'Webhook environment variables missing' }, { status: 500 });
   }
 
-  const stripe = new Stripe(stripeKey);
-  const signature = req.headers.get('stripe-signature');
-
-  if (!signature) {
-    return NextResponse.json({ error: 'Missing stripe signature' }, { status: 400 });
+  const rawBody = await req.text();
+  if (!verifyPaddleSignature(rawBody, req.headers.get('paddle-signature'), secret)) {
+    return NextResponse.json({ error: 'Invalid signature' }, { status: 400 });
   }
 
   try {
-    const rawBody = await req.text();
-    const event = stripe.webhooks.constructEvent(rawBody, signature, webhookSecret);
-
-    switch (event.type) {
-      case 'checkout.session.completed': {
-        const session = event.data.object as Stripe.Checkout.Session;
-        console.log(`[Stripe Webhook] Checkout completed for: ${session.customer_email}`);
+    const event = JSON.parse(rawBody);
+    const data = event?.data || {};
+    switch (event?.event_type) {
+      case 'transaction.completed':
+        console.log(`[Paddle] Transaction completed: ${data.id} (customer ${data.customer_id})`);
         break;
-      }
-      case 'customer.subscription.updated': {
-        const subscription = event.data.object as Stripe.Subscription;
-        console.log(`[Stripe Webhook] Subscription status updated: ${subscription.status}`);
+      case 'subscription.created':
+      case 'subscription.updated':
+      case 'subscription.canceled':
+        console.log(`[Paddle] ${event.event_type}: ${data.id} status=${data.status}`);
         break;
-      }
-      case 'customer.subscription.deleted': {
-        const subscription = event.data.object as Stripe.Subscription;
-        console.log(`[Stripe Webhook] Subscription cancelled: ${subscription.id}`);
-        break;
-      }
       default:
-        console.log(`[Stripe Webhook] Unhandled event type: ${event.type}`);
+        console.log(`[Paddle] Unhandled event type: ${event?.event_type}`);
     }
-
     return NextResponse.json({ received: true });
-  } catch (err: any) {
-    console.error(`Webhook signature verification failed: ${err.message}`);
-    return NextResponse.json({ error: `Webhook error: ${err.message}` }, { status: 400 });
+  } catch {
+    return NextResponse.json({ error: 'Invalid payload' }, { status: 400 });
   }
 }

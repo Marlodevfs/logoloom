@@ -2,7 +2,7 @@ import { InterfaceLang } from '@/types';
 
 /**
  * Is the Pro subscription purchasable on this deployment?
- * Computed at build time in next.config.ts (Stripe keys present, or local dev).
+ * Computed at build time in next.config.ts (Paddle keys present, or local dev).
  */
 export const PRO_ENABLED = process.env.NEXT_PUBLIC_PRO_ENABLED === '1';
 
@@ -14,6 +14,16 @@ export const PRO_PRICE_LABEL: Record<InterfaceLang, string> = {
   es: '9 €',
   it: '9 €',
   pt: '9 €',
+};
+
+/** Yearly Pro price label per interface language. */
+export const PRO_YEARLY_PRICE_LABEL: Record<InterfaceLang, string> = {
+  en: '$29',
+  fr: '29 €',
+  de: '29 €',
+  es: '29 €',
+  it: '29 €',
+  pt: '29 €',
 };
 
 export const FREE_PRICE_LABEL: Record<InterfaceLang, string> = {
@@ -31,6 +41,8 @@ export interface ProStrings {
   comingSoon: string;
   comingSoonNote: string;
   connectingStripe: string;
+  /** Secondary button for the yearly plan, e.g. "or 29 €/year" */
+  orYearly: (price: string) => string;
   checkoutError: string;
   networkError: string;
   // Modal
@@ -72,7 +84,8 @@ export const PRO_I18N: Record<InterfaceLang, ProStrings> = {
     perMonth: '/ month',
     comingSoon: 'Coming soon',
     comingSoonNote: 'The Pro plan is not open yet. The free version stays 100% free.',
-    connectingStripe: 'Connecting to Stripe...',
+    connectingStripe: 'Opening secure checkout...',
+    orYearly: (price) => `or ${price}/year (save over 50%)`,
     checkoutError: 'Unable to start checkout. Please try again.',
     networkError: 'Network error during checkout.',
     modalTitle: 'Deliver 100% white-label documents',
@@ -88,7 +101,7 @@ export const PRO_I18N: Record<InterfaceLang, ProStrings> = {
     restoreTitle: 'Restore Pro with your billing email',
     restorePlaceholder: 'you@company.com',
     restoreBtn: 'Restore',
-    secureNotice: 'Secure payment by Stripe • No commitment',
+    secureNotice: 'Secure payment by Paddle • No commitment',
     subRestored: 'Subscription restored!',
     subNotFound: 'No active subscription found for this email.',
     seePricing: 'See pricing details',
@@ -129,7 +142,8 @@ export const PRO_I18N: Record<InterfaceLang, ProStrings> = {
     perMonth: '/ mois',
     comingSoon: 'Bientôt disponible',
     comingSoonNote: 'L’offre Pro n’est pas encore ouverte. La version gratuite reste 100 % gratuite.',
-    connectingStripe: 'Connexion à Stripe...',
+    connectingStripe: 'Ouverture du paiement sécurisé...',
+    orYearly: (price) => `ou ${price}/an (plus de 50 % d’économie)`,
     checkoutError: 'Impossible d’ouvrir le paiement. Veuillez réessayer.',
     networkError: 'Erreur réseau pendant le paiement.',
     modalTitle: 'Des documents 100 % en marque blanche',
@@ -145,7 +159,7 @@ export const PRO_I18N: Record<InterfaceLang, ProStrings> = {
     restoreTitle: 'Restaurer Pro avec votre email de facturation',
     restorePlaceholder: 'vous@entreprise.com',
     restoreBtn: 'Restaurer',
-    secureNotice: 'Paiement sécurisé par Stripe • Sans engagement',
+    secureNotice: 'Paiement sécurisé par Paddle • Sans engagement',
     subRestored: 'Abonnement Pro restauré !',
     subNotFound: 'Aucun abonnement actif trouvé pour cet email.',
     seePricing: 'Voir le détail des tarifs',
@@ -186,7 +200,8 @@ export const PRO_I18N: Record<InterfaceLang, ProStrings> = {
     perMonth: '/ Monat',
     comingSoon: 'Demnächst verfügbar',
     comingSoonNote: 'Der Pro-Tarif ist noch nicht verfügbar. Die kostenlose Version bleibt 100 % kostenlos.',
-    connectingStripe: 'Verbindung zu Stripe...',
+    connectingStripe: 'Sichere Zahlung wird geöffnet...',
+    orYearly: (price) => `oder ${price}/Jahr (über 50 % sparen)`,
     checkoutError: 'Zahlung konnte nicht gestartet werden. Bitte erneut versuchen.',
     networkError: 'Netzwerkfehler bei der Zahlung.',
     modalTitle: '100 % White-Label-Dokumente',
@@ -202,7 +217,7 @@ export const PRO_I18N: Record<InterfaceLang, ProStrings> = {
     restoreTitle: 'Pro mit Ihrer Rechnungs-E-Mail wiederherstellen',
     restorePlaceholder: 'sie@unternehmen.de',
     restoreBtn: 'Wiederherstellen',
-    secureNotice: 'Sichere Zahlung über Stripe • Ohne Bindung',
+    secureNotice: 'Sichere Zahlung über Paddle • Ohne Bindung',
     subRestored: 'Abo wiederhergestellt!',
     subNotFound: 'Kein aktives Abo für diese E-Mail gefunden.',
     seePricing: 'Preisdetails ansehen',
@@ -243,7 +258,8 @@ export const PRO_I18N: Record<InterfaceLang, ProStrings> = {
     perMonth: '/ mes',
     comingSoon: 'Próximamente',
     comingSoonNote: 'El plan Pro aún no está disponible. La versión gratuita sigue siendo 100 % gratuita.',
-    connectingStripe: 'Conectando con Stripe...',
+    connectingStripe: 'Abriendo el pago seguro...',
+    orYearly: (price) => `o ${price}/año (ahorra más del 50 %)`,
     checkoutError: 'No se pudo iniciar el pago. Inténtelo de nuevo.',
     networkError: 'Error de red durante el pago.',
     modalTitle: 'Documentos 100 % marca blanca',
@@ -259,7 +275,7 @@ export const PRO_I18N: Record<InterfaceLang, ProStrings> = {
     restoreTitle: 'Restaurar Pro con tu correo de facturación',
     restorePlaceholder: 'tu@empresa.com',
     restoreBtn: 'Restaurar',
-    secureNotice: 'Pago seguro con Stripe • Sin permanencia',
+    secureNotice: 'Pago seguro con Paddle • Sin permanencia',
     subRestored: '¡Suscripción restaurada!',
     subNotFound: 'No se encontró ninguna suscripción activa para este correo.',
     seePricing: 'Ver detalles de precios',
@@ -300,7 +316,8 @@ export const PRO_I18N: Record<InterfaceLang, ProStrings> = {
     perMonth: '/ mese',
     comingSoon: 'Presto disponibile',
     comingSoonNote: 'Il piano Pro non è ancora aperto. La versione gratuita resta 100% gratuita.',
-    connectingStripe: 'Connessione a Stripe...',
+    connectingStripe: 'Apertura del pagamento sicuro...',
+    orYearly: (price) => `oppure ${price}/anno (risparmi oltre il 50%)`,
     checkoutError: 'Impossibile avviare il pagamento. Riprova.',
     networkError: 'Errore di rete durante il pagamento.',
     modalTitle: 'Documenti 100% white-label',
@@ -316,7 +333,7 @@ export const PRO_I18N: Record<InterfaceLang, ProStrings> = {
     restoreTitle: 'Ripristina Pro con la tua email di fatturazione',
     restorePlaceholder: 'tu@azienda.it',
     restoreBtn: 'Ripristina',
-    secureNotice: 'Pagamento sicuro con Stripe • Senza vincoli',
+    secureNotice: 'Pagamento sicuro con Paddle • Senza vincoli',
     subRestored: 'Abbonamento ripristinato!',
     subNotFound: 'Nessun abbonamento attivo trovato per questa email.',
     seePricing: 'Vedi i dettagli dei prezzi',
@@ -357,7 +374,8 @@ export const PRO_I18N: Record<InterfaceLang, ProStrings> = {
     perMonth: '/ mês',
     comingSoon: 'Em breve',
     comingSoonNote: 'O plano Pro ainda não está disponível. A versão gratuita continua 100% gratuita.',
-    connectingStripe: 'A ligar ao Stripe...',
+    connectingStripe: 'A abrir o pagamento seguro...',
+    orYearly: (price) => `ou ${price}/ano (poupe mais de 50%)`,
     checkoutError: 'Não foi possível iniciar o pagamento. Tente novamente.',
     networkError: 'Erro de rede durante o pagamento.',
     modalTitle: 'Documentos 100% marca branca',
@@ -373,7 +391,7 @@ export const PRO_I18N: Record<InterfaceLang, ProStrings> = {
     restoreTitle: 'Restaurar Pro com o email de faturação',
     restorePlaceholder: 'voce@empresa.com',
     restoreBtn: 'Restaurar',
-    secureNotice: 'Pagamento seguro pela Stripe • Sem fidelização',
+    secureNotice: 'Pagamento seguro pela Paddle • Sem fidelização',
     subRestored: 'Assinatura restaurada!',
     subNotFound: 'Nenhuma assinatura ativa encontrada para este email.',
     seePricing: 'Ver detalhes dos preços',

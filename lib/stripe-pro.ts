@@ -9,13 +9,14 @@ export const PRO_CONFIG = {
   priceLabelUsd: '$9',
   priceLabelEur: '9 €',
   interval: 'month' as const,
-  stripePriceId: process.env.STRIPE_PRICE_ID_MONTHLY || '',
+  priceYearlyEur: 29,
+  priceLabelYearlyEur: '29 €',
 };
 
 export interface ProStatus {
   isPro: boolean;
   proSince?: string;
-  source?: 'stripe' | 'test_mode';
+  source?: 'paddle' | 'test_mode';
 }
 
 const PRO_STORAGE_KEY = 'logoloom_pro_status_v1';

@@ -1,10 +1,14 @@
 import type { NextConfig } from "next";
 
-// The Pro plan is only purchasable when Stripe is configured (or in local dev,
+// The Pro plan is only purchasable when Paddle is configured (or in local dev,
 // where checkout is simulated). Exposed to the browser as a build-time flag.
 const proEnabled =
   process.env.NODE_ENV !== 'production' ||
-  Boolean(process.env.STRIPE_SECRET_KEY && process.env.STRIPE_PRICE_ID_MONTHLY);
+  Boolean(
+    process.env.PADDLE_API_KEY &&
+      process.env.NEXT_PUBLIC_PADDLE_CLIENT_TOKEN &&
+      process.env.NEXT_PUBLIC_PADDLE_PRICE_PRO_MONTHLY
+  );
 
 const nextConfig: NextConfig = {
   reactStrictMode: true,

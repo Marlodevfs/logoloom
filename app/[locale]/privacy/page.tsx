@@ -63,7 +63,7 @@ export default async function PrivacyPage({ params }: Props) {
         {
           title: 'Abonnement Pro',
           body: [
-            'Si vous souscrivez à l’offre Pro, le paiement est traité par Stripe. Nous ne voyons jamais vos données bancaires ; nous recevons uniquement votre email de facturation et le statut de votre abonnement, afin d’activer votre accès Pro.',
+            'Si vous souscrivez à l’offre Pro, le paiement est traité par Paddle (Paddle.com Market Ltd), qui agit comme revendeur officiel et gère la facturation et la TVA. Nous ne voyons jamais vos données bancaires ; nous recevons uniquement votre email de facturation et le statut de votre abonnement, afin d’activer votre accès Pro.',
           ],
         },
         {
@@ -102,7 +102,7 @@ export default async function PrivacyPage({ params }: Props) {
         {
           title: 'Pro subscription',
           body: [
-            'If you subscribe to Pro, payment is handled by Stripe. We never see your card details; we only receive your billing email and subscription status to activate your Pro access.',
+            'If you subscribe to Pro, payment is handled by Paddle (Paddle.com Market Ltd), which acts as reseller and merchant of record and handles invoicing and VAT. We never see your card details; we only receive your billing email and subscription status to activate your Pro access.',
           ],
         },
         {

@@ -1,41 +1,32 @@
 import { NextRequest, NextResponse } from 'next/server';
-import Stripe from 'stripe';
 import { verifyProToken, signProToken } from '@/lib/pro-auth';
+import { paddleApiKey, paddleGet, hasActiveSubscription } from '@/lib/paddle';
 
-// Tokens are short-lived relative to the monthly plan and are re-checked against
-// Stripe on every verification, so a cancelled subscription loses Pro quickly.
+// Tokens are short-lived and re-checked against Paddle on every verification,
+// so a cancelled subscription loses Pro quickly.
 const TOKEN_DURATION_DAYS = 35;
-
-async function hasActiveSubscription(stripe: Stripe, customerId: string): Promise<boolean> {
-  const subs = await stripe.subscriptions.list({
-    customer: customerId,
-    status: 'all',
-    limit: 10,
-  });
-  return subs.data.some((s) => s.status === 'active' || s.status === 'trialing');
-}
 
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json().catch(() => ({}));
-    const { token, sessionId } = body;
+    const { token } = body;
+    // "sessionId" kept as an alias for old links / cached clients
+    const transactionId: unknown = body.transactionId ?? body.sessionId;
     const isProduction = process.env.NODE_ENV === 'production';
-    const stripeKey = process.env.STRIPE_SECRET_KEY;
-    const stripe = stripeKey ? new Stripe(stripeKey) : null;
+    const paddleReady = Boolean(paddleApiKey());
 
-    // 1. Verify existing signed token if supplied
+    // 1. Verify an existing signed token
     if (typeof token === 'string' && token) {
       const payload = verifyProToken(token);
       if (payload) {
-        // Re-check the subscription with Stripe so cancelled/unpaid users lose Pro
-        if (stripe && payload.customerId) {
+        if (paddleReady && payload.customerId?.startsWith('ctm_')) {
           let active = true;
           try {
-            active = await hasActiveSubscription(stripe, payload.customerId);
+            active = await hasActiveSubscription(payload.customerId);
           } catch (err) {
-            // Stripe unreachable: keep the (still valid, signed) token rather than
+            // Paddle unreachable: keep the (still valid, signed) token rather than
             // punishing a paying user for a transient outage.
-            console.warn('Stripe subscription re-check failed, trusting token', err);
+            console.warn('Paddle subscription re-check failed, trusting token', err);
           }
           if (!active) {
             return NextResponse.json(
@@ -43,17 +34,12 @@ export async function POST(req: NextRequest) {
               { status: 401 }
             );
           }
-          // Refresh the token so active subscribers never expire
           const refreshed = signProToken({
             email: payload.email,
             customerId: payload.customerId,
             durationDays: TOKEN_DURATION_DAYS,
           });
-          return NextResponse.json({
-            verified: true,
-            email: payload.email,
-            token: refreshed,
-          });
+          return NextResponse.json({ verified: true, email: payload.email, token: refreshed });
         }
 
         return NextResponse.json({
@@ -65,14 +51,10 @@ export async function POST(req: NextRequest) {
       }
     }
 
-    // 2. Verify Stripe Checkout Session ID
-    if (typeof sessionId === 'string' && sessionId) {
-      // In dev environment, accept demo session
-      if (!isProduction && sessionId === 'demo_pro_session_success') {
-        const devToken = signProToken({
-          email: 'demo@logoloom.app',
-          durationDays: 30,
-        });
+    // 2. Verify a Paddle transaction right after checkout
+    if (typeof transactionId === 'string' && transactionId) {
+      if (!isProduction && transactionId === 'demo_pro_session_success') {
+        const devToken = signProToken({ email: 'demo@logoloom.app', durationDays: 30 });
         return NextResponse.json({
           verified: true,
           token: devToken,
@@ -81,36 +63,19 @@ export async function POST(req: NextRequest) {
         });
       }
 
-      if (stripe && sessionId.startsWith('cs_')) {
-        const session = await stripe.checkout.sessions.retrieve(sessionId);
+      if (paddleReady && /^txn_[a-z0-9]+$/i.test(transactionId)) {
+        const txn = await paddleGet<any>(
+          `/transactions/${encodeURIComponent(transactionId)}?include=customer`
+        );
+        const paid = txn && (txn.status === 'completed' || txn.status === 'paid');
 
-        // A completed subscription checkout is either paid, or needs no payment (trial / 100% coupon)
-        const isPaid =
-          session.mode === 'subscription' &&
-          session.status === 'complete' &&
-          (session.payment_status === 'paid' || session.payment_status === 'no_payment_required');
-
-        if (isPaid) {
-          const userEmail =
-            session.customer_details?.email ||
-            session.customer_email ||
-            undefined;
-          const customerId =
-            typeof session.customer === 'string'
-              ? session.customer
-              : session.customer?.id;
-
+        if (paid && txn.subscription_id && txn.customer_id) {
           const signedToken = signProToken({
-            email: userEmail,
-            customerId,
+            email: txn.customer?.email,
+            customerId: txn.customer_id,
             durationDays: TOKEN_DURATION_DAYS,
           });
-
-          return NextResponse.json({
-            verified: true,
-            token: signedToken,
-            email: userEmail,
-          });
+          return NextResponse.json({ verified: true, token: signedToken, email: txn.customer?.email });
         }
       }
     }
@@ -121,9 +86,6 @@ export async function POST(req: NextRequest) {
     );
   } catch (error: any) {
     console.error('Subscription verification error:', error);
-    return NextResponse.json(
-      { verified: false, error: 'Verification failed' },
-      { status: 500 }
-    );
+    return NextResponse.json({ verified: false, error: 'Verification failed' }, { status: 500 });
   }
 }

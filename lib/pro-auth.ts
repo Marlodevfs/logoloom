@@ -13,12 +13,12 @@ interface ProTokenPayload {
 const DEV_ONLY_FALLBACK_SECRET = 'logoloom-dev-only-insecure-secret';
 
 function getSecretKey(): string {
-  const secret = process.env.PRO_SIGNING_SECRET || process.env.STRIPE_SECRET_KEY;
+  const secret = process.env.PRO_SIGNING_SECRET || process.env.PADDLE_API_KEY;
   if (secret) return secret;
 
   if (process.env.NODE_ENV === 'production') {
     throw new Error(
-      'PRO_SIGNING_SECRET (or STRIPE_SECRET_KEY) must be set in production to sign Pro tokens.'
+      'PRO_SIGNING_SECRET (or PADDLE_API_KEY) must be set in production to sign Pro tokens.'
     );
   }
   return DEV_ONLY_FALLBACK_SECRET;

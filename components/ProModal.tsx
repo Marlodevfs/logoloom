@@ -4,7 +4,8 @@ import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { X, Check, Sparkles, ShieldCheck, Loader2, ArrowRight, KeyRound, Clock } from 'lucide-react';
 import { InterfaceLang } from '@/types';
-import { PRO_ENABLED, PRO_I18N, PRO_PRICE_LABEL } from '@/lib/i18n/pro';
+import { PRO_ENABLED, PRO_I18N, PRO_PRICE_LABEL, PRO_YEARLY_PRICE_LABEL } from '@/lib/i18n/pro';
+import { openProCheckout, PRO_YEARLY_AVAILABLE, type ProInterval } from '@/lib/paddle-checkout';
 import { trackEvent } from '@/lib/analytics';
 
 interface ProModalProps {
@@ -52,28 +53,22 @@ export const ProModal: React.FC<ProModalProps> = ({
   const p = PRO_I18N[interfaceLang] || PRO_I18N.en;
   const price = PRO_PRICE_LABEL[interfaceLang] || PRO_PRICE_LABEL.en;
 
-  const handleStartCheckout = async () => {
-    trackEvent('pro_upgrade_click');
+  const yearlyPrice = PRO_YEARLY_PRICE_LABEL[interfaceLang] || PRO_YEARLY_PRICE_LABEL.en;
+
+  const handleStartCheckout = async (interval: ProInterval = 'month') => {
+    trackEvent('pro_upgrade_click', { interval });
     setIsLoadingCheckout(true);
     setCheckoutError(null);
     try {
-      const res = await fetch('/api/checkout', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          returnUrl: `${window.location.origin}${window.location.pathname}`,
-        }),
+      await openProCheckout({
+        interval,
+        returnUrl: `${window.location.origin}${window.location.pathname}`,
+        locale: interfaceLang,
       });
-
-      const data = await res.json();
-      if (data.url) {
-        window.location.href = data.url;
-        return;
-      }
-      setCheckoutError(p.checkoutError);
     } catch {
-      setCheckoutError(p.networkError);
+      setCheckoutError(p.checkoutError);
     }
+    // The overlay sits on top of the page: re-enable the buttons behind it
     setIsLoadingCheckout(false);
   };
 
@@ -155,7 +150,7 @@ export const ProModal: React.FC<ProModalProps> = ({
             <>
               <button
                 type="button"
-                onClick={handleStartCheckout}
+                onClick={() => handleStartCheckout('month')}
                 disabled={isLoadingCheckout}
                 className="w-full py-3 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs shadow-md shadow-indigo-600/25 transition-all flex items-center justify-center space-x-2 disabled:opacity-75"
               >
@@ -172,6 +167,16 @@ export const ProModal: React.FC<ProModalProps> = ({
                   </>
                 )}
               </button>
+              {PRO_YEARLY_AVAILABLE && (
+                <button
+                  type="button"
+                  onClick={() => handleStartCheckout('year')}
+                  disabled={isLoadingCheckout}
+                  className="w-full py-2 text-xs font-semibold text-indigo-600 dark:text-indigo-400 hover:underline disabled:opacity-60"
+                >
+                  {p.orYearly(yearlyPrice)}
+                </button>
+              )}
               {checkoutError && (
                 <p role="alert" className="text-[11px] text-center text-rose-600 font-medium">
                   {checkoutError}
