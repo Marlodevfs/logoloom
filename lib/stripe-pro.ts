@@ -9,8 +9,8 @@ export const PRO_CONFIG = {
   priceLabelUsd: '$9',
   priceLabelEur: '9 €',
   interval: 'month' as const,
-  priceYearlyEur: 29,
-  priceLabelYearlyEur: '29 €',
+  priceYearlyEur: 30,
+  priceLabelYearlyEur: '30 €',
 };
 
 export interface ProStatus {
