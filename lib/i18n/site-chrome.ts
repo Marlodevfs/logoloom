@@ -27,6 +27,8 @@ export interface SiteChromeStrings {
     legal: string;
     legalNotice: string;
     privacy: string;
+    terms: string;
+    refund: string;
     contact: string;
     rights: string;
   };
@@ -60,6 +62,8 @@ export const SITE_CHROME: Record<InterfaceLang, SiteChromeStrings> = {
       legal: 'Legal',
       legalNotice: 'Legal notice',
       privacy: 'Privacy policy',
+      terms: 'Terms of service',
+      refund: 'Refund policy',
       contact: 'Contact',
       rights: 'All rights reserved.',
     },
@@ -101,6 +105,8 @@ export const SITE_CHROME: Record<InterfaceLang, SiteChromeStrings> = {
       legal: 'Légal',
       legalNotice: 'Mentions légales',
       privacy: 'Confidentialité',
+      terms: 'Conditions générales',
+      refund: 'Remboursement',
       contact: 'Contact',
       rights: 'Tous droits réservés.',
     },
@@ -142,6 +148,8 @@ export const SITE_CHROME: Record<InterfaceLang, SiteChromeStrings> = {
       legal: 'Rechtliches',
       legalNotice: 'Impressum',
       privacy: 'Datenschutz',
+      terms: 'AGB',
+      refund: 'Rückerstattung',
       contact: 'Kontakt',
       rights: 'Alle Rechte vorbehalten.',
     },
@@ -183,6 +191,8 @@ export const SITE_CHROME: Record<InterfaceLang, SiteChromeStrings> = {
       legal: 'Legal',
       legalNotice: 'Aviso legal',
       privacy: 'Privacidad',
+      terms: 'Condiciones',
+      refund: 'Reembolsos',
       contact: 'Contacto',
       rights: 'Todos los derechos reservados.',
     },
@@ -224,6 +234,8 @@ export const SITE_CHROME: Record<InterfaceLang, SiteChromeStrings> = {
       legal: 'Note legali',
       legalNotice: 'Note legali',
       privacy: 'Privacy',
+      terms: 'Termini',
+      refund: 'Rimborsi',
       contact: 'Contatto',
       rights: 'Tutti i diritti riservati.',
     },
@@ -265,6 +277,8 @@ export const SITE_CHROME: Record<InterfaceLang, SiteChromeStrings> = {
       legal: 'Legal',
       legalNotice: 'Aviso legal',
       privacy: 'Privacidade',
+      terms: 'Termos',
+      refund: 'Reembolsos',
       contact: 'Contacto',
       rights: 'Todos os direitos reservados.',
     },
