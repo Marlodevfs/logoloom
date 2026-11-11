@@ -9,7 +9,7 @@ const DEFAULT_LOCALE = 'en';
 const LOCALIZED_ONLY = new Set([
   'habit-tracker', 'goal-planner', 'weekly-planner', 'monthly-calendar', 'daily-priorities',
   'meal-planner', 'budget-tracker', 'checklist', 'cv',
-  'legal', 'privacy',
+  'legal', 'privacy', 'terms', 'refund',
 ]);
 
 export function middleware(request: NextRequest) {

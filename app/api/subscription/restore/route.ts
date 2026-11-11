@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
-import Stripe from 'stripe';
 import { signProToken } from '@/lib/pro-auth';
+import { paddleApiKey, findCustomersByEmail, hasActiveSubscription } from '@/lib/paddle';
 
 export async function POST(req: NextRequest) {
   try {
@@ -15,7 +15,6 @@ export async function POST(req: NextRequest) {
     }
 
     const cleanEmail = email.trim().toLowerCase();
-    const stripeKey = process.env.STRIPE_SECRET_KEY;
     const isProduction = process.env.NODE_ENV === 'production';
 
     // In dev mode, allow demo restore
@@ -28,52 +27,21 @@ export async function POST(req: NextRequest) {
       });
     }
 
-    if (!stripeKey) {
+    if (!paddleApiKey()) {
       return NextResponse.json(
-        {
-          success: false,
-          error:
-            'Subscription restoration is unavailable because Stripe is not configured on this instance.',
-        },
+        { success: false, error: 'Subscription restoration is unavailable on this instance.' },
         { status: 503 }
       );
     }
 
-    const stripe = new Stripe(stripeKey);
-    const customers = await stripe.customers.list({
-      email: cleanEmail,
-      limit: 5,
-    });
-
-    if (customers.data.length === 0) {
-      return NextResponse.json(
-        {
-          success: false,
-          error: 'No active Stripe subscription found matching this email.',
-        },
-        { status: 404 }
-      );
-    }
-
-    // Check each customer record for an active (or trialing) subscription
-    for (const customer of customers.data) {
-      const subscriptions = await stripe.subscriptions.list({
-        customer: customer.id,
-        status: 'all',
-        limit: 10,
-      });
-
-      const hasActive = subscriptions.data.some(
-        (s) => s.status === 'active' || s.status === 'trialing'
-      );
-
-      if (hasActive) {
+    const customers = await findCustomersByEmail(cleanEmail);
+    for (const customer of customers) {
+      if (await hasActiveSubscription(customer.id)) {
         const signedToken = signProToken({
           email: cleanEmail,
           customerId: customer.id,
           durationDays: 35,
         });
-
         return NextResponse.json({
           success: true,
           token: signedToken,
@@ -83,18 +51,11 @@ export async function POST(req: NextRequest) {
     }
 
     return NextResponse.json(
-      {
-        success: false,
-        error:
-          'A customer record was found, but there are no active subscriptions associated with it.',
-      },
+      { success: false, error: 'No active subscription found for this email.' },
       { status: 404 }
     );
   } catch (error: any) {
     console.error('Subscription restore error:', error);
-    return NextResponse.json(
-      { success: false, error: 'Restoration failed' },
-      { status: 500 }
-    );
+    return NextResponse.json({ success: false, error: 'Restoration failed' }, { status: 500 });
   }
 }

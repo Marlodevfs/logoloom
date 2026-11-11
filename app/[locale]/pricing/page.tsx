@@ -5,7 +5,8 @@ import Link from 'next/link';
 import { useParams } from 'next/navigation';
 import { Check, Sparkles, ArrowLeft, HelpCircle, Clock, Loader2 } from 'lucide-react';
 import { InterfaceLang } from '@/types';
-import { PRO_ENABLED, PRO_I18N, PRO_PRICE_LABEL, FREE_PRICE_LABEL } from '@/lib/i18n/pro';
+import { PRO_ENABLED, PRO_I18N, PRO_PRICE_LABEL, PRO_YEARLY_PRICE_LABEL, FREE_PRICE_LABEL } from '@/lib/i18n/pro';
+import { openProCheckout, PRO_YEARLY_AVAILABLE, type ProInterval } from '@/lib/paddle-checkout';
 import { trackEvent } from '@/lib/analytics';
 import { SiteFooter } from '@/components/SiteFooter';
 
@@ -20,24 +21,14 @@ export default function PricingPage() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const handleCheckout = async () => {
-    trackEvent('pro_upgrade_click', { from: 'pricing' });
+  const handleCheckout = async (interval: ProInterval = 'month') => {
+    trackEvent('pro_upgrade_click', { from: 'pricing', interval });
     setLoading(true);
     setError(null);
     try {
-      const res = await fetch('/api/checkout', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ returnUrl: `${window.location.origin}/${lang}` }),
-      });
-      const data = await res.json();
-      if (data.url) {
-        window.location.href = data.url;
-        return;
-      }
-      setError(p.checkoutError);
+      await openProCheckout({ interval, returnUrl: `${window.location.origin}/${lang}`, locale: lang });
     } catch {
-      setError(p.networkError);
+      setError(p.checkoutError);
     }
     setLoading(false);
   };
@@ -130,13 +121,23 @@ export default function PricingPage() {
               <div className="space-y-2">
                 <button
                   type="button"
-                  onClick={handleCheckout}
+                  onClick={() => handleCheckout('month')}
                   disabled={loading}
                   className="w-full py-3 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-sm shadow-md shadow-indigo-600/25 transition-all flex items-center justify-center space-x-2 disabled:opacity-75"
                 >
                   {loading ? <Loader2 className="w-4 h-4 animate-spin" /> : <Sparkles className="w-4 h-4" />}
                   <span>{loading ? p.connectingStripe : p.upgradePage}</span>
                 </button>
+                {PRO_YEARLY_AVAILABLE && (
+                  <button
+                    type="button"
+                    onClick={() => handleCheckout('year')}
+                    disabled={loading}
+                    className="w-full py-2 text-xs font-semibold text-indigo-600 dark:text-indigo-400 hover:underline disabled:opacity-60"
+                  >
+                    {p.orYearly(PRO_YEARLY_PRICE_LABEL[lang])}
+                  </button>
+                )}
                 {error && (
                   <p role="alert" className="text-xs text-center text-rose-600">{error}</p>
                 )}

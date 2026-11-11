@@ -187,7 +187,7 @@ export const UI_TRANSLATIONS: Record<InterfaceLang, UIStrings> = {
     freeTierPrice: '$0',
     freeTierDesc: 'Everything you need to send professional, branded documents to your clients.',
     proTierTitle: 'Pro White-Label',
-    proTierPrice: '$9 / mo',
+    proTierPrice: '$5 / mo',
     proTierDesc: 'For established agencies and coaches who demand 100% white-label documents.',
 
     footerPrivacy: 'Privacy Policy',
@@ -280,7 +280,7 @@ export const UI_TRANSLATIONS: Record<InterfaceLang, UIStrings> = {
     freeTierPrice: '0 €',
     freeTierDesc: 'Tout ce dont vous avez besoin pour envoyer des PDFs impeccables à vos clients.',
     proTierTitle: 'Pro White-Label',
-    proTierPrice: '9 € / mois',
+    proTierPrice: '5 € / mois',
     proTierDesc: 'Pour les coachs et agences qui exigent une marque 100% blanche sans mention LogoLoom.',
 
     footerPrivacy: 'Politique de confidentialité',
@@ -373,7 +373,7 @@ export const UI_TRANSLATIONS: Record<InterfaceLang, UIStrings> = {
     freeTierPrice: '0 €',
     freeTierDesc: 'Todo lo necesario para enviar documentos de prestigio a tus clientes.',
     proTierTitle: 'Pro Marca Blanca',
-    proTierPrice: '9 € / mes',
+    proTierPrice: '5 € / mes',
     proTierDesc: 'Para consultores y agencias que exigen total marca blanca sin créditos externos.',
 
     footerPrivacy: 'Política de privacidad',
@@ -466,7 +466,7 @@ export const UI_TRANSLATIONS: Record<InterfaceLang, UIStrings> = {
     freeTierPrice: '0 €',
     freeTierDesc: 'Alles, was Sie für professionelle Dokumente an Kunden benötigen.',
     proTierTitle: 'Pro White-Label',
-    proTierPrice: '9 € / Monat',
+    proTierPrice: '5 € / Monat',
     proTierDesc: 'Für Agenturen und Berater, die 100% White-Label ohne Fremdlogos verlangen.',
 
     footerPrivacy: 'Datenschutz',
@@ -559,7 +559,7 @@ export const UI_TRANSLATIONS: Record<InterfaceLang, UIStrings> = {
     freeTierPrice: '0 €',
     freeTierDesc: 'Tudo o que necessita para entregar PDFs de excelência aos seus clientes.',
     proTierTitle: 'Pro Marca Branca',
-    proTierPrice: '9 € / mês',
+    proTierPrice: '5 € / mês',
     proTierDesc: 'Para consultores e agências que exigem personalização integral sem marcas externas.',
 
     footerPrivacy: 'Política de Privacidade',
@@ -652,7 +652,7 @@ export const UI_TRANSLATIONS: Record<InterfaceLang, UIStrings> = {
     freeTierPrice: '0 €',
     freeTierDesc: 'Tutto ciò che serve per inviare documenti professionali ai tuoi clienti.',
     proTierTitle: 'Pro White-Label',
-    proTierPrice: '9 € / mese',
+    proTierPrice: '5 € / mese',
     proTierDesc: 'Per professionisti e studi che desiderano documenti al 100% senza loghi di terze parti.',
 
     footerPrivacy: 'Informativa sulla privacy',

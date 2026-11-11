@@ -4,18 +4,19 @@
  */
 
 export const PRO_CONFIG = {
-  priceMonthlyUsd: 9,
-  priceMonthlyEur: 9,
-  priceLabelUsd: '$9',
-  priceLabelEur: '9 €',
+  priceMonthlyUsd: 5,
+  priceMonthlyEur: 5,
+  priceLabelUsd: '$5',
+  priceLabelEur: '5 €',
   interval: 'month' as const,
-  stripePriceId: process.env.STRIPE_PRICE_ID_MONTHLY || '',
+  priceYearlyEur: 30,
+  priceLabelYearlyEur: '30 €',
 };
 
 export interface ProStatus {
   isPro: boolean;
   proSince?: string;
-  source?: 'stripe' | 'test_mode';
+  source?: 'paddle' | 'test_mode';
 }
 
 const PRO_STORAGE_KEY = 'logoloom_pro_status_v1';

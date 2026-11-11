@@ -293,14 +293,14 @@ export function useBrandKit(initialLang?: InterfaceLang, initialTemplate?: Templ
 
         // Server-Side Pro Subscription Entitlement Verification
         const urlParams = new URLSearchParams(window.location.search);
-        const sessionId = urlParams.get('session_id');
+        const sessionId = urlParams.get('transaction_id') || urlParams.get('session_id');
         const storedToken = localStorage.getItem(PRO_TOKEN_KEY);
 
         if (sessionId || storedToken) {
           fetch('/api/subscription/verify', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ sessionId, token: storedToken }),
+            body: JSON.stringify({ transactionId: sessionId, token: storedToken }),
           })
             .then(async (res) => ({ status: res.status, data: await res.json().catch(() => ({})) }))
             .then(({ status, data }) => {

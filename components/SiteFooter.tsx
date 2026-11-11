@@ -78,6 +78,16 @@ export function SiteFooter({ lang, withStickyBar = false }: { lang: string; with
               </Link>
             </li>
             <li>
+              <Link href={`/${lang}/terms`} className="text-slate-500 hover:text-indigo-600 dark:text-slate-400 dark:hover:text-indigo-400">
+                {c.footer.terms}
+              </Link>
+            </li>
+            <li>
+              <Link href={`/${lang}/refund`} className="text-slate-500 hover:text-indigo-600 dark:text-slate-400 dark:hover:text-indigo-400">
+                {c.footer.refund}
+              </Link>
+            </li>
+            <li>
               <Link href={`/${lang}/privacy`} className="text-slate-500 hover:text-indigo-600 dark:text-slate-400 dark:hover:text-indigo-400">
                 {c.footer.privacy}
               </Link>
