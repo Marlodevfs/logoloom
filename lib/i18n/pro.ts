@@ -8,12 +8,12 @@ export const PRO_ENABLED = process.env.NEXT_PUBLIC_PRO_ENABLED === '1';
 
 /** Display price per interface language (€ for European languages, $ for English). */
 export const PRO_PRICE_LABEL: Record<InterfaceLang, string> = {
-  en: '$9',
-  fr: '9 €',
-  de: '9 €',
-  es: '9 €',
-  it: '9 €',
-  pt: '9 €',
+  en: '$5',
+  fr: '5 €',
+  de: '5 €',
+  es: '5 €',
+  it: '5 €',
+  pt: '5 €',
 };
 
 export const FREE_PRICE_LABEL: Record<InterfaceLang, string> = {

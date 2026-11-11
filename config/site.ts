@@ -29,6 +29,10 @@ export const siteConfig = {
     publisherStatus: '', // e.g. "Entrepreneur individuel – SIREN 123 456 789"
     publisherAddress: '', // postal address
     publicationDirector: '', // usually the publisher's name
+    /** VAT mention shown in the terms of sale, e.g. "TVA non applicable, art. 293 B du CGI" (micro-entreprise). */
+    vatMention: '',
+    /** Consumer mediator (mandatory in France for B2C sales): name + website. */
+    mediator: '',
     host: {
       name: 'Vercel Inc.',
       address: '440 N Barranca Ave #4133, Covina, CA 91723, USA',
