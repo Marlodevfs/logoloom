@@ -4,7 +4,9 @@ import { CANONICAL_TEMPLATE_SLUGS } from '@/lib/seo/templates-metadata';
 import { CV_EXAMPLES_FR } from '@/lib/cv-examples/fr';
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const now = new Date();
+  // Fixed date of the last real content update: a date that changes on every
+  // crawl tells search engines nothing. Bump it when pages actually change.
+  const now = new Date('2026-11-11');
   const locales = siteConfig.locales;
 
   const entries: MetadataRoute.Sitemap = [];
