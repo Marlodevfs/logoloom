@@ -5,9 +5,9 @@ export const siteConfig = {
   url: 'https://logoloom.app',
   ogImage: 'https://logoloom.app/api/og',
   description:
-    'Free printable planners and business documents you personalize in seconds. High-resolution vector PDFs, 100% private in browser, no signup.',
-  tagline: 'Free Printable Planners & Business Documents',
-  defaultTitle: 'LogoLoom – Free Printable Planners & Business Documents',
+    'Free online CV maker with no account and no subscription: pick a layout, fill it in, download a clean PDF. Your CV never leaves your browser. Free printable planners too.',
+  tagline: 'Free CV Maker – No Account, No Subscription',
+  defaultTitle: 'LogoLoom – Free CV Maker, PDF Without Subscription',
   social: {
     github: 'https://github.com/Marlodevfs/logoloom',
     twitter: 'https://twitter.com/logoloom',
