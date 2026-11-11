@@ -4,6 +4,7 @@ import localFont from 'next/font/local';
 import '../globals.css';
 import { siteConfig } from '@/config/site';
 import { CookieConsent } from '@/components/CookieConsent';
+import { ProActivation } from '@/components/ProActivation';
 
 const sans = localFont({
   src: [
@@ -97,6 +98,7 @@ export default async function LocaleLayout({
       </head>
       <body className="antialiased min-h-screen bg-slate-50 dark:bg-slate-950 font-sans selection:bg-indigo-200 selection:text-slate-900">
         {children}
+        <ProActivation lang={lang} />
         <CookieConsent lang={lang} />
         {/* GoatCounter privacy-friendly analytics */}
         <Script
