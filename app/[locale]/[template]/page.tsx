@@ -14,6 +14,7 @@ import {
 import { Studio } from '@/components/Studio';
 import { CvStudio } from '@/components/cv/CvStudio';
 import { CV_EXAMPLES_FR, exampleLabel } from '@/lib/cv-examples/fr';
+import { CV_GUIDES_FR } from '@/lib/cv-guides/fr';
 import { SiteFooter } from '@/components/SiteFooter';
 import { getSiteChrome } from '@/lib/i18n/site-chrome';
 
@@ -308,6 +309,15 @@ export default async function TemplateLandingPage({ params }: Props) {
                   </li>
                 ))}
               </ul>
+              <p className="pt-2 text-slate-600 dark:text-slate-300">
+                Besoin d’aide pour la rédaction ?{' '}
+                {CV_GUIDES_FR.map((g, i) => (
+                  <span key={g.slug}>
+                    {i > 0 && ' · '}
+                    <Link href={`/fr/cv/conseils/${g.slug}`} className="font-bold text-ink-700 dark:text-ink-300 hover:underline">{g.label}</Link>
+                  </span>
+                ))}
+              </p>
             </section>
           )}
 
