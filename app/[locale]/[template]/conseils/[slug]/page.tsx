@@ -155,6 +155,7 @@ export default async function CvGuidePage({ params }: Props) {
                   ))}
                 </ul>
               )}
+              {s.outro && <p className="mt-5 text-[17px] text-slate-700 dark:text-slate-300 leading-relaxed">{s.outro}</p>}
             </section>
           ))}
 

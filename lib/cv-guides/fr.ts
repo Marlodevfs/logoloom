@@ -10,6 +10,8 @@ export interface GuideSection {
   examples?: string[];
   /** Optional "à éviter" lines. */
   avoid?: string[];
+  /** Paragraph shown after the list/examples. */
+  outro?: string;
 }
 
 export interface CvGuide {
@@ -116,7 +118,7 @@ export const CV_GUIDES_FR: CvGuide[] = [
           'Ce que vous faites bien : une ou deux forces, avec une preuve',
           'Ce que vous cherchez : type de poste, contrat, disponibilité',
         ],
-        paragraphs: ['Écrivez-la à la fin, une fois le reste du CV terminé : vous saurez exactement quoi mettre en avant.'],
+        outro: 'Écrivez-la à la fin, une fois le reste du CV terminé : vous saurez exactement quoi mettre en avant.',
       },
       {
         h2: 'Exemples pour un premier emploi ou un étudiant',
@@ -178,9 +180,9 @@ export const CV_GUIDES_FR: CvGuide[] = [
     slug: 'titre-cv',
     h1: 'Titre de CV : comment le choisir, avec exemples',
     label: 'Titre de CV',
-    metaTitle: 'Titre de CV : comment bien le choisir + 30 exemples – LogoLoom',
+    metaTitle: 'Titre de CV : comment bien le choisir + 24 exemples – LogoLoom',
     metaDescription:
-      'Le titre du CV est la première ligne lue par le recruteur. Comment le formuler pour un poste précis, une alternance ou une reconversion, avec 30 exemples.',
+      'Le titre du CV est la première ligne lue par le recruteur. Comment le formuler pour un poste précis, une alternance ou une reconversion, avec 24 exemples.',
     intro:
       'Le titre, c’est la ligne juste sous votre nom. En quelques mots, il dit au recruteur quel poste vous visez et pourquoi vous êtes crédible. C’est aussi un mot-clé important pour les logiciels qui trient les candidatures.',
     sections: [
@@ -274,9 +276,8 @@ export const CV_GUIDES_FR: CvGuide[] = [
       {
         h2: 'Les savoir-être les plus recherchés',
         list: ['Fiabilité et ponctualité', 'Sens du contact client', 'Organisation', 'Travail en équipe', 'Adaptabilité', 'Calme sous pression', 'Autonomie', 'Rigueur'],
-        paragraphs: [
+        outro:
           'Ne les listez pas seuls : glissez-les dans vos expériences avec un fait. « Calme sous pression » devient « 120 clients par heure en rush sans erreur de caisse ».',
-        ],
       },
       {
         h2: 'Comment choisir les vôtres',
