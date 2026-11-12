@@ -3,6 +3,7 @@ import { siteConfig } from '@/config/site';
 import { CANONICAL_TEMPLATE_SLUGS } from '@/lib/seo/templates-metadata';
 import { CV_EXAMPLES_FR } from '@/lib/cv-examples/fr';
 import { CV_GUIDES_FR } from '@/lib/cv-guides/fr';
+import { PRO_ENABLED } from '@/lib/i18n/pro';
 
 export default function sitemap(): MetadataRoute.Sitemap {
   // Fixed date of the last real content update: a date that changes on every
@@ -49,8 +50,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
     }
   }
 
-  // 3. Localized pricing pages (each one is its own canonical)
-  for (const locale of locales) {
+  // 3. Localized pricing pages (each one is its own canonical).
+  // Only listed once Pro sales are open.
+  for (const locale of PRO_ENABLED ? locales : []) {
     entries.push({
       url: `${siteConfig.url}/${locale}/pricing`,
       lastModified: now,

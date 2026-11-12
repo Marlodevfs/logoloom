@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import { siteConfig } from '@/config/site';
 import { getHreflangAlternates } from '@/lib/i18n/meta';
-import { PRO_I18N } from '@/lib/i18n/pro';
+import { PRO_ENABLED, PRO_I18N } from '@/lib/i18n/pro';
 import { getSiteChrome } from '@/lib/i18n/site-chrome';
 import { InterfaceLang } from '@/types';
 
@@ -21,6 +21,8 @@ export async function generateMetadata({
   return {
     title,
     description: p.pageSubtitle,
+    // Hidden from search engines until Pro sales are open.
+    ...(PRO_ENABLED ? {} : { robots: { index: false, follow: true } }),
     openGraph: {
       title,
       description: p.pageSubtitle,

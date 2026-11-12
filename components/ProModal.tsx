@@ -247,13 +247,15 @@ export const ProModal: React.FC<ProModalProps> = ({
             </>
           )}
 
-          <Link
-            href={`/${interfaceLang}/pricing`}
-            onClick={onClose}
-            className="block text-center text-[11px] font-semibold text-indigo-600 dark:text-indigo-400 hover:underline"
-          >
-            {p.seePricing}
-          </Link>
+          {PRO_ENABLED && (
+            <Link
+              href={`/${interfaceLang}/pricing`}
+              onClick={onClose}
+              className="block text-center text-[11px] font-semibold text-indigo-600 dark:text-indigo-400 hover:underline"
+            >
+              {p.seePricing}
+            </Link>
+          )}
         </div>
       </div>
     </div>

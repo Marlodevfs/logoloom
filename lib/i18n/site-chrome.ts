@@ -54,7 +54,7 @@ export const SITE_CHROME: Record<InterfaceLang, SiteChromeStrings> = {
     exploreSubtitle: 'All templates are free, minimalist and print-ready in A4 and US Letter.',
     viewAll: 'View all templates',
     noscriptTitle: 'JavaScript is disabled in your browser.',
-    noscriptBody: 'Enable JavaScript to customize colors, add your logo and download print-ready vector PDFs.',
+    noscriptBody: 'Enable JavaScript to fill in your CV or planner and download it as a PDF.',
     footer: {
       product: 'Product',
       templates: 'Templates',
@@ -97,7 +97,7 @@ export const SITE_CHROME: Record<InterfaceLang, SiteChromeStrings> = {
     exploreSubtitle: 'Tous les modèles sont gratuits, minimalistes et prêts à imprimer en A4 et US Letter.',
     viewAll: 'Voir tous les modèles',
     noscriptTitle: 'JavaScript est désactivé dans votre navigateur.',
-    noscriptBody: 'Activez JavaScript pour personnaliser les couleurs, ajouter votre logo et télécharger vos PDF vectoriels.',
+    noscriptBody: 'Activez JavaScript pour remplir votre CV ou votre planner et le télécharger en PDF.',
     footer: {
       product: 'Produit',
       templates: 'Modèles',
@@ -140,7 +140,7 @@ export const SITE_CHROME: Record<InterfaceLang, SiteChromeStrings> = {
     exploreSubtitle: 'Alle Vorlagen sind kostenlos, minimalistisch und druckfertig in A4 und US Letter.',
     viewAll: 'Alle Vorlagen ansehen',
     noscriptTitle: 'JavaScript ist in Ihrem Browser deaktiviert.',
-    noscriptBody: 'Aktivieren Sie JavaScript, um Farben anzupassen, Ihr Logo hinzuzufügen und druckfertige Vektor-PDFs herunterzuladen.',
+    noscriptBody: 'Aktivieren Sie JavaScript, um Ihren Lebenslauf oder Planer auszufüllen und als PDF herunterzuladen.',
     footer: {
       product: 'Produkt',
       templates: 'Vorlagen',
@@ -183,7 +183,7 @@ export const SITE_CHROME: Record<InterfaceLang, SiteChromeStrings> = {
     exploreSubtitle: 'Todas las plantillas son gratuitas, minimalistas y listas para imprimir en A4 y US Letter.',
     viewAll: 'Ver todas las plantillas',
     noscriptTitle: 'JavaScript está desactivado en tu navegador.',
-    noscriptBody: 'Activa JavaScript para personalizar colores, añadir tu logo y descargar PDF vectoriales listos para imprimir.',
+    noscriptBody: 'Activa JavaScript para rellenar tu currículum o tu planificador y descargarlo en PDF.',
     footer: {
       product: 'Producto',
       templates: 'Plantillas',
@@ -226,7 +226,7 @@ export const SITE_CHROME: Record<InterfaceLang, SiteChromeStrings> = {
     exploreSubtitle: 'Tutti i modelli sono gratuiti, minimalisti e pronti per la stampa in A4 e US Letter.',
     viewAll: 'Vedi tutti i modelli',
     noscriptTitle: 'JavaScript è disattivato nel tuo browser.',
-    noscriptBody: 'Attiva JavaScript per personalizzare i colori, aggiungere il tuo logo e scaricare PDF vettoriali pronti per la stampa.',
+    noscriptBody: 'Attiva JavaScript per compilare il tuo CV o il tuo planner e scaricarlo in PDF.',
     footer: {
       product: 'Prodotto',
       templates: 'Modelli',
@@ -269,7 +269,7 @@ export const SITE_CHROME: Record<InterfaceLang, SiteChromeStrings> = {
     exploreSubtitle: 'Todos os modelos são gratuitos, minimalistas e prontos a imprimir em A4 e US Letter.',
     viewAll: 'Ver todos os modelos',
     noscriptTitle: 'O JavaScript está desativado no seu navegador.',
-    noscriptBody: 'Ative o JavaScript para personalizar cores, adicionar o seu logo e descarregar PDF vetoriais prontos a imprimir.',
+    noscriptBody: 'Ative o JavaScript para preencher o seu CV ou planner e descarregá-lo em PDF.',
     footer: {
       product: 'Produto',
       templates: 'Modelos',

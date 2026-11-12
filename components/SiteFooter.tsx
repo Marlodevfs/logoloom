@@ -5,6 +5,7 @@ import { CATALOG, CATEGORY_COPY, CATEGORY_ORDER } from '@/lib/catalog';
 import type { InterfaceLang } from '@/types';
 import { BuyMeACoffeeButton } from '@/components/BuyMeACoffee';
 import { CookieSettingsLink } from '@/components/CookieConsent';
+import { PRO_ENABLED } from '@/lib/i18n/pro';
 
 /** Site-wide footer: product links, legal pages and contact. Server component. */
 export function SiteFooter({ lang, withStickyBar = false }: { lang: string; withStickyBar?: boolean }) {
@@ -63,11 +64,14 @@ export function SiteFooter({ lang, withStickyBar = false }: { lang: string; with
                 {c.viewAll}
               </Link>
             </li>
-            <li>
-              <Link href={`/${lang}/pricing`} className="text-slate-500 hover:text-indigo-600 dark:text-slate-400 dark:hover:text-indigo-400">
-                {c.footer.pricing}
-              </Link>
-            </li>
+            {/* Pricing stays hidden until Pro sales are open (PRO_ENABLED, set at build time). */}
+            {PRO_ENABLED && (
+              <li>
+                <Link href={`/${lang}/pricing`} className="text-slate-500 hover:text-indigo-600 dark:text-slate-400 dark:hover:text-indigo-400">
+                  {c.footer.pricing}
+                </Link>
+              </li>
+            )}
             <li>
               <a href={`mailto:${siteConfig.contact.email}`} className="text-slate-500 hover:text-indigo-600 dark:text-slate-400 dark:hover:text-indigo-400">
                 {c.footer.contact}
