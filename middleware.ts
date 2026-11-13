@@ -22,6 +22,12 @@ export function middleware(request: NextRequest) {
     return NextResponse.redirect(canonicalUrl, 301);
   }
 
+  // 1b. www → apex: a single canonical host so Google does not index duplicates
+  if (host === `www.${CANONICAL_HOST}`) {
+    const canonicalUrl = new URL(`https://${CANONICAL_HOST}${pathname}${search}`);
+    return NextResponse.redirect(canonicalUrl, 301);
+  }
+
   // 2. Root URL serves default language without auto-redirecting crawlers
   if (pathname === '/') {
     return NextResponse.rewrite(new URL(`/${DEFAULT_LOCALE}${search}`, request.url));
