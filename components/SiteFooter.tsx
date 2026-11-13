@@ -15,7 +15,7 @@ export function SiteFooter({ lang, withStickyBar = false }: { lang: string; with
 
   return (
     <footer className={`border-t border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 ${withStickyBar ? 'pb-24 lg:pb-0' : ''}`}>
-      <div className="max-w-5xl mx-auto px-4 sm:px-6 py-10 grid grid-cols-2 sm:grid-cols-4 gap-8 text-xs">
+      <div className="max-w-5xl mx-auto px-4 sm:px-6 py-10 grid grid-cols-2 sm:grid-cols-4 gap-8 text-xs [&_li>a]:inline-block [&_li>a]:py-2.5 lg:[&_li>a]:py-0 [&_li>button]:py-2.5 lg:[&_li>button]:py-0">
         <div className="col-span-2 sm:col-span-1 space-y-2">
           <p className="font-extrabold text-sm text-slate-900 dark:text-white">{siteConfig.name}</p>
           <p className="text-slate-500 dark:text-slate-400 leading-relaxed">{c.slogan}</p>
@@ -29,7 +29,7 @@ export function SiteFooter({ lang, withStickyBar = false }: { lang: string; with
           {CATEGORY_ORDER.map((cat) => (
             <div key={cat} className="space-y-1">
               <p className="text-[11px] font-semibold text-slate-400 dark:text-slate-500 pt-1">{cats[cat].name}</p>
-              <ul className="space-y-1">
+              <ul className="space-y-0 lg:space-y-1">
                 {CATALOG.filter((t) => t.category === cat).map((t) => (
                   <li key={t.slug}>
                     <Link href={`/${lang}/${t.slug}`} className="text-slate-500 hover:text-indigo-600 dark:text-slate-400 dark:hover:text-indigo-400">
@@ -65,7 +65,7 @@ export function SiteFooter({ lang, withStickyBar = false }: { lang: string; with
 
         <nav aria-label={c.footer.product} className="space-y-2">
           <p className="font-bold text-slate-800 dark:text-slate-200">{c.footer.product}</p>
-          <ul className="space-y-1.5">
+          <ul className="space-y-0 lg:space-y-1.5">
             <li>
               <Link href={`/${lang}`} className="text-slate-500 hover:text-indigo-600 dark:text-slate-400 dark:hover:text-indigo-400">
                 {c.viewAll}
@@ -89,7 +89,7 @@ export function SiteFooter({ lang, withStickyBar = false }: { lang: string; with
 
         <nav aria-label={c.footer.legal} className="space-y-2">
           <p className="font-bold text-slate-800 dark:text-slate-200">{c.footer.legal}</p>
-          <ul className="space-y-1.5">
+          <ul className="space-y-0 lg:space-y-1.5">
             <li>
               <Link href={`/${lang}/legal`} className="text-slate-500 hover:text-indigo-600 dark:text-slate-400 dark:hover:text-indigo-400">
                 {c.footer.legalNotice}

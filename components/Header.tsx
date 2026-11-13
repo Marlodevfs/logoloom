@@ -106,7 +106,7 @@ export const Header: React.FC<HeaderProps> = ({
                 LogoLoom
               </span>
             </div>
-            <p className="text-[11px] text-slate-500 dark:text-slate-400 hidden sm:block">
+            <p className="text-[11px] leading-tight text-slate-500 dark:text-slate-400 max-w-[42vw] sm:max-w-none truncate">
               {t.appTagline}
             </p>
           </div>

@@ -413,31 +413,8 @@ export function CvStudio({ initialLang, title }: { initialLang: InterfaceLang; t
               <p className="mt-3 text-base text-slate-600 dark:text-slate-300 leading-relaxed max-w-[52ch]">{s.help}</p>
             </div>
 
-            <div className="mt-8">
-              {id === 'design' ? (
-                <DesignStep c={c} lang={interfaceLang} brandKit={brandKit} cv={cv} onUpdate={updateBrandKit} />
-              ) : (
-                <CvEditor
-                  brandKit={brandKit}
-                  onUpdate={updateBrandKit}
-                  interfaceLang={interfaceLang}
-                  sections={STEP_SECTIONS[id]}
-                  variant="roomy"
-                />
-              )}
-            </div>
-
-            {id === 'you' && interfaceLang === 'fr' && !loadedExample && (
-              <p className="mt-8 text-sm text-slate-600 dark:text-slate-300">
-                Besoin d’inspiration ?{' '}
-                <a href="/fr/cv/exemples" className="font-bold text-ink-700 dark:text-ink-300 underline underline-offset-4">
-                  Voir des exemples de CV par métier
-                </a>
-              </p>
-            )}
-
             {id === 'you' && (
-              <div className="mt-6 pt-6 border-t border-slate-200 dark:border-slate-800 text-sm">
+              <div className="mt-5 text-sm">
                 {justCleared ? (
                   <p role="status" className="text-slate-600 dark:text-slate-300">{c.cleared}</p>
                 ) : confirmClear ? (
@@ -468,6 +445,29 @@ export function CvStudio({ initialLang, title }: { initialLang: InterfaceLang; t
                   </button>
                 )}
               </div>
+            )}
+
+            <div className="mt-8">
+              {id === 'design' ? (
+                <DesignStep c={c} lang={interfaceLang} brandKit={brandKit} cv={cv} onUpdate={updateBrandKit} />
+              ) : (
+                <CvEditor
+                  brandKit={brandKit}
+                  onUpdate={updateBrandKit}
+                  interfaceLang={interfaceLang}
+                  sections={STEP_SECTIONS[id]}
+                  variant="roomy"
+                />
+              )}
+            </div>
+
+            {id === 'you' && interfaceLang === 'fr' && !loadedExample && (
+              <p className="mt-8 text-sm text-slate-600 dark:text-slate-300">
+                Besoin d’inspiration ?{' '}
+                <a href="/fr/cv/exemples" className="font-bold text-ink-700 dark:text-ink-300 underline underline-offset-4">
+                  Voir des exemples de CV par métier
+                </a>
+              </p>
             )}
 
             {/* Step navigation */}

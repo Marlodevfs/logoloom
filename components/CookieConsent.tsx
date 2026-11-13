@@ -81,10 +81,12 @@ export function CookieConsent({ lang }: { lang: string }) {
       role="dialog"
       aria-live="polite"
       aria-label="Cookies"
-      className="fixed z-40 left-3 right-3 bottom-[92px] lg:bottom-4 lg:left-4 lg:right-auto lg:max-w-sm bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-2xl shadow-2xl p-4 space-y-3"
+      className="fixed z-40 left-3 right-3 bottom-[92px] lg:bottom-4 lg:left-4 lg:right-auto lg:max-w-sm bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-2xl shadow-2xl p-3 lg:p-4 space-y-2 lg:space-y-3"
     >
-      <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
-        {t.text}{' '}
+      <p className="text-xs text-slate-600 dark:text-slate-300 leading-snug lg:leading-relaxed">
+        {/* On phones only the first sentence shows, so the banner hides less of the page */}
+        {t.text.split(/(?<=\.) /)[0]}{' '}
+        <span className="hidden lg:inline">{t.text.split(/(?<=\.) /).slice(1).join(' ')}{' '}</span>
         <Link href={`/${lang}/privacy`} className="font-semibold text-indigo-600 dark:text-indigo-400 underline">
           {t.more}
         </Link>

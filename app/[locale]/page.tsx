@@ -9,6 +9,8 @@ import { SiteFooter } from '@/components/SiteFooter';
 import { getSiteChrome } from '@/lib/i18n/site-chrome';
 import { CATALOG, CATEGORY_COPY } from '@/lib/catalog';
 import { ChevronRight, Plus } from 'lucide-react';
+import { getCvExample, exampleLabel, type CvExample } from '@/lib/cv-examples/fr';
+import { CV_EXAMPLES_EN, exampleLabelEn } from '@/lib/cv-examples/en';
 import { LiveCvHero, CvLayoutsShowcase, type LiveCvHeroCopy } from '@/components/home/LiveCvHero';
 
 interface Props {
@@ -17,6 +19,21 @@ interface Props {
 
 export function generateStaticParams() {
   return siteConfig.locales.map((locale) => ({ locale }));
+}
+
+// Most searched jobs, linked from the homepage so search engines reach the example pages quickly.
+const POPULAR_FR = ['vendeur', 'aide-soignant', 'serveur', 'caissier', 'assistant-administratif', 'comptable', 'preparateur-de-commandes', 'developpeur-web'];
+
+function popularExamples(lang: string): { href: string; label: string }[] | null {
+  if (lang === 'fr') {
+    return POPULAR_FR.map((slug) => getCvExample(slug))
+      .filter((e): e is CvExample => Boolean(e))
+      .map((e) => ({ href: `/fr/cv/exemples/${e.slug}`, label: exampleLabel(e) }));
+  }
+  if (lang === 'en') {
+    return CV_EXAMPLES_EN.slice(0, 8).map((e) => ({ href: `/en/cv/examples/${e.slug}`, label: exampleLabelEn(e) }));
+  }
+  return null;
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
@@ -97,7 +114,7 @@ type HomeCopy = LiveCvHeroCopy & {
 
 const HOME_I18N: Record<InterfaceLang, HomeCopy> = {
   fr: {
-    "h1": "Un CV propre en dix minutes.",
+    "h1": "Un CV gratuit et propre en dix minutes.",
     "lead": "Remplissez, choisissez une mise en page, téléchargez le PDF. Gratuit, sans compte, sans abonnement.",
     "nameLabel": "Commencez par votre nom",
     "namePlaceholder": "Camille Martin",
@@ -164,7 +181,7 @@ const HOME_I18N: Record<InterfaceLang, HomeCopy> = {
     ]
 },
   en: {
-    "h1": "A clean CV in ten minutes.",
+    "h1": "A free, clean CV in ten minutes.",
     "lead": "Fill it in, pick a layout, download the PDF. Free, no account, no subscription.",
     "nameLabel": "Start with your name",
     "namePlaceholder": "Alex Morgan",
@@ -231,7 +248,7 @@ const HOME_I18N: Record<InterfaceLang, HomeCopy> = {
     ]
 },
   de: {
-    "h1": "Ein sauberer Lebenslauf in zehn Minuten.",
+    "h1": "Ein kostenloser, sauberer Lebenslauf in zehn Minuten.",
     "lead": "Ausfüllen, Layout wählen, PDF herunterladen. Kostenlos, ohne Konto, ohne Abo.",
     "nameLabel": "Beginnen Sie mit Ihrem Namen",
     "namePlaceholder": "Lena Schneider",
@@ -298,7 +315,7 @@ const HOME_I18N: Record<InterfaceLang, HomeCopy> = {
     ]
 },
   es: {
-    "h1": "Un CV limpio en diez minutos.",
+    "h1": "Un CV gratis y limpio en diez minutos.",
     "lead": "Rellénalo, elige un diseño, descarga el PDF. Gratis, sin cuenta, sin suscripción.",
     "nameLabel": "Empieza por tu nombre",
     "namePlaceholder": "Lucía García",
@@ -365,7 +382,7 @@ const HOME_I18N: Record<InterfaceLang, HomeCopy> = {
     ]
 },
   it: {
-    "h1": "Un CV pulito in dieci minuti.",
+    "h1": "Un CV gratis e pulito in dieci minuti.",
     "lead": "Compila, scegli un layout, scarica il PDF. Gratis, senza account, senza abbonamento.",
     "nameLabel": "Inizia dal tuo nome",
     "namePlaceholder": "Giulia Rossi",
@@ -432,7 +449,7 @@ const HOME_I18N: Record<InterfaceLang, HomeCopy> = {
     ]
 },
   pt: {
-    "h1": "Um CV limpo em dez minutos.",
+    "h1": "Um CV grátis e limpo em dez minutos.",
     "lead": "Preencha, escolha um layout, descarregue o PDF. Grátis, sem conta, sem assinatura.",
     "nameLabel": "Comece pelo seu nome",
     "namePlaceholder": "Inês Costa",
@@ -573,14 +590,32 @@ export default async function LocalePage({ params }: Props) {
             >
               {t.cta}
             </Link>
-            {lang === 'fr' && (
-              <p className="mt-5 text-slate-600 dark:text-slate-300">
-                Ou partez d’un{' '}
-                <Link href="/fr/cv/exemples" className="font-bold text-ink-700 dark:text-ink-300 underline underline-offset-4">
-                  exemple de CV pour votre métier
-                </Link>
-                .
-              </p>
+            {popularExamples(lang) && (
+              <div className="mt-6">
+                <p className="text-slate-600 dark:text-slate-300">
+                  {lang === 'fr' ? 'Ou partez d’un exemple de CV pour votre métier :' : 'Or start from a CV example for your job:'}
+                </p>
+                <ul className="mt-3 flex flex-wrap gap-2">
+                  {popularExamples(lang)!.map((e) => (
+                    <li key={e.href}>
+                      <Link
+                        href={e.href}
+                        className="inline-flex items-center h-9 px-3 rounded-full border border-slate-300 dark:border-slate-700 text-sm font-semibold text-slate-700 dark:text-slate-200 hover:border-ink-600 hover:text-ink-700 dark:hover:text-ink-300 transition-colors"
+                      >
+                        {e.label}
+                      </Link>
+                    </li>
+                  ))}
+                  <li>
+                    <Link
+                      href={lang === 'fr' ? '/fr/cv/exemples' : '/en/cv/examples'}
+                      className="inline-flex items-center h-9 px-3 text-sm font-bold text-ink-700 dark:text-ink-300 underline underline-offset-4"
+                    >
+                      {lang === 'fr' ? 'Tous les exemples' : 'All examples'}
+                    </Link>
+                  </li>
+                </ul>
+              </div>
             )}
           </div>
           <CvLayoutsShowcase lang={lang as DocumentLang} captions={t.captions} />
