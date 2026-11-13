@@ -10,6 +10,7 @@ import { CV_EXAMPLES_FR, exampleH1, exampleLabel, getCvExample } from '@/lib/cv-
 import { cvKit } from '@/lib/cv-examples/kit';
 import { SwissPackTeaser } from '@/components/cv/SwissPackTeaser';
 import { CV_GUIDES_FR } from '@/lib/cv-guides/fr';
+import { enSlugForFr } from '@/lib/cv-examples/en';
 
 interface Props {
   params: Promise<{ locale: string; template: string; job: string }>;
@@ -31,12 +32,16 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const ex = resolve(locale, template, job);
   if (!ex) return {};
   const url = `${siteConfig.url}/fr/cv/exemples/${ex.slug}`;
+  const en = enSlugForFr(ex.slug);
   const og = `${siteConfig.url}/api/og?title=${encodeURIComponent(exampleH1(ex))}`;
   return {
     title: ex.metaTitle,
     description: ex.metaDescription,
     metadataBase: new URL(siteConfig.url),
-    alternates: { canonical: url },
+    alternates: {
+      canonical: url,
+      ...(en ? { languages: { fr: url, en: `${siteConfig.url}/en/cv/examples/${en}`, 'x-default': `${siteConfig.url}/en/cv/examples/${en}` } } : {}),
+    },
     openGraph: {
       title: ex.metaTitle,
       description: ex.metaDescription,

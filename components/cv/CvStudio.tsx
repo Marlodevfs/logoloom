@@ -270,6 +270,7 @@ export function CvStudio({ initialLang, title }: { initialLang: InterfaceLang; t
     const params = new URLSearchParams(window.location.search);
     const name = params.get('name')?.trim().slice(0, 60);
     const exampleSlug = params.get('exemple');
+    const exampleSlugEn = params.get('example');
     // The old violet default looks off on a CV: move it to ink.
     const legacyColor = brandKit.brandColor?.toUpperCase() === '#4F46E5';
     if (name || legacyColor) {
@@ -290,7 +291,18 @@ export function CvStudio({ initialLang, title }: { initialLang: InterfaceLang; t
         setLoadedExample(ex.short);
       });
     }
-    if (name || exampleSlug) window.history.replaceState({}, '', window.location.pathname);
+    if (exampleSlugEn) {
+      import('@/lib/cv-examples/en').then(({ getCvExampleEn }) => {
+        const ex = getCvExampleEn(exampleSlugEn);
+        if (!ex) return;
+        try {
+          localStorage.setItem(CV_BACKUP_KEY, JSON.stringify({ cvContent: cv, brandColor: brandKit.brandColor }));
+        } catch {}
+        updateBrandKit({ cvContent: { ...ex.cv }, brandColor: ex.color });
+        setLoadedExample(ex.short);
+      });
+    }
+    if (name || exampleSlug || exampleSlugEn) window.history.replaceState({}, '', window.location.pathname);
   }, [isLoaded]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const restoreBackup = () => {

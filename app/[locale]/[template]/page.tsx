@@ -14,6 +14,7 @@ import {
 import { Studio } from '@/components/Studio';
 import { CvStudio } from '@/components/cv/CvStudio';
 import { CV_EXAMPLES_FR, exampleLabel } from '@/lib/cv-examples/fr';
+import { CV_EXAMPLES_EN, exampleLabelEn } from '@/lib/cv-examples/en';
 import { CV_GUIDES_FR } from '@/lib/cv-guides/fr';
 import { SiteFooter } from '@/components/SiteFooter';
 import { getSiteChrome } from '@/lib/i18n/site-chrome';
@@ -288,6 +289,32 @@ export default async function TemplateLandingPage({ params }: Props) {
               ))}
             </div>
           </section>
+
+          {isCv && lang === 'en' && (
+            <section className="space-y-5">
+              <div>
+                <h2 className="font-display text-2xl sm:text-3xl font-semibold text-slate-900 dark:text-white">
+                  CV examples by job
+                </h2>
+                <p className="mt-2 text-slate-600 dark:text-slate-300">
+                  Start from a CV already filled in for your job, then replace the details with your own.
+                </p>
+              </div>
+              <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-8 border-t border-slate-200 dark:border-slate-800">
+                {CV_EXAMPLES_EN.map((e) => (
+                  <li key={e.slug} className="border-b border-slate-200 dark:border-slate-800">
+                    <Link href={`/en/cv/examples/${e.slug}`} className="flex items-center justify-between py-3 font-bold text-slate-800 dark:text-slate-100 hover:text-ink-700">
+                      {exampleLabelEn(e)}
+                      <ChevronRight className="w-4 h-4 text-slate-400" aria-hidden="true" />
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+              <p className="pt-2">
+                <Link href="/en/cv/examples" className="font-bold text-ink-700 dark:text-ink-300 hover:underline">See all CV examples</Link>
+              </p>
+            </section>
+          )}
 
           {isCv && lang === 'fr' && (
             <section className="space-y-5">

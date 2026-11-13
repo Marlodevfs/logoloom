@@ -1,7 +1,7 @@
 import type { BrandKit, CvCustomContent } from '@/types';
 
 /** A minimal brand kit that renders one CV (server-safe, serializable). */
-export function cvKit(cv: CvCustomContent, color: string): BrandKit {
+export function cvKit(cv: CvCustomContent, color: string, lang: 'fr' | 'en' = 'fr'): BrandKit {
   return {
     logoUrl: null,
     brandColor: color,
@@ -13,7 +13,7 @@ export function cvKit(cv: CvCustomContent, color: string): BrandKit {
     contactEmail: '',
     qrUrl: '',
     paperSize: 'a4',
-    documentLang: 'fr',
+    documentLang: lang,
     designStyle: 'minimal',
     isPro: false,
     removeWatermark: false,

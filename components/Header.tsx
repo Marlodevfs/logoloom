@@ -86,8 +86,10 @@ export const Header: React.FC<HeaderProps> = ({
     } else {
       segments.unshift(code);
     }
-    // CV examples by job only exist in French for now: other languages land on the editor.
-    if (segments[2] === 'exemples' && code !== 'fr') return `/${code}/cv`;
+    // CV examples by job exist in French (/exemples) and English (/examples) only:
+    // switch to the other hub, or land on the editor for the other languages.
+    if (segments[2] === 'exemples' && code !== 'fr') return code === 'en' ? '/en/cv/examples' : `/${code}/cv`;
+    if (segments[2] === 'examples' && code !== 'en') return code === 'fr' ? '/fr/cv/exemples' : `/${code}/cv`;
     return '/' + segments.join('/');
   };
 

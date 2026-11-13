@@ -3,12 +3,14 @@ import { siteConfig } from '@/config/site';
 import { CANONICAL_TEMPLATE_SLUGS } from '@/lib/seo/templates-metadata';
 import { CV_EXAMPLES_FR } from '@/lib/cv-examples/fr';
 import { CV_GUIDES_FR } from '@/lib/cv-guides/fr';
+import { CV_EXAMPLES_EN, enSlugForFr } from '@/lib/cv-examples/en';
 import { PRO_ENABLED } from '@/lib/i18n/pro';
 
 export default function sitemap(): MetadataRoute.Sitemap {
   // Fixed date of the last real content update: a date that changes on every
   // crawl tells search engines nothing. Bump it when pages actually change.
   const now = new Date('2026-11-11');
+  const examplesUpdated = new Date('2026-11-13');
   const locales = siteConfig.locales;
 
   const entries: MetadataRoute.Sitemap = [];
@@ -62,19 +64,42 @@ export default function sitemap(): MetadataRoute.Sitemap {
     });
   }
 
-  // 4. CV examples by job (French only for now, so no hreflang alternates)
-  entries.push({
-    url: `${siteConfig.url}/fr/cv/exemples`,
-    lastModified: now,
-    changeFrequency: 'weekly',
-    priority: 0.8,
+  // 4. CV examples by job: French (33) and English (12). Pairs that exist in
+  // both languages get hreflang alternates; the others stand alone.
+  const hubAlternates = {
+    languages: {
+      fr: `${siteConfig.url}/fr/cv/exemples`,
+      en: `${siteConfig.url}/en/cv/examples`,
+      'x-default': `${siteConfig.url}/en/cv/examples`,
+    },
+  };
+  for (const url of [`${siteConfig.url}/fr/cv/exemples`, `${siteConfig.url}/en/cv/examples`]) {
+    entries.push({ url, lastModified: examplesUpdated, changeFrequency: 'weekly', priority: 0.8, alternates: hubAlternates });
+  }
+  const pairAlternates = (fr: string, en: string) => ({
+    languages: {
+      fr: `${siteConfig.url}/fr/cv/exemples/${fr}`,
+      en: `${siteConfig.url}/en/cv/examples/${en}`,
+      'x-default': `${siteConfig.url}/en/cv/examples/${en}`,
+    },
   });
   for (const ex of CV_EXAMPLES_FR) {
+    const en = enSlugForFr(ex.slug);
     entries.push({
       url: `${siteConfig.url}/fr/cv/exemples/${ex.slug}`,
-      lastModified: now,
+      lastModified: en ? examplesUpdated : now,
       changeFrequency: 'monthly',
       priority: 0.75,
+      ...(en ? { alternates: pairAlternates(ex.slug, en) } : {}),
+    });
+  }
+  for (const ex of CV_EXAMPLES_EN) {
+    entries.push({
+      url: `${siteConfig.url}/en/cv/examples/${ex.slug}`,
+      lastModified: examplesUpdated,
+      changeFrequency: 'monthly',
+      priority: 0.75,
+      ...(ex.fr ? { alternates: pairAlternates(ex.fr, ex.slug) } : {}),
     });
   }
 
