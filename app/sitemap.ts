@@ -2,6 +2,7 @@ import { MetadataRoute } from 'next';
 import { siteConfig } from '@/config/site';
 import { CANONICAL_TEMPLATE_SLUGS } from '@/lib/seo/templates-metadata';
 import { CV_EXAMPLES_FR } from '@/lib/cv-examples/fr';
+import { LETTER_EXAMPLES_FR } from '@/lib/letter-examples/fr';
 import { CV_GUIDES_FR } from '@/lib/cv-guides/fr';
 import { CV_EXAMPLES_EN, enSlugForFr } from '@/lib/cv-examples/en';
 import { PRO_ENABLED } from '@/lib/i18n/pro';
@@ -101,6 +102,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.75,
       ...(ex.fr ? { alternates: pairAlternates(ex.fr, ex.slug) } : {}),
     });
+  }
+
+  // 4b. Cover letter hub and examples (French only)
+  entries.push({ url: `${siteConfig.url}/fr/cv/lettre-de-motivation`, lastModified: now, changeFrequency: 'monthly', priority: 0.8 });
+  for (const ex of LETTER_EXAMPLES_FR) {
+    entries.push({ url: `${siteConfig.url}/fr/cv/lettre-de-motivation/${ex.slug}`, lastModified: now, changeFrequency: 'monthly', priority: 0.7 });
   }
 
   // 5. CV guides (French only)
