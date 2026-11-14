@@ -32,6 +32,7 @@ import {
   DEFAULT_CHECKLIST,
 } from './i18n/catalog-data';
 import { DEFAULT_CV } from './i18n/cv-data';
+import { getDefaultLetterContent } from './i18n/letter-data';
 
 const STORAGE_KEY = 'logoloom_brand_kit_v3';
 const TEMPLATE_KEY = 'logoloom_template_id_v3';
@@ -124,7 +125,8 @@ type LocalizedContentKey =
   | 'mealPlannerContent'
   | 'budgetTrackerContent'
   | 'checklistContent'
-  | 'cvContent';
+  | 'cvContent'
+  | 'letterContent';
 
 const LOCALIZED_DEFAULTS: Record<LocalizedContentKey, (lang: DocumentLang) => unknown> = {
   goalPlannerContent: getDefaultGoalPlannerContent,
@@ -135,6 +137,7 @@ const LOCALIZED_DEFAULTS: Record<LocalizedContentKey, (lang: DocumentLang) => un
   budgetTrackerContent: getDefaultBudgetTrackerContent,
   checklistContent: getDefaultChecklistContent,
   cvContent: getDefaultCvContent,
+  letterContent: getDefaultLetterContent,
 };
 
 const sameContent = (a: unknown, b: unknown) => JSON.stringify(a) === JSON.stringify(b);
@@ -214,6 +217,7 @@ export function useBrandKit(initialLang?: InterfaceLang, initialTemplate?: Templ
     budgetTrackerContent: getDefaultBudgetTrackerContent(initialDocLang),
     checklistContent: getDefaultChecklistContent(initialDocLang),
     cvContent: getDefaultCvContent(initialDocLang),
+    letterContent: getDefaultLetterContent(initialDocLang),
   }));
 
   const [activeTemplate, setActiveTemplate] = useState<TemplateId>(resolvedTemplate);
@@ -288,6 +292,7 @@ export function useBrandKit(initialLang?: InterfaceLang, initialTemplate?: Templ
             budgetTrackerContent: getDefaultBudgetTrackerContent(resolvedUiLang as DocumentLang),
             checklistContent: getDefaultChecklistContent(resolvedUiLang as DocumentLang),
             cvContent: getDefaultCvContent(resolvedUiLang as DocumentLang),
+            letterContent: getDefaultLetterContent(resolvedUiLang as DocumentLang),
           }));
         }
 

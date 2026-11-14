@@ -3,6 +3,7 @@ import { pdf } from '@react-pdf/renderer';
 import confetti from 'canvas-confetti';
 import { BrandKit, PaperSize, TemplateId } from '@/types';
 import { DocumentCompiler } from './pdf/DocumentCompiler';
+import { LETTER_FILE_PREFIX } from './i18n/letter-data';
 
 export interface PDFExportOptions {
   element?: HTMLElement;
@@ -10,6 +11,8 @@ export interface PDFExportOptions {
   fileName?: string;
   brandKit: BrandKit;
   templateId: TemplateId;
+  /** 'letter' exports the cover letter instead of the template. */
+  doc?: 'letter';
 }
 
 export async function exportToPDF({
@@ -17,6 +20,7 @@ export async function exportToPDF({
   fileName,
   brandKit,
   templateId,
+  doc,
 }: PDFExportOptions): Promise<void> {
   try {
     const finalKit: BrandKit = {
@@ -26,7 +30,7 @@ export async function exportToPDF({
     };
 
     // 1. Compile pure vector PDF with embedded Roboto fonts & selectable text
-    const docElement = React.createElement(DocumentCompiler, { brandKit: finalKit });
+    const docElement = React.createElement(DocumentCompiler, { brandKit: finalKit, doc });
     const blob = await pdf(docElement as any).toBlob();
 
     // 2. Format download filename
@@ -39,8 +43,11 @@ export async function exportToPDF({
         .replace(/^_|_$/g, '')
         .slice(0, 40);
     // A CV is sent to employers: name it after the candidate ("CV_Jean_Dupont.pdf").
+    const letterPrefix = LETTER_FILE_PREFIX[finalKit.documentLang || 'en'] || LETTER_FILE_PREFIX.en;
     const defaultName =
-      templateId === 'cv'
+      doc === 'letter'
+        ? `${letterPrefix}_${slug(finalKit.cvContent?.fullName || '')}`.replace(/_$/, '') + '.pdf'
+        : templateId === 'cv'
         ? `CV_${slug(finalKit.cvContent?.fullName || '') || 'CV'}.pdf`.replace('CV_CV.pdf', 'CV.pdf')
         : `${slug(finalKit.companyName || 'LogoLoom') || 'LogoLoom'}_${templateId}.pdf`;
     const finalFileName = fileName || defaultName;

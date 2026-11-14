@@ -7,6 +7,9 @@ import { Header } from '@/components/Header';
 import { CvEditor, type CvSection } from '@/components/CvEditor';
 import { CvSheet } from '@/components/home/LiveCvHero';
 import { DownloadButton } from '@/components/DownloadButton';
+import { LetterEditor } from '@/components/cv/LetterEditor';
+import { LetterSheet } from '@/components/templates/LetterTemplate';
+import { LETTER_STUDIO_COPY } from '@/lib/i18n/letter-data';
 import type { CvCustomContent, CvLayout, InterfaceLang } from '@/types';
 
 const CV_BACKUP_KEY = 'logoloom_cv_backup';
@@ -259,6 +262,10 @@ export function CvStudio({ initialLang, title }: { initialLang: InterfaceLang; t
   const [justCleared, setJustCleared] = useState(false);
   const [previewOpen, setPreviewOpen] = useState(false);
   const [loadedExample, setLoadedExample] = useState<string | null>(null);
+  // CV or cover letter. "?lettre" / "?letter" in the URL opens the letter directly.
+  const [doc, setDoc] = useState<'cv' | 'letter'>('cv');
+  const lc = LETTER_STUDIO_COPY[interfaceLang] || LETTER_STUDIO_COPY.en;
+  const isLetter = doc === 'letter';
   const formTop = useRef<HTMLDivElement>(null);
   const stepHeading = useRef<HTMLHeadingElement>(null);
   const prefilled = useRef(false);
@@ -271,6 +278,8 @@ export function CvStudio({ initialLang, title }: { initialLang: InterfaceLang; t
     const name = params.get('name')?.trim().slice(0, 60);
     const exampleSlug = params.get('exemple');
     const exampleSlugEn = params.get('example');
+    const wantsLetter = params.has('lettre') || params.has('letter');
+    if (wantsLetter) setDoc('letter');
     // The old violet default looks off on a CV: move it to ink.
     const legacyColor = brandKit.brandColor?.toUpperCase() === '#4F46E5';
     if (name || legacyColor) {
@@ -302,7 +311,7 @@ export function CvStudio({ initialLang, title }: { initialLang: InterfaceLang; t
         setLoadedExample(ex.short);
       });
     }
-    if (name || exampleSlug || exampleSlugEn) window.history.replaceState({}, '', window.location.pathname);
+    if (name || exampleSlug || exampleSlugEn || wantsLetter) window.history.replaceState({}, '', window.location.pathname);
   }, [isLoaded]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const restoreBackup = () => {
@@ -344,7 +353,19 @@ export function CvStudio({ initialLang, title }: { initialLang: InterfaceLang; t
   const s = c.steps[id];
   const isLast = step === STEPS.length - 1;
 
-  const sheet = <CvSheet kit={brandKit} />;
+  const sheet = isLetter ? <LetterSheet kit={brandKit} /> : <CvSheet kit={brandKit} />;
+  const docProp = isLetter ? ('letter' as const) : undefined;
+
+  const switchDoc = (next: 'cv' | 'letter') => {
+    if (next === doc) return;
+    setDoc(next);
+    setConfirmClear(false);
+    setJustCleared(false);
+    requestAnimationFrame(() => {
+      const top = formTop.current;
+      if (top && top.getBoundingClientRect().top < 0) top.scrollIntoView({ block: 'start' });
+    });
+  };
 
   return (
     <div className="min-h-screen bg-slate-100 dark:bg-slate-950 text-slate-900 dark:text-slate-100">
@@ -355,6 +376,24 @@ export function CvStudio({ initialLang, title }: { initialLang: InterfaceLang; t
         <div className="bg-white dark:bg-slate-900 lg:border-r border-slate-200 dark:border-slate-800">
           <div ref={formTop} className="max-w-[640px] lg:ml-auto px-5 sm:px-8 lg:px-12 pt-8 sm:pt-10 pb-32 lg:pb-16 scroll-mt-16">
             <h1 className="text-sm font-bold text-slate-500 dark:text-slate-400">{title}</h1>
+
+            <div className="mt-4 inline-flex p-1 rounded-xl bg-slate-100 dark:bg-slate-800" role="group">
+              {(['cv', 'letter'] as const).map((d) => (
+                <button
+                  key={d}
+                  type="button"
+                  aria-pressed={doc === d}
+                  onClick={() => switchDoc(d)}
+                  className={`h-10 px-4 rounded-lg text-sm font-bold transition-colors ${
+                    doc === d
+                      ? 'bg-white dark:bg-slate-900 text-slate-900 dark:text-white shadow-sm'
+                      : 'text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white'
+                  }`}
+                >
+                  {d === 'cv' ? lc.tabCv : lc.tabLetter}
+                </button>
+              ))}
+            </div>
 
             {loadedExample && (
               <div role="status" className="mt-5 rounded-lg border border-ink-200 bg-ink-50 dark:bg-ink-950 dark:border-ink-800 px-4 py-3 text-sm text-slate-800 dark:text-slate-100 flex flex-wrap items-center gap-x-4 gap-y-1">
@@ -367,6 +406,28 @@ export function CvStudio({ initialLang, title }: { initialLang: InterfaceLang; t
               </div>
             )}
 
+            {isLetter ? (
+              <>
+                <div className="mt-8 sm:mt-10">
+                  <h2 className="font-display text-3xl sm:text-[2.5rem] leading-tight font-semibold text-slate-900 dark:text-white">
+                    {lc.title}
+                  </h2>
+                  <p className="mt-3 text-base text-slate-600 dark:text-slate-300 leading-relaxed max-w-[52ch]">{lc.help}</p>
+                </div>
+                <div className="mt-8">
+                  <LetterEditor
+                    brandKit={brandKit}
+                    onUpdate={updateBrandKit}
+                    interfaceLang={interfaceLang}
+                    onEditCv={() => {
+                      setDoc('cv');
+                      goTo(0);
+                    }}
+                  />
+                </div>
+              </>
+            ) : (
+              <>
             {/* Stepper: the six steps are a real sequence, so they are numbered. */}
             <nav aria-label={c.stepOf(step + 1, STEPS.length)} className="mt-5">
               <ol className="grid grid-cols-6 gap-1.5">
@@ -493,10 +554,13 @@ export function CvStudio({ initialLang, title }: { initialLang: InterfaceLang; t
                 </button>
               ) : (
                 <div className="w-full max-w-[260px] hidden lg:block">
-                  <DownloadButton brandKit={brandKit} activeTemplate="cv" interfaceLang={interfaceLang} compact />
+                  <DownloadButton brandKit={brandKit} activeTemplate="cv" interfaceLang={interfaceLang} compact doc={docProp} />
                 </div>
               )}
             </div>
+
+              </>
+            )}
 
             <p className="mt-10 text-sm text-slate-500 dark:text-slate-400">{c.privacy}</p>
           </div>
@@ -508,7 +572,7 @@ export function CvStudio({ initialLang, title }: { initialLang: InterfaceLang; t
             <div className="flex items-center justify-between gap-4 mb-5 max-w-[560px] w-full mx-auto">
               <p className="text-sm text-slate-600 dark:text-slate-400">{c.livePreview}</p>
               <div className="w-[220px]">
-                <DownloadButton brandKit={brandKit} activeTemplate="cv" interfaceLang={interfaceLang} compact />
+                <DownloadButton brandKit={brandKit} activeTemplate="cv" interfaceLang={interfaceLang} compact doc={docProp} />
               </div>
             </div>
             <div className="flex-1 min-h-0 flex justify-center">
@@ -532,7 +596,7 @@ export function CvStudio({ initialLang, title }: { initialLang: InterfaceLang; t
           {c.preview}
         </button>
         <div className="flex-1 min-w-0">
-          <DownloadButton brandKit={brandKit} activeTemplate="cv" interfaceLang={interfaceLang} compact />
+          <DownloadButton brandKit={brandKit} activeTemplate="cv" interfaceLang={interfaceLang} compact doc={docProp} />
         </div>
       </div>
 

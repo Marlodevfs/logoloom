@@ -170,6 +170,24 @@ export interface CvCustomContent {
   interests: string;
 }
 
+/** Cover letter written next to the CV. Sender name, email and phone come from the CV. */
+export interface CoverLetterContent {
+  /** Street address of the sender (optional; the CV city is used when empty). */
+  senderAddress: string;
+  /** Recipient block, one line per line (name, company, address). */
+  recipient: string;
+  /** Place written before the date; the CV city is used when empty. */
+  place: string;
+  /** Free text date; today's date in the document language when empty. */
+  date: string;
+  /** Subject without its prefix ("Objet :" is added per language). */
+  subject: string;
+  salutation: string;
+  /** Paragraphs separated by blank lines. */
+  body: string;
+  closing: string;
+}
+
 export interface ChecklistCustomContent {
   title: string;
   subtitle: string;
@@ -207,6 +225,7 @@ export interface BrandKit {
   budgetTrackerContent?: BudgetTrackerCustomContent;
   checklistContent?: ChecklistCustomContent;
   cvContent?: CvCustomContent;
+  letterContent?: CoverLetterContent;
 }
 
 export interface TemplateConfig {
