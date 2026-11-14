@@ -1,13 +1,17 @@
-/** LogoLoom mark: a planner page with a red bookmark ribbon. Same drawing as app/icon.svg. */
+/**
+ * LogoLoom mark: a woven "L" (white strand crossing a red thread, over/under like a loom).
+ * Same drawing as app/icon.svg. The gaps use the tile colour, so they follow dark mode.
+ */
 export function LogoMark({ className = 'w-9 h-9' }: { className?: string }) {
+  const tile = 'stroke-[#1E293B] dark:stroke-[#334155]';
   return (
     <svg className={className} viewBox="0 0 48 48" aria-hidden="true" focusable="false">
       <rect width="48" height="48" rx="11" className="fill-[#1E293B] dark:fill-[#334155]" />
-      <rect x="10" y="8" width="28" height="32" rx="4" fill="#FFFFFF" />
-      <rect x="15" y="17" width="12" height="2.6" rx="1.3" fill="#CBD5E1" />
-      <rect x="15" y="23" width="18" height="2.6" rx="1.3" fill="#CBD5E1" />
-      <rect x="15" y="29" width="15" height="2.6" rx="1.3" fill="#CBD5E1" />
-      <path d="M29 6h6v15l-3-2.6-3 2.6z" fill="#F43F5E" />
+      <path d="M25 10v17" fill="none" stroke="#F43F5E" strokeWidth="5" strokeLinecap="round" />
+      <path d="M21.5 22h7" fill="none" className={tile} strokeWidth="9" />
+      <path d="M11 22h27" fill="none" stroke="#F43F5E" strokeWidth="5" strokeLinecap="round" />
+      <path d="M17 17.5v9" fill="none" className={tile} strokeWidth="9" />
+      <path d="M17 10v24h15" fill="none" stroke="#FFFFFF" strokeWidth="5" strokeLinecap="round" strokeLinejoin="round" />
     </svg>
   );
 }
