@@ -1,4 +1,4 @@
-import type { BrandKit, CvCustomContent } from '@/types';
+import type { BrandKit, CoverLetterContent, CvCustomContent } from '@/types';
 
 /** A minimal brand kit that renders one CV (server-safe, serializable). */
 export function cvKit(cv: CvCustomContent, color: string, lang: 'fr' | 'en' = 'fr'): BrandKit {
@@ -21,3 +21,26 @@ export function cvKit(cv: CvCustomContent, color: string, lang: 'fr' | 'en' = 'f
     cvContent: cv,
   } as BrandKit;
 }
+
+/** Brand kit for a cover letter preview: the CV gives the sender block. */
+export function letterKit(cv: CvCustomContent, letter: CoverLetterContent, color: string): BrandKit {
+  return { ...cvKit(cv, color, 'fr'), letterContent: letter } as BrandKit;
+}
+
+/** Sender used when a letter example has no matching CV example. */
+export const PLACEHOLDER_CV_FR: CvCustomContent = {
+  layout: 'sidebar',
+  fullName: '[Prénom Nom]',
+  jobTitle: '[Votre métier]',
+  email: '[email]',
+  phone: '[téléphone]',
+  city: '[Ville]',
+  link: '',
+  photoUrl: null,
+  summary: '',
+  experiences: [],
+  education: [],
+  skills: [],
+  languages: [],
+  interests: '',
+};

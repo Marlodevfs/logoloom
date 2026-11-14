@@ -280,6 +280,26 @@ export function CvStudio({ initialLang, title }: { initialLang: InterfaceLang; t
     const exampleSlugEn = params.get('example');
     const wantsLetter = params.has('lettre') || params.has('letter');
     if (wantsLetter) setDoc('letter');
+    // "?lettre=vendeur": a cover letter example, with its matching CV example when there is one.
+    const letterSlug = params.get('lettre')?.trim();
+    if (letterSlug) {
+      Promise.all([import('@/lib/letter-examples/fr'), import('@/lib/cv-examples/fr')]).then(([{ getLetterExample }, { getCvExample }]) => {
+        const ex = getLetterExample(letterSlug);
+        if (!ex) return;
+        const cvEx = ex.cvSlug ? getCvExample(ex.cvSlug) : undefined;
+        try {
+          localStorage.setItem(
+            CV_BACKUP_KEY,
+            JSON.stringify({ cvContent: cv, brandColor: brandKit.brandColor, letterContent: brandKit.letterContent })
+          );
+        } catch {}
+        updateBrandKit({
+          letterContent: { ...ex.letter },
+          ...(cvEx ? { cvContent: { ...cvEx.cv }, brandColor: ex.color } : {}),
+        });
+        setLoadedExample(ex.short);
+      });
+    }
     // The old violet default looks off on a CV: move it to ink.
     const legacyColor = brandKit.brandColor?.toUpperCase() === '#4F46E5';
     if (name || legacyColor) {
@@ -319,7 +339,11 @@ export function CvStudio({ initialLang, title }: { initialLang: InterfaceLang; t
       const raw = localStorage.getItem(CV_BACKUP_KEY);
       if (raw) {
         const saved = JSON.parse(raw);
-        updateBrandKit({ cvContent: saved.cvContent, brandColor: saved.brandColor });
+        updateBrandKit({
+          cvContent: saved.cvContent,
+          brandColor: saved.brandColor,
+          ...(saved.letterContent ? { letterContent: saved.letterContent } : {}),
+        });
       }
       localStorage.removeItem(CV_BACKUP_KEY);
     } catch {}
@@ -401,7 +425,7 @@ export function CvStudio({ initialLang, title }: { initialLang: InterfaceLang; t
                   Exemple « {loadedExample} » chargé. Remplacez les informations par les vôtres.
                 </span>
                 <button type="button" onClick={restoreBackup} className="font-bold text-ink-700 dark:text-ink-300 underline underline-offset-4">
-                  Revenir à mon CV précédent
+                  {isLetter ? 'Revenir à ma version précédente' : 'Revenir à mon CV précédent'}
                 </button>
               </div>
             )}
@@ -425,6 +449,14 @@ export function CvStudio({ initialLang, title }: { initialLang: InterfaceLang; t
                     }}
                   />
                 </div>
+                {interfaceLang === 'fr' && !loadedExample && (
+                  <p className="mt-8 text-sm text-slate-600 dark:text-slate-300">
+                    Besoin d’inspiration ?{' '}
+                    <a href="/fr/cv/lettre-de-motivation#exemples" className="font-bold text-ink-700 dark:text-ink-300 underline underline-offset-4">
+                      Voir des exemples de lettres par métier
+                    </a>
+                  </p>
+                )}
               </>
             ) : (
               <>

@@ -11,6 +11,7 @@ import { cvKit } from '@/lib/cv-examples/kit';
 import { SwissPackTeaser } from '@/components/cv/SwissPackTeaser';
 import { CV_GUIDES_FR } from '@/lib/cv-guides/fr';
 import { enSlugForFr } from '@/lib/cv-examples/en';
+import { getLetterExample } from '@/lib/letter-examples/fr';
 
 interface Props {
   params: Promise<{ locale: string; template: string; job: string }>;
@@ -62,6 +63,7 @@ export default async function CvExamplePage({ params }: Props) {
 
   const startHref = `/fr/cv?exemple=${ex.slug}`;
   const others = CV_EXAMPLES_FR.filter((e) => e.slug !== ex.slug);
+  const letterEx = getLetterExample(ex.slug);
 
   const jsonLd = [
     {
@@ -149,6 +151,22 @@ export default async function CvExamplePage({ params }: Props) {
           </section>
 
           {ex.slug === 'frontalier-suisse' && <SwissPackTeaser startHref={startHref} />}
+
+          <section className="rounded-xl border border-slate-200 dark:border-slate-800 p-6 sm:p-8">
+            <h2 className="font-display text-2xl font-semibold text-slate-900 dark:text-white">Et la lettre de motivation ?</h2>
+            <p className="mt-2 text-slate-600 dark:text-slate-300 leading-relaxed">
+              {letterEx
+                ? 'Un exemple de lettre assortie à ce CV est prêt : même personne, même mise en page. Il s’ouvre avec le CV dans l’éditeur.'
+                : 'Écrivez-la dans le même outil : vos coordonnées et votre couleur sont reprises du CV.'}
+            </p>
+            <Link
+              href={letterEx ? `/fr/cv/lettre-de-motivation/${letterEx.slug}` : '/fr/cv/lettre-de-motivation'}
+              className="mt-4 inline-flex items-center gap-1 font-bold text-ink-700 dark:text-ink-300 underline underline-offset-4"
+            >
+              {letterEx ? `Voir la lettre de motivation ${letterEx.short.toLowerCase()}` : 'Voir le modèle de lettre de motivation'}
+              <ChevronRight className="w-4 h-4" aria-hidden="true" />
+            </Link>
+          </section>
 
           <section>
             <h2 className="font-display text-3xl font-semibold text-slate-900 dark:text-white">Exemples de profil à adapter</h2>

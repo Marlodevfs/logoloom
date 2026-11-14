@@ -53,6 +53,13 @@ export function SiteFooter({ lang, withStickyBar = false }: { lang: string; with
                 )}
                 {cat === 'career' && lang === 'fr' && (
                   <li>
+                    <Link href="/fr/cv/lettre-de-motivation" className="text-slate-500 hover:text-indigo-600 dark:text-slate-400 dark:hover:text-indigo-400">
+                      Lettre de motivation gratuite
+                    </Link>
+                  </li>
+                )}
+                {cat === 'career' && lang === 'fr' && (
+                  <li>
                     <Link href="/fr/cv/conseils" className="text-slate-500 hover:text-indigo-600 dark:text-slate-400 dark:hover:text-indigo-400">
                       Conseils pour faire un CV
                     </Link>
