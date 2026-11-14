@@ -12,13 +12,26 @@ import { VectorMealPlannerPDF } from './VectorMealPlannerPDF';
 import { VectorBudgetTrackerPDF } from './VectorBudgetTrackerPDF';
 import { VectorChecklistPDF } from './VectorChecklistPDF';
 import { VectorCvPDF } from './VectorCvPDF';
+import { VectorLetterPDF } from './VectorLetterPDF';
 
 interface DocumentCompilerProps {
   brandKit: BrandKit;
+  /** 'letter' renders the cover letter written next to the CV. */
+  doc?: 'letter';
 }
 
-export const DocumentCompiler: React.FC<DocumentCompilerProps> = ({ brandKit }) => {
+export const DocumentCompiler: React.FC<DocumentCompilerProps> = ({ brandKit, doc }) => {
   registerPDFFonts();
+
+  // The cover letter goes to employers too: metadata names the candidate only.
+  if (doc === 'letter') {
+    const name = brandKit.cvContent?.fullName?.trim() || 'Letter';
+    return (
+      <Document title={name} author={name} subject="Cover letter" creator={name} producer={name}>
+        <VectorLetterPDF brandKit={brandKit} />
+      </Document>
+    );
+  }
 
   const isMinimal = (brandKit.designStyle || 'minimal') === 'minimal';
   const isProMode = Boolean(brandKit.removeWatermark || brandKit.isPro);

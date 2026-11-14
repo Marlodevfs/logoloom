@@ -13,6 +13,8 @@ interface DownloadButtonProps {
   interfaceLang: InterfaceLang;
   /** Hide the reassurance caption (used in the mobile sticky bar) */
   compact?: boolean;
+  /** 'letter' downloads the cover letter instead of the template. */
+  doc?: 'letter';
 }
 
 // The PDF engine (@react-pdf + fonts) is heavy: load it only when needed.
@@ -62,6 +64,7 @@ export const DownloadButton: React.FC<DownloadButtonProps> = ({
   activeTemplate,
   interfaceLang,
   compact = false,
+  doc,
 }) => {
   const t = UI_TRANSLATIONS[interfaceLang] || UI_TRANSLATIONS.en;
   const dI18n = DOWNLOAD_I18N[interfaceLang] || DOWNLOAD_I18N.en;
@@ -80,9 +83,10 @@ export const DownloadButton: React.FC<DownloadButtonProps> = ({
         paperSize: brandKit.paperSize,
         brandKit,
         templateId: activeTemplate,
+        doc,
       });
 
-      trackEvent('pdf_download', { template: activeTemplate, paper: brandKit.paperSize });
+      trackEvent('pdf_download', { template: doc === 'letter' ? 'cover-letter' : activeTemplate, paper: brandKit.paperSize });
       setHasExported(true);
       setShowSupport(true);
       setTimeout(() => setHasExported(false), 3000);
