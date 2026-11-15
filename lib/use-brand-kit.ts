@@ -33,6 +33,7 @@ import {
 } from './i18n/catalog-data';
 import { DEFAULT_CV } from './i18n/cv-data';
 import { getDefaultLetterContent } from './i18n/letter-data';
+import { getDefaultCardContent } from './i18n/card-data';
 
 const STORAGE_KEY = 'logoloom_brand_kit_v3';
 const TEMPLATE_KEY = 'logoloom_template_id_v3';
@@ -126,7 +127,8 @@ type LocalizedContentKey =
   | 'budgetTrackerContent'
   | 'checklistContent'
   | 'cvContent'
-  | 'letterContent';
+  | 'letterContent'
+  | 'cardContent';
 
 const LOCALIZED_DEFAULTS: Record<LocalizedContentKey, (lang: DocumentLang) => unknown> = {
   goalPlannerContent: getDefaultGoalPlannerContent,
@@ -138,6 +140,7 @@ const LOCALIZED_DEFAULTS: Record<LocalizedContentKey, (lang: DocumentLang) => un
   checklistContent: getDefaultChecklistContent,
   cvContent: getDefaultCvContent,
   letterContent: getDefaultLetterContent,
+  cardContent: getDefaultCardContent,
 };
 
 const sameContent = (a: unknown, b: unknown) => JSON.stringify(a) === JSON.stringify(b);
@@ -199,6 +202,7 @@ const VALID_TEMPLATES: TemplateId[] = [
   'budget-tracker',
   'checklist',
   'cv',
+  'business-card',
 ];
 
 export function useBrandKit(initialLang?: InterfaceLang, initialTemplate?: TemplateId) {
@@ -218,6 +222,7 @@ export function useBrandKit(initialLang?: InterfaceLang, initialTemplate?: Templ
     checklistContent: getDefaultChecklistContent(initialDocLang),
     cvContent: getDefaultCvContent(initialDocLang),
     letterContent: getDefaultLetterContent(initialDocLang),
+    cardContent: getDefaultCardContent(initialDocLang),
   }));
 
   const [activeTemplate, setActiveTemplate] = useState<TemplateId>(resolvedTemplate);
@@ -293,6 +298,7 @@ export function useBrandKit(initialLang?: InterfaceLang, initialTemplate?: Templ
             checklistContent: getDefaultChecklistContent(resolvedUiLang as DocumentLang),
             cvContent: getDefaultCvContent(resolvedUiLang as DocumentLang),
             letterContent: getDefaultLetterContent(resolvedUiLang as DocumentLang),
+            cardContent: getDefaultCardContent(resolvedUiLang as DocumentLang),
           }));
         }
 
@@ -465,6 +471,8 @@ export function useBrandKit(initialLang?: InterfaceLang, initialTemplate?: Templ
         updateBrandKit({ checklistContent: getDefaultChecklistContent(lang) });
       } else if (section === 'cv') {
         updateBrandKit({ cvContent: getDefaultCvContent(lang) });
+      } else if (section === 'business-card') {
+        updateBrandKit({ cardContent: getDefaultCardContent(lang) });
       } else if (section === 'all') {
         updateBrandKit({
           ...DEFAULT_BRAND_KIT,
@@ -478,6 +486,7 @@ export function useBrandKit(initialLang?: InterfaceLang, initialTemplate?: Templ
           budgetTrackerContent: getDefaultBudgetTrackerContent(lang),
           checklistContent: getDefaultChecklistContent(lang),
           cvContent: getDefaultCvContent(lang),
+          cardContent: getDefaultCardContent(lang),
         });
       }
     },

@@ -13,8 +13,9 @@ export type TemplateId =
   | 'budget-tracker'
   // Business (5)
   | 'checklist'
-  // Career (1)
-  | 'cv';
+  // Career (2)
+  | 'cv'
+  | 'business-card';
 
 export type DesignStyle = 'minimal' | 'complete';
 
@@ -170,6 +171,31 @@ export interface CvCustomContent {
   interests: string;
 }
 
+export type CardLayout = 'classic' | 'band' | 'centered';
+
+/** Business card. Colour and logo come from the brand kit (brandColor, logoUrl). */
+export interface BusinessCardContent {
+  layout: CardLayout;
+  fullName: string;
+  jobTitle: string;
+  company: string;
+  phone: string;
+  email: string;
+  website: string;
+  address: string;
+  /** QR code printed on the card (front, or back for the centered layout). */
+  showQr: boolean;
+  /** QR target; the website is used when empty. */
+  qrUrl: string;
+  /** Print a back side (logo, tagline). */
+  backSide: boolean;
+  backText: string;
+  /** 'eu' 85 × 55 mm, 'us' 3.5 × 2 in. */
+  cardSize: 'eu' | 'us';
+  /** 'sheet': A4/Letter page of cards with crop marks; 'printer': one card per page with 3 mm bleed. */
+  output: 'sheet' | 'printer';
+}
+
 /** Cover letter written next to the CV. Sender name, email and phone come from the CV. */
 export interface CoverLetterContent {
   /** Street address of the sender (optional; the CV city is used when empty). */
@@ -226,6 +252,7 @@ export interface BrandKit {
   checklistContent?: ChecklistCustomContent;
   cvContent?: CvCustomContent;
   letterContent?: CoverLetterContent;
+  cardContent?: BusinessCardContent;
 }
 
 export interface TemplateConfig {

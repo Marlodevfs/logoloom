@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useEffect, useRef, useState } from 'react';
-import { Check, ChevronLeft, Eye, X } from 'lucide-react';
+import { Check, ChevronLeft, ChevronRight, Eye, IdCard, X } from 'lucide-react';
 import { useBrandKit, getDefaultCvContent } from '@/lib/use-brand-kit';
 import { Header } from '@/components/Header';
 import { CvEditor, type CvSection } from '@/components/CvEditor';
@@ -231,6 +231,16 @@ const COPY: Record<InterfaceLang, Copy> = {
     privacy: 'O seu CV fica neste navegador. Nada é enviado para os nossos servidores.',
     done: 'Pronto.',
   },
+};
+
+/** Cross-link shown on the last CV step: a matching business card, prefilled from the CV. */
+const CARD_PROMO: Record<string, { title: string; desc: string }> = {
+  fr: { title: 'Une carte de visite assortie ?', desc: 'Déjà remplie avec les infos de votre CV. Gratuite, à imprimer.' },
+  en: { title: 'A matching business card?', desc: 'Already filled in with your CV details. Free, ready to print.' },
+  de: { title: 'Passende Visitenkarte?', desc: 'Schon mit den Angaben aus Ihrem Lebenslauf ausgefüllt. Kostenlos, druckfertig.' },
+  es: { title: '¿Una tarjeta de visita a juego?', desc: 'Ya rellenada con los datos de tu CV. Gratis, lista para imprimir.' },
+  it: { title: 'Un biglietto da visita coordinato?', desc: 'Già compilato con i dati del tuo CV. Gratis, pronto da stampare.' },
+  pt: { title: 'Um cartão de visita a condizer?', desc: 'Já preenchido com os dados do seu CV. Grátis, pronto a imprimir.' },
 };
 
 function blankCv(layout: CvLayout): CvCustomContent {
@@ -590,6 +600,22 @@ export function CvStudio({ initialLang, title }: { initialLang: InterfaceLang; t
                 </div>
               )}
             </div>
+
+            {isLast && !isLetter && (
+              <a
+                href={`/${interfaceLang}/business-card?from=cv`}
+                className="mt-10 flex items-center gap-4 rounded-xl border border-slate-200 dark:border-slate-800 p-4 hover:border-ink-300 hover:bg-ink-50/40 dark:hover:bg-slate-800/50 transition-colors"
+              >
+                <span className="shrink-0 w-11 h-11 rounded-lg flex items-center justify-center text-white" style={{ backgroundColor: brandKit.brandColor || '#2340A8' }}>
+                  <IdCard className="w-5 h-5" aria-hidden="true" />
+                </span>
+                <span className="min-w-0">
+                  <span className="block font-bold text-slate-900 dark:text-white">{CARD_PROMO[interfaceLang]?.title || CARD_PROMO.en.title}</span>
+                  <span className="block text-sm text-slate-600 dark:text-slate-300">{CARD_PROMO[interfaceLang]?.desc || CARD_PROMO.en.desc}</span>
+                </span>
+                <ChevronRight className="ml-auto w-5 h-5 text-slate-400 shrink-0" aria-hidden="true" />
+              </a>
+            )}
 
               </>
             )}

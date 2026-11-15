@@ -8,6 +8,7 @@ export const CATEGORY_ORDER: TemplateFamily[] = ['career', 'organisation', 'home
 
 export const CATALOG: { id: TemplateId; slug: string; category: TemplateFamily; featured?: boolean }[] = [
   { id: 'cv', slug: 'cv', category: 'career', featured: true },
+  { id: 'business-card', slug: 'business-card', category: 'career', featured: true },
   { id: 'habit-tracker', slug: 'habit-tracker', category: 'organisation', featured: true },
   { id: 'weekly-planner', slug: 'weekly-planner', category: 'organisation', featured: true },
   { id: 'monthly-calendar', slug: 'monthly-calendar', category: 'organisation', featured: true },

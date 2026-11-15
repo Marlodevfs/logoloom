@@ -13,6 +13,7 @@ import {
 } from '@/lib/seo/templates-metadata';
 import { Studio } from '@/components/Studio';
 import { CvStudio } from '@/components/cv/CvStudio';
+import { CardStudio } from '@/components/card/CardStudio';
 import { CV_EXAMPLES_FR, exampleLabel } from '@/lib/cv-examples/fr';
 import { CV_EXAMPLES_EN, exampleLabelEn } from '@/lib/cv-examples/en';
 import { CV_GUIDES_FR } from '@/lib/cv-guides/fr';
@@ -137,7 +138,7 @@ export default async function TemplateLandingPage({ params }: Props) {
 
   const isCv = data.templateId === 'cv';
   // The CV page is the product itself: describe it as an app for search engines.
-  const appSchema = isCv
+  const appSchema = isCv || data.templateId === 'business-card'
     ? {
         '@context': 'https://schema.org',
         '@type': 'WebApplication',
@@ -231,6 +232,8 @@ export default async function TemplateLandingPage({ params }: Props) {
       <main className="flex-1 w-full">
         {data.templateId === 'cv' ? (
           <CvStudio initialLang={lang} title={data.h1} />
+        ) : data.templateId === 'business-card' ? (
+          <CardStudio initialLang={lang} title={data.h1} />
         ) : (
           <Studio initialLang={lang} initialTemplate={data.templateId} intro={intro} />
         )}

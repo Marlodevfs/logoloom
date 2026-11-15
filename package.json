@@ -14,7 +14,8 @@
     "test:languages": "tsx --require ./scripts/react-pdf-cjs-compat.cjs scripts/test-all-6-languages.ts",
     "test:e2e": "tsx --require ./scripts/react-pdf-cjs-compat.cjs scripts/test-all-features-e2e.ts",
     "test:cv": "tsx --require ./scripts/react-pdf-cjs-compat.cjs scripts/test-cv.ts",
-    "test": "npm run test:pdf && npm run test:i18n && npm run test:quality && npm run test:languages && npm run test:e2e && npm run test:cv"
+    "test:card": "tsx --require ./scripts/react-pdf-cjs-compat.cjs scripts/test-business-card.ts",
+    "test": "npm run test:pdf && npm run test:i18n && npm run test:quality && npm run test:languages && npm run test:e2e && npm run test:cv && npm run test:card"
   },
   "dependencies": {
     "@react-pdf/renderer": "^4.9.0",
