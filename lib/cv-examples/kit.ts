@@ -1,7 +1,7 @@
-import type { BrandKit, CoverLetterContent, CvCustomContent } from '@/types';
+import type { BrandKit, CoverLetterContent, CvCustomContent, DocumentLang } from '@/types';
 
 /** A minimal brand kit that renders one CV (server-safe, serializable). */
-export function cvKit(cv: CvCustomContent, color: string, lang: 'fr' | 'en' = 'fr'): BrandKit {
+export function cvKit(cv: CvCustomContent, color: string, lang: DocumentLang = 'fr'): BrandKit {
   return {
     logoUrl: null,
     brandColor: color,

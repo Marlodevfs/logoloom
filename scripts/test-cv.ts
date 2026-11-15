@@ -13,6 +13,9 @@ import { DocumentCompiler } from '../lib/pdf/DocumentCompiler';
 import { getDefaultCvContent } from '../lib/use-brand-kit';
 import { CV_PERSONAL_LABELS, CV_SECTION_LABELS, cvLines, cvPeriod, cvSignOffLine } from '../lib/i18n/cv-data';
 import { CV_EXAMPLES_FR } from '../lib/cv-examples/fr';
+import { CV_EXAMPLES_DE } from '../lib/cv-examples/de';
+import { CV_EXAMPLES_EN } from '../lib/cv-examples/en';
+import { exampleLanguages } from '../lib/cv-examples/alternates';
 
 registerPDFFonts();
 const OUT = path.join(__dirname, 'output/cv');
@@ -92,6 +95,28 @@ async function main() {
       const { text, pages } = await render(`example-${ex.slug}-${layout}`, kit('fr', cv, { brandColor: ex.color }));
       assert(pages === 1, `[example ${ex.slug}/${layout}] fits on one page`, `pages=${pages}`);
       assert(text.includes(cv.fullName), `[example ${ex.slug}/${layout}] name printed`);
+    }
+  }
+
+  console.log('\n--- Job examples (de) fit on one page, signed, hreflang reciprocal ---');
+  const deSlugs = new Set<string>();
+  for (const ex of CV_EXAMPLES_DE) {
+    assert(!deSlugs.has(ex.slug), `[beispiel ${ex.slug}] unique slug`);
+    deSlugs.add(ex.slug);
+    assert(ex.tips.length >= 4 && ex.faq.length >= 2 && ex.summaries.length >= 2, `[beispiel ${ex.slug}] has tips, FAQ and summaries`);
+    assert(!!ex.cv.signOff?.enabled, `[beispiel ${ex.slug}] closes with place, date and signature`);
+    if (ex.fr) assert(CV_EXAMPLES_FR.some((f) => f.slug === ex.fr), `[beispiel ${ex.slug}] French pair exists`);
+    if (ex.en) assert(CV_EXAMPLES_EN.some((e) => e.slug === ex.en && e.fr === ex.fr), `[beispiel ${ex.slug}] English pair exists and agrees on French`);
+    const langs = exampleLanguages('de', ex.slug);
+    if (langs) {
+      const same = (a?: Record<string, string>) => JSON.stringify(a) === JSON.stringify(langs);
+      assert((!ex.fr || same(exampleLanguages('fr', ex.fr))) && (!ex.en || same(exampleLanguages('en', ex.en))), `[beispiel ${ex.slug}] hreflang identical on every language version`);
+    }
+    for (const layout of ['sidebar', 'classic'] as const) {
+      const c = { ...ex.cv, layout };
+      const { text, pages } = await render(`beispiel-${ex.slug}-${layout}`, kit('de', c, { brandColor: ex.color }));
+      assert(pages === 1, `[beispiel ${ex.slug}/${layout}] fits on one page`, `pages=${pages}`);
+      assert(text.includes(c.fullName) && text.includes('BERUFSERFAHRUNG'), `[beispiel ${ex.slug}/${layout}] name and German headings printed`);
     }
   }
 

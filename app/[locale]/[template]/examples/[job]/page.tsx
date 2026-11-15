@@ -8,6 +8,7 @@ import { SiteFooter } from '@/components/SiteFooter';
 import { CvSheet } from '@/components/home/LiveCvHero';
 import { CV_EXAMPLES_EN, exampleH1En as exampleH1, exampleLabelEn as exampleLabel, getCvExampleEn as getCvExample } from '@/lib/cv-examples/en';
 import { cvKit } from '@/lib/cv-examples/kit';
+import { exampleLanguages } from '@/lib/cv-examples/alternates';
 
 interface Props {
   params: Promise<{ locale: string; template: string; job: string }>;
@@ -29,6 +30,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const ex = resolve(locale, template, job);
   if (!ex) return {};
   const url = `${siteConfig.url}/en/cv/examples/${ex.slug}`;
+  const languages = exampleLanguages('en', ex.slug);
   const og = `${siteConfig.url}/api/og?title=${encodeURIComponent(exampleH1(ex))}`;
   return {
     title: ex.metaTitle,
@@ -36,9 +38,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     metadataBase: new URL(siteConfig.url),
     alternates: {
       canonical: url,
-      ...(ex.fr
-        ? { languages: { en: url, fr: `${siteConfig.url}/fr/cv/exemples/${ex.fr}`, 'x-default': url } }
-        : {}),
+      ...(languages ? { languages } : {}),
     },
     openGraph: {
       title: ex.metaTitle,

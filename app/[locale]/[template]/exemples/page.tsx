@@ -8,6 +8,7 @@ import { SiteFooter } from '@/components/SiteFooter';
 import { CvSheet } from '@/components/home/LiveCvHero';
 import { CV_EXAMPLES_FR, exampleH1, exampleLabel } from '@/lib/cv-examples/fr';
 import { cvKit } from '@/lib/cv-examples/kit';
+import { HUB_LANGUAGES } from '@/lib/cv-examples/alternates';
 
 interface Props {
   params: Promise<{ locale: string; template: string }>;
@@ -33,7 +34,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     metadataBase: new URL(siteConfig.url),
     alternates: {
       canonical: url,
-      languages: { fr: url, en: `${siteConfig.url}/en/cv/examples`, 'x-default': `${siteConfig.url}/en/cv/examples` },
+      languages: HUB_LANGUAGES,
     },
     openGraph: { title: TITLE, description: DESCRIPTION, url, siteName: siteConfig.name, type: 'website', locale: 'fr_FR' },
   };

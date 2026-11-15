@@ -8,6 +8,7 @@ import { SiteFooter } from '@/components/SiteFooter';
 import { CvSheet } from '@/components/home/LiveCvHero';
 import { CV_EXAMPLES_FR, exampleH1, exampleLabel, getCvExample } from '@/lib/cv-examples/fr';
 import { cvKit } from '@/lib/cv-examples/kit';
+import { exampleLanguages } from '@/lib/cv-examples/alternates';
 import { SwissPackTeaser } from '@/components/cv/SwissPackTeaser';
 import { CV_GUIDES_FR } from '@/lib/cv-guides/fr';
 import { enSlugForFr } from '@/lib/cv-examples/en';
@@ -33,7 +34,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const ex = resolve(locale, template, job);
   if (!ex) return {};
   const url = `${siteConfig.url}/fr/cv/exemples/${ex.slug}`;
-  const en = enSlugForFr(ex.slug);
+  const languages = exampleLanguages('fr', ex.slug);
   const og = `${siteConfig.url}/api/og?title=${encodeURIComponent(exampleH1(ex))}`;
   return {
     title: ex.metaTitle,
@@ -41,7 +42,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     metadataBase: new URL(siteConfig.url),
     alternates: {
       canonical: url,
-      ...(en ? { languages: { fr: url, en: `${siteConfig.url}/en/cv/examples/${en}`, 'x-default': `${siteConfig.url}/en/cv/examples/${en}` } } : {}),
+      ...(languages ? { languages } : {}),
     },
     openGraph: {
       title: ex.metaTitle,

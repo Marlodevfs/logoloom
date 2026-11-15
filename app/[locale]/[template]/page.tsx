@@ -15,6 +15,7 @@ import { Studio } from '@/components/Studio';
 import { CvStudio } from '@/components/cv/CvStudio';
 import { CV_EXAMPLES_FR, exampleLabel } from '@/lib/cv-examples/fr';
 import { CV_EXAMPLES_EN, exampleLabelEn } from '@/lib/cv-examples/en';
+import { CV_EXAMPLES_DE, exampleLabelDe } from '@/lib/cv-examples/de';
 import { CV_GUIDES_FR } from '@/lib/cv-guides/fr';
 import { SiteFooter } from '@/components/SiteFooter';
 import { getSiteChrome } from '@/lib/i18n/site-chrome';
@@ -312,6 +313,32 @@ export default async function TemplateLandingPage({ params }: Props) {
               </ul>
               <p className="pt-2">
                 <Link href="/en/cv/examples" className="font-bold text-ink-700 dark:text-ink-300 hover:underline">See all CV examples</Link>
+              </p>
+            </section>
+          )}
+
+          {isCv && lang === 'de' && (
+            <section className="space-y-5">
+              <div>
+                <h2 className="font-display text-2xl sm:text-3xl font-semibold text-slate-900 dark:text-white">
+                  Lebenslauf-Beispiele nach Beruf
+                </h2>
+                <p className="mt-2 text-slate-600 dark:text-slate-300">
+                  Starten Sie mit einem Lebenslauf, der schon für Ihren Beruf ausgefüllt ist, und ersetzen Sie die Angaben durch Ihre eigenen.
+                </p>
+              </div>
+              <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-8 border-t border-slate-200 dark:border-slate-800">
+                {CV_EXAMPLES_DE.map((e) => (
+                  <li key={e.slug} className="border-b border-slate-200 dark:border-slate-800">
+                    <Link href={`/de/cv/beispiele/${e.slug}`} className="flex items-center justify-between py-3 font-bold text-slate-800 dark:text-slate-100 hover:text-ink-700">
+                      {exampleLabelDe(e)}
+                      <ChevronRight className="w-4 h-4 text-slate-400" aria-hidden="true" />
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+              <p className="pt-2">
+                <Link href="/de/cv/beispiele" className="font-bold text-ink-700 dark:text-ink-300 hover:underline">Alle Lebenslauf-Beispiele ansehen</Link>
               </p>
             </section>
           )}

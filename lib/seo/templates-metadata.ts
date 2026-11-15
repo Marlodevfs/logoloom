@@ -519,13 +519,13 @@ export const TEMPLATES_SEO_DATA: Record<InterfaceLang, Record<string, TemplateSE
       slug: 'cv',
       templateId: 'cv',
       category: 'career',
-      title: "Lebenslauf kostenlos erstellen – PDF ohne Abo | LogoLoom",
-      description: "Erstellen Sie in wenigen Minuten einen professionellen Lebenslauf als PDF. Kostenlos, ohne Konto, ohne verstecktes Abo. 2 Layouts, optionales Foto, ATS-lesbar.",
-      h1: "Lebenslauf kostenlos als PDF erstellen, ohne Abo",
+      title: "Lebenslauf kostenlos erstellen ohne Anmeldung – PDF | LogoLoom",
+      description: "Lebenslauf kostenlos erstellen, ohne Anmeldung und ohne Abo: tabellarisch, mit optionalem Foto, persönlichen Daten sowie Ort, Datum und Unterschrift. Als PDF herunterladen.",
+      h1: "Lebenslauf kostenlos erstellen, ohne Anmeldung",
       intro: "Tragen Sie Berufserfahrung, Ausbildung und Kenntnisse ein, sehen Sie die Vorschau live und laden Sie ein sauberes PDF herunter. Kein Konto, kein Probeabo, Ihre Daten bleiben im Browser.",
       steps: [
         { title: "1. Angaben ausfüllen", desc: "Berufserfahrung, Ausbildung, Kenntnisse und Sprachen in einem einfachen Formular. Foto optional." },
-        { title: "2. Layout wählen", desc: "Seitenleiste oder klassisch, mit Ihrer Akzentfarbe, in A4 oder US Letter." },
+        { title: "2. Layout wählen und unterschreiben", desc: "Seitenleiste oder klassisch, mit Ihrer Akzentfarbe. Ort, Datum und Unterschrift setzen Sie direkt im Browser." },
         { title: "3. PDF herunterladen", desc: "Ein echtes Text-PDF, das Personaler und Bewerbermanagementsysteme lesen können." },
       ],
       faqs: [
@@ -533,7 +533,7 @@ export const TEMPLATES_SEO_DATA: Record<InterfaceLang, Record<string, TemplateSE
         { q: "Können Bewerbungssysteme den Lebenslauf lesen?", a: "Ja. Das PDF enthält echten, markierbaren Text, kein Bild." },
         { q: "Wo werden meine Daten gespeichert?", a: "Nur in Ihrem Browser. Nichts wird an unsere Server gesendet." },
       ],
-      features: ["Kein Abo, keine versteckten Kosten", "ATS-lesbares Text-PDF", "Optionales Foto", "A4 und US Letter"],
+      features: ["Ohne Anmeldung, ohne Abo", "ATS-lesbares Text-PDF", "Foto und Unterschrift optional", "Tabellarisch nach deutschem Standard"],
     },
   },
   es: {
