@@ -168,6 +168,27 @@ export interface CvCustomContent {
   skills: string[];
   languages: CvLanguage[];
   interests: string;
+  /**
+   * Optional personal details, expected on many German, Austrian and Swiss CVs.
+   * Free text, so the user writes them the way their country does ("12.03.1994", "Permis G").
+   */
+  birthDate?: string;
+  nationality?: string;
+  /** Work permit, mostly for Switzerland ("Aufenthaltsbewilligung B", "Permis G"). */
+  workPermit?: string;
+  drivingLicence?: string;
+  /** "Place, date and signature" block closing the CV (German-speaking convention). */
+  signOff?: CvSignOff;
+}
+
+export interface CvSignOff {
+  enabled: boolean;
+  /** Place written before the date; the CV city is used when empty. */
+  place: string;
+  /** Free text date; today's date in the document language when empty. */
+  date: string;
+  /** Transparent PNG data URL of a drawn or imported signature, or null. */
+  signatureUrl: string | null;
 }
 
 /** Cover letter written next to the CV. Sender name, email and phone come from the CV. */

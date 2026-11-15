@@ -233,7 +233,7 @@ const COPY: Record<InterfaceLang, Copy> = {
   },
 };
 
-function blankCv(layout: CvLayout): CvCustomContent {
+function blankCv(layout: CvLayout, lang: string): CvCustomContent {
   return {
     layout,
     fullName: '',
@@ -249,6 +249,8 @@ function blankCv(layout: CvLayout): CvCustomContent {
     skills: [],
     languages: [{ name: '', level: '' }],
     interests: '',
+    // German-speaking CVs close with place, date and signature: on by default there.
+    ...(lang === 'de' ? { signOff: { enabled: true, place: '', date: '', signatureUrl: null } } : {}),
   };
 }
 
@@ -516,7 +518,7 @@ export function CvStudio({ initialLang, title }: { initialLang: InterfaceLang; t
                     <button
                       type="button"
                       onClick={() => {
-                        updateBrandKit({ cvContent: blankCv(cv.layout) });
+                        updateBrandKit({ cvContent: blankCv(cv.layout, brandKit.documentLang || interfaceLang) });
                         setConfirmClear(false);
                         setJustCleared(true);
                       }}
@@ -542,7 +544,10 @@ export function CvStudio({ initialLang, title }: { initialLang: InterfaceLang; t
 
             <div className="mt-8">
               {id === 'design' ? (
-                <DesignStep c={c} lang={interfaceLang} brandKit={brandKit} cv={cv} onUpdate={updateBrandKit} />
+                <div className="space-y-10">
+                  <DesignStep c={c} lang={interfaceLang} brandKit={brandKit} cv={cv} onUpdate={updateBrandKit} />
+                  <CvEditor brandKit={brandKit} onUpdate={updateBrandKit} interfaceLang={interfaceLang} sections={['signoff']} variant="roomy" />
+                </div>
               ) : (
                 <CvEditor
                   brandKit={brandKit}

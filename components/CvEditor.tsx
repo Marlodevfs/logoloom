@@ -8,11 +8,14 @@ import {
   CvEducation,
   CvExperience,
   CvLanguage,
+  CvSignOff,
   InterfaceLang,
 } from '@/types';
 import { getDefaultCvContent } from '@/lib/use-brand-kit';
+import { CV_PERSONAL_LABELS } from '@/lib/i18n/cv-data';
+import { SignaturePad } from '@/components/cv/SignaturePad';
 
-export type CvSection = 'layout' | 'identity' | 'summary' | 'experience' | 'education' | 'skills';
+export type CvSection = 'layout' | 'identity' | 'summary' | 'experience' | 'education' | 'skills' | 'signoff';
 
 interface CvEditorProps {
   brandKit: BrandKit;
@@ -315,6 +318,138 @@ const LABELS: Record<InterfaceLang, L> = {
   },
 };
 
+/** Personal details and closing signature (German-speaking CV conventions). */
+type LX = {
+  personal: string;
+  personalHint: string;
+  placeholders: { birthDate: string; nationality: string; workPermit: string; drivingLicence: string };
+  signOff: string;
+  signOffHint: string;
+  signOffToggle: string;
+  place: string;
+  placeHint: string;
+  date: string;
+  dateHint: string;
+  signature: string;
+  drawHere: string;
+  clearSignature: string;
+  importSignature: string;
+  signatureError: string;
+  /** Placeholder for start/end dates, in the local month/year order. */
+  periodPh: string;
+};
+
+const EXTRA: Record<InterfaceLang, LX> = {
+  fr: {
+    personal: 'Informations personnelles (facultatives)',
+    personalHint: 'Courantes en Suisse, en Allemagne et en Autriche, jamais obligatoires. Laissez vide ce que vous ne voulez pas indiquer.',
+    placeholders: { birthDate: '12/03/1994', nationality: 'Française', workPermit: 'Ex. permis G (Suisse)', drivingLicence: 'Permis B' },
+    signOff: 'Lieu, date et signature',
+    signOffHint: 'Attendus en bas du CV en Allemagne, en Autriche et en Suisse alémanique. Rarement utilisés en France.',
+    signOffToggle: 'Ajouter lieu, date et signature en bas du CV',
+    place: 'Lieu',
+    placeHint: 'Vide : votre ville',
+    date: 'Date',
+    dateHint: 'Vide : date du jour',
+    signature: 'Signature',
+    drawHere: 'Signez ici avec la souris ou le doigt',
+    clearSignature: 'Effacer',
+    importSignature: 'Importer une image',
+    signatureError: 'Image illisible. Essayez un JPG ou un PNG.',
+    periodPh: 'MM/AAAA',
+  },
+  en: {
+    personal: 'Personal details (optional)',
+    personalHint: 'Common in Germany, Austria and Switzerland, never required. Leave blank what you would rather not share.',
+    placeholders: { birthDate: '12/03/1994', nationality: 'British', workPermit: 'e.g. Permit B (Switzerland)', drivingLicence: 'Full licence (B)' },
+    signOff: 'Place, date and signature',
+    signOffHint: 'Expected at the bottom of CVs in Germany, Austria and Switzerland. Not used in the UK or US.',
+    signOffToggle: 'Add place, date and signature at the bottom of the CV',
+    place: 'Place',
+    placeHint: 'Blank: your city',
+    date: 'Date',
+    dateHint: 'Blank: today',
+    signature: 'Signature',
+    drawHere: 'Sign here with your mouse or finger',
+    clearSignature: 'Clear',
+    importSignature: 'Import an image',
+    signatureError: 'Could not read this image. Try a JPG or PNG.',
+    periodPh: 'MM/YYYY',
+  },
+  de: {
+    personal: 'Persönliche Daten (optional)',
+    personalHint: 'In Deutschland, Österreich und der Schweiz üblich, aber keine Pflicht. Was Sie nicht angeben möchten, lassen Sie leer.',
+    placeholders: { birthDate: '12.03.1994', nationality: 'deutsch', workPermit: 'z. B. Bewilligung B (Schweiz)', drivingLicence: 'Klasse B' },
+    signOff: 'Ort, Datum und Unterschrift',
+    signOffHint: 'Der klassische Abschluss eines Lebenslaufs in Deutschland, Österreich und der Schweiz.',
+    signOffToggle: 'Ort, Datum und Unterschrift unter den Lebenslauf setzen',
+    place: 'Ort',
+    placeHint: 'Leer: Ihr Wohnort',
+    date: 'Datum',
+    dateHint: 'Leer: heutiges Datum',
+    signature: 'Unterschrift',
+    drawHere: 'Hier mit Maus oder Finger unterschreiben',
+    clearSignature: 'Löschen',
+    importSignature: 'Bild importieren',
+    signatureError: 'Bild nicht lesbar. Versuchen Sie JPG oder PNG.',
+    periodPh: 'MM/JJJJ',
+  },
+  es: {
+    personal: 'Datos personales (opcionales)',
+    personalHint: 'Habituales en Alemania, Austria y Suiza, nunca obligatorios. Deja en blanco lo que no quieras indicar.',
+    placeholders: { birthDate: '12/03/1994', nationality: 'Española', workPermit: 'Ej. permiso B (Suiza)', drivingLicence: 'Carné B' },
+    signOff: 'Lugar, fecha y firma',
+    signOffHint: 'Esperados al pie del CV en Alemania, Austria y Suiza.',
+    signOffToggle: 'Añadir lugar, fecha y firma al pie del CV',
+    place: 'Lugar',
+    placeHint: 'Vacío: tu ciudad',
+    date: 'Fecha',
+    dateHint: 'Vacío: hoy',
+    signature: 'Firma',
+    drawHere: 'Firma aquí con el ratón o el dedo',
+    clearSignature: 'Borrar',
+    importSignature: 'Importar una imagen',
+    signatureError: 'Imagen ilegible. Prueba con JPG o PNG.',
+    periodPh: 'MM/AAAA',
+  },
+  it: {
+    personal: 'Dati personali (facoltativi)',
+    personalHint: 'Comuni in Germania, Austria e Svizzera, mai obbligatori. Lascia vuoto ciò che non vuoi indicare.',
+    placeholders: { birthDate: '12/03/1994', nationality: 'Italiana', workPermit: 'Es. permesso B (Svizzera)', drivingLicence: 'Patente B' },
+    signOff: 'Luogo, data e firma',
+    signOffHint: 'Attesi in fondo al CV in Germania, Austria e Svizzera.',
+    signOffToggle: 'Aggiungi luogo, data e firma in fondo al CV',
+    place: 'Luogo',
+    placeHint: 'Vuoto: la tua città',
+    date: 'Data',
+    dateHint: 'Vuoto: oggi',
+    signature: 'Firma',
+    drawHere: 'Firma qui con il mouse o il dito',
+    clearSignature: 'Cancella',
+    importSignature: 'Importa un’immagine',
+    signatureError: 'Immagine illeggibile. Prova JPG o PNG.',
+    periodPh: 'MM/AAAA',
+  },
+  pt: {
+    personal: 'Dados pessoais (opcionais)',
+    personalHint: 'Comuns na Alemanha, Áustria e Suíça, nunca obrigatórios. Deixe em branco o que não quiser indicar.',
+    placeholders: { birthDate: '12/03/1994', nationality: 'Portuguesa', workPermit: 'Ex. autorização B (Suíça)', drivingLicence: 'Categoria B' },
+    signOff: 'Local, data e assinatura',
+    signOffHint: 'Esperados no fim do CV na Alemanha, Áustria e Suíça.',
+    signOffToggle: 'Adicionar local, data e assinatura no fim do CV',
+    place: 'Local',
+    placeHint: 'Vazio: a sua cidade',
+    date: 'Data',
+    dateHint: 'Vazio: hoje',
+    signature: 'Assinatura',
+    drawHere: 'Assine aqui com o rato ou o dedo',
+    clearSignature: 'Apagar',
+    importSignature: 'Importar uma imagem',
+    signatureError: 'Imagem ilegível. Experimente JPG ou PNG.',
+    periodPh: 'MM/AAAA',
+  },
+};
+
 const MAX_EXPERIENCES = 6;
 const MAX_EDUCATION = 4;
 const MAX_LANGUAGES = 5;
@@ -415,7 +550,9 @@ const ItemTools: React.FC<{
   );
 };
 
-const ALL_SECTIONS: CvSection[] = ['layout', 'identity', 'summary', 'experience', 'education', 'skills'];
+const ALL_SECTIONS: CvSection[] = ['layout', 'identity', 'summary', 'experience', 'education', 'skills', 'signoff'];
+
+const PERSONAL_KEYS = ['birthDate', 'nationality', 'workPermit', 'drivingLicence'] as const;
 
 export const CvEditor: React.FC<CvEditorProps> = ({
   brandKit,
@@ -425,6 +562,8 @@ export const CvEditor: React.FC<CvEditorProps> = ({
   variant = 'compact',
 }) => {
   const l = LABELS[interfaceLang] || LABELS.en;
+  const lx = EXTRA[interfaceLang] || EXTRA.en;
+  const lp = CV_PERSONAL_LABELS[interfaceLang] || CV_PERSONAL_LABELS.en;
   const roomy = variant === 'roomy';
   const { input, label, sectionTitle, card, addBtn, grid, stack, gap, icon, hint } = STYLES[variant];
   const show = (sec: CvSection) => sections.includes(sec);
@@ -440,6 +579,8 @@ export const CvEditor: React.FC<CvEditorProps> = ({
     update({ experiences: cv.experiences.map((e, i) => (i === idx ? { ...e, ...patch } : e)) });
   const setEdu = (idx: number, patch: Partial<CvEducation>) =>
     update({ education: cv.education.map((e, i) => (i === idx ? { ...e, ...patch } : e)) });
+  const signOff: CvSignOff = cv.signOff || { enabled: false, place: '', date: '', signatureUrl: null };
+  const setSignOff = (patch: Partial<CvSignOff>) => update({ signOff: { ...signOff, ...patch } });
   const setLang = (idx: number, patch: Partial<CvLanguage>) =>
     update({ languages: cv.languages.map((e, i) => (i === idx ? { ...e, ...patch } : e)) });
 
@@ -551,6 +692,25 @@ export const CvEditor: React.FC<CvEditorProps> = ({
             </div>
             <input ref={fileRef} type="file" accept="image/*" className="hidden" onChange={onPhoto} />
           </div>
+          <details className={roomy ? 'pt-4' : 'pt-1'} open={interfaceLang === 'de' || PERSONAL_KEYS.some((k) => cv[k])}>
+            <summary className={(roomy ? 'text-sm' : 'text-[11px]') + ' font-bold text-slate-700 dark:text-slate-200 cursor-pointer select-none'}>
+              {lx.personal}
+            </summary>
+            <p className={`${hint} text-slate-500 dark:text-slate-400 mt-1.5`}>{lx.personalHint}</p>
+            <div className={grid + (roomy ? ' mt-3' : ' mt-1.5')}>
+              {PERSONAL_KEYS.map((key) => (
+                <label key={key} className={label}>
+                  {lp[key]}
+                  <input
+                    value={cv[key] || ''}
+                    placeholder={lx.placeholders[key]}
+                    onChange={(e) => update({ [key]: e.target.value } as Partial<CvCustomContent>)}
+                    className={input}
+                  />
+                </label>
+              ))}
+            </div>
+          </details>
         </div>
       )}
 
@@ -588,8 +748,8 @@ export const CvEditor: React.FC<CvEditorProps> = ({
                 <label className={label}>{l.company}<input value={exp.company} onChange={(e) => setExp(idx, { company: e.target.value })} className={input} /></label>
                 <label className={label}>{l.location}<input value={exp.location} onChange={(e) => setExp(idx, { location: e.target.value })} className={input} /></label>
                 <div className={`grid grid-cols-2 ${roomy ? 'gap-3' : 'gap-1'}`}>
-                  <label className={label}>{l.start}<input value={exp.start} onChange={(e) => setExp(idx, { start: e.target.value })} className={input} /></label>
-                  <label className={label}>{l.end}<input value={exp.end} onChange={(e) => setExp(idx, { end: e.target.value })} className={input} /></label>
+                  <label className={label}>{l.start}<input value={exp.start} placeholder={lx.periodPh} onChange={(e) => setExp(idx, { start: e.target.value })} className={input} /></label>
+                  <label className={label}>{l.end}<input value={exp.end} placeholder={lx.periodPh} onChange={(e) => setExp(idx, { end: e.target.value })} className={input} /></label>
                 </div>
               </div>
               <label className={label}>
@@ -627,8 +787,8 @@ export const CvEditor: React.FC<CvEditorProps> = ({
               <div className={grid}>
                 <label className={label}>{l.degree}<input value={ed.degree} onChange={(e) => setEdu(idx, { degree: e.target.value })} className={input + (roomy ? '' : ' font-semibold')} /></label>
                 <label className={label}>{l.school}<input value={ed.school} onChange={(e) => setEdu(idx, { school: e.target.value })} className={input} /></label>
-                <label className={label}>{l.start}<input value={ed.start} onChange={(e) => setEdu(idx, { start: e.target.value })} className={input} /></label>
-                <label className={label}>{l.end}<input value={ed.end} onChange={(e) => setEdu(idx, { end: e.target.value })} className={input} /></label>
+                <label className={label}>{l.start}<input value={ed.start} placeholder={lx.periodPh} onChange={(e) => setEdu(idx, { start: e.target.value })} className={input} /></label>
+                <label className={label}>{l.end}<input value={ed.end} placeholder={lx.periodPh} onChange={(e) => setEdu(idx, { end: e.target.value })} className={input} /></label>
               </div>
               <label className={label}>
                 {l.details}
@@ -696,6 +856,50 @@ export const CvEditor: React.FC<CvEditorProps> = ({
             <input value={cv.interests} onChange={(e) => update({ interests: e.target.value })} className={input + (roomy ? '' : ' mt-1')} />
           </label>
         </>
+      )}
+
+      {show('signoff') && (
+        <fieldset className={stack}>
+          <legend className={roomy ? 'text-sm font-bold text-slate-700 dark:text-slate-200' : sectionTitle}>{lx.signOff}</legend>
+          <p className={`${hint} text-slate-500 dark:text-slate-400 ${roomy ? 'mt-1' : ''}`}>{lx.signOffHint}</p>
+          <label className={`flex items-center gap-2.5 ${roomy ? 'text-[15px] mt-3' : 'text-[11px]'} text-slate-800 dark:text-slate-100 cursor-pointer`}>
+            <input
+              type="checkbox"
+              checked={!!signOff.enabled}
+              onChange={(e) => setSignOff({ enabled: e.target.checked })}
+              className={roomy ? 'w-5 h-5 accent-ink-600' : 'w-3.5 h-3.5'}
+            />
+            {lx.signOffToggle}
+          </label>
+          {signOff.enabled && (
+            <>
+              <div className={grid}>
+                <label className={label}>
+                  {lx.place}
+                  <input value={signOff.place} placeholder={lx.placeHint} onChange={(e) => setSignOff({ place: e.target.value })} className={input} />
+                </label>
+                <label className={label}>
+                  {lx.date}
+                  <input value={signOff.date} placeholder={lx.dateHint} onChange={(e) => setSignOff({ date: e.target.value })} className={input} />
+                </label>
+              </div>
+              <div>
+                <span className={label}>{lx.signature}</span>
+                <div className={roomy ? 'mt-1.5' : 'mt-1'}>
+                  <SignaturePad
+                    value={signOff.signatureUrl}
+                    onChange={(signatureUrl) => setSignOff({ signatureUrl })}
+                    drawHere={lx.drawHere}
+                    clear={lx.clearSignature}
+                    importImage={lx.importSignature}
+                    importError={lx.signatureError}
+                    roomy={roomy}
+                  />
+                </div>
+              </div>
+            </>
+          )}
+        </fieldset>
       )}
 
       {!roomy && <p className="text-[10px] text-slate-500 leading-snug">{l.privacy}</p>}

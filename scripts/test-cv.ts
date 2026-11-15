@@ -11,7 +11,7 @@ import { BrandKit, CvCustomContent, DocumentLang } from '../types';
 import { registerPDFFonts } from '../lib/pdf/fonts';
 import { DocumentCompiler } from '../lib/pdf/DocumentCompiler';
 import { getDefaultCvContent } from '../lib/use-brand-kit';
-import { CV_SECTION_LABELS, cvLines, cvPeriod } from '../lib/i18n/cv-data';
+import { CV_PERSONAL_LABELS, CV_SECTION_LABELS, cvLines, cvPeriod, cvSignOffLine } from '../lib/i18n/cv-data';
 import { CV_EXAMPLES_FR } from '../lib/cv-examples/fr';
 
 registerPDFFonts();
@@ -114,6 +114,31 @@ async function main() {
   const emptyPdf = await render('cv-empty', kit('en', empty));
   const te = CV_SECTION_LABELS.en;
   assert(!emptyPdf.text.includes(te.skills.toUpperCase()) && !emptyPdf.text.includes(te.languages.toUpperCase()), 'No empty Skills/Languages headings');
+
+  console.log('\n--- German conventions: personal details, place, date and signature ---');
+  assert(cvSignOffLine({ ...base, city: 'Köln', signOff: { enabled: true, place: '', date: '', signatureUrl: null } }, 'de', new Date(2026, 10, 5)) === 'Köln, 05.11.2026', 'German sign-off line: city + dd.mm.yyyy');
+  assert(cvSignOffLine({ ...base, signOff: { enabled: false, place: 'X', date: 'Y', signatureUrl: null } }, 'de') === null, 'Sign-off off: no line');
+  assert(cvSignOffLine(base, 'en') === null, 'Old saved CVs without signOff: no line');
+  // 1x1 transparent PNG stands in for a drawn signature.
+  const sig = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNkYPhfDwAChwGA60e6kgAAAABJRU5ErkJggg==';
+  const deCv: CvCustomContent = {
+    ...getDefaultCvContent('de'),
+    birthDate: '12.03.1994',
+    nationality: 'deutsch',
+    workPermit: 'Bewilligung B',
+    signOff: { enabled: true, place: 'Zürich', date: '15.11.2026', signatureUrl: sig },
+  };
+  const tp = CV_PERSONAL_LABELS.de;
+  for (const layout of ['sidebar', 'classic'] as const) {
+    const { text, pages } = await render(`cv-de-personal-${layout}`, kit('de', { ...deCv, layout }));
+    const label = `[de/${layout}]`;
+    assert(text.includes('12.03.1994') && text.includes(tp.birthDate), `${label} birth date printed with its label`);
+    assert(text.includes('Bewilligung B') && text.includes('Klasse B'), `${label} work permit and driving licence printed`);
+    assert(text.includes('Zürich, 15.11.2026'), `${label} place and date printed`);
+    assert(pages === 1, `${label} still fits on one page`, `pages=${pages}`);
+  }
+  const frPlain = await render('cv-fr-no-signoff', kit('fr', getDefaultCvContent('fr')));
+  assert(!frPlain.text.includes(CV_PERSONAL_LABELS.fr.birthDate), 'French sample: no personal details unless filled');
 
   console.log('\n--- US Letter ---');
   const letter = await render('cv-letter', kit('en', base, { paperSize: 'letter' }));
