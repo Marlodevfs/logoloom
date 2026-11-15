@@ -142,6 +142,8 @@ export const DEFAULT_CV: Record<DocumentLang, CvCustomContent> = {
       { name: 'Französisch', level: 'Gute Kenntnisse (B1)' },
     ],
     interests: 'Fotografie, Laufen, Ehrenamt im Stadtteilverein',
+    drivingLicence: 'Klasse B',
+    signOff: { enabled: true, place: '', date: '', signatureUrl: null },
   },
   es: {
     layout: 'sidebar',
@@ -282,6 +284,42 @@ export const CV_SECTION_LABELS: Record<
   es: { profile: 'Perfil', experience: 'Experiencia profesional', education: 'Formación', skills: 'Competencias', languages: 'Idiomas', interests: 'Intereses', contact: 'Contacto' },
   it: { profile: 'Profilo', experience: 'Esperienza professionale', education: 'Formazione', skills: 'Competenze', languages: 'Lingue', interests: 'Interessi', contact: 'Contatti' },
   pt: { profile: 'Perfil', experience: 'Experiência profissional', education: 'Formação', skills: 'Competências', languages: 'Línguas', interests: 'Interesses', contact: 'Contacto' },
+};
+
+/** Labels of the optional personal details, printed on the CV and shown in the editor. */
+export const CV_PERSONAL_LABELS: Record<
+  DocumentLang,
+  { personal: string; birthDate: string; nationality: string; workPermit: string; drivingLicence: string }
+> = {
+  fr: { personal: 'Informations personnelles', birthDate: 'Date de naissance', nationality: 'Nationalité', workPermit: 'Permis de travail', drivingLicence: 'Permis de conduire' },
+  en: { personal: 'Personal details', birthDate: 'Date of birth', nationality: 'Nationality', workPermit: 'Work permit', drivingLicence: 'Driving licence' },
+  de: { personal: 'Persönliche Daten', birthDate: 'Geburtsdatum', nationality: 'Staatsangehörigkeit', workPermit: 'Arbeitsbewilligung', drivingLicence: 'Führerschein' },
+  es: { personal: 'Datos personales', birthDate: 'Fecha de nacimiento', nationality: 'Nacionalidad', workPermit: 'Permiso de trabajo', drivingLicence: 'Carné de conducir' },
+  it: { personal: 'Dati personali', birthDate: 'Data di nascita', nationality: 'Nazionalità', workPermit: 'Permesso di lavoro', drivingLicence: 'Patente' },
+  pt: { personal: 'Dados pessoais', birthDate: 'Data de nascimento', nationality: 'Nacionalidade', workPermit: 'Autorização de trabalho', drivingLicence: 'Carta de condução' },
+};
+
+/** Filled personal details as label/value pairs, in the usual order. */
+export const cvPersonalRows = (cv: CvCustomContent, lang: DocumentLang): { label: string; value: string }[] => {
+  const t = CV_PERSONAL_LABELS[lang] || CV_PERSONAL_LABELS.en;
+  return (['birthDate', 'nationality', 'workPermit', 'drivingLicence'] as const)
+    .map((key) => ({ label: t[key], value: (cv[key] || '').trim() }))
+    .filter((row) => row.value);
+};
+
+const DATE_LOCALE: Record<DocumentLang, string> = { fr: 'fr-FR', en: 'en-GB', de: 'de-DE', es: 'es-ES', it: 'it-IT', pt: 'pt-PT' };
+
+/**
+ * "Köln, 15.11.2026": the line above the signature. Null when the block is off.
+ * Place falls back to the CV city, date to today written the local way.
+ */
+export const cvSignOffLine = (cv: CvCustomContent, lang: DocumentLang, now: Date = new Date()): string | null => {
+  if (!cv.signOff?.enabled) return null;
+  const place = cv.signOff.place?.trim() || cv.city?.trim() || '';
+  const date =
+    cv.signOff.date?.trim() ||
+    new Intl.DateTimeFormat(DATE_LOCALE[lang] || 'en-GB', { day: '2-digit', month: '2-digit', year: 'numeric' }).format(now);
+  return [place, date].filter(Boolean).join(', ');
 };
 
 /** Splits a multi-line field into non-empty trimmed lines. */

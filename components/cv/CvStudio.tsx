@@ -233,7 +233,7 @@ const COPY: Record<InterfaceLang, Copy> = {
   },
 };
 
-function blankCv(layout: CvLayout): CvCustomContent {
+function blankCv(layout: CvLayout, lang: string): CvCustomContent {
   return {
     layout,
     fullName: '',
@@ -249,6 +249,8 @@ function blankCv(layout: CvLayout): CvCustomContent {
     skills: [],
     languages: [{ name: '', level: '' }],
     interests: '',
+    // German-speaking CVs close with place, date and signature: on by default there.
+    ...(lang === 'de' ? { signOff: { enabled: true, place: '', date: '', signatureUrl: null } } : {}),
   };
 }
 
@@ -278,6 +280,7 @@ export function CvStudio({ initialLang, title }: { initialLang: InterfaceLang; t
     const name = params.get('name')?.trim().slice(0, 60);
     const exampleSlug = params.get('exemple');
     const exampleSlugEn = params.get('example');
+    const exampleSlugDe = params.get('beispiel');
     const wantsLetter = params.has('lettre') || params.has('letter');
     if (wantsLetter) setDoc('letter');
     // "?lettre=vendeur": a cover letter example, with its matching CV example when there is one.
@@ -331,7 +334,18 @@ export function CvStudio({ initialLang, title }: { initialLang: InterfaceLang; t
         setLoadedExample(ex.short);
       });
     }
-    if (name || exampleSlug || exampleSlugEn || wantsLetter) window.history.replaceState({}, '', window.location.pathname);
+    if (exampleSlugDe) {
+      import('@/lib/cv-examples/de').then(({ getCvExampleDe }) => {
+        const ex = getCvExampleDe(exampleSlugDe);
+        if (!ex) return;
+        try {
+          localStorage.setItem(CV_BACKUP_KEY, JSON.stringify({ cvContent: cv, brandColor: brandKit.brandColor }));
+        } catch {}
+        updateBrandKit({ cvContent: { ...ex.cv }, brandColor: ex.color });
+        setLoadedExample(ex.short);
+      });
+    }
+    if (name || exampleSlug || exampleSlugEn || exampleSlugDe || wantsLetter) window.history.replaceState({}, '', window.location.pathname);
   }, [isLoaded]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const restoreBackup = () => {
@@ -422,10 +436,20 @@ export function CvStudio({ initialLang, title }: { initialLang: InterfaceLang; t
             {loadedExample && (
               <div role="status" className="mt-5 rounded-lg border border-ink-200 bg-ink-50 dark:bg-ink-950 dark:border-ink-800 px-4 py-3 text-sm text-slate-800 dark:text-slate-100 flex flex-wrap items-center gap-x-4 gap-y-1">
                 <span>
-                  Exemple « {loadedExample} » chargé. Remplacez les informations par les vôtres.
+                  {interfaceLang === 'de'
+                    ? `Muster „${loadedExample}“ geladen. Ersetzen Sie die Angaben durch Ihre eigenen.`
+                    : interfaceLang === 'en'
+                      ? `“${loadedExample}” example loaded. Replace the details with your own.`
+                      : `Exemple « ${loadedExample} » chargé. Remplacez les informations par les vôtres.`}
                 </span>
                 <button type="button" onClick={restoreBackup} className="font-bold text-ink-700 dark:text-ink-300 underline underline-offset-4">
-                  {isLetter ? 'Revenir à ma version précédente' : 'Revenir à mon CV précédent'}
+                  {interfaceLang === 'de'
+                    ? 'Zurück zu meinem vorherigen Lebenslauf'
+                    : interfaceLang === 'en'
+                      ? 'Back to my previous CV'
+                      : isLetter
+                        ? 'Revenir à ma version précédente'
+                        : 'Revenir à mon CV précédent'}
                 </button>
               </div>
             )}
@@ -516,7 +540,7 @@ export function CvStudio({ initialLang, title }: { initialLang: InterfaceLang; t
                     <button
                       type="button"
                       onClick={() => {
-                        updateBrandKit({ cvContent: blankCv(cv.layout) });
+                        updateBrandKit({ cvContent: blankCv(cv.layout, brandKit.documentLang || interfaceLang) });
                         setConfirmClear(false);
                         setJustCleared(true);
                       }}
@@ -542,7 +566,10 @@ export function CvStudio({ initialLang, title }: { initialLang: InterfaceLang; t
 
             <div className="mt-8">
               {id === 'design' ? (
-                <DesignStep c={c} lang={interfaceLang} brandKit={brandKit} cv={cv} onUpdate={updateBrandKit} />
+                <div className="space-y-10">
+                  <DesignStep c={c} lang={interfaceLang} brandKit={brandKit} cv={cv} onUpdate={updateBrandKit} />
+                  <CvEditor brandKit={brandKit} onUpdate={updateBrandKit} interfaceLang={interfaceLang} sections={['signoff']} variant="roomy" />
+                </div>
               ) : (
                 <CvEditor
                   brandKit={brandKit}
@@ -553,6 +580,15 @@ export function CvStudio({ initialLang, title }: { initialLang: InterfaceLang; t
                 />
               )}
             </div>
+
+            {id === 'you' && interfaceLang === 'de' && !loadedExample && (
+              <p className="mt-8 text-sm text-slate-600 dark:text-slate-300">
+                Brauchen Sie Inspiration?{' '}
+                <a href="/de/cv/beispiele" className="font-bold text-ink-700 dark:text-ink-300 underline underline-offset-4">
+                  Lebenslauf-Beispiele nach Beruf ansehen
+                </a>
+              </p>
+            )}
 
             {id === 'you' && interfaceLang === 'fr' && !loadedExample && (
               <p className="mt-8 text-sm text-slate-600 dark:text-slate-300">

@@ -3,7 +3,7 @@
 import React from 'react';
 import { BrandKit, CvCustomContent, DocumentLang } from '@/types';
 import { getDefaultCvContent } from '@/lib/use-brand-kit';
-import { CV_SECTION_LABELS, cvLines, cvPeriod } from '@/lib/i18n/cv-data';
+import { CV_PERSONAL_LABELS, CV_SECTION_LABELS, cvLines, cvPeriod, cvPersonalRows, cvSignOffLine } from '@/lib/i18n/cv-data';
 
 interface CvTemplateProps {
   brandKit: BrandKit;
@@ -23,6 +23,9 @@ export const CvTemplate: React.FC<CvTemplateProps> = ({ brandKit, decorative = f
   const lang: DocumentLang = brandKit.documentLang || 'en';
   const cv: CvCustomContent = brandKit.cvContent || getDefaultCvContent(lang);
   const t = CV_SECTION_LABELS[lang] || CV_SECTION_LABELS.en;
+  const tp = CV_PERSONAL_LABELS[lang] || CV_PERSONAL_LABELS.en;
+  const personal = cvPersonalRows(cv, lang);
+  const signOffLine = cvSignOffLine(cv, lang);
   const accent = brandKit.brandColor || '#1E293B';
   const onAccent = brandKit.contrastText || '#FFFFFF';
   const isA4 = brandKit.paperSize !== 'letter';
@@ -62,6 +65,19 @@ export const CvTemplate: React.FC<CvTemplateProps> = ({ brandKit, decorative = f
       <span style={{ fontSize: '9.2pt', color: SOFT, whiteSpace: 'nowrap' }}>{period}</span>
     </div>
   );
+
+  const signOffBlock = signOffLine ? (
+    <section style={{ marginTop: '22pt', breakInside: 'avoid' }}>
+      <div style={{ fontSize: '9.8pt' }}>{signOffLine}</div>
+      {cv.signOff?.signatureUrl ? (
+        // eslint-disable-next-line @next/next/no-img-element
+        <img src={cv.signOff.signatureUrl} alt="" style={{ height: '38pt', maxWidth: '150pt', objectFit: 'contain', display: 'block', marginTop: '6pt' }} />
+      ) : (
+        <div style={{ height: '30pt' }} />
+      )}
+      <div style={{ fontSize: '9.2pt', color: MUTED, paddingTop: '3pt', borderTop: '0.6pt solid #CBD5E1', width: '170pt' }}>{cv.fullName}</div>
+    </section>
+  ) : null;
 
   const summaryBlock = cv.summary?.trim() ? (
     <section>
@@ -156,6 +172,17 @@ export const CvTemplate: React.FC<CvTemplateProps> = ({ brandKit, decorative = f
               ))}
             </div>
           )}
+          {personal.length > 0 && (
+            <div>
+              <div style={sideTitle}>{tp.personal}</div>
+              {personal.map((row, i) => (
+                <div key={i} style={{ marginBottom: '3pt' }}>
+                  <div style={{ fontSize: '8.2pt', opacity: 0.85 }}>{row.label}</div>
+                  <div>{row.value}</div>
+                </div>
+              ))}
+            </div>
+          )}
           {cv.skills.length > 0 && (
             <div>
               <div style={sideTitle}>{t.skills}</div>
@@ -189,6 +216,7 @@ export const CvTemplate: React.FC<CvTemplateProps> = ({ brandKit, decorative = f
           {summaryBlock}
           {experienceBlock}
           {educationBlock}
+          {signOffBlock}
         </main>
       </div>
     );
@@ -210,6 +238,11 @@ export const CvTemplate: React.FC<CvTemplateProps> = ({ brandKit, decorative = f
           {cv.jobTitle && <div style={{ fontSize: '12.5pt', color: accent, marginTop: '4pt', fontWeight: 500 }}>{cv.jobTitle}</div>}
           {contactParts.length > 0 && (
             <div style={{ fontSize: '9.2pt', color: MUTED, marginTop: '6pt' }}>{contactParts.join('  ·  ')}</div>
+          )}
+          {personal.length > 0 && (
+            <div style={{ fontSize: '9.2pt', color: MUTED, marginTop: '3pt' }}>
+              {personal.map((row) => `${row.label}: ${row.value}`).join('  ·  ')}
+            </div>
           )}
         </div>
         {photo(72)}
@@ -250,6 +283,7 @@ export const CvTemplate: React.FC<CvTemplateProps> = ({ brandKit, decorative = f
           <div>{cv.interests.trim()}</div>
         </section>
       )}
+      {signOffBlock}
     </div>
   );
 };

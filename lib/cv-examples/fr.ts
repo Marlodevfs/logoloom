@@ -800,13 +800,16 @@ const BASE: CvExample[] = [
         { degree: 'BTS Maintenance des systèmes', school: 'Lycée Germain-Sommeiller, Annecy', start: '2015', end: '2017', details: '' },
         { degree: 'Habilitation électrique B2V-BR', school: 'APAVE', start: '2024', end: '2024', details: '' },
       ],
-      skills: ['Permis G valable', 'Permis B (voiture)', 'Électrotechnique', 'Automates Siemens', 'Pneumatique', 'GMAO', 'Lecture de plans'],
+      skills: ['Électrotechnique', 'Automates Siemens', 'Pneumatique', 'GMAO', 'Lecture de plans', 'Habilitation électrique'],
       languages: [
         { name: 'Français', level: 'Langue maternelle' },
         { name: 'Anglais', level: 'Professionnel (B2)' },
         { name: 'Allemand', level: 'Notions (A2)' },
       ],
       interests: 'Ski de randonnée, VTT',
+      nationality: 'Française',
+      workPermit: 'Permis G (frontalier)',
+      drivingLicence: 'Permis B',
     },
     tips: [
       { title: 'Votre statut en une ligne', body: 'Permis G déjà obtenu ou à demander, ville de résidence en France, temps de trajet : écrivez-le en haut, l’employeur se pose la question tout de suite.' },
@@ -822,7 +825,7 @@ const BASE: CvExample[] = [
     ],
     faq: [
       { q: 'Faut-il déjà avoir le permis G pour postuler ?', a: 'Non. Le permis G se demande en général une fois le contrat signé, souvent avec l’aide de l’employeur. Écrivez simplement « permis G à demander » pour être clair.' },
-      { q: 'Doit-on indiquer sa date de naissance et sa nationalité ?', a: 'C’est encore fréquent sur les CV suisses, mais ce n’est pas obligatoire. Si vous les ajoutez, mettez-les dans le titre ou le profil, en une ligne.' },
+      { q: 'Doit-on indiquer sa date de naissance et sa nationalité ?', a: 'C’est encore fréquent sur les CV suisses, mais ce n’est pas obligatoire. Si vous les ajoutez, utilisez la rubrique « Informations personnelles » à l’étape « Vous » : elle accueille aussi le type de permis de travail et le permis de conduire.' },
       { q: 'Faut-il écrire son salaire souhaité sur le CV ?', a: 'Non, gardez-le pour la lettre de motivation si l’annonce le demande, ou pour l’entretien.' },
     ],
   },

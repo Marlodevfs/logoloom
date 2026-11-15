@@ -2,7 +2,7 @@ import React from 'react';
 import { Page, View, Text, Image, StyleSheet, Link } from '@react-pdf/renderer';
 import { BrandKit, CvCustomContent, DocumentLang } from '@/types';
 import { getDefaultCvContent } from '@/lib/use-brand-kit';
-import { CV_SECTION_LABELS, cvLines, cvPeriod } from '@/lib/i18n/cv-data';
+import { CV_PERSONAL_LABELS, CV_SECTION_LABELS, cvLines, cvPeriod, cvPersonalRows, cvSignOffLine } from '@/lib/i18n/cv-data';
 
 interface VectorCvPDFProps {
   brandKit: BrandKit;
@@ -25,6 +25,9 @@ export const VectorCvPDF: React.FC<VectorCvPDFProps> = ({ brandKit }) => {
   const lang: DocumentLang = brandKit.documentLang || 'en';
   const cv: CvCustomContent = brandKit.cvContent || getDefaultCvContent(lang);
   const t = CV_SECTION_LABELS[lang] || CV_SECTION_LABELS.en;
+  const tp = CV_PERSONAL_LABELS[lang] || CV_PERSONAL_LABELS.en;
+  const personal = cvPersonalRows(cv, lang);
+  const signOffLine = cvSignOffLine(cv, lang);
   const accent = brandKit.brandColor || '#1E293B';
   const onAccent = brandKit.contrastText || '#FFFFFF';
   const isA4 = brandKit.paperSize !== 'letter';
@@ -90,6 +93,10 @@ export const VectorCvPDF: React.FC<VectorCvPDFProps> = ({ brandKit }) => {
     chipRow: { flexDirection: 'row', flexWrap: 'wrap', gap: 4 },
     chip: { fontSize: 9, color: INK, backgroundColor: '#F1F5F9', paddingVertical: 2, paddingHorizontal: 6, borderRadius: 3 },
     text: { fontSize: 9.8, color: INK },
+    signOff: { marginTop: 22 },
+    signature: { height: 38, maxWidth: 150, objectFit: 'contain', objectPositionX: 0, marginTop: 6 },
+    signatureGap: { height: 30 },
+    signatureName: { fontSize: 9.2, color: MUTED, paddingTop: 3, borderTopWidth: 0.6, borderTopColor: '#CBD5E1', width: 170 },
   });
 
   const contactParts = [cv.email, cv.phone, cv.city, cv.link].filter((x) => x && x.trim());
@@ -136,6 +143,15 @@ export const VectorCvPDF: React.FC<VectorCvPDFProps> = ({ brandKit }) => {
     </View>
   );
 
+  // "Köln, 15.11.2026", the signature, then the name: closes German-speaking CVs.
+  const signOffBlock = signOffLine ? (
+    <View style={s.signOff} wrap={false}>
+      <Text style={s.text}>{signOffLine}</Text>
+      {cv.signOff?.signatureUrl ? <Image src={cv.signOff.signatureUrl} style={s.signature} /> : <View style={s.signatureGap} />}
+      <Text style={s.signatureName}>{cv.fullName}</Text>
+    </View>
+  ) : null;
+
   const summaryBlock = cv.summary?.trim() ? (
     <View>
       <Text style={s.sectionTitle}>{t.profile}</Text>
@@ -161,6 +177,17 @@ export const VectorCvPDF: React.FC<VectorCvPDFProps> = ({ brandKit }) => {
                   {cv.link}
                 </Link>
               ) : null}
+            </View>
+          )}
+          {personal.length > 0 && (
+            <View>
+              <Text style={s.sideTitle}>{tp.personal}</Text>
+              {personal.map((row, i) => (
+                <View key={i}>
+                  <Text style={[s.sideSmall, { marginBottom: 0 }]}>{row.label}</Text>
+                  <Text style={s.sideText}>{row.value}</Text>
+                </View>
+              ))}
             </View>
           )}
           {cv.skills.length > 0 && (
@@ -196,6 +223,7 @@ export const VectorCvPDF: React.FC<VectorCvPDFProps> = ({ brandKit }) => {
           {summaryBlock}
           {experienceBlock}
           {educationBlock}
+          {signOffBlock}
         </View>
       </Page>
     );
@@ -208,6 +236,9 @@ export const VectorCvPDF: React.FC<VectorCvPDFProps> = ({ brandKit }) => {
           <Text style={s.name}>{cv.fullName}</Text>
           {cv.jobTitle ? <Text style={s.jobTitle}>{cv.jobTitle}</Text> : null}
           {contactParts.length > 0 ? <Text style={s.contactLine}>{contactParts.join('  ·  ')}</Text> : null}
+          {personal.length > 0 ? (
+            <Text style={[s.contactLine, { marginTop: 3 }]}>{personal.map((row) => `${row.label}: ${row.value}`).join('  ·  ')}</Text>
+          ) : null}
         </View>
         {cv.photoUrl ? <Image src={cv.photoUrl} style={s.photoClassic} /> : null}
       </View>
@@ -245,6 +276,7 @@ export const VectorCvPDF: React.FC<VectorCvPDFProps> = ({ brandKit }) => {
           <Text style={s.text}>{cv.interests.trim()}</Text>
         </View>
       ) : null}
+      {signOffBlock}
     </Page>
   );
 };
