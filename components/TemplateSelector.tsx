@@ -13,6 +13,7 @@ import {
   ListTodo,
   Layers,
   Feather,
+  IdCard,
 } from 'lucide-react';
 import { TemplateId, DesignStyle, InterfaceLang, TemplateFamily } from '@/types';
 import { CATEGORY_COPY, CATEGORY_ORDER } from '@/lib/catalog';
@@ -49,7 +50,7 @@ const SELECTOR_I18N: Record<
 > = {
   fr: {
     stepTitle: '3. Modèle de document',
-    countModels: '9 modèles prêts à imprimer',
+    countModels: '10 modèles prêts à imprimer',
     minimalLabel: 'Minimal',
     defaultBadge: 'Défaut',
     completeLabel: 'Complet',
@@ -100,11 +101,16 @@ const SELECTOR_I18N: Record<
         desc: 'Expériences, formation, compétences, langues. PDF lisible par les recruteurs',
         tag: 'Carrière',
       },
+      'business-card': {
+        title: 'Carte de visite',
+        desc: 'Recto verso, QR code, planche à imprimer ou fichier imprimeur',
+        tag: 'Carrière',
+      },
     },
   },
   en: {
     stepTitle: '3. Document Template',
-    countModels: '9 print-ready models',
+    countModels: '10 print-ready models',
     minimalLabel: 'Minimal',
     defaultBadge: 'Default',
     completeLabel: 'Complete',
@@ -155,11 +161,16 @@ const SELECTOR_I18N: Record<
         desc: 'Experience, education, skills, languages. Recruiter-friendly PDF',
         tag: 'Career',
       },
+      'business-card': {
+        title: 'Business card',
+        desc: 'Front and back, QR code, print-at-home sheet or print shop file',
+        tag: 'Career',
+      },
     },
   },
   de: {
     stepTitle: '3. Dokumenten-Vorlage',
-    countModels: '9 druckfertige Vorlagen',
+    countModels: '10 druckfertige Vorlagen',
     minimalLabel: 'Minimal',
     defaultBadge: 'Standard',
     completeLabel: 'Vollständig',
@@ -210,11 +221,16 @@ const SELECTOR_I18N: Record<
         desc: 'Berufserfahrung, Ausbildung, Kenntnisse, Sprachen. ATS-lesbares PDF',
         tag: 'Karriere',
       },
+      'business-card': {
+        title: 'Visitenkarte',
+        desc: 'Vorder- und Rückseite, QR-Code, Druckbogen oder Druckerei-Datei',
+        tag: 'Karriere',
+      },
     },
   },
   es: {
     stepTitle: '3. Plantilla de documento',
-    countModels: '9 modelos listos para imprimir',
+    countModels: '10 modelos listos para imprimir',
     minimalLabel: 'Mínimo',
     defaultBadge: 'Por defecto',
     completeLabel: 'Completo',
@@ -265,11 +281,16 @@ const SELECTOR_I18N: Record<
         desc: 'Experiencia, formación, competencias, idiomas. PDF legible por reclutadores',
         tag: 'Carrera',
       },
+      'business-card': {
+        title: 'Tarjeta de visita',
+        desc: 'Anverso y reverso, código QR, hoja para imprimir o archivo de imprenta',
+        tag: 'Carrera',
+      },
     },
   },
   it: {
     stepTitle: '3. Modello di Documento',
-    countModels: '9 modelli pronti per la stampa',
+    countModels: '10 modelli pronti per la stampa',
     minimalLabel: 'Minimale',
     defaultBadge: 'Predefinito',
     completeLabel: 'Completo',
@@ -320,11 +341,16 @@ const SELECTOR_I18N: Record<
         desc: 'Esperienza, formazione, competenze, lingue. PDF leggibile dai selezionatori',
         tag: 'Carriera',
       },
+      'business-card': {
+        title: 'Biglietto da visita',
+        desc: 'Fronte e retro, codice QR, foglio da stampare o file per tipografia',
+        tag: 'Carriera',
+      },
     },
   },
   pt: {
     stepTitle: '3. Modelo de Documento',
-    countModels: '9 modelos prontos para impressão',
+    countModels: '10 modelos prontos para impressão',
     minimalLabel: 'Mínimo',
     defaultBadge: 'Padrão',
     completeLabel: 'Completo',
@@ -375,6 +401,11 @@ const SELECTOR_I18N: Record<
         desc: 'Experiência, formação, competências, línguas. PDF legível por recrutadores',
         tag: 'Carreira',
       },
+      'business-card': {
+        title: 'Cartão de visita',
+        desc: 'Frente e verso, código QR, folha para imprimir ou ficheiro para gráfica',
+        tag: 'Carreira',
+      },
     },
   },
 };
@@ -386,6 +417,7 @@ const TEMPLATE_DEFINITIONS: Array<{
 }> = [
   // Career: listed first, it is the most searched-for template
   { id: 'cv', family: 'career', icon: FileText },
+  { id: 'business-card', family: 'career', icon: IdCard },
   // Personal (7)
   { id: 'habit-tracker', family: 'organisation', icon: Calendar },
   { id: 'goal-planner-90', family: 'organisation', icon: Milestone },

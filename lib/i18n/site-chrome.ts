@@ -77,6 +77,7 @@ export const SITE_CHROME: Record<InterfaceLang, SiteChromeStrings> = {
       'budget-tracker': 'Budget Tracker',
       checklist: 'Checklist',
       cv: 'CV / Resume',
+      'business-card': 'Business card',
     },
   },
   fr: {
@@ -120,6 +121,7 @@ export const SITE_CHROME: Record<InterfaceLang, SiteChromeStrings> = {
       'budget-tracker': 'Budget mensuel',
       checklist: 'Checklist',
       cv: 'CV',
+      'business-card': 'Carte de visite',
     },
   },
   de: {
@@ -163,6 +165,7 @@ export const SITE_CHROME: Record<InterfaceLang, SiteChromeStrings> = {
       'budget-tracker': 'Budgetplaner',
       checklist: 'Checkliste',
       cv: 'Lebenslauf',
+      'business-card': 'Visitenkarte',
     },
   },
   es: {
@@ -206,6 +209,7 @@ export const SITE_CHROME: Record<InterfaceLang, SiteChromeStrings> = {
       'budget-tracker': 'Control de gastos',
       checklist: 'Checklist',
       cv: 'Currículum',
+      'business-card': 'Tarjeta de visita',
     },
   },
   it: {
@@ -249,6 +253,7 @@ export const SITE_CHROME: Record<InterfaceLang, SiteChromeStrings> = {
       'budget-tracker': 'Budget mensile',
       checklist: 'Checklist',
       cv: 'Curriculum',
+      'business-card': 'Biglietto da visita',
     },
   },
   pt: {
@@ -292,6 +297,7 @@ export const SITE_CHROME: Record<InterfaceLang, SiteChromeStrings> = {
       'budget-tracker': 'Orçamento mensal',
       checklist: 'Checklist',
       cv: 'Currículo',
+      'business-card': 'Cartão de visita',
     },
   },
 };

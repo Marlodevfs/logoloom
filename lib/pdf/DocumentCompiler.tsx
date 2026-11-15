@@ -13,6 +13,7 @@ import { VectorBudgetTrackerPDF } from './VectorBudgetTrackerPDF';
 import { VectorChecklistPDF } from './VectorChecklistPDF';
 import { VectorCvPDF } from './VectorCvPDF';
 import { VectorLetterPDF } from './VectorLetterPDF';
+import { VectorBusinessCardPDF } from './VectorBusinessCardPDF';
 
 interface DocumentCompilerProps {
   brandKit: BrandKit;
@@ -61,10 +62,22 @@ export const DocumentCompiler: React.FC<DocumentCompilerProps> = ({ brandKit, do
         return <VectorChecklistPDF brandKit={brandKit} />;
       case 'cv':
         return <VectorCvPDF brandKit={brandKit} />;
+      case 'business-card':
+        return <VectorBusinessCardPDF brandKit={brandKit} />;
       default:
         return <VectorMinimalHabitTrackerPDF brandKit={brandKit} />;
     }
   };
+
+  // A business card is the user's own print: metadata names them only.
+  if (template === 'business-card') {
+    const name = brandKit.cardContent?.fullName?.trim() || 'Business card';
+    return (
+      <Document title={name} author={name} subject="Business card" creator={name} producer={name}>
+        {renderTemplatePage()}
+      </Document>
+    );
+  }
 
   // A CV goes to employers: its metadata names the candidate only, never LogoLoom.
   if (template === 'cv') {

@@ -110,6 +110,11 @@ export const Studio: React.FC<StudioProps> = ({
 
   const handleTemplateSelect = (id: TemplateId) => {
     trackEvent('template_select', { template: id });
+    // The business card has its own editor page.
+    if (id === 'business-card') {
+      window.location.href = `/${interfaceLang}/business-card`;
+      return;
+    }
     setActiveTemplate(id);
   };
 

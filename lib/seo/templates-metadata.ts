@@ -25,6 +25,7 @@ export const TEMPLATE_SLUGS: Record<string, TemplateId> = {
   'budget-tracker': 'budget-tracker',
   'checklist': 'checklist',
   'cv': 'cv',
+  'business-card': 'business-card',
 };
 
 export const CANONICAL_TEMPLATE_SLUGS: { slug: string; templateId: TemplateId }[] = [
@@ -37,6 +38,7 @@ export const CANONICAL_TEMPLATE_SLUGS: { slug: string; templateId: TemplateId }[
   { slug: 'budget-tracker', templateId: 'budget-tracker' },
   { slug: 'checklist', templateId: 'checklist' },
   { slug: 'cv', templateId: 'cv' },
+  { slug: 'business-card', templateId: 'business-card' },
 ];
 
 export const TEMPLATES_SEO_DATA: Record<InterfaceLang, Record<string, TemplateSEOData>> = {
@@ -214,6 +216,26 @@ export const TEMPLATES_SEO_DATA: Record<InterfaceLang, Record<string, TemplateSE
       ],
       features: ["No subscription, no hidden charge", "Recruiter-friendly text PDF", "Optional photo", "A4 and US Letter"],
     },
+    'business-card': {
+      slug: 'business-card',
+      templateId: 'business-card',
+      category: 'career',
+      title: "Free Business Card Maker – Print at Home or Print Shop PDF | LogoLoom",
+      description: "Make a business card online for free: logo, QR code, front and back. Download a sheet of 10 cards to print at home, or a print-ready file with 3 mm bleed. No sign-up.",
+      h1: "Free business card maker, ready to print",
+      intro: "Type your details, add your logo and a QR code, pick a style and colour. Download a sheet of cards with crop marks to print at home, or a print shop file with bleed. No account, and your card stays in your browser.",
+      steps: [
+        { title: "1. Fill in your details", desc: "Name, job title, phone, email, website. Add your logo: the card colour adapts to it." },
+        { title: "2. Choose a style", desc: "Classic, band or centered, with a QR code to your website and an optional back side." },
+        { title: "3. Download the PDF", desc: "A sheet of 10 cards with crop marks for home printing, or one card per page with 3 mm bleed for a print shop." },
+      ],
+      faqs: [
+        { q: "Is it really free?", a: "Yes. Creating and downloading your business cards is free, with no watermark on the cards and no account." },
+        { q: "What paper should I use at home?", a: "A thick matte or satin paper, 250 to 350 g/m², if your printer accepts it. Cut along the crop marks with a ruler and a craft knife or a paper trimmer." },
+        { q: "Can I send the file to a print shop?", a: "Yes. Choose “Print shop file”: each card is on its own page at the exact size, with 3 mm bleed, as most printers ask." },
+      ],
+      features: ["Free, no account", "QR code included", "Front and back", "Home sheet or print shop file"],
+    },
   },
   fr: {
     'habit-tracker': {
@@ -381,6 +403,26 @@ export const TEMPLATES_SEO_DATA: Record<InterfaceLang, Record<string, TemplateSE
       ],
       features: ["Sans abonnement ni prélèvement caché", "PDF texte lisible par les recruteurs", "Photo facultative", "A4 et US Letter"],
     },
+    'business-card': {
+      slug: 'business-card',
+      templateId: 'business-card',
+      category: 'career',
+      title: "Carte de visite gratuite à imprimer – Créer en ligne (PDF) | LogoLoom",
+      description: "Créez votre carte de visite gratuitement en ligne : logo, QR code, recto verso. Planche de 10 cartes à imprimer chez vous ou fichier imprimeur avec fond perdu. Sans compte.",
+      h1: "Carte de visite gratuite à créer et imprimer",
+      intro: "Saisissez vos coordonnées, ajoutez votre logo et un QR code, choisissez un style et une couleur. Téléchargez une planche avec traits de coupe à imprimer chez vous, ou un fichier imprimeur avec fond perdu. Sans compte, votre carte reste dans votre navigateur.",
+      steps: [
+        { title: "1. Remplissez vos informations", desc: "Nom, métier, téléphone, e-mail, site web. Ajoutez votre logo : la couleur de la carte s’y adapte." },
+        { title: "2. Choisissez un style", desc: "Classique, bandeau ou centré, avec un QR code vers votre site et un verso si vous le souhaitez." },
+        { title: "3. Téléchargez le PDF", desc: "Une planche de 10 cartes avec traits de coupe à imprimer chez vous, ou une carte par page avec 3 mm de fond perdu pour l’imprimeur." },
+      ],
+      faqs: [
+        { q: "Est-ce vraiment gratuit ?", a: "Oui. Créer et télécharger vos cartes est gratuit, sans filigrane sur les cartes et sans compte." },
+        { q: "Quel papier utiliser chez soi ?", a: "Un papier épais mat ou satiné de 250 à 350 g/m², si votre imprimante l’accepte. Découpez le long des traits de coupe avec une règle et un cutter, ou un massicot." },
+        { q: "Puis-je envoyer le fichier à un imprimeur ?", a: "Oui. Choisissez « Fichier imprimeur » : chaque carte est sur sa propre page, au format exact, avec 3 mm de fond perdu, comme le demandent la plupart des imprimeurs." },
+      ],
+      features: ["Gratuit, sans compte", "QR code inclus", "Recto verso", "Planche maison ou fichier imprimeur"],
+    },
   },
   de: {
     'habit-tracker': {
@@ -535,6 +577,26 @@ export const TEMPLATES_SEO_DATA: Record<InterfaceLang, Record<string, TemplateSE
       ],
       features: ["Kein Abo, keine versteckten Kosten", "ATS-lesbares Text-PDF", "Optionales Foto", "A4 und US Letter"],
     },
+    'business-card': {
+      slug: 'business-card',
+      templateId: 'business-card',
+      category: 'career',
+      title: "Visitenkarten kostenlos erstellen und drucken (PDF) | LogoLoom",
+      description: "Visitenkarte kostenlos online gestalten: Logo, QR-Code, Vorder- und Rückseite. Bogen mit 10 Karten zum Selbstdrucken oder Druckdatei mit Beschnitt. Ohne Anmeldung.",
+      h1: "Visitenkarten kostenlos erstellen und drucken",
+      intro: "Angaben eintragen, Logo und QR-Code hinzufügen, Stil und Farbe wählen. Laden Sie einen Bogen mit Schnittmarken zum Selbstdrucken herunter oder eine Druckdatei mit Beschnitt. Ohne Konto, Ihre Karte bleibt im Browser.",
+      steps: [
+        { title: "1. Angaben ausfüllen", desc: "Name, Beruf, Telefon, E-Mail, Website. Mit Logo passt sich die Kartenfarbe an." },
+        { title: "2. Stil wählen", desc: "Klassisch, Farbband oder zentriert, mit QR-Code zu Ihrer Website und optionaler Rückseite." },
+        { title: "3. PDF herunterladen", desc: "Ein Bogen mit 10 Karten und Schnittmarken für zu Hause oder eine Karte pro Seite mit 3 mm Beschnitt für die Druckerei." },
+      ],
+      faqs: [
+        { q: "Ist es wirklich kostenlos?", a: "Ja. Erstellen und Herunterladen sind kostenlos, ohne Wasserzeichen auf den Karten und ohne Konto." },
+        { q: "Welches Papier für den Druck zu Hause?", a: "Dickes mattes oder seidenmattes Papier mit 250 bis 350 g/m², wenn Ihr Drucker es verarbeitet. Entlang der Schnittmarken mit Lineal und Cutter oder Schneidemaschine schneiden." },
+        { q: "Kann ich die Datei an eine Druckerei schicken?", a: "Ja. Wählen Sie „Datei für die Druckerei“: jede Karte auf einer eigenen Seite im exakten Format mit 3 mm Beschnitt." },
+      ],
+      features: ["Kostenlos, ohne Konto", "Mit QR-Code", "Vorder- und Rückseite", "Druckbogen oder Druckdatei"],
+    },
   },
   es: {
     'habit-tracker': {
@@ -684,6 +746,26 @@ export const TEMPLATES_SEO_DATA: Record<InterfaceLang, Record<string, TemplateSE
         { q: "¿Dónde se guardan mis datos?", a: "Solo en tu navegador. No se envía nada a nuestros servidores." },
       ],
       features: ["Sin suscripción ni cobros ocultos", "PDF de texto legible por ATS", "Foto opcional", "A4 y Carta"],
+    },
+    'business-card': {
+      slug: 'business-card',
+      templateId: 'business-card',
+      category: 'career',
+      title: "Tarjetas de visita gratis para imprimir – Crear online (PDF) | LogoLoom",
+      description: "Crea tu tarjeta de visita gratis online: logo, código QR, anverso y reverso. Hoja de 10 tarjetas para imprimir en casa o archivo para imprenta con sangrado. Sin registro.",
+      h1: "Tarjetas de visita gratis para crear e imprimir",
+      intro: "Escribe tus datos, añade tu logo y un código QR, elige estilo y color. Descarga una hoja con marcas de corte para imprimir en casa o un archivo para imprenta con sangrado. Sin cuenta, tu tarjeta se queda en tu navegador.",
+      steps: [
+        { title: "1. Rellena tus datos", desc: "Nombre, profesión, teléfono, correo, web. Añade tu logo: el color de la tarjeta se adapta." },
+        { title: "2. Elige un estilo", desc: "Clásico, banda o centrado, con un código QR a tu web y reverso opcional." },
+        { title: "3. Descarga el PDF", desc: "Una hoja de 10 tarjetas con marcas de corte para casa, o una tarjeta por página con 3 mm de sangrado para la imprenta." },
+      ],
+      faqs: [
+        { q: "¿Es realmente gratis?", a: "Sí. Crear y descargar tus tarjetas es gratis, sin marca de agua en las tarjetas y sin cuenta." },
+        { q: "¿Qué papel uso en casa?", a: "Papel grueso mate o satinado de 250 a 350 g/m², si tu impresora lo admite. Corta siguiendo las marcas con regla y cúter o guillotina." },
+        { q: "¿Puedo enviar el archivo a una imprenta?", a: "Sí. Elige «Archivo para imprenta»: cada tarjeta en su propia página, al tamaño exacto, con 3 mm de sangrado." },
+      ],
+      features: ["Gratis, sin cuenta", "Código QR incluido", "Anverso y reverso", "Hoja casera o archivo de imprenta"],
     },
   },
   pt: {
@@ -835,6 +917,26 @@ export const TEMPLATES_SEO_DATA: Record<InterfaceLang, Record<string, TemplateSE
       ],
       features: ["Sem assinatura nem cobranças escondidas", "PDF de texto legível por ATS", "Foto opcional", "A4 e Letter"],
     },
+    'business-card': {
+      slug: 'business-card',
+      templateId: 'business-card',
+      category: 'career',
+      title: "Cartão de visita grátis para imprimir – Criar online (PDF) | LogoLoom",
+      description: "Crie o seu cartão de visita grátis online: logótipo, código QR, frente e verso. Folha de 10 cartões para imprimir em casa ou ficheiro para gráfica com sangria. Sem registo.",
+      h1: "Cartão de visita grátis para criar e imprimir",
+      intro: "Escreva os seus dados, adicione o logótipo e um código QR, escolha estilo e cor. Descarregue uma folha com marcas de corte para imprimir em casa, ou um ficheiro para gráfica com sangria. Sem conta, o seu cartão fica no navegador.",
+      steps: [
+        { title: "1. Preencha os seus dados", desc: "Nome, profissão, telefone, e-mail, site. Adicione o logótipo: a cor do cartão adapta-se." },
+        { title: "2. Escolha um estilo", desc: "Clássico, faixa ou centrado, com código QR para o seu site e verso opcional." },
+        { title: "3. Descarregue o PDF", desc: "Uma folha de 10 cartões com marcas de corte para casa, ou um cartão por página com 3 mm de sangria para a gráfica." },
+      ],
+      faqs: [
+        { q: "É mesmo grátis?", a: "Sim. Criar e descarregar os seus cartões é grátis, sem marca de água nos cartões e sem conta." },
+        { q: "Que papel usar em casa?", a: "Papel grosso mate ou acetinado de 250 a 350 g/m², se a impressora aceitar. Corte pelas marcas com régua e x-ato ou guilhotina." },
+        { q: "Posso enviar o ficheiro para uma gráfica?", a: "Sim. Escolha «Ficheiro para a gráfica»: cada cartão na sua página, no formato exato, com 3 mm de sangria." },
+      ],
+      features: ["Grátis, sem conta", "Código QR incluído", "Frente e verso", "Folha caseira ou ficheiro de gráfica"],
+    },
   },
   it: {
     'habit-tracker': {
@@ -984,6 +1086,26 @@ export const TEMPLATES_SEO_DATA: Record<InterfaceLang, Record<string, TemplateSE
         { q: "Dove vengono salvati i miei dati?", a: "Solo nel tuo browser. Nulla viene inviato ai nostri server." },
       ],
       features: ["Nessun abbonamento né addebiti nascosti", "PDF di testo leggibile dagli ATS", "Foto facoltativa", "A4 e Letter"],
+    },
+    'business-card': {
+      slug: 'business-card',
+      templateId: 'business-card',
+      category: 'career',
+      title: "Biglietti da visita gratis da stampare – Crea online (PDF) | LogoLoom",
+      description: "Crea il tuo biglietto da visita gratis online: logo, codice QR, fronte e retro. Foglio da 10 biglietti da stampare a casa o file per tipografia con abbondanza. Senza registrazione.",
+      h1: "Biglietti da visita gratis da creare e stampare",
+      intro: "Inserisci i tuoi dati, aggiungi logo e codice QR, scegli stile e colore. Scarica un foglio con segni di taglio da stampare a casa, o un file per la tipografia con abbondanza. Senza account, il biglietto resta nel tuo browser.",
+      steps: [
+        { title: "1. Inserisci i tuoi dati", desc: "Nome, professione, telefono, e-mail, sito. Aggiungi il logo: il colore del biglietto si adatta." },
+        { title: "2. Scegli uno stile", desc: "Classico, fascia o centrato, con codice QR al tuo sito e retro facoltativo." },
+        { title: "3. Scarica il PDF", desc: "Un foglio da 10 biglietti con segni di taglio per casa, o un biglietto per pagina con 3 mm di abbondanza per la tipografia." },
+      ],
+      faqs: [
+        { q: "È davvero gratis?", a: "Sì. Creare e scaricare i biglietti è gratis, senza filigrana sui biglietti e senza account." },
+        { q: "Che carta usare a casa?", a: "Carta spessa opaca o satinata da 250 a 350 g/m², se la stampante la accetta. Taglia lungo i segni con righello e taglierino o una taglierina." },
+        { q: "Posso inviare il file a una tipografia?", a: "Sì. Scegli «File per la tipografia»: ogni biglietto su una pagina, nel formato esatto, con 3 mm di abbondanza." },
+      ],
+      features: ["Gratis, senza account", "Codice QR incluso", "Fronte e retro", "Foglio casa o file tipografia"],
     },
   },
 };

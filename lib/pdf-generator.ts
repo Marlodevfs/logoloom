@@ -5,6 +5,15 @@ import { BrandKit, PaperSize, TemplateId } from '@/types';
 import { DocumentCompiler } from './pdf/DocumentCompiler';
 import { LETTER_FILE_PREFIX } from './i18n/letter-data';
 
+const CARD_FILE_PREFIX: Record<string, string> = {
+  fr: 'Carte_de_visite',
+  en: 'Business_card',
+  de: 'Visitenkarte',
+  es: 'Tarjeta_de_visita',
+  it: 'Biglietto_da_visita',
+  pt: 'Cartao_de_visita',
+};
+
 export interface PDFExportOptions {
   element?: HTMLElement;
   paperSize?: PaperSize;
@@ -47,6 +56,8 @@ export async function exportToPDF({
     const defaultName =
       doc === 'letter'
         ? `${letterPrefix}_${slug(finalKit.cvContent?.fullName || '')}`.replace(/_$/, '') + '.pdf'
+        : templateId === 'business-card'
+        ? `${CARD_FILE_PREFIX[finalKit.documentLang || 'en'] || CARD_FILE_PREFIX.en}_${slug(finalKit.cardContent?.fullName || '')}`.replace(/_$/, '') + '.pdf'
         : templateId === 'cv'
         ? `CV_${slug(finalKit.cvContent?.fullName || '') || 'CV'}.pdf`.replace('CV_CV.pdf', 'CV.pdf')
         : `${slug(finalKit.companyName || 'LogoLoom') || 'LogoLoom'}_${templateId}.pdf`;
