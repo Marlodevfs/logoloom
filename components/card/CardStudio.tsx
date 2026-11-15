@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Check, ImagePlus } from 'lucide-react';
 import { useBrandKit } from '@/lib/use-brand-kit';
 import { Header } from '@/components/Header';
@@ -58,7 +58,7 @@ function Choice({ active, onClick, children }: { active: boolean; onClick: () =>
 }
 
 export function CardStudio({ initialLang, title }: { initialLang: InterfaceLang; title: string }) {
-  const { brandKit, updateBrandKit, interfaceLang, setInterfaceLang, setUploadedLogo, resetLogo } = useBrandKit(initialLang, 'business-card');
+  const { brandKit, updateBrandKit, interfaceLang, setInterfaceLang, setUploadedLogo, resetLogo, isLoaded } = useBrandKit(initialLang, 'business-card');
   const t = CARD_COPY[interfaceLang] || CARD_COPY.en;
   const card: BusinessCardContent = brandKit.cardContent || getDefaultCardContent(brandKit.documentLang || 'en');
   const style = { accent: brandKit.brandColor || '#2340A8', logoUrl: brandKit.logoUrl || null };
@@ -67,6 +67,31 @@ export function CardStudio({ initialLang, title }: { initialLang: InterfaceLang;
   const [confirmClear, setConfirmClear] = useState(false);
 
   const update = (patch: Partial<BusinessCardContent>) => updateBrandKit({ cardContent: { ...card, ...patch } });
+
+  // Coming from the CV tool (?from=cv): the card starts with the CV's details.
+  const prefilled = useRef(false);
+  useEffect(() => {
+    if (!isLoaded || prefilled.current) return;
+    prefilled.current = true;
+    const params = new URLSearchParams(window.location.search);
+    if (params.get('from') !== 'cv') return;
+    const cv = brandKit.cvContent;
+    if (cv?.fullName?.trim()) {
+      update({
+        fullName: cv.fullName,
+        jobTitle: cv.jobTitle,
+        company: '',
+        phone: cv.phone,
+        email: cv.email,
+        website: cv.link,
+        address: cv.city,
+        qrUrl: '',
+        showQr: Boolean(cv.link?.trim()),
+      });
+    }
+    window.history.replaceState({}, '', window.location.pathname);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isLoaded]);
   const hasBack = cardHasBack(card);
   const paper = brandKit.paperSize === 'letter' ? 'letter' : 'a4';
   const perSheet = (() => {
