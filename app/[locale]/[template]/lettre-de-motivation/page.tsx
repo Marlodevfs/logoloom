@@ -94,7 +94,7 @@ export default async function LetterHub({ params }: Props) {
   const { locale, template } = await params;
   if (locale !== 'fr' || template !== 'cv') notFound();
 
-  const heroKit = letterKit(PLACEHOLDER_CV_FR, getDefaultLetterContent('fr'), '#2340A8');
+  const heroKit = letterKit(PLACEHOLDER_CV_FR, getDefaultLetterContent('fr'), '#1F5C4A');
 
   const jsonLd = [
     {

@@ -606,7 +606,7 @@ export function CvStudio({ initialLang, title }: { initialLang: InterfaceLang; t
                 href={`/${interfaceLang}/business-card?from=cv`}
                 className="mt-10 flex items-center gap-4 rounded-xl border border-slate-200 dark:border-slate-800 p-4 hover:border-ink-300 hover:bg-ink-50/40 dark:hover:bg-slate-800/50 transition-colors"
               >
-                <span className="shrink-0 w-11 h-11 rounded-lg flex items-center justify-center text-white" style={{ backgroundColor: brandKit.brandColor || '#2340A8' }}>
+                <span className="shrink-0 w-11 h-11 rounded-lg flex items-center justify-center text-white" style={{ backgroundColor: brandKit.brandColor || '#1F5C4A' }}>
                   <IdCard className="w-5 h-5" aria-hidden="true" />
                 </span>
                 <span className="min-w-0">

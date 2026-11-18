@@ -7,7 +7,7 @@ import { getDefaultCvContent } from '@/lib/use-brand-kit';
 import type { BrandKit, CvLayout, DocumentLang } from '@/types';
 
 /** Minimal brand kit to render a CV sheet outside the editor. */
-export function sampleCvKit(lang: DocumentLang, layout: CvLayout, fullName?: string, color = '#2340A8'): BrandKit {
+export function sampleCvKit(lang: DocumentLang, layout: CvLayout, fullName?: string, color = '#1F5C4A'): BrandKit {
   const base = getDefaultCvContent(lang);
   return {
     logoUrl: null,
@@ -102,11 +102,11 @@ export function LiveCvHero({ lang, copy }: { lang: DocumentLang; copy: LiveCvHer
               placeholder={copy.namePlaceholder}
               autoComplete="name"
               maxLength={60}
-              className="w-full sm:flex-1 h-12 shrink-0 px-4 rounded-lg border border-slate-300 bg-white text-base text-slate-900 placeholder:text-slate-400 dark:bg-slate-900 dark:border-slate-700 dark:text-white"
+              className="w-full sm:flex-1 h-12 shrink-0 px-4 rounded-lg border border-slate-300 bg-slate-50 text-base text-slate-900 placeholder:text-slate-400 dark:bg-slate-900 dark:border-slate-700 dark:text-white"
             />
             <Link
               href={href}
-              className="h-12 px-6 inline-flex items-center justify-center rounded-lg bg-ink-600 hover:bg-ink-700 text-white font-bold text-base transition-colors"
+              className="h-12 px-6 inline-flex items-center justify-center rounded-lg bg-ink-600 hover:bg-ink-700 text-white font-bold text-base transition-colors shadow-[0_10px_24px_-12px_rgba(31,68,54,0.7)]"
             >
               {copy.cta}
             </Link>
@@ -116,7 +116,7 @@ export function LiveCvHero({ lang, copy }: { lang: DocumentLang; copy: LiveCvHer
         <ul className="mt-6 space-y-1.5 text-[15px] text-slate-600 dark:text-slate-300">
           {copy.facts.map((f) => (
             <li key={f} className="flex gap-2">
-              <span aria-hidden="true" className="mt-[0.55em] w-1.5 h-1.5 rounded-full bg-ink-600 shrink-0" />
+              <svg aria-hidden="true" viewBox="0 0 20 20" className="mt-[0.15em] w-[1.15em] h-[1.15em] shrink-0 text-ocre-600 dark:text-ocre-300" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M4 10.5l4 4 8-9" /></svg>
               {f}
             </li>
           ))}
@@ -125,10 +125,14 @@ export function LiveCvHero({ lang, copy }: { lang: DocumentLang; copy: LiveCvHer
 
       {/* The product itself: a real CV sheet that follows what you type */}
       <figure className="relative">
-        <div className="rounded-sm shadow-[0_1px_2px_rgba(27,29,33,0.08),0_12px_40px_-12px_rgba(27,29,33,0.25)] overflow-hidden bg-white">
-          <CvSheet kit={sampleCvKit(lang, 'sidebar', name)} />
+        <div className="relative">
+        {/* A second sheet underneath: the CV reads as paper on a desk */}
+        <div aria-hidden="true" className="absolute inset-0 rounded-sm bg-slate-200 rotate-[3deg] translate-x-3 translate-y-2 shadow-[0_20px_40px_-20px_rgba(60,45,25,0.35)] motion-reduce:rotate-0" />
+        <div className="relative rounded-sm -rotate-1 motion-reduce:rotate-0 shadow-[0_2px_4px_rgba(60,45,25,0.08),0_30px_60px_-20px_rgba(60,45,25,0.45)] overflow-hidden bg-white">
+          <CvSheet kit={sampleCvKit(lang, 'sidebar', name, '#1F5C4A')} />
         </div>
-        <figcaption className="mt-3 text-sm text-slate-500 dark:text-slate-400">{copy.sheetCaption}</figcaption>
+        </div>
+        <figcaption className="mt-5 text-sm text-slate-500 dark:text-slate-400">{copy.sheetCaption}</figcaption>
       </figure>
     </section>
   );

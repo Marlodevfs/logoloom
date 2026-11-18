@@ -55,7 +55,7 @@ export function drawCard(c: BusinessCardContent, side: 'front' | 'back', style: 
   const W = w + 2 * b;
   const H = h + 2 * b;
   const P = 5 * MM; // safe margin inside the trim
-  const accent = style.accent || '#2340A8';
+  const accent = style.accent || '#1F5C4A';
   const onAccent = getOptimalTextColor(accent);
   const accentText = ensureAccessibleOnWhite(accent);
   const qr = c.showQr ? cardQrTarget(c) : '';

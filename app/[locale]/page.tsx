@@ -86,12 +86,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     },
     icons: {
       icon: [
-        { url: '/favicon.ico?v=2', sizes: 'any' },
-        { url: '/icon.svg?v=2', type: 'image/svg+xml' },
-        { url: '/favicon-32x32.png?v=2', type: 'image/png', sizes: '32x32' },
+        { url: '/favicon.ico?v=3', sizes: 'any' },
+        { url: '/icon.svg?v=3', type: 'image/svg+xml' },
+        { url: '/favicon-32x32.png?v=3', type: 'image/png', sizes: '32x32' },
       ],
-      apple: [{ url: '/apple-touch-icon.png?v=2', sizes: '180x180', type: 'image/png' }],
-      shortcut: '/favicon.ico?v=2',
+      apple: [{ url: '/apple-touch-icon.png?v=3', sizes: '180x180', type: 'image/png' }],
+      shortcut: '/favicon.ico?v=3',
     },
   };
 }
@@ -564,13 +564,13 @@ export default async function LocalePage({ params }: Props) {
         <LiveCvHero lang={lang as DocumentLang} copy={t} />
 
         {/* How it works: a real three-step sequence */}
-        <section className="bg-white dark:bg-slate-900 border-y border-slate-200 dark:border-slate-800">
+        <section className="bg-slate-50 dark:bg-slate-900 border-y border-slate-200 dark:border-slate-800">
           <div className="max-w-6xl mx-auto px-5 sm:px-8 py-14 sm:py-20">
             <h2 className="font-display text-3xl sm:text-4xl font-semibold">{t.stepsTitle}</h2>
             <ol className="mt-10 grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-12">
               {t.steps.map((step, i) => (
                 <li key={step.title}>
-                  <span className="font-display text-5xl text-ink-600 dark:text-ink-300 leading-none">{i + 1}</span>
+                  <span className="font-display italic text-5xl text-ocre-600 dark:text-ocre-300 leading-none">{i + 1}.</span>
                   <h3 className="mt-4 text-lg font-bold">{step.title}</h3>
                   <p className="mt-2 text-[15px] leading-relaxed text-slate-600 dark:text-slate-300 max-w-[38ch]">{step.desc}</p>
                 </li>
@@ -622,15 +622,15 @@ export default async function LocalePage({ params }: Props) {
         </section>
 
         {/* The honest difference */}
-        <section className="bg-slate-900 text-slate-100">
+        <section className="bg-ink-700 dark:bg-ink-900 text-slate-100">
           <div className="max-w-6xl mx-auto px-5 sm:px-8 py-14 sm:py-20 grid grid-cols-1 lg:grid-cols-2 gap-10">
             <div>
               <h2 className="font-display text-3xl sm:text-4xl font-semibold text-white">{t.honestTitle}</h2>
-              <p className="mt-4 text-lg leading-relaxed text-slate-300 max-w-[40ch]">{t.honestLead}</p>
+              <p className="mt-4 text-lg leading-relaxed text-ink-100 max-w-[40ch]">{t.honestLead}</p>
             </div>
-            <ul className="divide-y divide-slate-700 border-y border-slate-700">
+            <ul className="divide-y divide-white/15 border-y border-white/15">
               {t.honest.map((item) => (
-                <li key={item} className="py-4 text-lg text-slate-200 line-through decoration-slate-500 decoration-1">
+                <li key={item} className="py-4 text-lg text-slate-50 line-through decoration-ocre-300 decoration-2">
                   {item}
                 </li>
               ))}
@@ -674,7 +674,7 @@ export default async function LocalePage({ params }: Props) {
         </noscript>
 
         {/* About + FAQ */}
-        <section className="bg-white dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800">
+        <section className="bg-slate-50 dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800">
           <div className="max-w-3xl mx-auto px-5 sm:px-8 py-14 sm:py-20">
             <h2 className="font-display text-2xl sm:text-3xl font-semibold">{t.aboutTitle}</h2>
             <div className="mt-4 space-y-4">
