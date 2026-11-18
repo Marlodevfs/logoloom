@@ -161,6 +161,16 @@ export default async function TemplateLandingPage({ params }: Props) {
     pt: 'Como fazer o seu CV em três passos',
   };
 
+  // The generic "printing this template" FAQ title does not fit the CV maker.
+  const CV_FAQ: Record<string, string> = {
+    fr: 'Questions fréquentes sur le CV gratuit',
+    en: 'Frequently asked questions about the free CV maker',
+    de: 'Häufige Fragen zum kostenlosen Lebenslauf',
+    es: 'Preguntas frecuentes sobre el currículum gratis',
+    it: 'Domande frequenti sul CV gratuito',
+    pt: 'Perguntas frequentes sobre o CV grátis',
+  };
+
   const otherTemplates = CANONICAL_TEMPLATE_SLUGS.filter((t) => t.slug !== slug).sort(
     (a, b) => catalogRank(a.templateId) - catalogRank(b.templateId)
   );
@@ -272,7 +282,7 @@ export default async function TemplateLandingPage({ params }: Props) {
           <section className="space-y-6">
             <div>
               <h2 className="font-display text-2xl sm:text-3xl font-semibold text-slate-900 dark:text-white">
-                {chrome.templateFaqTitle}
+                {isCv ? CV_FAQ[lang] || CV_FAQ.en : chrome.templateFaqTitle}
               </h2>
             </div>
 
