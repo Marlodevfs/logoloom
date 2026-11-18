@@ -61,7 +61,7 @@ export function CardStudio({ initialLang, title }: { initialLang: InterfaceLang;
   const { brandKit, updateBrandKit, interfaceLang, setInterfaceLang, setUploadedLogo, resetLogo, isLoaded } = useBrandKit(initialLang, 'business-card');
   const t = CARD_COPY[interfaceLang] || CARD_COPY.en;
   const card: BusinessCardContent = brandKit.cardContent || getDefaultCardContent(brandKit.documentLang || 'en');
-  const style = { accent: brandKit.brandColor || '#2340A8', logoUrl: brandKit.logoUrl || null };
+  const style = { accent: brandKit.brandColor || '#1F5C4A', logoUrl: brandKit.logoUrl || null };
   const fileRef = useRef<HTMLInputElement>(null);
   const [logoError, setLogoError] = useState(false);
   const [confirmClear, setConfirmClear] = useState(false);
@@ -268,7 +268,7 @@ export function CardStudio({ initialLang, title }: { initialLang: InterfaceLang;
                     <label className="inline-flex items-center gap-2 text-sm font-bold text-slate-700 dark:text-slate-200 cursor-pointer">
                       <input
                         type="color"
-                        value={brandKit.brandColor || '#2340A8'}
+                        value={brandKit.brandColor || '#1F5C4A'}
                         onChange={(e) => updateBrandKit({ brandColor: e.target.value.toUpperCase() })}
                         className="w-11 h-11 rounded-full border border-slate-300 cursor-pointer bg-transparent"
                         aria-label={t.customColor}

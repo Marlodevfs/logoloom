@@ -174,7 +174,7 @@ export function relocalizeContents(
 
 export const DEFAULT_BRAND_KIT: BrandKit = {
   logoUrl: DEFAULT_SAMPLE_LOGO,
-  brandColor: '#2340A8', // Ink
+  brandColor: '#1F5C4A', // Pine (matches the site's ink)
   contrastText: '#FFFFFF',
   companyName: '', // Empty: preview shows placeholder suggestion; export omits cleanly
   tagline: '',
@@ -434,7 +434,7 @@ export function useBrandKit(initialLang?: InterfaceLang, initialTemplate?: Templ
   const resetLogo = useCallback(() => {
     updateBrandKit({
       logoUrl: null,
-      brandColor: '#2340A8',
+      brandColor: '#1F5C4A',
       contrastText: '#FFFFFF',
     });
     setExtractedColorSuggestion(null);

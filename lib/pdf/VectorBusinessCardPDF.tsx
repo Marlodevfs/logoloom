@@ -130,7 +130,7 @@ function CropMarks({ x0, y0, cols, rows, cw, ch, pageW, pageH }: { x0: number; y
  */
 export const VectorBusinessCardPDF: React.FC<{ brandKit: BrandKit }> = ({ brandKit }) => {
   const c: BusinessCardContent = brandKit.cardContent || getDefaultCardContent(brandKit.documentLang || 'en');
-  const style = { accent: brandKit.brandColor || '#2340A8', logoUrl: brandKit.logoUrl || null };
+  const style = { accent: brandKit.brandColor || '#1F5C4A', logoUrl: brandKit.logoUrl || null };
   const sides: ('front' | 'back')[] = cardHasBack(c) ? ['front', 'back'] : ['front'];
 
   if (c.output === 'printer') {

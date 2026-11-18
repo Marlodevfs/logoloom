@@ -19,8 +19,8 @@ export async function GET(req: NextRequest) {
             flexDirection: 'column',
             justifyContent: 'space-between',
             padding: '60px 80px',
-            backgroundColor: '#0F172A',
-            backgroundImage: 'radial-gradient(circle at 25px 25px, #1E293B 2%, transparent 0%), radial-gradient(circle at 75px 75px, #1E293B 2%, transparent 0%)',
+            backgroundColor: '#152E25',
+            backgroundImage: 'radial-gradient(circle at 25px 25px, #1F4436 2%, transparent 0%), radial-gradient(circle at 75px 75px, #1F4436 2%, transparent 0%)',
             backgroundSize: '100px 100px',
             fontFamily: 'sans-serif',
           }}
@@ -34,11 +34,11 @@ export async function GET(req: NextRequest) {
             }}
           >
             <svg width="54" height="54" viewBox="0 0 48 48">
-              <rect width="48" height="48" rx="11" fill="#334155" />
-              <path d="M25 10v17" fill="none" stroke="#F43F5E" strokeWidth="5" strokeLinecap="round" />
-              <path d="M21.5 22h7" fill="none" stroke="#334155" strokeWidth="9" />
-              <path d="M11 22h27" fill="none" stroke="#F43F5E" strokeWidth="5" strokeLinecap="round" />
-              <path d="M17 17.5v9" fill="none" stroke="#334155" strokeWidth="9" />
+              <rect width="48" height="48" rx="11" fill="#24513F" />
+              <path d="M25 10v17" fill="none" stroke="#D09A3E" strokeWidth="5" strokeLinecap="round" />
+              <path d="M21.5 22h7" fill="none" stroke="#24513F" strokeWidth="9" />
+              <path d="M11 22h27" fill="none" stroke="#D09A3E" strokeWidth="5" strokeLinecap="round" />
+              <path d="M17 17.5v9" fill="none" stroke="#24513F" strokeWidth="9" />
               <path d="M17 10v24h15" fill="none" stroke="#FFFFFF" strokeWidth="5" strokeLinecap="round" strokeLinejoin="round" />
             </svg>
             <div style={{ display: 'flex', flexDirection: 'column' }}>
@@ -110,18 +110,18 @@ export async function GET(req: NextRequest) {
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'space-between',
-              borderTop: '1px solid #1E293B',
+              borderTop: '1px solid #1F4436',
               paddingTop: '28px',
             }}
           >
             <div style={{ display: 'flex', gap: '16px' }}>
-              <span style={{ backgroundColor: '#1E293B', color: '#E2E8F0', padding: '8px 16px', borderRadius: '8px', fontSize: '15px', fontWeight: 600 }}>
+              <span style={{ backgroundColor: '#1F4436', color: '#E2E8F0', padding: '8px 16px', borderRadius: '8px', fontSize: '15px', fontWeight: 600 }}>
                 Habit Tracker
               </span>
-              <span style={{ backgroundColor: '#1E293B', color: '#E2E8F0', padding: '8px 16px', borderRadius: '8px', fontSize: '15px', fontWeight: 600 }}>
+              <span style={{ backgroundColor: '#1F4436', color: '#E2E8F0', padding: '8px 16px', borderRadius: '8px', fontSize: '15px', fontWeight: 600 }}>
                 Weekly Planner
               </span>
-              <span style={{ backgroundColor: '#1E293B', color: '#E2E8F0', padding: '8px 16px', borderRadius: '8px', fontSize: '15px', fontWeight: 600 }}>
+              <span style={{ backgroundColor: '#1F4436', color: '#E2E8F0', padding: '8px 16px', borderRadius: '8px', fontSize: '15px', fontWeight: 600 }}>
                 Monthly Calendar
               </span>
             </div>

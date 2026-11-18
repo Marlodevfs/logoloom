@@ -14,7 +14,7 @@ export function SiteFooter({ lang, withStickyBar = false }: { lang: string; with
   const cats = CATEGORY_COPY[lang as InterfaceLang] || CATEGORY_COPY.en;
 
   return (
-    <footer className={`border-t border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 ${withStickyBar ? 'pb-24 lg:pb-0' : ''}`}>
+    <footer className={`border-t border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900 ${withStickyBar ? 'pb-24 lg:pb-0' : ''}`}>
       <div className="max-w-5xl mx-auto px-4 sm:px-6 py-10 grid grid-cols-2 sm:grid-cols-4 gap-8 text-xs [&_li>a]:inline-block [&_li>a]:py-2.5 lg:[&_li>a]:py-0 [&_li>button]:py-2.5 lg:[&_li>button]:py-0">
         <div className="col-span-2 sm:col-span-1 space-y-2">
           <p className="font-extrabold text-sm text-slate-900 dark:text-white">{siteConfig.name}</p>
