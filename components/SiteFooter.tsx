@@ -7,6 +7,16 @@ import { BuyMeACoffeeButton } from '@/components/BuyMeACoffee';
 import { CookieSettingsLink } from '@/components/CookieConsent';
 import { PRO_ENABLED } from '@/lib/i18n/pro';
 
+/** Sister site, linked from the footer with a descriptive anchor in each language. */
+const CONVERSAPDF: Record<InterfaceLang, { href: string; label: string }> = {
+  en: { href: 'https://conversapdf.com/en', label: 'WhatsApp chat to PDF' },
+  fr: { href: 'https://conversapdf.com/fr', label: 'Conversation WhatsApp en PDF' },
+  es: { href: 'https://conversapdf.com/es', label: 'Chat de WhatsApp a PDF' },
+  de: { href: 'https://conversapdf.com/en', label: 'WhatsApp-Chat als PDF' },
+  pt: { href: 'https://conversapdf.com/pt', label: 'Conversa do WhatsApp em PDF' },
+  it: { href: 'https://conversapdf.com/it', label: 'Chat WhatsApp in PDF' },
+};
+
 /** Site-wide footer: product links, legal pages and contact. Server component. */
 export function SiteFooter({ lang, withStickyBar = false }: { lang: string; withStickyBar?: boolean }) {
   const c = getSiteChrome(lang);
@@ -86,6 +96,14 @@ export function SiteFooter({ lang, withStickyBar = false }: { lang: string; with
                 </Link>
               </li>
             )}
+            <li>
+              <a
+                href={(CONVERSAPDF[lang as InterfaceLang] || CONVERSAPDF.en).href}
+                className="text-slate-500 hover:text-indigo-600 dark:text-slate-400 dark:hover:text-indigo-400"
+              >
+                {(CONVERSAPDF[lang as InterfaceLang] || CONVERSAPDF.en).label}
+              </a>
+            </li>
             <li>
               <a href={`mailto:${siteConfig.contact.email}`} className="text-slate-500 hover:text-indigo-600 dark:text-slate-400 dark:hover:text-indigo-400">
                 {c.footer.contact}
