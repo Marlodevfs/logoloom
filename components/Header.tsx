@@ -14,13 +14,13 @@ interface HeaderProps {
   onOpenProModal?: () => void;
 }
 
-const NAV: Record<InterfaceLang, { cv: string; tools: string }> = {
-  fr: { cv: 'Créer un CV', tools: 'Autres outils' },
-  en: { cv: 'Create a CV', tools: 'Other tools' },
-  de: { cv: 'Lebenslauf erstellen', tools: 'Weitere Tools' },
-  es: { cv: 'Crear un CV', tools: 'Otras herramientas' },
-  it: { cv: 'Crea un CV', tools: 'Altri strumenti' },
-  pt: { cv: 'Criar um CV', tools: 'Outras ferramentas' },
+const NAV: Record<InterfaceLang, { cv: string; cvShort: string; tools: string }> = {
+  fr: { cv: 'Créer un CV', cvShort: 'Faire un CV', tools: 'Autres outils' },
+  en: { cv: 'Create a CV', cvShort: 'Make a CV', tools: 'Other tools' },
+  de: { cv: 'Lebenslauf erstellen', cvShort: 'Lebenslauf', tools: 'Weitere Tools' },
+  es: { cv: 'Crear un CV', cvShort: 'Crear CV', tools: 'Otras herramientas' },
+  it: { cv: 'Crea un CV', cvShort: 'Crea CV', tools: 'Altri strumenti' },
+  pt: { cv: 'Criar um CV', cvShort: 'Criar CV', tools: 'Outras ferramentas' },
 };
 
 export const Header: React.FC<HeaderProps> = ({
@@ -97,7 +97,7 @@ export const Header: React.FC<HeaderProps> = ({
     <header className="w-full border-b border-slate-200/80 dark:border-slate-800 bg-slate-50/90 backdrop-blur dark:bg-slate-900 sticky top-0 z-50 transition-colors overflow-visible">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 h-16 py-2 flex items-center justify-between">
         {/* Brand Logo */}
-        <Link href={`/${interfaceLang}`} className="flex items-center space-x-3 group">
+        <Link href={`/${interfaceLang}`} className="flex items-center space-x-2 sm:space-x-3 group shrink-0">
           <LogoMark className="w-9 h-9 shrink-0 group-hover:scale-105 transition-transform duration-200" />
 
           <div>
@@ -106,7 +106,7 @@ export const Header: React.FC<HeaderProps> = ({
                 LogoLoom
               </span>
             </div>
-            <p className="text-[11px] leading-tight text-slate-500 dark:text-slate-400 max-w-[42vw] sm:max-w-none truncate">
+            <p className="hidden sm:block text-[11px] leading-tight text-slate-500 dark:text-slate-400 max-w-[42vw] sm:max-w-none truncate">
               {t.appTagline}
             </p>
           </div>
@@ -129,7 +129,14 @@ export const Header: React.FC<HeaderProps> = ({
         </nav>
 
         {/* Actions Right: Language Switcher, Dark Mode, Pro Button */}
-        <div className="flex items-center space-x-2.5">
+        <div className="flex items-center space-x-1.5 sm:space-x-2.5">
+          {/* Phones: the main tool stays one tap away (the centre nav is hidden there) */}
+          <Link
+            href={`/${interfaceLang}/cv`}
+            className="md:hidden inline-flex items-center h-9 px-2.5 rounded-lg bg-ink-600 hover:bg-ink-700 text-white text-xs font-bold whitespace-nowrap transition-colors"
+          >
+            {NAV[interfaceLang]?.cvShort || NAV.en.cvShort}
+          </Link>
           {/* Crawlable Language Switcher Dropdown */}
           <div className="relative" ref={langMenuRef}>
             <button
@@ -139,7 +146,7 @@ export const Header: React.FC<HeaderProps> = ({
               aria-label="Change language"
               aria-expanded={isLangOpen}
             >
-              <Globe className="w-3.5 h-3.5 text-slate-500 dark:text-slate-400" />
+              <Globe className="hidden sm:block w-3.5 h-3.5 text-slate-500 dark:text-slate-400" />
               <span aria-hidden="true">{currentLang.flag}</span>
               <span className="sm:hidden uppercase">{currentLang.code}</span>
               <span className="hidden sm:inline">{currentLang.label}</span>

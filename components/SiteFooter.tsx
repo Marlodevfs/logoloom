@@ -17,6 +17,16 @@ const CONVERSAPDF: Record<InterfaceLang, { href: string; label: string }> = {
   it: { href: 'https://conversapdf.com/it', label: 'Chat WhatsApp in PDF' },
 };
 
+/** Footer call to action: the main tool, reachable from every page. */
+const CREATE_CV: Record<InterfaceLang, string> = {
+  fr: 'Créer mon CV gratuit',
+  en: 'Create my free CV',
+  de: 'Kostenlosen Lebenslauf erstellen',
+  es: 'Crear mi CV gratis',
+  it: 'Crea il mio CV gratis',
+  pt: 'Criar meu CV grátis',
+};
+
 /** Site-wide footer: product links, legal pages and contact. Server component. */
 export function SiteFooter({ lang, withStickyBar = false }: { lang: string; withStickyBar?: boolean }) {
   const c = getSiteChrome(lang);
@@ -29,6 +39,17 @@ export function SiteFooter({ lang, withStickyBar = false }: { lang: string; with
         <div className="col-span-2 sm:col-span-1 space-y-2">
           <p className="font-extrabold text-sm text-slate-900 dark:text-white">{siteConfig.name}</p>
           <p className="text-slate-500 dark:text-slate-400 leading-relaxed">{c.slogan}</p>
+          <div className="pt-1 flex flex-col items-start gap-2">
+            <Link
+              href={`/${lang}/cv`}
+              className="inline-flex items-center h-10 px-4 rounded-lg bg-ink-600 hover:bg-ink-700 text-white text-sm font-bold transition-colors"
+            >
+              {CREATE_CV[lang as InterfaceLang] || CREATE_CV.en}
+            </Link>
+            <Link href={`/${lang}#tools`} className="text-sm font-semibold text-slate-700 hover:text-indigo-600 dark:text-slate-300 dark:hover:text-indigo-400">
+              {c.viewAll}
+            </Link>
+          </div>
           <div className="pt-2">
             <BuyMeACoffeeButton lang={lang} withHint />
           </div>
